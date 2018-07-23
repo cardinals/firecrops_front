@@ -76,6 +76,51 @@ var vue = new Vue({
         this.getAllTeamsData();
     },
     methods: {
+        //预案删除
+        deleteClick: function () {
+            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                var params = {
+                    xgrid: this.role_data.userid,
+                    xgrmc: this.role_data.realName
+                }
+                axios.post('/dpapi/digitalplanlist/doDeleteDigitalplan', this.multipleSelection).then(function (res) {
+                    this.$message({
+                        message: "成功删除" + res.data.result + "条信息",
+                        showClose: true,
+                        onClose: this.searchClick('delete')
+                    });
+                }.bind(this), function (error) {
+                    console.log(error)
+                })
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
+        //车辆新增跳转
+        addClick: function () {
+            var params = {
+                ID: 0,
+                type: "XZ"
+            }
+            loadDivParam("basicinfo/fireengine_add", params);
+            //window.location.href = "digitalplan_add.html?ID=" + 0 + "&index=" + this.activeIndex + "&type=XZ";
+        },
+        //车辆编辑跳转
+        handleEdit: function (row) {
+            var params = {
+                ID: row.uuid,
+                type: "BJ"
+            }
+            loadDivParam("basicinfo/fireengine_add", params);
+                //window.location.href = "digitalplan_add.html?ID=" + row.uuid + "&index=" + this.activeIndex + "&type=BJ";
+        },
         //表格查询事件
         searchClick: function(type) {
             //按钮事件的选择

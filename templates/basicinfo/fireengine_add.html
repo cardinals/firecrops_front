@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" type="text/css" href="../../static/css/basicinfo/fireengine_add.css">
+	<title>新增重点单位预案</title>
+</head>
+
+<body class="fw f14 main-index-body">
+	<div id="app">
+		<div class="main-box">
+			<div class="main-container" v-loading="loading1" element-loading-text="加载中">
+				<!-- 面包屑 -->
+				<div id="breadcrumb_box"></div>
+				<div id="inforView" class="pt15">
+					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<strong style="color: #20a0ff;">车辆基本信息</strong>
+						</el-col>
+					</el-row>
+					<el-form :inline="true" class="el-form demo-form-inline" ref="addForm" :model="addForm" label-position="right">
+						<el-row class="tr mb5">
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>所属队站</el-label>
+							</el-col>
+							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+								<el-select size="small" v-model="searchForm.ssdz" placeholder="全部" class="searchSelect" clearable>
+									<el-option v-for="type in allTeamsData" :label="type.codeName" :value="type.codeValue" :key="type.codeName"></el-option>
+								</el-select>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>车辆类型</el-label>
+							</el-col>
+							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+								<el-cascader :options="allTypesData" :props="props" size="small" v-model="searchForm.cllx" placeholder="全部" class="searchSelect"
+									clearable change-on-select :show-all-levels="false"></el-cascader>
+						    </el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>车牌号码</el-label>
+							</el-col>
+							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+								<el-input size="small" v-model="searchForm.cphm" placeholder="车牌号码" clearable></el-input>
+						    </el-col>
+						</el-row>
+						<el-row class="tr">
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>车辆状态</el-label>
+							</el-col>
+							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+								<el-select size="small" v-model="searchForm.clzt" placeholder="全部" class="searchSelect" clearable>
+									<el-option v-for="type in allStatesData" :label="type.codeName" :value="type.codeValue" :key="type.codeName"></el-option>
+								</el-select>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
+								<el-button class="templete" icon="document" size="small" style="border:none; display:none;" @click="templeteDown"></el-button>
+								<span class="space">&nbsp;</span>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>车辆编码</el-label>
+							</el-col>
+							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+								<el-input size="small" v-model="searchForm.clbm" placeholder="车辆编码" clearable></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
+								<span class="space">&nbsp;</span>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>GPS编号</el-label>
+							</el-col>
+							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+								<el-input size="small" v-model="searchForm.gpsbh" placeholder="GPS编号" clearable></el-input>
+							</el-col>
+						</el-row>
+					</el-form>
+				</div>
+				<div id="remark" class="pt15">
+					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<strong style="color: #20a0ff;">备注</strong>
+						</el-col>
+					</el-row>
+					<el-row>
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<el-input size="small" v-model="addForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+						</el-col>
+					</el-row>
+				</div>
+				<el-row class="mt10 mb20">
+					<el-form :inline="true" class="el-form demo-form-inline">
+						<el-row>
+							<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+								<el-button type="success" icon="document" size="small" class="btn_save" @click="save('addForm')">暂存</el-button>
+								<el-button type="primary" icon="check" size="small" class="btn_submit" @click="submit('addForm')">提交</el-button>
+							</el-col>
+							<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
+						</el-row>
+					</el-form>
+				</el-row>
+					
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../../static/js/common/config.js"></script>
+<script src="../../static/js/basicinfo/fireengine_add.js"></script>
+</html>
