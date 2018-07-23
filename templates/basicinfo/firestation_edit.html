@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>单位建筑信息编辑</title>
+</head>
+
+<body class="fw f14 main-index-body">
+	<div id="app">
+		<div class="main-box">
+			<div class="main-container" v-loading="loading" element-loading-text="加载中">
+				<!-- 面包屑 -->
+				<div id="breadcrumb_box"></div>
+				<div id="inforView" class="pt15">
+					<el-form label-width="75px" :inline="true" class="el-form demo-form-inline" ref="editForm" :model="editForm" label-position="right">
+						<el-row class="mb5 row-edit-subtitle">
+							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+								<strong class="col-edit-subtitle">基本信息</strong>
+							</el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>队站名称</el-label>
+							</el-col>
+							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">
+								<el-input size="small" v-model="editForm.jzmc" placeholder="队站名称"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">队站简称</el-label>
+							</el-col>
+							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">
+								<el-input size="small" v-model="editForm.jzlx" placeholder="队站简称"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						</el-row>
+
+						<el-row class="tr mb5">
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>队站编码</el-label>
+							</el-col>
+							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">
+								<el-input size="small" v-model="editForm.jzmc" placeholder="队站编码"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">队站类型</el-label>
+							</el-col>
+							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">
+								<el-input size="small" v-model="editForm.jzlx" placeholder="队站类型"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						</el-row>
+
+						<el-row  class="tr mb5">
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">上级队站</el-label>
+							</el-col>
+							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
+								<el-input type="textarea" size="small" v-model="editForm.jzwz" placeholder="上级队站"></el-input>	
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						</el-row>
+
+						<el-row class="mb5 row-edit-subtitle">
+							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+								<strong class="col-edit-subtitle">位置及辖区情况</strong>
+							</el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>队站地址</el-label>
+							</el-col>
+							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">
+								<el-input size="small" v-model="editForm.jzmc" placeholder="队站地址"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">行政区划</el-label>
+							</el-col>
+							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">
+								<el-input size="small" v-model="editForm.jzlx" placeholder="行政区划"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						</el-row>
+						
+						<el-row class="tr mb5">
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>经度</el-label>
+							</el-col>
+							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">
+								<el-input size="small" v-model="editForm.jzmc" placeholder="经度"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">纬度</el-label>
+							</el-col>
+							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">
+								<el-input size="small" v-model="editForm.jzlx" placeholder="纬度"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						</el-row>
+
+
+						<el-row class="tr mb5">
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">管辖水源数</el-label>
+							</el-col>
+							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">
+								<el-input size="small" v-model="editForm.jzmc" placeholder="管辖水源数"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">管辖重点单位数</el-label>
+							</el-col>
+							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">
+								<el-input size="small" v-model="editForm.jzlx" placeholder="管辖重点单位数"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">辖区范围</el-label>
+							</el-col>
+							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">
+								<el-input size="small" v-model="editForm.jzmc" placeholder="辖区范围"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">辖区面积</el-label>
+							</el-col>
+							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">
+								<el-input size="small" v-model="editForm.jzlx" placeholder="辖区面积"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						</el-row>
+
+						<el-row class="tr mb5">
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">联系人</el-label>
+							</el-col>
+							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+								<el-input size="small" v-model="editForm.jzmc" placeholder="联系人"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">联系电话</el-label>
+							</el-col>
+							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+								<el-input size="small" v-model="editForm.jzlx" placeholder="联系电话"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">传真号码</el-label>
+							</el-col>
+							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+								<el-input size="small" v-model="editForm.jzmc" placeholder="传真号码"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						</el-row>
+
+						<el-row class="tr mb5">
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">执勤车辆数(台)</el-label>
+							</el-col>
+							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+								<el-input size="small" v-model="editForm.jzmc" placeholder="执勤车辆数(台)"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">装备器材数(个)</el-label>
+							</el-col>
+							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+								<el-input size="small" v-model="editForm.jzlx" placeholder="装备器材数(个)"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5 vbm">灭火剂总量(t)</el-label>
+							</el-col>
+							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+								<el-input size="small" v-model="editForm.jzmc" placeholder="灭火剂总量(t)"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						</el-row>
+	
+					</el-form>
+				</div>
+				<el-row class="mt20 mb20">
+					<el-row>
+						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
+						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+							<el-button type="primary" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
+							<el-button type="success" icon="check" size="small" class="btn_save" @click="save('editForm')">保存</el-button>
+						</el-col>
+						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
+					</el-row>
+				</el-row>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../../static/js/basicinfo/firestation_edit.js"></script>
+</html>

@@ -217,3 +217,10 @@ body{height:100%;overflow:hidden;}
 .el-message{
     margin-top: 3%;
 }
+.row-edit-subtitle{
+    border-bottom:1px solid #20a0ff;
+    line-height: 29px;
+}
+.col-edit-subtitle{
+    color: #20a0ff;
+}
