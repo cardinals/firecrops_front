@@ -11,6 +11,7 @@ new Vue({
             //显示加载中样
             loading: false,
             allYjlxDataTree: [],
+            allXzqhDataTree: [],
             role_data: [],
             //搜索表单
             addForm: {
@@ -19,15 +20,17 @@ new Vue({
                 yjlx: "",
                 sccj: "",
                 pc: "",
-                zcbl: "",
-                czl: "",
-                kcl: "",
+                zcbl: '0.00',
+                czl: '0.00',
+                kcl: '0.00',
                 scsj: "",
                 hhb: "",
                 cjrid: "",
                 cjrmc: "",
                 xgrid: "",
-                xgrmc: ""
+                xgrmc: "",
+                xzqh: "",
+                ssdz: "",
             },
             //树结构配置
             defaultProps: {
@@ -82,12 +85,12 @@ new Vue({
                         var yjlx = this.addForm.yjlx;
                         this.addForm.yjlx = [];
                         this.addForm.yjlx.push(yjlx);
-                    } else if(this.addForm.yjlx.endsWith("0000")){
+                    } else if (this.addForm.yjlx.endsWith("0000")) {
                         var yjlx1 = this.addForm.yjlx.substring(0, 2) + '000000';
                         var yjlx2 = this.addForm.yjlx;
                         this.addForm.yjlx = [];
                         this.addForm.yjlx.push(yjlx1, yjlx2);
-                    }else if(this.addForm.yjlx.endsWith("00")){
+                    } else if (this.addForm.yjlx.endsWith("00")) {
                         var yjlx1 = this.addForm.yjlx.substring(0, 2) + '000000';
                         var yjlx2 = this.addForm.yjlx.substring(0, 4) + '0000';
                         var yjlx3 = this.addForm.yjlx;
@@ -109,10 +112,27 @@ new Vue({
             })
         },
         czlChange: function (value) {
-            this.addForm.zcbl = value + this.addForm.kcl;
+            debugger
+            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+                this.$message.warning({
+                    message: "请输入数字或小数！",
+                    showClose: true
+                });
+                this.addForm.czl = '';
+            } else {
+                this.addForm.zcbl = parseFloat(value) + parseFloat(this.addForm.kcl);
+            }
         },
         kclChange: function (value) {
-            this.addForm.zcbl = value + this.addForm.czl;
+            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+                this.$message.warning({
+                    message: "请输入数字或小数！",
+                    showClose: true
+                });
+                this.addForm.kcl = '';
+            } else {
+                this.addForm.zcbl = parseFloat(value) + parseFloat(this.addForm.czl);
+            }
         },
         pickerOptions0: {
             disabledDate(time) {
