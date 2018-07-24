@@ -49,6 +49,8 @@
 								<el-form>
 									<el-col :span="12" class="btnEditDelete">
 										<el-form-item align="left">
+											<el-button type="primary" icon="plus" size="small" @click="addClick">新增</el-button>
+											<el-button type="danger" icon="delete" size="small">删除</el-button>
 										</el-form-item>
 									</el-col>
 									<el-col :span="12"></el-col>
@@ -125,13 +127,13 @@
 							</el-col>
 						</el-row>
 						<el-row class="inform-text inform-margin">
-								<el-col :span="24">
-									<div>
-										<strong class="dtdlStyle">药剂类型：</strong>
-										<v-text v-text="tableData_detail.yjlxmc||'无'"></v-text>
-									</div>
-								</el-col>
-							</el-row>
+							<el-col :span="24">
+								<div>
+									<strong class="dtdlStyle">药剂类型：</strong>
+									<v-text v-text="tableData_detail.yjlxmc||'无'"></v-text>
+								</div>
+							</el-col>
+						</el-row>
 						<div class="mt10">
 							<el-tabs v-model="activeName" class="mb5">
 								<el-tab-pane name="first" label="基本信息">
@@ -206,4 +208,5 @@
 	</div>
 </body>
 <script src="../../static/js/basicinfo/firedrug_list.js"></script>
+
 </html>

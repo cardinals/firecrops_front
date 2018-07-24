@@ -137,7 +137,13 @@ var vue = new Vue({
             this.searchForm.cbl = [0, 1000];
             this.searchClick('reset');
         },
-
+        addClick: function (){
+            var params = {
+                ID: 0,
+                type: "XZ"
+            }
+            loadDivParam("basicinfo/firedrug_add", params);
+        },
         //表格勾选事件
         selectionChange: function (val) {
             for (var i = 0; i < val.length; i++) {
