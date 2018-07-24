@@ -50,7 +50,7 @@
 									<el-col :span="12" class="btnEditDelete">
 										<el-form-item align="left">
 											<el-button type="primary" icon="plus" size="small" @click="addClick">新增</el-button>
-											<el-button type="danger" icon="delete" size="small">删除</el-button>
+											<el-button type="danger" icon="delete" size="small" @click="deleteClick">删除</el-button>
 										</el-form-item>
 									</el-col>
 									<el-col :span="12"></el-col>
@@ -68,7 +68,7 @@
 					<div class="table_container">
 						<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" @selection-change="selectionChange"
 						 class="tableStyle" :height="tableheight">
-							<!-- <el-table-column type="selection" min-width="5%"></el-table-column> -->
+							<el-table-column type="selection" width="45"></el-table-column>
 							<el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
 							<el-table-column prop="yjmc" label="药剂名称" show-overflow-tooltip min-width="25%" align="center">
 								<template slot-scope="scope">
