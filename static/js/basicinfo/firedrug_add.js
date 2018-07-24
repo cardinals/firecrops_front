@@ -58,7 +58,7 @@ new Vue({
     },
     mounted: function () {
         this.status = getQueryString("ID");
-        // this.searchClick();
+        this.searchClick();
     },
     methods: {
         //当前登录用户信息
@@ -75,8 +75,25 @@ new Vue({
             if (this.status == 0) {  //新增
                 this.loading = false;
             } else {//修改
-                axios.get('/dpapi/danger/' + this.status).then(function (res) {
+                axios.get('/dpapi/firedrug/' + this.status).then(function (res) {
                     this.addForm = res.data.result;
+                    //药剂类型格式化
+                    if (this.addForm.yjlx.endsWith("000000")) {
+                        var yjlx = this.addForm.yjlx;
+                        this.addForm.yjlx = [];
+                        this.addForm.yjlx.push(yjlx);
+                    } else if(this.addForm.yjlx.endsWith("0000")){
+                        var yjlx1 = this.addForm.yjlx.substring(0, 2) + '000000';
+                        var yjlx2 = this.addForm.yjlx;
+                        this.addForm.yjlx = [];
+                        this.addForm.yjlx.push(yjlx1, yjlx2);
+                    }else if(this.addForm.yjlx.endsWith("00")){
+                        var yjlx1 = this.addForm.yjlx.substring(0, 2) + '000000';
+                        var yjlx2 = this.addForm.yjlx.substring(0, 4) + '0000';
+                        var yjlx3 = this.addForm.yjlx;
+                        this.addForm.yjlx = [];
+                        this.addForm.yjlx.push(yjlx1, yjlx2, yjlx3);
+                    }
                     this.loading = false;
                 }.bind(this), function (error) {
                     console.log(error);
@@ -139,14 +156,15 @@ new Vue({
                 } else {//修改
                     this.addForm.xgrid = this.role_data.userid;
                     this.addForm.xgrmc = this.role_data.realName;
-                    axios.post('/dpapi/danger/doUpdateDanger', this.addForm).then(function (res) {
+                    this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
+                    this.addForm.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];
+                    axios.post('/dpapi/firedrug/doUpdateDrug', this.addForm).then(function (res) {
                         if (res.data.result >= 1) {
-                            this.$alert('成功修改' + res.data.result + '条化危品信息', '提示', {
+                            this.$alert('成功修改' + res.data.result + '条消防药剂信息', '提示', {
                                 type: 'success',
                                 confirmButtonText: '确定',
                                 callback: action => {
-                                    loadDiv("auxiliarydecision/danger_list");
-                                    //window.location.href = "danger_list.html?index=" + this.activeIndex
+                                    loadDiv("basicinfo/firedrug_list");
                                 }
                             });
                         } else {
@@ -154,8 +172,7 @@ new Vue({
                                 type: 'error',
                                 confirmButtonText: '确定',
                                 callback: action => {
-                                    loadDiv("auxiliarydecision/danger_list");
-                                    //window.location.href = "danger_list.html?index=" + this.activeIndex
+                                    loadDiv("basicinfo/firedrug_list");
                                 }
                             });
                         }
