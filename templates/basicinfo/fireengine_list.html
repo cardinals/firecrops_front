@@ -71,18 +71,19 @@
 					<div class="table_container">
 						<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" @selection-change="selectionChange"
 						 class="tableStyle" :height="tableheight">
-							<el-table-column type="index" label="序号" show-overflow-tooltip width="70px" align="center"></el-table-column>
+						 	<el-table-column type="selection" width="45"></el-table-column>
+							<el-table-column type="index" label="序号" show-overflow-tooltip width="65px" align="center"></el-table-column>
 							<el-table-column prop="clmc" label="车辆名称" min-width="18%" show-overflow-tooltip align="center">
 								<template slot-scope="scope">
 									<a @click="informClick(scope.row)" type="text" v-text="scope.row.clmc"></a>
 								</template>
 							</el-table-column>
-							<el-table-column prop="ssdzmc" label="所属队站" min-width="18%" show-overflow-tooltip align="center"></el-table-column>
-							<el-table-column prop="cllxmc" label="车辆类型" min-width="13%" show-overflow-tooltip align="center"></el-table-column>
-							<el-table-column prop="cphm" label="车牌号码" min-width="13%" show-overflow-tooltip align="center"></el-table-column>
-							<el-table-column prop="clbm" label="车辆编码" min-width="14%" show-overflow-tooltip align="center"></el-table-column>
-							<el-table-column prop="gpsbh" label="GPS编号" min-width="11%" show-overflow-tooltip align="center"></el-table-column>
-							<el-table-column prop="clztmc" label="车辆状态" min-width="11%" show-overflow-tooltip align="center"></el-table-column>
+							<el-table-column prop="ssdzmc" label="所属队站" min-width="15%" show-overflow-tooltip align="center"></el-table-column>
+							<el-table-column prop="cllxmc" label="车辆类型" min-width="11%" show-overflow-tooltip align="center"></el-table-column>
+							<el-table-column prop="cphm" label="车牌号码" min-width="11%" show-overflow-tooltip align="center"></el-table-column>
+							<el-table-column prop="clbm" label="车辆编码" min-width="11%" show-overflow-tooltip align="center"></el-table-column>
+							<el-table-column prop="gpsbh" label="GPS编号" min-width="13%" show-overflow-tooltip align="center"></el-table-column>
+							<el-table-column prop="clztmc" label="车辆状态" min-width="13%" show-overflow-tooltip align="center"></el-table-column>
 							<el-table-column label="操作" min-width="8%" align="center">
                                 <template slot-scope="scope">
                                     <el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>

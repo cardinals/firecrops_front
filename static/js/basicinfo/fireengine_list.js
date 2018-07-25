@@ -15,6 +15,7 @@ var vue = new Vue({
                 gpsbh: ""
             },
             tableData: [],
+            role_data: [],//当前用户信息
             allTeamsData: [],
             allTypesData: [],
             allStatesData: [],
@@ -74,22 +75,37 @@ var vue = new Vue({
         this.getAllTypesData();
         this.getAllStatesData();
         this.getAllTeamsData();
+        this.roleData();
     },
     methods: {
-        //预案删除
+        handleNodeClick(data) {
+        },
+        //获取当前用户信息
+         roleData: function () {
+            axios.post('/api/shiro').then(function (res) {
+                this.role_data = res.data;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
+        //表格勾选事件
+        selectionChange: function (val) {
+            this.multipleSelection = val;
+        },
         deleteClick: function () {
-            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            this.$confirm('确认删除选中信息?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                var params = {
-                    xgrid: this.role_data.userid,
-                    xgrmc: this.role_data.realName
+                for(var i=0;i<this.multipleSelection.length;i++){
+                    debugger;
+                    this.multipleSelection[i].xgrid = this.role_data.userid;
+                    this.multipleSelection[i].xgrmc = this.role_data.realName;
                 }
-                axios.post('/dpapi/digitalplanlist/doDeleteDigitalplan', this.multipleSelection).then(function (res) {
-                    this.$message({
-                        message: "成功删除" + res.data.result + "条信息",
+                axios.post('/dpapi/fireengine/doDeleteFireengine', this.multipleSelection).then(function (res) {
+                   this.$message({
+                        message: "成功删除" + res.data.result + "条车辆信息",
                         showClose: true,
                         onClose: this.searchClick('delete')
                     });
@@ -200,15 +216,7 @@ var vue = new Vue({
                 console.log(error);
             })
         },
-        //表格勾选事件
-        selectionChange: function (val) {
-            for (var i = 0; i < val.length; i++) {
-                var row = val[i];
-            }
-            this.multipleSelection = val;
-            //this.sels = sels
-            console.info(val);
-        },
+       
         //表格重新加载数据
         loadingData: function () {
             var _self = this;
