@@ -50,7 +50,8 @@
 						</el-row>
 						<div class="table_container">
 								<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-									class="tableStyle" :height="tableheight">
+									class="tableStyle" :height="tableheight" @selection-change="selectionChange">
+									<el-table-column type="selection" width="45px"></el-table-column>
 									<el-table-column type="index" label="序号" show-overflow-tooltip width="65px" align="center"></el-table-column>
 									<el-table-column prop="dzmc" label="队站名称" show-overflow-tooltip min-width="25%" align="center">
 										<template slot-scope="scope">
@@ -59,10 +60,10 @@
 										</template>
 									</el-table-column>
 									<el-table-column prop="dzbm" label="队站编码" show-overflow-tooltip min-width="15%" align="center"></el-table-column>
-									<el-table-column prop="dzdz" label="地址" show-overflow-tooltip min-width="30%" align="center"></el-table-column>
+									<el-table-column prop="dzdz" label="地址" show-overflow-tooltip min-width="28%" align="center"></el-table-column>
 									<el-table-column prop="xzqhmc" label="行政区划" show-overflow-tooltip min-width="15%" align="center"></el-table-column>
                                     <el-table-column prop="gxsys" label="管辖水源数" show-overflow-tooltip min-width="15%" align="center" :formatter="dataFormat2"></el-table-column>
-                                    <el-table-column prop="gxzddws" label="管辖重点单位数" show-overflow-tooltip min-width="18%" align="center" :formatter="dataFormat2"></el-table-column>
+                                    <el-table-column prop="gxzddws" label="管辖重点单位数" show-overflow-tooltip min-width="20%" align="center" :formatter="dataFormat2"></el-table-column>
                                 </el-table>
 		
 								<!--列表底部工具条和分页符-->

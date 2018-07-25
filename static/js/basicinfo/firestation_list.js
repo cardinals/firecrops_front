@@ -35,6 +35,10 @@ var vue = new Vue({
             sels: [],
             //选中的序号
             selectIndex: -1,
+            //删除复选框
+            multipleSelection: [],
+            //登录用户
+            shiroData: [],
         }
     },
     created:function(){
@@ -111,6 +115,9 @@ var vue = new Vue({
         dataFormat2: function(row, column){
             var rowData = row[column.property];
             var dzlx = row.dzlx;
+            if(dzlx == null){
+                return null;
+            }
             dzlx = dzlx.substr(0,2);
             if(dzlx =="0A"){
                 return '——';
@@ -167,7 +174,40 @@ var vue = new Vue({
         },
         //删除
         deleteClick: function(){
+            this.$confirm('确认删除选中信息?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                axios.post('/api/shiro').then(function (res) {
+                    this.shiroData = res.data;
+                    for(var i=0;i<this.multipleSelection.length;i++){
+                        this.multipleSelection[i].xgrid = this.shiroData.userid;
+                        this.multipleSelection[i].xgrmc = this.shiroData.realName;
+                    }
+                    axios.post('/dpapi/xfdz/doDeleteBatch', this.multipleSelection).then(function (res) {
+                        this.$message({
+                            message: "成功删除" + this.multipleSelection.length + "条化危品信息",
+                            showClose: true,
+                            onClose: this.searchClick('delete')
+                        });
+                    }.bind(this), function (error) {
+                        console.log(error)
+                    })
+                }.bind(this), function (error) {
+                    console.log(error);
+                }); 
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
+        //删除复选框
+        selectionChange: function(val) {
+            this.multipleSelection = val;
+        },
 
-        }
     }
 })
