@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="../../static/css/basicinfo/firedrug_add.css">
+	<title>新增消防药剂</title>
+</head>
+
+<body class="fw f14 main-index-body">
+	<div id="app">
+		<div class="main-box">
+			<div class="main-container" v-loading="loading" element-loading-text="加载中">
+				<!-- 面包屑 -->
+				<div id="breadcrumb_box"></div>
+				<div id="inforView" class="pt15">
+					<el-form :inline="true" class="el-form demo-form-inline" ref="addForm" :model="addForm" label-position="right">
+						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+								<strong style="color: #20a0ff;">基本信息</strong>
+							</el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">
+									<span style="color:red;">* </span>药剂名称
+								</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-form-item required>
+									<el-input size="small" v-model="addForm.yjmc" placeholder="药剂名称" clearable></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">药剂编码</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-form-item>
+									<el-input size="small" v-model="addForm.yjbm" placeholder="药剂编码" clearable></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">药剂类型</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-form-item>
+									<el-cascader :options="allYjlxDataTree" :props="defaultProps" size="small" v-model="addForm.yjlx" placeholder="药剂类型" class="searchSelect"
+									 clearable change-on-select :show-all-levels="false"></el-cascader>
+								</el-form-item>
+							</el-col>
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">混合比</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-form-item>
+									<el-input size="small" v-model="addForm.hhb" placeholder="混合比" clearable></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">行政区划</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-form-item>
+									<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="药剂类型" class="searchSelect"
+									 clearable change-on-select :show-all-levels="false"></el-cascader>
+								</el-form-item>
+							</el-col>
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">所属队站</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-form-item>
+									<el-input size="small" v-model="addForm.ssdz" placeholder="所属队站" clearable></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						</el-row>
+						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+								<strong style="color: #20a0ff;">储备信息</strong>
+							</el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">车载量(t)</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input v-model="addForm.czl" @change="czlChange" size="small"></el-input>
+							</el-col>
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">总储备量(t)</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input v-model="addForm.zcbl" size="small" :disabled="true"></el-input>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">库存量(t)</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input v-model="addForm.kcl" @change="kclChange" size="small"></el-input>
+							</el-col>
+							<el-col :xs="13" :sm="13" :md="13" :lg="13" :xl="13">&nbsp;</el-col>
+						</el-row>
+						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+								<strong style="color: #20a0ff;">生产信息</strong>
+							</el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">生产厂家</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="addForm.sccj" :min="0" :max="1000"></el-input>
+							</el-col>
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">生产时间</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-date-picker size="small" v-model="addForm.scsj" type="date" placeholder="选择日期" :picker-options="pickerOptions0"></el-date-picker>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">生产批次</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="addForm.pc"></el-input>
+							</el-col>
+							<el-col :xs="13" :sm="13" :md="13" :lg="13" :xl="13">&nbsp;</el-col>
+						</el-row>
+					</el-form>
+				</div>
+				<el-row class="mt35 mb20">
+					<el-row>
+						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
+						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+							<el-button type="primary" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
+							<el-button type="success" icon="check" size="small" class="btn_save" @click="save('addForm')">保存</el-button>
+						</el-col>
+						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
+					</el-row>
+				</el-row>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../../static/js/basicinfo/firedrug_add.js"></script>
+
+</html>
