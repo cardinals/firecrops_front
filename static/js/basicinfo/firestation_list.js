@@ -157,5 +157,17 @@ var vue = new Vue({
             var r = window.location.search.substr(1).match(reg);
             if(r!=null)return  unescape(r[2]); return null;
         },
+        //新增
+        addClick: function(){
+            var params = {
+                ID: 0,
+                type: "XZ"
+            }
+            loadDivParam("basicinfo/firestation_edit", params);
+        },
+        //删除
+        deleteClick: function(){
+
+        }
     }
 })

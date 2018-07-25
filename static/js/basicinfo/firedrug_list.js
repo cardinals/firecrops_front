@@ -15,6 +15,7 @@ var vue = new Vue({
                 cbl: [0, 1000]
             },
             tableData: [],
+            role_data:[],
             tableData_detail: {},
             allYjlxDataTree: [],//药剂类型级联选择器数据
             allSsdzData: [],//所属队站下拉框数据
@@ -62,11 +63,17 @@ var vue = new Vue({
         loadBreadcrumb("消防药剂管理", "-1");
         this.getAllSszdData();//消防队站下拉框数据（到总队级）
         this.getAllYjlxDataTree(); //药剂类型级联选择器数据
+        this.roleData();
         this.searchClick('click');
     },
     methods: {
-        handleNodeClick(data) {
-            // console.log(data);
+        //当前登录用户信息
+        roleData: function () {
+            axios.post('/api/shiro').then(function (res) {
+                this.role_data = res.data;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
         },
         //药剂类型级联选择器数据
         getAllYjlxDataTree: function () {
@@ -137,17 +144,55 @@ var vue = new Vue({
             this.searchForm.cbl = [0, 1000];
             this.searchClick('reset');
         },
-
+        
         //表格勾选事件
         selectionChange: function (val) {
-            for (var i = 0; i < val.length; i++) {
-                var row = val[i];
-            }
             this.multipleSelection = val;
-            //this.sels = sels
-            console.info(val);
         },
-
+        //新增
+        addClick: function (){
+            var params = {
+                ID: 0,
+                type: "XZ"
+            }
+            loadDivParam("basicinfo/firedrug_add", params);
+        },
+        //修改
+        handleEdit:function(val){
+            var params = {
+                ID: val.uuid,
+                type: "BJ"
+            }
+            loadDivParam("basicinfo/firedrug_add", params);
+        },
+        //删除
+        deleteClick: function () {
+            this.$confirm('确认删除选中信息?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                for(var i=0;i<this.multipleSelection.length;i++){
+                    this.multipleSelection[i].xgrid = this.role_data.userid;
+                    this.multipleSelection[i].xgrmc = this.role_data.realName;
+                }
+                axios.post('/dpapi/firedrug/doDeleteDrug', this.multipleSelection).then(function (res) {
+                    this.$message({
+                        message: "成功删除" + res.data.result + "条消防药剂信息",
+                        showClose: true,
+                        onClose: this.searchClick('delete')
+                    });
+                }.bind(this), function (error) {
+                    console.log(error)
+                })
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
+        
         //表格重新加载数据
         loadingData: function () {
             var _self = this;
