@@ -109,7 +109,8 @@ new Vue({
                 var organization = this.shiroData.organizationVO;
                 var params = {
                     dzid: organization.uuid,
-                    dzjc: organization.jgjc
+                    dzjc: organization.jgjc,
+                    dzbm: organization.jgid
                 };
                 axios.post('/dpapi/xfdz/findSjdzByUser', params).then(function(res){
                     this.sjdzData = res.data.result;
@@ -135,7 +136,7 @@ new Vue({
             if (this.status == 0) {  //新增
                 this.loading = false;
             } else {//修改
-                axios.get('/dpapi/danger/' + this.status).then(function (res) {
+                axios.get('/dpapi/xfdz/' + this.status).then(function (res) {
                     this.editForm = res.data.result;
                     this.loading = false;
                 }.bind(this), function (error) {
