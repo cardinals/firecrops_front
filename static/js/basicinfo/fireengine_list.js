@@ -197,9 +197,9 @@ var vue = new Vue({
         },
         //获取所有车辆状态
         getAllStatesData: function (){
-            var params= {
-                codetype : "CLZT",
-                list : [2,4]
+            var params = {
+                codetype: "CLZT",
+                list: [2, 4]
             };
             axios.post('/api/codelist/getCodelisttree',params).then(function(res){
                 this.allStatesData=res.data.result;

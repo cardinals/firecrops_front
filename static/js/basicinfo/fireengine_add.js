@@ -26,23 +26,25 @@ new Vue({
             tableData: [],
             allTeamsData: [],
             allTypesData: [],
+            allXzqhDataTree: [],
             allStatesData: [],
             //新建数据
             addForm: {
                 //新信息
-                sccj:"",
-                xzqh:"",	//行政区划
-                sccj:"",	//生产厂家
-                jglgd:"",	//举高类车辆高度(m)
-                sbll:"",	//水泵流量(L/s)
-                zsl:"",	 //载水量(t)
-                xfpll:"",	//消防炮流量(L/s)
-                sbedyl:"",	//水泵额定压力(Mpa)
-                czmhjlb:"",	//车载灭火剂类别
-                czmhjl:"",//车载灭火剂量(t)
-                mhjhhb:"",//灭火剂混合比
-                gisX:"",//
-                gisY:"",//
+                sccj: "",
+                xzqh: [],	//行政区划
+                sccj: "",	//生产厂家
+                jglgd: "",	//举高类车辆高度(m)
+                sbll: "",	//水泵流量(L/s)
+                zsl: "",	 //载水量(t)
+                xfpll: "",	//消防炮流量(L/s)
+                sbedyl: "",	//水泵额定压力(Mpa)
+                czmhjlb: "",	//车载灭火剂类别
+                czmhjl: "",//车载灭火剂量(t)
+                mhjhhb: "",//灭火剂混合比
+                clmc: "",
+                gisX: "",//
+                gisY: "",//
                 ssdz: [],
                 cllx: [],
                 cphm: "",
@@ -102,7 +104,7 @@ new Vue({
                 permissionname: [{ required: true, message: "请输入权限名称", trigger: "blur" }]
             },
             //详情页显示flag
-            detailVisible:false,
+            detailVisible: false,
             //选中的值显示
             sels: [],
             //选中的序号
@@ -122,7 +124,7 @@ new Vue({
         }
     },
     created: function () {
-        
+
         var type = getQueryString("type");
         if (type == "XZ") {
             loadBreadcrumb("消防车辆管理", "消防车辆信息新增");
@@ -133,7 +135,8 @@ new Vue({
         this.searchClick('click');
         this.getAllTypesData();
         this.getAllStatesData();
-        this.getAllTeamsData();
+        this.getAllXzqhDataTree();
+        // this.getAllTeamsData();
         this.roleData();
     },
     mounted: function () {
@@ -143,33 +146,118 @@ new Vue({
         //     var str = url.substr(1);
         //     this.status = str.substring(3);
         // }
-        this.searchClick();
+        // this.searchClick();
     },
     methods: {
         //当前登录用户信息
         roleData: function () {
             axios.post('/api/shiro').then(function (res) {
                 this.role_data = res.data;
+                this.getAllTeamsData();
             }.bind(this), function (error) {
                 console.log(error);
             })
         },
         //初始化查询
         searchClick: function (type) {
-            //按钮事件的选择
-            if(type == 'page'){
-                this.tableData = [];
-            }else{
-                this.currentPage = 1;
-            }
-            this.loading=true;
-            
+            this.loading = true;
             if (this.status == 0) {  //新增
                 this.loading = false;
             } else { //修改
                 axios.get('/dpapi/fireengine/' + this.status).then(function (res) {
                     //修改存在问题
                     this.addForm = res.data.result;
+                    //车辆类型格式化
+                    if (this.addForm.cllx != '' && this.addForm.cllx != null) {
+                        if (this.addForm.cllx.endsWith("000000")) {
+                            var cllx = this.addForm.cllx;
+                            this.addForm.cllx = [];
+                            this.addForm.cllx.push(cllx);
+                        } else if (this.addForm.cllx.endsWith("0000")) {
+                            var cllx1 = this.addForm.cllx.substring(0, 2) + '000000';
+                            var cllx2 = this.addForm.cllx;
+                            this.addForm.cllx = [];
+                            this.addForm.cllx.push(cllx1, cllx2);
+                        } else if (this.addForm.cllx.endsWith("00")) {
+                            var cllx1 = this.addForm.cllx.substring(0, 2) + '000000';
+                            var cllx2 = this.addForm.cllx.substring(0, 4) + '0000';
+                            var cllx3 = this.addForm.cllx;
+                            this.addForm.cllx = [];
+                            this.addForm.cllx.push(cllx1, cllx2,cllx3);
+                        }else {
+                            var cllx1 = this.addForm.cllx.substring(0, 2) + '000000';
+                            var cllx2 = this.addForm.cllx.substring(0, 4) + '0000';
+                            var cllx3 = this.addForm.cllx.substring(0, 4) + '00';
+                            var cllx4 = this.addForm.cllx;
+                            this.addForm.cllx = [];
+                            this.addForm.cllx.push(cllx1, cllx2,cllx3,cllx4);
+                        }
+                    }else {
+                        this.addForm.cllx = [];
+                    }
+                    //行政区划格式化
+                    if (this.addForm.xzqh != '' && this.addForm.xzqh != null) {
+                        if (this.addForm.xzqh.endsWith("0000")) {
+                            var xzqh = this.addForm.xzqh;
+                            this.addForm.xzqh = [];
+                            this.addForm.xzqh.push(xzqh);
+                        } else if (this.addForm.xzqh.endsWith("00")) {
+                            var xzqh1 = this.addForm.xzqh.substring(0, 2) + '0000';
+                            var xzqh2 = this.addForm.xzqh;
+                            this.addForm.xzqh = [];
+                            this.addForm.xzqh.push(xzqh1, xzqh2);
+                        } else {
+                            var xzqh1 = this.addForm.xzqh.substring(0, 2) + '0000';
+                            var xzqh2 = this.addForm.xzqh.substring(0, 4) + '00';
+                            var xzqh3 = this.addForm.xzqh;
+                            this.addForm.xzqh = [];
+                            this.addForm.xzqh.push(xzqh1, xzqh2, xzqh3);
+                        }
+                    } else {
+                        this.addForm.xzqh = [];
+                    }
+                    //队站格式化
+                    if (this.addForm.ssdz != '' && this.addForm.ssdz != null) {
+                        for (var i in this.allTeamsData) {
+                            if (this.allTeamsData[i].dzid == this.addForm.ssdz) {
+                                var ssdz = this.addForm.ssdz;
+                                this.addForm.ssdz = [];
+                                this.addForm.ssdz.push(ssdz);
+                            } else {
+                                for (var k in this.allTeamsData[i].children) {
+                                    if (this.allTeamsData[i].children[k].dzid == this.addForm.ssdz) {
+                                        var ssdz1 = this.allTeamsData[i].dzid;
+                                        var ssdz2 = this.allTeamsData[i].children[k].dzid;
+                                        this.addForm.ssdz = [];
+                                        this.addForm.ssdz.push(ssdz1, ssdz2);
+                                    } else {
+                                        for (var j in this.allTeamsData[i].children[k].children) {
+                                            if (this.allTeamsData[i].children[k].children[j].dzid == this.addForm.ssdz) {
+                                                var ssdz1 = this.allTeamsData[i].dzid;
+                                                var ssdz2 = this.allTeamsData[i].children[k].dzid;
+                                                var ssdz3 = this.allTeamsData[i].children[k].children[j].dzid;
+                                                this.addForm.ssdz = [];
+                                                this.addForm.ssdz.push(ssdz1, ssdz2, ssdz3);
+                                            } else {
+                                                for (var s in this.allTeamsData[i].children[k].children[j].children) {
+                                                    if (this.allTeamsData[i].children[k].children[j].children[s].dzid == this.addForm.ssdz) {
+                                                        var ssdz1 = this.allTeamsData[i].dzid;
+                                                        var ssdz2 = this.allTeamsData[i].children[k].dzid;
+                                                        var ssdz3 = this.allTeamsData[i].children[k].children[j].dzid;
+                                                        var ssdz4 = this.allTeamsData[i].children[k].children[j].children[s].dzid;
+                                                        this.addForm.ssdz = [];
+                                                        this.addForm.ssdz.push(ssdz1, ssdz2, ssdz3, ssdz4);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        this.addForm.xzqh = [];
+                    }
                     this.loading = false;
                 }.bind(this), function (error) {
                     console.log(error);
@@ -177,14 +265,22 @@ new Vue({
 
             }
         },
+        //行政区划级联选择器数据
+        getAllXzqhDataTree: function () {
+            axios.get('/api/codelist/getXzqhTreeByUser').then(function (res) {
+                this.allXzqhDataTree = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
         //根据参数部分和参数名来获取参数值 
         GetQueryString(name) {
-            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
-            if(r!=null)return  unescape(r[2]); return null;
+            if (r != null) return unescape(r[2]); return null;
         },
         //获取所有车辆类型
-        getAllTypesData: function (){
+        getAllTypesData: function () {
             axios.post('/api/codelist/getYjlxTree/CLLX').then(function (res) {
                 this.allTypesData = res.data.result;
             }.bind(this), function (error) {
@@ -192,14 +288,14 @@ new Vue({
             })
         },
         //获取所有车辆状态
-        getAllStatesData: function (){
-            var params= {
-                codetype : "CLZT",
-                list : [2,4]
+        getAllStatesData: function () {
+            var params = {
+                codetype: "CLZT",
+                list: [2, 4]
             };
-            axios.post('/api/codelist/getCodelisttree',params).then(function(res){
-                this.allStatesData=res.data.result;
-            }.bind(this),function(error){
+            axios.post('/api/codelist/getCodelisttree', params).then(function (res) {
+                this.allStatesData = res.data.result;
+            }.bind(this), function (error) {
                 console.log(error);
             })
         },
@@ -215,6 +311,7 @@ new Vue({
                 };
                 axios.post('/dpapi/xfdz/findSjdzByUser', params).then(function (res) {
                     this.allTeamsData = res.data.result;
+                    this.searchClick();
                 }.bind(this), function (error) {
                     console.log(error);
                 })
@@ -223,93 +320,79 @@ new Vue({
             })
         },
 
-        //选择消防队站，返回消防队站名称和id
-        selectRow_fireSta: function (val) {
-            var index = this.zqIndex;
-            var index1 = this.dzIndex;
-            this.dynamicValidateForm[index].forcedevList[index1].dzid = val.dzid
-            this.dynamicValidateForm[index].forcedevList[index1].dzmc = val.dzmc
-            this.fireStaListVisible = false;
-        },
-        //消防队站弹出页关闭
-        closeDialog_fireSta: function (val) {
-            this.fireStaListVisible = false;
-        },
-        //消防队站查询条件清空
-        clearfireStaList: function (val) {
-            this.addForm_fireSta.dzmc = "";
-        },
-        //表格重新加载数据
-        loadingData: function () {
-            var _self = this;
-            _self.loading = true;
-            setTimeout(function () {
-                console.info("加载数据成功");
-                _self.loading = false;
-            }, 300);
-        },
         //点击保存事件
-        //保存
-
         save: function () {
-           
-                if (this.status == 0) {//新增
-                    this.addForm.cjrid = this.role_data.userid;
-                    this.addForm.cjrmc = this.role_data.realName;   
-                    // if(this.addForm.cllx>0){
-                        this.addForm.cllx = this.addForm.cllx[this.addForm.cllx.length - 1];
-                    // }                 
-                    axios.post('/dpapi/fireengine/insertByVO', this.addForm).then(function (res) {
-                       if (res.data.result >= 1) {
-                            this.$alert('成功保存' + res.data.result + '条车辆信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/fireengine_list");
-                                }
-                            });
-                        } else {
-                            this.$alert('保存失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/fireengine_list");
-                                }
-                            });
-                        }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
-                } else {//修改
-                    // debugger
-                    this.addForm.xgrid = this.role_data.userid;
-                    this.addForm.xgrmc = this.role_data.realName;
-                    if(this.addForm.cllx>0){
-                        this.addForm.cllx = this.addForm.cllx[this.addForm.cllx.length - 1];
+
+            if (this.status == 0) {//新增
+                this.addForm.cjrid = this.role_data.userid;
+                this.addForm.cjrmc = this.role_data.realName;
+                if (this.addForm.cllx.length > 0) {
+                    this.addForm.cllx = this.addForm.cllx[this.addForm.cllx.length - 1];
+                }
+                if (this.addForm.xzqh.length > 0) {
+                    this.addForm.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
+                }
+                if (this.addForm.ssdz.length > 0) {
+                    this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
+                }
+                // debugger;
+                axios.post('/dpapi/fireengine/insertByVO', this.addForm).then(function (res) {
+                    if (res.data.result >= 1) {
+                        this.$alert('成功保存' + res.data.result + '条车辆信息', '提示', {
+                            type: 'success',
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                loadDiv("basicinfo/fireengine_list");
+                            }
+                        });
+                    } else {
+                        this.$alert('保存失败', '提示', {
+                            type: 'error',
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                loadDiv("basicinfo/fireengine_list");
+                            }
+                        });
                     }
-                    axios.post('/dpapi/fireengine/doUpdateFireengine', this.addForm).then(function (res) {
-                        if (res.data.result >= 1) {
-                            this.$alert('成功修改' + res.data.result + '条车辆信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/fireengine_list");
-                                }
-                            });
-                        } else {
-                            this.$alert('修改失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/fireengine_list");
-                                }
-                            });
-                        }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
-                } 
- 
+                }.bind(this), function (error) {
+                    console.log(error);
+                })
+            } else {//修改
+                
+                this.addForm.xgrid = this.role_data.userid;
+                this.addForm.xgrmc = this.role_data.realName;
+                if (this.addForm.cllx.length > 0) {
+                    this.addForm.cllx = this.addForm.cllx[this.addForm.cllx.length - 1];
+                }
+                if (this.addForm.xzqh.length > 0) {
+                    this.addForm.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
+                }
+                if (this.addForm.ssdz.length > 0) {
+                    this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
+                }
+                axios.post('/dpapi/fireengine/doUpdateFireengine', this.addForm).then(function (res) {
+                    if (res.data.result >= 1) {
+                        this.$alert('成功修改' + res.data.result + '条车辆信息', '提示', {
+                            type: 'success',
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                loadDiv("basicinfo/fireengine_list");
+                            }
+                        });
+                    } else {
+                        this.$alert('修改失败', '提示', {
+                            type: 'error',
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                loadDiv("basicinfo/fireengine_list");
+                            }
+                        });
+                    }
+                }.bind(this), function (error) {
+                    console.log(error);
+                })
+            }
+
         },
         //取消
         cancel: function () {

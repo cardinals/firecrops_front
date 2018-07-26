@@ -77,31 +77,40 @@
 								<el-label class="mr5 vbm"><span style="color:red;">* </span>行政区划</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="addForm.xzqhmc" placeholder="行政区划" clearable></el-input>
+								<!-- <el-input size="small" v-model="addForm.xzqhmc" placeholder="行政区划" clearable></el-input> -->
+								<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="行政区划" class="searchSelect"
+								clearable change-on-select :show-all-levels="false"></el-cascader>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
 									<el-label class="mr5 vbm"><span style="color:red;">* </span>生产厂家</el-label>
-								</el-col>
-								<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-									<el-input size="small" v-model="addForm.sccj" placeholder="生产厂家" clearable></el-input>
-								</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm"><span style="color:red;">* </span>经度</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="addForm.gisX" placeholder="经度" clearable></el-input>
+									<el-input size="small" v-model="addForm.sccj" placeholder="生产厂家" clearable></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+									<el-label class="mr5 vbm"><span style="color:red;">* </span>车辆名称</el-label>
+							</el-col>
+							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+									<el-input size="small" v-model="addForm.clmc" placeholder="车辆名称" clearable></el-input>
 							</el-col>
 						</el-row>
 						<el-row class="tr mt5">
+								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+									<el-label class="mr5 vbm"><span style="color:red;">* </span>经度</el-label>
+								</el-col>
+								<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+									<el-input size="small" v-model="addForm.gisX" placeholder="经度" clearable></el-input>
+								</el-col>
+								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
 									<el-label class="mr5 vbm"><span style="color:red;">* </span>纬度</el-label>
 								</el-col>
 								<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 									<el-input size="small" v-model="addForm.gisY" placeholder="纬度" clearable></el-input>
 								</el-col>
-							</el-row>
+						</el-row>
 					</el-form>
 				</div>
 				<div id="inforView" class="pt15">
