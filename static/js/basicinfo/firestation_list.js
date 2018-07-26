@@ -172,6 +172,13 @@ var vue = new Vue({
             }
             loadDivParam("basicinfo/firestation_edit", params);
         },
+        editClick: function(val){
+            var params = {
+                ID: val.dzid,
+                type: "BJ"
+            }
+            loadDivParam("basicinfo/firestation_edit", params);
+        },
         //删除
         deleteClick: function(){
             this.$confirm('确认删除选中信息?', '提示', {
