@@ -187,7 +187,42 @@ var vue = new Vue({
         },
         closeDialog: function () {
             this.engineListVisible = fasle;
-        }
+        },
+        //新增
+        addClick: function (){
+            var params = {
+                ID: 0,
+                type: "XZ"
+            }
+            loadDivParam("basicinfo/equipment_add", params);
+        },
+        //删除
+        deleteClick: function () {
+            this.$confirm('确认删除选中信息?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                for(var i=0;i<this.multipleSelection.length;i++){
+                    this.multipleSelection[i].xgrid = this.role_data.userid;
+                    this.multipleSelection[i].xgrmc = this.role_data.realName;
+                }
+                axios.post('/dpapi/firedrug/doDeleteDrug', this.multipleSelection).then(function (res) {
+                    this.$message({
+                        message: "成功删除" + res.data.result + "条消防药剂信息",
+                        showClose: true,
+                        onClose: this.searchClick('delete')
+                    });
+                }.bind(this), function (error) {
+                    console.log(error)
+                })
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
 
     },
 
