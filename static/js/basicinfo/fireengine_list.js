@@ -99,12 +99,11 @@ var vue = new Vue({
                 type: 'warning'
             }).then(() => {
                 for(var i=0;i<this.multipleSelection.length;i++){
-                    debugger;
                     this.multipleSelection[i].xgrid = this.role_data.userid;
                     this.multipleSelection[i].xgrmc = this.role_data.realName;
                 }
                 axios.post('/dpapi/fireengine/doDeleteFireengine', this.multipleSelection).then(function (res) {
-                   this.$message({
+                    this.$message({
                         message: "成功删除" + res.data.result + "条车辆信息",
                         showClose: true,
                         onClose: this.searchClick('delete')
@@ -216,7 +215,6 @@ var vue = new Vue({
                 console.log(error);
             })
         },
-       
         //表格重新加载数据
         loadingData: function () {
             var _self = this;
