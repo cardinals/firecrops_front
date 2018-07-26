@@ -248,12 +248,18 @@ new Vue({
                     this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
                     if (this.addForm.yjlx.length > 0) {
                         this.addForm.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];
+                    }else{
+                        this.addForm.yjlx='';
                     }
                     if (this.addForm.xzqh.length > 0) {
                         this.addForm.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
+                    }else{
+                        this.addForm.xzqh='';
                     }
                     if (this.addForm.ssdz.length > 0) {
                         this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
+                    }else{
+                        this.addForm.ssdz='';
                     }
                     axios.post('/dpapi/firedrug/insertByVO', this.addForm).then(function (res) {
                         if (res.data.result >= 1) {
@@ -282,12 +288,18 @@ new Vue({
                     this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
                     if (this.addForm.yjlx.length > 0) {
                         this.addForm.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];
+                    }else{
+                        this.addForm.yjlx='';
                     }
                     if (this.addForm.xzqh.length > 0) {
                         this.addForm.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
+                    }else{
+                        this.addForm.xzqh='';
                     }
                     if (this.addForm.ssdz.length > 0) {
                         this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
+                    }else{
+                        this.addForm.ssdz='';
                     }
                     axios.post('/dpapi/firedrug/doUpdateDrug', this.addForm).then(function (res) {
                         if (res.data.result >= 1) {
