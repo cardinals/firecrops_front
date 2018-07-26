@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="../../static/css/basicinfo/equipment_add.css">
+	<title>新增装备器材</title>
+</head>
+
+<body class="fw f14 main-index-body">
+	<div id="app">
+		<div class="main-box">
+			<div class="main-container" v-loading="loading" element-loading-text="加载中">
+				<!-- 面包屑 -->
+				<div id="breadcrumb_box"></div>
+				<div id="inforView" class="pt15">
+					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<strong style="color: #20a0ff;">基本信息</strong>
+						</el-col>
+					</el-row>
+					<el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">
+								<span style="color:red;">* </span>装备名称
+							</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input size="small" v-model="addForm.zbmc" placeholder="装备名称" clearable></el-input>
+						</el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">装备编码</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input size="small" v-model="addForm.zbbm" placeholder="装备编码" clearable></el-input>
+						</el-col>
+						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+					</el-row>
+					<el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">装备类型</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-cascader :options="allTypesDataTree" :props="defaultProps" size="small" v-model="addForm.zblx" placeholder="装备类型" class="searchSelect"
+							 clearable change-on-select :show-all-levels="false"></el-cascader>
+						</el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">生产厂家</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input size="small" v-model="addForm.sccj" placeholder="生产厂家" clearable></el-input>
+						</el-col>
+						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+					</el-row>
+					<el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">行政区划</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="行政区划" class="searchSelect"
+							 clearable change-on-select :show-all-levels="false"></el-cascader>
+						</el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">所属队站</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-cascader :options="allSsdzDataTree" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="所属队站" class="searchSelect"
+							 clearable change-on-select :show-all-levels="false"></el-cascader>
+						</el-col>
+						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+					</el-row>
+					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<strong style="color: #20a0ff;">储备信息</strong>
+						</el-col>
+					</el-row>
+					<el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">库存数量(可用)</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input-number v-model="addForm.kysl" size="small" :min="0"></el-input-number>
+						</el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">库存数量(损坏)</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input-number v-model="addForm.shsl" size="small" :min="0"></el-input-number>
+						</el-col>
+						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+					</el-row>
+					<!-- <el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">装载数量</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input-number v-model="addForm.zzsl" size="small" :disabled="true" :min="0"></el-input-number>
+						</el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">总储备量</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input-number v-model="addForm.zcbl" size="small" :disabled="true" :min="0"></el-input-number>
+						</el-col>
+						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+					</el-row> -->
+					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+						<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+							<strong style="color: #20a0ff;">车辆装载信息</strong>
+						</el-col>
+						<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+							<el-button type="primary" icon="plus" size="small" class="r" @click="addDomain"></el-button>
+						</el-col>
+					</el-row>
+					<el-form :model="engineForm" ref="engineForm" label-width="100px" style="margin:0;">
+						<el-row class="tr" v-for="(domain, index) in engineForm" :key="domain.key" :prop="'engineForm.' + index + '.value'">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5">{{index+1}}.&nbsp;&nbsp;车辆名称</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input v-model="domain.clmc" size="small" placeholder="车辆名称"></el-input>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" class="tl">
+								<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="engineList(index)"></el-button>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+								<el-label class="mr5">装载数量</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input-number v-model="domain.clzzs" size="small" placeholder="装载数量"></el-input-number>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
+								<el-button type="danger" icon="minus " size="small" @click.prevent="removeDomain(domain)" class="r"></el-button>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						</el-row>
+					</el-form>
+				</div>
+				<el-row class="mt35 mb20">
+					<el-row>
+						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
+						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+							<el-button type="primary" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
+							<el-button type="success" icon="check" size="small" class="btn_save" @click="save">保存</el-button>
+						</el-col>
+						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
+					</el-row>
+				</el-row>
+				<!--选择消防车辆界面-->
+				<el-dialog title="选择消防车辆" :visible.sync="engineListVisible" :close-on-click-modal="false">
+					<div id="tableView" v-loading="loading_engine" element-loading-text="加载中">
+						<el-row>
+							<el-form :inline="true" class="el-form demo-form-inline">
+								<el-row>
+									<el-col :span="9" class="searchInline">
+										<label class="el-form-item__label" style="width:95px;">车辆名称</label>
+										<el-input size="small" v-model="searchForm.clmc" placeholder="车辆名称" clearable></el-input>
+									</el-col>
+									<el-col :span="9" class="searchInline">
+										<label class="el-form-item__label" style="width:95px;">车牌号码</label>
+										<el-input size="small" v-model="searchForm.cphm" placeholder="车牌号码" clearable></el-input>
+									</el-col>
+									<el-col :span="6" class="btnSearchPlus">
+										<el-button type="primary" icon="search" size="small" @click="engineList">查询</el-button>
+										<el-button type="clear" icon="delete" size="small" @click="clearEngineList">清空</el-button>
+									</el-col>
+								</el-row>
+							</el-form>
+						</el-row>
+						<div class="table_container">
+							<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" class="tableStyle" :height="tableheight"
+							 @row-click="selectRow">
+								<el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
+								<el-table-column prop="clmc" label="车辆名称" show-overflow-tooltip min-width="40%" align="center"></el-table-column>
+								<el-table-column prop="cpmc" label="车牌号码" show-overflow-tooltip min-width="25%" align="center"></el-table-column>
+								<el-table-column prop="ssdzmc" label="所属队站" show-overflow-tooltip min-width="25%" align="center"></el-table-column>
+							</el-table>
+							<!--列表底部工具条和分页符-->
+							<el-row type="flex" justify="end">
+								<el-col :span="18">
+									<el-pagination @current-change="currentPageChange" :current-page="currentPage" :page-size="pageSize" layout="total, prev, pager, next, jumper"
+									 :total=parseInt(total)>
+									</el-pagination>
+								</el-col>
+							</el-row>
+						</div>
+					</div>
+				</el-dialog>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../../static/js/basicinfo/equipment_add.js"></script>
+
+</html>

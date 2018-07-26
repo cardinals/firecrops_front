@@ -72,6 +72,8 @@ new Vue({
         } else if (type == "BJ") {
             loadBreadcrumb("消防队站管理", "消防队站管理编辑");
         }
+        this.shiroData = shiroGlobal;
+        this.status = getQueryString("ID");
         //队站类型下拉框
         this.getDzlxData();
         //上级队站下拉框
@@ -79,20 +81,8 @@ new Vue({
         //行政区划下拉框
         this.getXzqhData();
     },
-    mounted: function () {
-        this.status = getQueryString("ID");
-        this.searchClick();
-    },
     methods: {
         handleNodeClick(data) {
-        },
-        //当前登录用户信息
-        getShiroData: function () {
-            axios.post('/api/shiro').then(function (res) {
-                this.shiroData = res.data;
-            }.bind(this), function (error) {
-                console.log(error);
-            })
         },
         //队站类型下拉框
         getDzlxData: function(){
@@ -104,22 +94,18 @@ new Vue({
         },
         //上级机构下拉框
         getSjdzData: function(){
-            axios.post('/api/shiro').then(function (res) {
-                this.shiroData = res.data;
-                var organization = this.shiroData.organizationVO;
-                var params = {
-                    dzid: organization.uuid,
-                    dzjc: organization.jgjc,
-                    dzbm: organization.jgid
-                };
-                axios.post('/dpapi/xfdz/findSjdzByUser', params).then(function(res){
-                    this.sjdzData = res.data.result;
-                }.bind(this),function(error){
-                    console.log(error);
-                }) 
-            }.bind(this), function (error) {
+            var organization = this.shiroData.organizationVO;
+            var params = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            };
+            axios.post('/dpapi/xfdz/findSjdzByUser', params).then(function(res){
+                this.sjdzData = res.data.result;
+                this.searchClick();
+            }.bind(this),function(error){
                 console.log(error);
-            })        
+            })      
         },
         //行政区划下拉框
         getXzqhData: function(){
@@ -191,6 +177,9 @@ new Vue({
                                 } else {//修改
                                     this.editForm.xgrid = this.shiroData.userid;
                                     this.editForm.xgrmc = this.shiroData.realName;
+                                    this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
+                                    this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
+                                    this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
                                     axios.post('/dpapi/xfdz/updateByXfdzVO', this.editForm).then(function (res) {
                                         if (res.data.result != null) {
                                             this.$alert('成功修改队站信息', '提示', {
@@ -205,7 +194,7 @@ new Vue({
                                                 type: 'error',
                                                 confirmButtonText: '确定',
                                                 callback: action => {
-                                                    loadDiv("auxiliarydecision/danger_list");
+                                                    loadDiv("basicinfo/firestation_list");
                                                 }
                                             });
                                         }

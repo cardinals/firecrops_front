@@ -4,10 +4,11 @@ $(function () {
     var paramUrl = getQueryString("url");
     loadDiv(urlRewrite(paramUrl));
 });
-
 /**header-box by li.xue 20180628 */
+var shiroGlobal = "";
 var realname = "";
 axios.get('/api/shiro').then(function (res) {
+    shiroGlobal = res.data;
     realname = res.data.realName;
     document.querySelector("#realname").innerHTML = realname;
     if(res.data == null && realname == null && realname == ""){

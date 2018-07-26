@@ -1,0 +1,15 @@
+.el-input-number--small {
+    width: 100%;
+}
+.el-form--inline .el-form-item{
+    margin-right: 0px !important;
+    margin-bottom: 0;
+    width: 100%;
+}
+.el-form--inline .el-form-item__content {
+    width: 100%;
+    margin-left: 0 !important;
+}
+.el-form-item__label {
+    padding: 11px 5px 11px 0;
+}

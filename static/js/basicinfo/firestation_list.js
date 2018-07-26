@@ -172,6 +172,13 @@ var vue = new Vue({
             }
             loadDivParam("basicinfo/firestation_edit", params);
         },
+        editClick: function(val){
+            var params = {
+                ID: val.dzid,
+                type: "BJ"
+            }
+            loadDivParam("basicinfo/firestation_edit", params);
+        },
         //删除
         deleteClick: function(){
             this.$confirm('确认删除选中信息?', '提示', {
@@ -187,7 +194,7 @@ var vue = new Vue({
                     }
                     axios.post('/dpapi/xfdz/doDeleteBatch', this.multipleSelection).then(function (res) {
                         this.$message({
-                            message: "成功删除" + this.multipleSelection.length + "条化危品信息",
+                            message: "成功删除" + this.multipleSelection.length + "条队站信息",
                             showClose: true,
                             onClose: this.searchClick('delete')
                         });
