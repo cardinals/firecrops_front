@@ -328,12 +328,18 @@ new Vue({
                 this.addForm.cjrmc = this.role_data.realName;
                 if (this.addForm.cllx.length > 0) {
                     this.addForm.cllx = this.addForm.cllx[this.addForm.cllx.length - 1];
+                }else{
+                    this.addForm.cllx='';
                 }
                 if (this.addForm.xzqh.length > 0) {
                     this.addForm.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
+                }else{
+                    this.addForm.xzqh='';
                 }
                 if (this.addForm.ssdz.length > 0) {
                     this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
+                }else{
+                    this.addForm.ssdz='';
                 }
                 // debugger;
                 axios.post('/dpapi/fireengine/insertByVO', this.addForm).then(function (res) {
@@ -363,12 +369,18 @@ new Vue({
                 this.addForm.xgrmc = this.role_data.realName;
                 if (this.addForm.cllx.length > 0) {
                     this.addForm.cllx = this.addForm.cllx[this.addForm.cllx.length - 1];
+                }else{
+                    this.addForm.cllx='';
                 }
                 if (this.addForm.xzqh.length > 0) {
                     this.addForm.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
+                }else{
+                    this.addForm.xzqh='';
                 }
                 if (this.addForm.ssdz.length > 0) {
                     this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
+                }else{
+                    this.addForm.ssdz='';
                 }
                 axios.post('/dpapi/fireengine/doUpdateFireengine', this.addForm).then(function (res) {
                     if (res.data.result >= 1) {
