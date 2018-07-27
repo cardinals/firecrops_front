@@ -175,6 +175,7 @@ var vue = new Vue({
         editClick: function(val){
             var params = {
                 ID: val.dzid,
+                dzlx: val.dzlx,
                 type: "BJ"
             }
             loadDivParam("basicinfo/firestation_edit", params);

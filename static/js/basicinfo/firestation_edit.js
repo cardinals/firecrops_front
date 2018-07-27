@@ -212,9 +212,55 @@ new Vue({
             if (this.status == 0) {  //新增
                 this.loading = false;
             } else {//修改
-                axios.get('/dpapi/xfdz/' + this.status).then(function (res) {
-                    this.editForm = res.data.result;
+                var dzlxParam = getQueryString("dzlx");
+                var params = {
+                    dzid : this.status,
+                    dzlx : dzlxParam
+                };
+                axios.post('/dpapi/xfdz/findDzDetailByVo',params).then(function (res) {
                     var result = res.data.result;
+                    this.editForm = res.data.result;
+                    //队站子属性信息
+                    if(dzlxParam!=null && dzlxParam!=""){
+                        switch(dzlxParam.substr(0,2)){
+                            case "02":
+                                this.isZongDui = true;
+                                this.editForm.zhidVO = {};
+                                this.editForm.dadVO = {};
+                                this.editForm.zhongdVO = {};
+                                this.editForm.qtxfdwVO = {};
+                                break;
+                            case "03":
+                                this.isZhiDui = true;
+                                this.editForm.zongdVO = {};
+                                this.editForm.dadVO = {};
+                                this.editForm.zhongdVO = {};
+                                this.editForm.qtxfdwVO = {};
+                                break;
+                            case "05":
+                                this.isDaDui = true;
+                                this.editForm.zongdVO = {};
+                                this.editForm.zhidVO = {};
+                                this.editForm.zhongdVO = {};
+                                this.editForm.qtxfdwVO = {};
+                                break;
+                            case "09":
+                                this.isZhongDui = true;
+                                this.editForm.zongdVO = {};
+                                this.editForm.zhidVO = {};
+                                this.editForm.dadVO = {};
+                                this.editForm.qtxfdwVO = {};
+                                break;
+                            case "0A":
+                                this.isQiTaXiaoFangDuiWu = true;
+                                this.editForm.zongdVO = {};
+                                this.editForm.zhidVO = {};
+                                this.editForm.dadVO = {};
+                                this.editForm.zhongdVO = {};
+                                break;
+                        }
+                    }
+                    
                     //队站类型
                     var dzlxArray = [];
                     if(result.dzlx!=null && result.dzlx!="" && result.dzlx.substr(0,2)=="0A" &&result.dzlx!="0A00"){
@@ -298,8 +344,6 @@ new Vue({
                             this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
                             this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
                             this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
-                            console.log(2222222222);
-                            console.log(this.editForm);
                             axios.post('/dpapi/xfdz/insertByXfdzVO', this.editForm).then(function (res) {
                                 if (res.data.result != null) {
                                     this.$alert('成功保存队站信息', '提示', {
