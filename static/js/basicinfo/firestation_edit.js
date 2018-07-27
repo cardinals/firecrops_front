@@ -18,7 +18,21 @@ new Vue({
             xzqhData: [],
             //角色
             shiroData: [],
-            //搜索表单
+            //队站属性
+            isZongDui: false,
+            isZhiDui: false,
+            isDaDui: false,
+            isZhongDui: false,
+            isQiTaXiaoFangDuiWu: false,
+            //是否独立接警
+            sfdljjData: [{
+                codeValue: '1',
+                codeName: '是'
+            }, {
+                codeValue: '0',
+                codeName: '否'
+            }],
+            //编辑表单
             editForm: {
                 dzmc: "",
                 dzjc: "",
@@ -29,6 +43,8 @@ new Vue({
                 xzqh: "",
                 lon: "",
                 lat: "",
+                gisX: "",
+                gisY: "",
                 gxsys: "",
                 gxzddws: "",
                 xqfw: "",
@@ -39,11 +55,85 @@ new Vue({
                 zqcls: "",
                 zbqcs: "",
                 mhjzl: "",
+                bz: "",
                 //创建人、修改人
                 cjrid: "",
                 cjrmc: "",
                 xgrid: "",
-                xgrmc: ""
+                xgrmc: "",
+                //总队VO
+                zongdVO: {
+                    dzid: "",
+                    xygbrs: "",
+                    zfzzxfys: "",
+                    wzgys: "",
+                    xxzhids: "",
+                    xxzhongds: "",
+                    zdzxm: "",
+                    zdzlxfs: "",
+                    zdzwxm: "",
+                    zdzwlxfs: "",
+                },
+                //支队VO
+                zhidVO: {
+                    dzid: "",
+                    xygbrs: "",
+                    zfzzxfys: "",
+                    xfwys: "",
+                    xxdads: "",
+                    xxzhongds: "",
+                    sfdljj: "",
+                    zdzxm: "",
+                    zdzlxfs: "",
+                    zdzwxm: "",
+                    zdzwlxfs: "",
+                },
+                //大队VO
+                dadVO: {
+                    dzid: "",
+                    xygbrs: "",
+                    zfzzxfys: "",
+                    xfwys: "",
+                    xxzhongds: "",
+                    sfdljj: "",
+                    ddzxm: "",
+                    ddzlxfs: "",
+                    jdyxm: "",
+                    jdylxfs: "",
+                    fddzxm: "",
+                    fddzlxfs: "",
+                    fjdyxm: "",
+                    fjdylxfs: "",
+                },
+                //中队VO
+                zhongdVO: {
+                    dzid: "",
+                    xyrs: "",
+                    zfzzxfys: "",
+                    mrzqrs: "",
+                    zdzxm: "",
+                    zdzlxfs: "",
+                    zdyxm: "",
+                    zdylxfs: "",
+                    fzdyxm: "",
+                    fzdylxfs: "",
+                    fzdzxm1: "",
+                    fzdzlxfs1: "",
+                    fzdzxm2: "",
+                    fzdzlxfs2: "",
+                    fzdzxm3: "",
+                    fzdzlxfs3: ""
+                },
+                //其他消防队伍VO
+                qtxfdwVO: {
+                    dzid: "",
+                    xfdyzrs: "",
+                    mrzqrs: "",
+                    gxdw: "",
+                    gxdwlxfs: "",
+                    dzxm: "",
+                    dzlxfs: "",
+                },
             },
             props: {
                 value: 'codeValue',
@@ -175,63 +265,44 @@ new Vue({
                 })
             }
         },
-        //保存
-        save: function (formName) {
-            if (this.editForm.dzmc == "" || this.editForm == null) {
+        //保存前校验
+        validateSave: function(){
+            if (this.editForm.dzmc == "" || this.editForm.dzmc == null) {
                 this.$message.warning({
                     message: '请输入队站名称',
                     showClose: true
                 });
-            } else {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        if (this.status == 0) {//新增
-                            axios.get('/dpapi/xfdz/doCheckName/' + this.editForm.dzmc).then(function (res) {
-                                if (res.data.result > 0) {
-                                    this.$message.warning({
-                                        message: '中文名已存在，请重新命名',
-                                        showClose: true
-                                    });
-                                } else {
-                                    this.editForm.cjrid = this.shiroData.userid;
-                                    this.editForm.cjrmc = this.shiroData.realName;
-                                    this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
-                                    this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
-                                    this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
-                                    axios.post('/dpapi/xfdz/insertByXfdzVO', this.editForm).then(function (res) {
-                                        if (res.data.result != null) {
-                                            this.$alert('成功保存队站信息', '提示', {
-                                                type: 'success',
-                                                confirmButtonText: '确定',
-                                                callback: action => {
-                                                    loadDiv("basicinfo/firestation_list");
-                                                }
-                                            });
-                                        } else {
-                                            this.$alert('保存失败', '提示', {
-                                                type: 'error',
-                                                confirmButtonText: '确定',
-                                                callback: action => {
-                                                    loadDiv("basicinfo/firestation_list");
-                                                }
-                                            });
-                                        }
-                                    }.bind(this), function (error) {
-                                        console.log(error);
-                                    })
-                                }
-                            }.bind(this), function (error) {
-                                console.log(error);
-                            })
-                        } else {//修改
-                            this.editForm.xgrid = this.shiroData.userid;
-                            this.editForm.xgrmc = this.shiroData.realName;
+                return false;
+            }else if(this.editForm.dzlx == "" || this.editForm.dzlx == null){
+                this.$message.warning({
+                    message: '请选择队站类型',
+                    showClose: true
+                });
+                return false;
+            }
+            return true;
+        },
+        //保存
+        save: function (formName) {
+            if(this.validateSave()){
+                if (this.status == 0) {//新增
+                    axios.get('/dpapi/xfdz/doCheckName/' + this.editForm.dzmc).then(function (res) {
+                        if (res.data.result > 0) {
+                            this.$message.warning({
+                                message: '中文名已存在，请重新命名',
+                                showClose: true
+                            });
+                        } else {
+                            this.editForm.cjrid = this.shiroData.userid;
+                            this.editForm.cjrmc = this.shiroData.realName;
                             this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
                             this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
                             this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
-                            axios.post('/dpapi/xfdz/updateByXfdzVO', this.editForm).then(function (res) {
+                            console.log(2222222222);
+                            console.log(this.editForm);
+                            axios.post('/dpapi/xfdz/insertByXfdzVO', this.editForm).then(function (res) {
                                 if (res.data.result != null) {
-                                    this.$alert('成功修改队站信息', '提示', {
+                                    this.$alert('成功保存队站信息', '提示', {
                                         type: 'success',
                                         confirmButtonText: '确定',
                                         callback: action => {
@@ -239,7 +310,7 @@ new Vue({
                                         }
                                     });
                                 } else {
-                                    this.$alert('修改失败', '提示', {
+                                    this.$alert('保存失败', '提示', {
                                         type: 'error',
                                         confirmButtonText: '确定',
                                         callback: action => {
@@ -251,12 +322,76 @@ new Vue({
                                 console.log(error);
                             })
                         }
-                    }
-                });
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
+                } else {//修改
+                    this.editForm.xgrid = this.shiroData.userid;
+                    this.editForm.xgrmc = this.shiroData.realName;
+                    this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
+                    this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
+                    this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
+                    axios.post('/dpapi/xfdz/updateByXfdzVO', this.editForm).then(function (res) {
+                        if (res.data.result != null) {
+                            this.$alert('成功修改队站信息', '提示', {
+                                type: 'success',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("basicinfo/firestation_list");
+                                }
+                            });
+                        } else {
+                            this.$alert('修改失败', '提示', {
+                                type: 'error',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("basicinfo/firestation_list");
+                                }
+                            });
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
+                }
             }
         },
         cancel: function () {
             loadDiv("basicinfo/firestation_list");
+        },
+        //队站类型变化
+        dzlxChange: function(){
+            var type = this.editForm.dzlx;
+            if(type == "0200"){
+                this.isZongDui = true;
+                this.isZhiDui = false;
+                this.isDaDui = false;
+                this.isZhongDui = false;
+                this.isQiTaXiaoFangDuiWu = false;
+            }else if(type == "0300"){
+                this.isZongDui = false;
+                this.isZhiDui = true;
+                this.isDaDui = false;
+                this.isZhongDui = false;
+                this.isQiTaXiaoFangDuiWu = false;
+            }else if(type == "0500"){
+                this.isZongDui = false;
+                this.isZhiDui = false;
+                this.isDaDui = true;
+                this.isZhongDui = false;
+                this.isQiTaXiaoFangDuiWu = false;
+            }else if(type == "0900"){
+                this.isZongDui = false;
+                this.isZhiDui = false;
+                this.isDaDui = false;
+                this.isZhongDui = true;
+                this.isQiTaXiaoFangDuiWu = false;
+            }else{
+                this.isZongDui = false;
+                this.isZhiDui = false;
+                this.isDaDui = false;
+                this.isZhongDui = false;
+                this.isQiTaXiaoFangDuiWu = true;
+            }
         }
     },
     

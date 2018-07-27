@@ -147,6 +147,14 @@
                             </el-col>
                         </el-row>
                     </div>
+                    <el-row class="inform-margin">
+                        <el-col :span="24">
+                            <div>
+                                <strong class="dtdlStyle">备注：</strong>
+                                <v-text v-text="detailData.bz||'无'"></v-text>
+                            </div>
+                        </el-col>
+                    </el-row>
                 </el-tab-pane>
                 <el-tab-pane name="second" label="人员信息">
                     <div v-show="isZongDui">
@@ -374,13 +382,13 @@
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">指导员：</strong>
-                                    <v-text v-text="daddetailData.zdyxm||'无'"></v-text>
+                                    <v-text v-text="zhongddetailData.zdyxm||'无'"></v-text>
                                 </div>
                             </el-col>
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">指导员联系方式：</strong>
-                                    <v-text v-text="daddetailData.zdylxfs||'无'"></v-text>
+                                    <v-text v-text="zhongddetailData.zdylxfs||'无'"></v-text>
                                 </div>
                             </el-col>
                         </el-row>
@@ -388,13 +396,13 @@
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">副指导员：</strong>
-                                    <v-text v-text="daddetailData.fzdyxm||'无'"></v-text>
+                                    <v-text v-text="zhongddetailData.fzdyxm||'无'"></v-text>
                                 </div>
                             </el-col>
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">副指导员联系方式：</strong>
-                                    <v-text v-text="daddetailData.fzdylxfs||'无'"></v-text>
+                                    <v-text v-text="zhongddetailData.fzdylxfs||'无'"></v-text>
                                 </div>
                             </el-col>
                         </el-row>
@@ -402,13 +410,13 @@
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">副中队长一：</strong>
-                                    <v-text v-text="daddetailData.fzdzxm1||'无'"></v-text>
+                                    <v-text v-text="zhongddetailData.fzdzxm1||'无'"></v-text>
                                 </div>
                             </el-col>
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">副中队长一联系方式：</strong>
-                                    <v-text v-text="daddetailData.fzdzlxfs1||'无'"></v-text>
+                                    <v-text v-text="zhongddetailData.fzdzlxfs1||'无'"></v-text>
                                 </div>
                             </el-col>
                         </el-row>
@@ -416,13 +424,13 @@
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">副中队长二：</strong>
-                                    <v-text v-text="daddetailData.fzdzxm2||'无'"></v-text>
+                                    <v-text v-text="zhongddetailData.fzdzxm2||'无'"></v-text>
                                 </div>
                             </el-col>
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">副中队长二联系方式：</strong>
-                                    <v-text v-text="daddetailData.fzdzlxfs2||'无'"></v-text>
+                                    <v-text v-text="zhongddetailData.fzdzlxfs2||'无'"></v-text>
                                 </div>
                             </el-col>
                         </el-row>
@@ -430,13 +438,13 @@
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">副中队长三：</strong>
-                                    <v-text v-text="daddetailData.fzdzxm3||'无'"></v-text>
+                                    <v-text v-text="zhongddetailData.fzdzxm3||'无'"></v-text>
                                 </div>
                             </el-col>
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">副中队长三联系方式：</strong>
-                                    <v-text v-text="daddetailData.fzdzlxfs3||'无'"></v-text>
+                                    <v-text v-text="zhongddetailData.fzdzlxfs3||'无'"></v-text>
                                 </div>
                             </el-col>
                         </el-row>

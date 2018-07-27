@@ -67,7 +67,7 @@ new Vue({
              var url=window.location.href;
              if(url.indexOf("?") != -1)
                  url = url.split("?")[0];
-             url += '?index=65';
+             url += '?url=/basicinfo/firestation';
              history.pushState(stateObject,title,url);
              //history.back();
              
