@@ -15,7 +15,7 @@ var vue = new Vue({
                 cbl: [0, 1000]
             },
             tableData: [],
-            role_data:[],
+            role_data: [],
             tableData_detail: {},
             allYjlxDataTree: [],//药剂类型级联选择器数据
             allSsdzData: [],//所属队站下拉框数据
@@ -92,11 +92,11 @@ var vue = new Vue({
             })
         },
         //表格查询事件
-        searchClick: function(type) {
+        searchClick: function (type) {
             //按钮事件的选择
-            if(type == 'page'){
+            if (type == 'page') {
                 this.tableData = [];
-            }else{
+            } else {
                 this.currentPage = 1;
             }
             this.loading = true;
@@ -117,7 +117,7 @@ var vue = new Vue({
                 pageNum: this.currentPage
             };
             axios.post('/dpapi/firedrug/page', params).then(function (res) {
-                var tableTemp = new Array((this.currentPage-1)*this.pageSize);
+                var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
                 this.loading = false;
@@ -144,13 +144,13 @@ var vue = new Vue({
             this.searchForm.cbl = [0, 1000];
             this.searchClick('reset');
         },
-        
+
         //表格勾选事件
         selectionChange: function (val) {
             this.multipleSelection = val;
         },
         //新增
-        addClick: function (){
+        addClick: function () {
             var params = {
                 ID: 0,
                 type: "XZ"
@@ -158,7 +158,7 @@ var vue = new Vue({
             loadDivParam("basicinfo/firedrug_add", params);
         },
         //修改
-        handleEdit:function(val){
+        handleEdit: function (val) {
             var params = {
                 ID: val.uuid,
                 type: "BJ"
@@ -172,7 +172,7 @@ var vue = new Vue({
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                for(var i=0;i<this.multipleSelection.length;i++){
+                for (var i = 0; i < this.multipleSelection.length; i++) {
                     this.multipleSelection[i].xgrid = this.role_data.userid;
                     this.multipleSelection[i].xgrmc = this.role_data.realName;
                 }
@@ -192,7 +192,7 @@ var vue = new Vue({
                 });
             });
         },
-        
+
         //表格重新加载数据
         loadingData: function () {
             var _self = this;

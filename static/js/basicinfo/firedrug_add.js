@@ -135,6 +135,7 @@ new Vue({
                                 var ssdz = this.addForm.ssdz;
                                 this.addForm.ssdz = [];
                                 this.addForm.ssdz.push(ssdz);
+                                break;
                             } else {
                                 for (var k in this.allSsdzDataTree[i].children) {
                                     if (this.allSsdzDataTree[i].children[k].dzid == this.addForm.ssdz) {
@@ -142,6 +143,7 @@ new Vue({
                                         var ssdz2 = this.allSsdzDataTree[i].children[k].dzid;
                                         this.addForm.ssdz = [];
                                         this.addForm.ssdz.push(ssdz1, ssdz2);
+                                        break;
                                     } else {
                                         for (var j in this.allSsdzDataTree[i].children[k].children) {
                                             if (this.allSsdzDataTree[i].children[k].children[j].dzid == this.addForm.ssdz) {
@@ -150,6 +152,7 @@ new Vue({
                                                 var ssdz3 = this.allSsdzDataTree[i].children[k].children[j].dzid;
                                                 this.addForm.ssdz = [];
                                                 this.addForm.ssdz.push(ssdz1, ssdz2, ssdz3);
+                                                break;
                                             } else {
                                                 for (var s in this.allSsdzDataTree[i].children[k].children[j].children) {
                                                     if (this.allSsdzDataTree[i].children[k].children[j].children[s].dzid == this.addForm.ssdz) {
@@ -159,6 +162,7 @@ new Vue({
                                                         var ssdz4 = this.allSsdzDataTree[i].children[k].children[j].children[s].dzid;
                                                         this.addForm.ssdz = [];
                                                         this.addForm.ssdz.push(ssdz1, ssdz2, ssdz3, ssdz4);
+                                                        break;
                                                     }
                                                 }
                                             }
