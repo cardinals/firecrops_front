@@ -17,6 +17,7 @@ var vue = new Vue({
             tableData: [],
             allTypesDataTree: [],//装备类型级联选择数据
             allSsdzData: [],//消防队站下拉框数据（到总队级）
+            role_data: [],
             rowdata: '',
             //表高度变量
             tableheight: 450,
@@ -42,7 +43,7 @@ var vue = new Vue({
                 value: 'codeValue'
             },
             //装备车辆弹出页-----------------------------------------------------------
-            tableData_engine:[],
+            tableData_engine: [],
             tableheight_engine: 250,
             loading_engine: false,
             currentPage_engine: 1,
@@ -57,18 +58,23 @@ var vue = new Vue({
         loadBreadcrumb("装备器材管理", "-1");
         this.getAllSszdData();//消防队站下拉框数据（到总队级）
         this.getAllTypesDataTree();//装备类型级联选择数据
+        this.roleData();
         this.searchClick('click');
     },
     methods: {
-        handleNodeClick(data) {
-            console.log(data);
-        },
-        //表格查询事件
-        searchClick: function(type) {
+        //当前登录用户信息
+        roleData: function () {
+            axios.post('/api/shiro').then(function (res) {
+                this.role_data = res.data;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },//表格查询事件
+        searchClick: function (type) {
             //按钮事件的选择
-            if(type == 'page'){
+            if (type == 'page') {
                 this.tableData = [];
-            }else{
+            } else {
                 this.currentPage = 1;
             }
             this.loading = true;
@@ -94,7 +100,7 @@ var vue = new Vue({
                 // kysl_max: kysl_max
             };
             axios.post('/dpapi/equipmentsource/page', params).then(function (res) {
-                var tableTemp = new Array((this.currentPage-1)*this.pageSize);
+                var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
                 this.loading = false;
@@ -132,15 +138,10 @@ var vue = new Vue({
                 console.log(error);
             })
         },
-       
+
         //表格勾选事件
         selectionChange: function (val) {
-            for (var i = 0; i < val.length; i++) {
-                var row = val[i];
-            }
             this.multipleSelection = val;
-            //this.sels = sels
-            console.info(val);
         },
         //跳转至详情页
         detailClick: function (val) {
@@ -189,7 +190,7 @@ var vue = new Vue({
             this.engineListVisible = fasle;
         },
         //新增
-        addClick: function (){
+        addClick: function () {
             var params = {
                 ID: 0,
                 type: "XZ"
@@ -203,13 +204,13 @@ var vue = new Vue({
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                for(var i=0;i<this.multipleSelection.length;i++){
+                for (var i = 0; i < this.multipleSelection.length; i++) {
                     this.multipleSelection[i].xgrid = this.role_data.userid;
                     this.multipleSelection[i].xgrmc = this.role_data.realName;
                 }
-                axios.post('/dpapi/firedrug/doDeleteDrug', this.multipleSelection).then(function (res) {
+                axios.post('/dpapi/equipmentsource/doDeleteEquipment', this.multipleSelection).then(function (res) {
                     this.$message({
-                        message: "成功删除" + res.data.result + "条消防药剂信息",
+                        message: "成功删除" + res.data.result + "条装备器材信息",
                         showClose: true,
                         onClose: this.searchClick('delete')
                     });
@@ -222,6 +223,14 @@ var vue = new Vue({
                     message: '已取消删除'
                 });
             });
+        },
+        //修改
+        handleEdit: function (val) {
+            var params = {
+                ID: val.uuid,
+                type: "BJ"
+            }
+            loadDivParam("basicinfo/firedrug_add", params);
         },
 
     },

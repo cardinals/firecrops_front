@@ -71,18 +71,19 @@
 					<div class="table_container">
 						<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" @selection-change="selectionChange"
 						 class="tableStyle" :height="tableheight">
+						 <el-table-column type="selection" width="45"></el-table-column>
 							<el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
-							<el-table-column prop="zbmc" label="装备名称" show-overflow-tooltip min-width="15%" align="center">
+							<el-table-column prop="zbmc" label="装备名称" show-overflow-tooltip min-width="13%" align="center">
 								<template slot-scope="scope">
 									<a @click="engineDatail(scope.row)" type="text">{{scope.row.zbmc}}</a>
 								</template>
 							</el-table-column>
-							<el-table-column prop="zbbm" label="装备编码" show-overflow-tooltip min-width="20%" align="center"></el-table-column>
+							<el-table-column prop="zbbm" label="装备编码" show-overflow-tooltip min-width="13%" align="center"></el-table-column>
 							<el-table-column prop="zblxmc" label="装备类型" show-overflow-tooltip min-width="14%" align="center"></el-table-column>
-							<el-table-column prop="dzmc" label="所属队站" show-overflow-tooltip min-width="9%" align="center"></el-table-column>
-							<el-table-column prop="xzqhmc" label="行政区划" show-overflow-tooltip min-width="9%" align="center"></el-table-column>
-							<el-table-column prop="sccj" label="生产厂家" show-overflow-tooltip min-width="9%" align="center"></el-table-column>
-							<el-table-column prop="zcbl" label="总储备量" show-overflow-tooltip min-width="9%" align="center">
+							<el-table-column prop="dzmc" label="所属队站" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
+							<el-table-column prop="xzqhmc" label="行政区划" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
+							<el-table-column prop="sccj" label="生产厂家" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
+							<el-table-column prop="zcbl" label="总储备量" show-overflow-tooltip min-width="11%" align="center">
 								<template slot-scope="scope">
 									<el-popover placement="bottom" width="100" trigger="click" ref="popover2">
 										<div :data="scope.row">
@@ -92,6 +93,11 @@
 										</div>
 									</el-popover>
 									<a type="text" v-popover:popover2 v-text="scope.row.zcbl"></a>
+								</template>
+							</el-table-column>
+							<el-table-column label="操作" min-width="8%" align="center">
+								<template slot-scope="scope">
+									<el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>
 								</template>
 							</el-table-column>
 						</el-table>
