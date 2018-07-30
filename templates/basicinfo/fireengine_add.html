@@ -193,6 +193,20 @@
 							</el-col>
 						</el-row>
 					</el-form>
+					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+						<strong style="color: #20a0ff;">备注</strong>
+					</el-col>
+					</el-row>
+					<el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">备注</el-label>
+						</el-col>
+						<el-col :xs="19" :sm="19" :md="19" :lg="19" :xl="19">
+							<el-input size="small" v-model="addForm.bz" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+						</el-col>
+						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+					</el-row>
 				</div>
 				<el-row class="mt20 mb20">
 					<el-form :inline="true" class="el-form demo-form-inline">

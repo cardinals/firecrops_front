@@ -54,7 +54,8 @@ new Vue({
                 cjrid: "",
                 cjrmc: "",
                 xgrid: "",
-                xgrmc: ""
+                xgrmc: "",
+                bz: ''
             },
             //灾情设定
             dynamicValidateForm: [],
@@ -115,11 +116,11 @@ new Vue({
                 label: 'codeName',
                 value: 'codeValue'
             },
-            //
+            //所属队站
             ssdzProps: {
                 children: 'children',
-                value: 'dzid',
-                label: 'dzjc'
+                label: 'dzjc',
+                value: 'dzid'
             },
         }
     },
