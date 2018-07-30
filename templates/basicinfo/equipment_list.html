@@ -52,8 +52,8 @@
 								<el-form>
 									<el-col :span="12" class="btnEditDelete">
 										<el-form-item align="left">
-												<el-button type="primary" icon="plus" size="small" @click="addClick">新增</el-button>
-												<el-button type="danger" icon="delete" size="small" @click="deleteClick">删除</el-button>
+											<el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
+											<el-button type="danger" icon="delete2" size="small" @click="deleteClick">删除</el-button>
 										</el-form-item>
 									</el-col>
 									<el-col :span="12"></el-col>
@@ -71,25 +71,35 @@
 					<div class="table_container">
 						<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" @selection-change="selectionChange"
 						 class="tableStyle" :height="tableheight">
-						 <el-table-column type="selection" width="45"></el-table-column>
-							<el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
-							<el-table-column prop="zbmc" label="装备名称" show-overflow-tooltip min-width="13%" align="center">
+							<el-table-column type="selection" width="45"></el-table-column>
+							<el-table-column type="index" label="序号" width="65px" align="center"></el-table-column>
+							<el-table-column prop="zbmc" label="装备名称" show-overflow-tooltip min-width="15%" align="center">
+
 								<template slot-scope="scope">
+
 									<a @click="engineDatail(scope.row)" type="text">{{scope.row.zbmc}}</a>
+
 								</template>
+
 							</el-table-column>
-							<el-table-column prop="zbbm" label="装备编码" show-overflow-tooltip min-width="13%" align="center"></el-table-column>
-							<el-table-column prop="zblxmc" label="装备类型" show-overflow-tooltip min-width="14%" align="center"></el-table-column>
-							<el-table-column prop="dzmc" label="所属队站" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
-							<el-table-column prop="xzqhmc" label="行政区划" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
-							<el-table-column prop="sccj" label="生产厂家" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
-							<el-table-column prop="zcbl" label="总储备量" show-overflow-tooltip min-width="11%" align="center">
+							<el-table-column prop="zbbm" label="装备编码" show-overflow-tooltip min-width="15%" align="center"></el-table-column>
+							<el-table-column prop="zblxmc" label="装备类型" show-overflow-tooltip min-width="12%" align="center"></el-table-column>
+							<el-table-column prop="dzmc" label="所属队站" show-overflow-tooltip min-width="12%" align="center"></el-table-column>
+							<el-table-column prop="xzqhmc" label="行政区划" show-overflow-tooltip min-width="12%" align="center"></el-table-column>
+							<el-table-column prop="sccj" label="生产厂家" show-overflow-tooltip min-width="12%" align="center"></el-table-column>
+							<el-table-column prop="zcbl" label="总储备量" show-overflow-tooltip min-width="12%" align="center">
 								<template slot-scope="scope">
 									<el-popover placement="bottom" width="100" trigger="click" ref="popover2">
 										<div :data="scope.row">
-											<el-row>库存数量（可用）: <v-text v-text="scope.row.kysl"></v-text></el-row>
-											<el-row>库存数量（损坏）: <v-text v-text="scope.row.shsl"></v-text></el-row>
-											<el-row>装载数量: <v-text v-text="scope.row.zzsl"></v-text></el-row>
+											<el-row>库存数量（可用）:
+												<v-text v-text="scope.row.kysl"></v-text>
+											</el-row>
+											<el-row>库存数量（损坏）:
+												<v-text v-text="scope.row.shsl"></v-text>
+											</el-row>
+											<el-row>装载数量:
+												<v-text v-text="scope.row.zzsl"></v-text>
+											</el-row>
 										</div>
 									</el-popover>
 									<a type="text" v-popover:popover2 v-text="scope.row.zcbl"></a>
@@ -105,8 +115,8 @@
 						<!--列表底部工具条和分页符-->
 						<el-row type="flex" justify="end">
 							<el-col :span="18">
-								<el-pagination @current-change="currentPageChange" :current-page="currentPage" page-sizes="10"
-								 :page-size="pageSize" layout="total, prev, pager, next, jumper" :total=parseInt(total)>
+								<el-pagination @current-change="currentPageChange" :current-page="currentPage" :page-size="pageSize" layout="total, prev, pager, next, jumper"
+								 :total=parseInt(total)>
 								</el-pagination>
 							</el-col>
 						</el-row>
@@ -114,28 +124,29 @@
 				</div>
 				<!--装备车辆详情界面-->
 				<el-dialog title="装备车辆装载信息" :visible.sync="engineListVisible" @close="closeDialog()" :close-on-click-modal="false">
-						<div id="tableView" v-loading="loading_engine" element-loading-text="加载中">
-							<div class="table_container">
-								<el-table border id="table" :data="tableData_engine.slice((currentPage_engine-1)*pageSize_engine,currentPage_engine*pageSize_engine)"
-								 class="tableStyle" :height="tableheight_engine">
-									<el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
-									<el-table-column prop="clmc" label="车辆名称" show-overflow-tooltip min-width="45%" align="center"></el-table-column>
-									<el-table-column prop="clzzs" label="车辆装载数" show-overflow-tooltip min-width="45%" align="center"></el-table-column>
-								</el-table>
-								<!--列表底部工具条和分页符-->
-								<el-row type="flex" justify="end">
-									<el-col :span="18">
-										<el-pagination @current-change="currentPageChange_engine" :current-page="currentPage_engine" :page-size="pageSize_engine" layout="total, prev, pager, next, jumper"
-										 :total=parseInt(total_engine)>
-										</el-pagination>
-									</el-col>
-								</el-row>
-							</div>
+					<div id="tableView" v-loading="loading_engine" element-loading-text="加载中">
+						<div class="table_container">
+							<el-table border id="table" :data="tableData_engine.slice((currentPage_engine-1)*pageSize_engine,currentPage_engine*pageSize_engine)"
+							 class="tableStyle" :height="tableheight_engine">
+								<el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
+								<el-table-column prop="clmc" label="车辆名称" show-overflow-tooltip min-width="45%" align="center"></el-table-column>
+								<el-table-column prop="clzzs" label="车辆装载数" show-overflow-tooltip min-width="45%" align="center"></el-table-column>
+							</el-table>
+							<!--列表底部工具条和分页符-->
+							<el-row type="flex" justify="end">
+								<el-col :span="18">
+									<el-pagination @current-change="currentPageChange_engine" :current-page="currentPage_engine" :page-size="pageSize_engine"
+									 layout="total, prev, pager, next, jumper" :total=parseInt(total_engine)>
+									</el-pagination>
+								</el-col>
+							</el-row>
 						</div>
-					</el-dialog>
+					</div>
+				</el-dialog>
 			</div>
 		</div>
 	</div>
 </body>
 <script src="../../static/js/basicinfo/equipment_list.js"></script>
+
 </html>

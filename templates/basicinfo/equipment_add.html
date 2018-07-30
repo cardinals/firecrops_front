@@ -135,6 +135,20 @@
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
 					</el-form>
+					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+								<strong style="color: #20a0ff;">备注</strong>
+							</el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">备注</el-label>
+							</el-col>
+							<el-col :xs="19" :sm="19" :md="19" :lg="19" :xl="19">
+								<el-input size="small" v-model="addForm.bz" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="备注"></el-input>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						</el-row>
 				</div>
 				<el-row class="mt35 mb20">
 					<el-row>
@@ -172,7 +186,7 @@
 							 @row-click="selectRow">
 								<el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
 								<el-table-column prop="clmc" label="车辆名称" show-overflow-tooltip min-width="40%" align="center"></el-table-column>
-								<el-table-column prop="cpmc" label="车牌号码" show-overflow-tooltip min-width="25%" align="center"></el-table-column>
+								<el-table-column prop="cphm" label="车牌号码" show-overflow-tooltip min-width="25%" align="center"></el-table-column>
 								<el-table-column prop="ssdzmc" label="所属队站" show-overflow-tooltip min-width="25%" align="center"></el-table-column>
 							</el-table>
 							<!--列表底部工具条和分页符-->
