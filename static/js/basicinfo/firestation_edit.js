@@ -439,37 +439,45 @@ new Vue({
         //队站类型变化
         dzlxChange: function(){
             var type = this.editForm.dzlx;
-            if(type == "0200"){
-                this.isZongDui = true;
-                this.isZhiDui = false;
-                this.isDaDui = false;
-                this.isZhongDui = false;
-                this.isQiTaXiaoFangDuiWu = false;
-            }else if(type == "0300"){
-                this.isZongDui = false;
-                this.isZhiDui = true;
-                this.isDaDui = false;
-                this.isZhongDui = false;
-                this.isQiTaXiaoFangDuiWu = false;
-            }else if(type == "0500"){
-                this.isZongDui = false;
-                this.isZhiDui = false;
-                this.isDaDui = true;
-                this.isZhongDui = false;
-                this.isQiTaXiaoFangDuiWu = false;
-            }else if(type == "0900"){
+            if(type == null || type ==""){
                 this.isZongDui = false;
                 this.isZhiDui = false;
                 this.isDaDui = false;
-                this.isZhongDui = true;
+                this.isZhongDui = false;
                 this.isQiTaXiaoFangDuiWu = false;
             }else{
-                this.isZongDui = false;
-                this.isZhiDui = false;
-                this.isDaDui = false;
-                this.isZhongDui = false;
-                this.isQiTaXiaoFangDuiWu = true;
-            }
+                if(type == "0200"){
+                    this.isZongDui = true;
+                    this.isZhiDui = false;
+                    this.isDaDui = false;
+                    this.isZhongDui = false;
+                    this.isQiTaXiaoFangDuiWu = false;
+                }else if(type == "0300"){
+                    this.isZongDui = false;
+                    this.isZhiDui = true;
+                    this.isDaDui = false;
+                    this.isZhongDui = false;
+                    this.isQiTaXiaoFangDuiWu = false;
+                }else if(type == "0500"){
+                    this.isZongDui = false;
+                    this.isZhiDui = false;
+                    this.isDaDui = true;
+                    this.isZhongDui = false;
+                    this.isQiTaXiaoFangDuiWu = false;
+                }else if(type == "0900"){
+                    this.isZongDui = false;
+                    this.isZhiDui = false;
+                    this.isDaDui = false;
+                    this.isZhongDui = true;
+                    this.isQiTaXiaoFangDuiWu = false;
+                }else{
+                    this.isZongDui = false;
+                    this.isZhiDui = false;
+                    this.isDaDui = false;
+                    this.isZhongDui = false;
+                    this.isQiTaXiaoFangDuiWu = true;
+                }
+            } 
         }
     },
     
