@@ -52,9 +52,9 @@ new Vue({
         /**面包屑 by li.xue 20180628*/
         var type = getQueryString("type");
         if (type == "XZ") {
-            loadBreadcrumb("消防药剂", "消防药剂新增");
+            loadBreadcrumb("消防药剂", "消防药剂管理");
         } else if (type == "BJ") {
-            loadBreadcrumb("消防药剂", "消防药剂编辑");
+            loadBreadcrumb("消防药剂", "消防药剂管理");
         }
         this.status = getQueryString("ID");
 

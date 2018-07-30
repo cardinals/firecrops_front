@@ -24,16 +24,14 @@ var vue = new Vue({
             //显示加载中样
             loading: false,
             labelPosition: 'right',
+            //多选值
+            multipleSelection: [],
             //当前页
             currentPage: 1,
             //分页大小
             pageSize: 10,
             //总记录数
             total: 10,
-            //行数据保存
-            rowdata: {
-
-            },
             //序号
             indexData: 0,
             //树结构配置

@@ -35,18 +35,6 @@ var vue = new Vue({
             total: 0,
             //序号
             indexData: 0,
-            //删除的弹出框
-            deleteVisible: false,
-            //新建页面是否显示
-            addFormVisible: false,
-            addLoading: false,
-            addFormRules: {
-                permissionname: [{ required: true, message: "请输入权限名称", trigger: "blur" }]
-            },
-            //选中的值显示
-            sels: [],
-            //选中的序号
-            selectIndex: -1,
             //树结构配置
             defaultProps: {
                 children: 'children',

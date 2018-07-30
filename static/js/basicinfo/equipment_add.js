@@ -32,6 +32,7 @@ new Vue({
                 cjrmc: '',
                 xgrid: '',
                 xgrmc: '',
+                bz: '',
                 equipengineVOList: []
             },
             engineForm: [{
@@ -74,9 +75,9 @@ new Vue({
         /**面包屑 by li.xue 20180628*/
         var type = getQueryString("type");
         if (type == "XZ") {
-            loadBreadcrumb("装备器材", "装备器材新增");
+            loadBreadcrumb("装备器材", "装备器材管理");
         } else if (type == "BJ") {
-            loadBreadcrumb("装备器材", "装备器材编辑");
+            loadBreadcrumb("装备器材", "装备器材管理");
         }
         this.status = getQueryString("ID");
         this.getAllTypesDataTree();//装备类型级联选择数据
@@ -111,11 +112,14 @@ new Vue({
             this.loading_engine = true;
             var params = {
                 clmc: this.searchForm.clmc,
-                cphm: this.searchForm.cphm
+                cphm: this.searchForm.cphm,
+                pageSize: this.pageSize,
+                pageNum: this.currentPage
             };
-            axios.post('/dpapi/fireengine/list', params).then(function (res) {
-                this.tableData = res.data.result;
-                this.total = res.data.result.length;
+            axios.post('/dpapi/fireengine/page', params).then(function (res) {
+                var tableTemp = new Array((this.currentPage-1)*this.pageSize);
+                this.tableData = tableTemp.concat(res.data.result.list);
+                this.total = res.data.result.total;
                 this.loading_engine = false;
             }.bind(this), function (error) {
                 console.log(error);
@@ -148,6 +152,7 @@ new Vue({
         clearEngineList: function (val) {
             this.searchForm.clmc = "";
             this.searchForm.cphm = "";
+            this.engineList();
         },
 
         //当前登录用户信息
@@ -267,7 +272,7 @@ new Vue({
                     };
                     axios.post('/dpapi/equipengine/list', params).then(function (res) {
                         this.engineForm = res.data.result;
-                        if(this.engineForm==''||this.engineForm==null){
+                        if (this.engineForm == '' || this.engineForm == null) {
                             this.addDomain();
                         }
                     }.bind(this), function (error) {
@@ -409,7 +414,7 @@ new Vue({
                     }
                     this.addForm.equipengineVOList = this.engineForm;
                     axios.post('/dpapi/equipmentsource/doUpdateEquipment', this.addForm).then(function (res) {
-                        if (res.data.result !=null &&res.data.result !='') {
+                        if (res.data.result != null && res.data.result != '') {
                             this.$alert('修改成功', '提示', {
                                 type: 'success',
                                 confirmButtonText: '确定',
