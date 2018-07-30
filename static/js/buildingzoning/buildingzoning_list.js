@@ -108,6 +108,26 @@ var vue = new Vue({
             loadDivParam("buildingzoning/buildingzoning_detail", params);
             //window.location.href = "building_zoning_detail.html?id=" + val.jzid +"&jzlx=" +val.jzlx + "&index=" + this.activeIndex;
         },
+        //新增
+        addClick: function(){
+            var params = {
+                ID: 0,
+                type: "XZ"
+            }
+            loadDivParam("buildingzoning/buildingzoning_edit", params);
+        },
+        editClick: function(val){
+            var params = {
+                ID: val.jzid,
+                dzlx: val.jzlx,
+                type: "BJ"
+            }
+            loadDivParam("buildingzoning/buildingzoning_edit", params);
+        },
+        //删除
+        deleteClick: function(){
+            
+        },
         //表格重新加载数据
         loadingData: function () {
             var _self = this;
