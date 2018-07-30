@@ -118,10 +118,10 @@
 								<el-label class="mr5">{{index+1}}.&nbsp;&nbsp;车辆名称</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input v-model="domain.clmc" size="small" placeholder="车辆名称"></el-input>
+								<el-input v-model="domain.clmc" size="small" placeholder="车辆名称" disabled></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" class="tl">
-								<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="engineList(index)"></el-button>
+								<el-button icon="search" size="small" style="border: none;background-color: #FFFFFF;" @click="engineList(index)"></el-button>
 							</el-col>
 							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
 								<el-label class="mr5">装载数量</el-label>

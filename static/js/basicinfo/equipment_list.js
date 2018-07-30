@@ -230,7 +230,7 @@ var vue = new Vue({
                 ID: val.uuid,
                 type: "BJ"
             }
-            loadDivParam("basicinfo/firedrug_add", params);
+            loadDivParam("basicinfo/equipment_add", params);
         },
 
     },
