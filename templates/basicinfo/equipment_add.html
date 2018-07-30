@@ -115,7 +115,7 @@
 					<el-form :model="engineForm" ref="engineForm" label-width="100px" style="margin:0;">
 						<el-row class="tr" v-for="(domain, index) in engineForm" :key="domain.key" :prop="'engineForm.' + index + '.value'">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5">{{index+1}}.&nbsp;&nbsp;车辆名称</el-label>
+								<el-label class="mr5 vbm">{{index+1}}.&nbsp;&nbsp;车辆名称</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input v-model="domain.clmc" size="small" placeholder="车辆名称" disabled></el-input>
@@ -124,7 +124,7 @@
 								<el-button icon="search" size="small" style="border: none;background-color: #FFFFFF;" @click="engineList(index)"></el-button>
 							</el-col>
 							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5">装载数量</el-label>
+								<el-label class="mr5 vbm">装载数量</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input-number v-model="domain.clzzs" size="small" placeholder="装载数量"></el-input-number>
@@ -165,13 +165,13 @@
 					<div id="tableView" v-loading="loading_engine" element-loading-text="加载中">
 						<el-row>
 							<el-form :inline="true" class="el-form demo-form-inline">
-								<el-row>
+								<el-row class="mb5">
 									<el-col :span="9" class="searchInline">
-										<label class="el-form-item__label" style="width:95px;">车辆名称</label>
+										<label class="el-form-item__label" style="width:95px;" class="tr vbm">车辆名称</label>
 										<el-input size="small" v-model="searchForm.clmc" placeholder="车辆名称" clearable></el-input>
 									</el-col>
 									<el-col :span="9" class="searchInline">
-										<label class="el-form-item__label" style="width:95px;">车牌号码</label>
+										<label class="el-form-item__label" style="width:95px;" class="tr vbm">车牌号码</label>
 										<el-input size="small" v-model="searchForm.cphm" placeholder="车牌号码" clearable></el-input>
 									</el-col>
 									<el-col :span="6" class="btnSearchPlus">
