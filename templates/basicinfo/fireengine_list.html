@@ -18,6 +18,10 @@
 						<el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
 							<el-row>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">车辆名称</label>
+									<el-input size="small" v-model="searchForm.clmc" placeholder="车辆名称"></el-input>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
 									<label class="el-form-item__label searchLabel">所属队站</label>
 									<el-select size="small" v-model="searchForm.ssdz" placeholder="全部" class="searchSelect" clearable>
 										<el-option v-for="type in allTeamsData" :label="type.codeName" :value="type.codeValue" :key="type.codeName"></el-option>
@@ -28,12 +32,12 @@
 									<el-cascader :options="allTypesData" :props="props" size="small" v-model="searchForm.cllx" placeholder="全部" class="searchSelect"
 									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-col>
+							</el-row>
+							<el-row>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
 									<label class="el-form-item__label searchLabel">车牌号码</label>
 									<el-input size="small" v-model="searchForm.cphm" placeholder="车牌号码"></el-input>
 								</el-col>
-							</el-row>
-							<el-row>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
 									<label class="el-form-item__label searchLabel">车辆状态</label>
 									<el-select size="small" v-model="searchForm.clzt" placeholder="全部" class="searchSelect" clearable>
@@ -44,16 +48,16 @@
 									<label class="el-form-item__label searchLabel">车辆编码</label>
 									<el-input size="small" v-model="searchForm.clbm" placeholder="车辆编码"></el-input>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+								<!-- <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
 									<label class="el-form-item__label searchLabel">GPS编号</label>
 									<el-input size="small" v-model="searchForm.gpsbh" placeholder="GPS编号"></el-input>
-								</el-col>
+								</el-col> -->
 							</el-row>
 							<div>
 								<el-form>
 									<el-col :span="12" class="btnEditDelete">
 										<el-form-item align="left">
-											<el-button type="primary" icon="plus" size="small" @click="addClick">新增</el-button>
+											<el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
 											<el-button type="danger" icon="delete2" size="small" @click="deleteClick">删除</el-button>
 										</el-form-item>
 									</el-col>

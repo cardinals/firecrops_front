@@ -47,7 +47,7 @@
 								<el-label class="mr5 vbm"><span style="color:red;">* </span>所属队站</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-cascader :options="allTeamsData" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="全部" class="searchSelect"
+								<el-cascader :options="allTeamsData" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="所属队站" class="searchSelect"
 									clearable change-on-select :show-all-levels="false"></el-cascader>
 							</el-col>
 						</el-row>
@@ -138,13 +138,13 @@
 								<el-label class="mr5 vbm">水泵流量(L/s)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="addForm.sbll" placeholder="水泵流量" clearable></el-input>
+								<el-input size="small" @change="sbllChange" v-model="addForm.sbll" placeholder="水泵流量" clearable></el-input>
 							</el-col>
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">载水量(t)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="addForm.zsl" placeholder="载水量(t)" clearable></el-input>
+								<el-input size="small" @change="zslChange" v-model="addForm.zsl" placeholder="载水量(t)" clearable></el-input>
 							</el-col>
 							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
 						</el-row>
@@ -153,13 +153,13 @@
 								<el-label class="mr5 vbm">消防炮流量(L/s)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="addForm.xfpll" placeholder="消防炮流量" clearable></el-input>
+								<el-input size="small" @change="xfpllChange" v-model="addForm.xfpll" placeholder="消防炮流量" clearable></el-input>
 							</el-col>
-							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-								<el-label class="mr5 vbm">水泵额定压力(Mpa)</el-label>
+							<el-col :xs="4" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm" >水泵额定压力</el-label>
 							</el-col>
-							<el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7">
-								<el-input size="small" v-model="addForm.sbedyl" placeholder="水泵额定压力(Mpa)" clearable></el-input>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" @change="sbedylChange" v-model="addForm.sbedyl" placeholder="水泵额定压力(Mpa)" clearable></el-input>
 							</el-col>
 						</el-row>
 						<el-row class="tr mt5">
@@ -168,7 +168,7 @@
 									<el-label class="mr5 vbm">车载灭火剂量(t)</el-label>
 								</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="addForm.czmhjl" placeholder="车载灭火剂量(t)" clearable></el-input>
+									<el-input size="small" @change="czmhjlChange" v-model="addForm.czmhjl" placeholder="车载灭火剂量(t)" clearable></el-input>
 							</el-col>
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">车载灭火剂类别</el-label>
@@ -184,6 +184,12 @@
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input size="small" v-model="addForm.mhjhhb" placeholder="灭火剂混合比" clearable></el-input>
+							</el-col>
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">举高类车辆高度</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" @change="jglgdChange" v-model="addForm.jglgd" placeholder="举高类车辆高度(m)" clearable></el-input>
 							</el-col>
 						</el-row>
 					</el-form>

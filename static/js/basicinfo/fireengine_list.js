@@ -12,7 +12,8 @@ var vue = new Vue({
                 cphm: "",
                 clzt: "",
                 clbm: "",
-                gpsbh: ""
+                gpsbh: "",
+                clmc:""
             },
             tableData: [],
             role_data: [],//当前用户信息
@@ -158,6 +159,7 @@ var vue = new Vue({
                 clzt :this.searchForm.clzt,
                 clbm :this.searchForm.clbm,
                 gpsbh :this.searchForm.gpsbh,
+                clmc:this.searchForm.clmc,
                 pageSize: this.pageSize,
                 pageNum: this.currentPage
             };
@@ -184,6 +186,7 @@ var vue = new Vue({
             this.searchForm.clzt="";
             this.searchForm.clbm="";
             this.searchForm.gpsbh="";
+            this.searchForm.clmc="";
             this.searchClick('reset');
         },
         

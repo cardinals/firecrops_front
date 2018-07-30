@@ -2,9 +2,9 @@
 window.onload = function () {
     var type = getQueryString("type");
     if (type == "XZ") {
-        loadBreadcrumb("消防车辆管理", "消防车辆信息新增");
+        loadBreadcrumb("消防车辆信息新增", "消防车辆管理新增");
     } else if (type == "BJ") {
-        loadBreadcrumb("消防车辆管理", "消防车辆信息编辑");
+        loadBreadcrumb("消防车辆信息编辑", "消防车辆管理编辑");
     }
 }
 //axios默认设置cookie
@@ -34,21 +34,21 @@ new Vue({
                 sccj: "",
                 xzqh: [],	//行政区划
                 sccj: "",	//生产厂家
-                jglgd: "",	//举高类车辆高度(m)
-                sbll: "",	//水泵流量(L/s)
-                zsl: "",	 //载水量(t)
-                xfpll: "",	//消防炮流量(L/s)
-                sbedyl: "",	//水泵额定压力(Mpa)
+                jglgd: '0.00',	//举高类车辆高度(m)
+                sbll: '0.00',	//水泵流量(L/s)
+                zsl: '0.00',	 //载水量(t)
+                xfpll: '0.00',	//消防炮流量(L/s)
+                sbedyl: '0.00',	//水泵额定压力(Mpa)
                 czmhjlb: "",	//车载灭火剂类别
-                czmhjl: "",//车载灭火剂量(t)
+                czmhjl: '0.00',//车载灭火剂量(t)
                 mhjhhb: "",//灭火剂混合比
                 clmc: "",
                 gisX: "",//
                 gisY: "",//
-                ssdz: [],
-                cllx: [],
-                cphm: "",
+                ssdz: [],//所属队站
+                cllx: [],//车辆类型
                 clzt: "",
+                cphm: "",
                 clbm: "",
                 gpsbh: "",
                 cjrid: "",
@@ -127,9 +127,9 @@ new Vue({
 
         var type = getQueryString("type");
         if (type == "XZ") {
-            loadBreadcrumb("消防车辆管理", "消防车辆信息新增");
+            loadBreadcrumb("消防车辆信息新增", "消防车辆管理新增");
         } else if (type == "BJ") {
-            loadBreadcrumb("消防车辆管理", "消防车辆信息编辑");
+            loadBreadcrumb("消防车辆信息编辑", "消防车辆管理编辑");
         }
 
         this.searchClick('click');
@@ -256,7 +256,7 @@ new Vue({
                             }
                         }
                     } else {
-                        this.addForm.xzqh = [];
+                        this.addForm.ssdz = [];
                     }
                     this.loading = false;
                 }.bind(this), function (error) {
@@ -319,7 +319,67 @@ new Vue({
                 console.log(error);
             })
         },
+        //对数据进行校验
 
+        jglgdChange: function (value) {
+            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+                this.$message.warning({
+                    message: "请输入数字或小数！",
+                    showClose: true
+                });
+                this.addForm.jglgd = '';
+            } 
+        },
+        sbllChange: function (value) {
+            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+                this.$message.warning({
+                    message: "请输入数字或小数！",
+                    showClose: true
+                });
+                this.addForm.sbll = '';
+            } 
+        },
+        zslChange: function (value) {
+            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+                this.$message.warning({
+                    message: "请输入数字或小数！",
+                    showClose: true
+                });
+                this.addForm.zsl = '';
+            } 
+        },
+        xfpllChange: function (value) {
+            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+                this.$message.warning({
+                    message: "请输入数字或小数！",
+                    showClose: true
+                });
+                this.addForm.xfpll = '';
+            } 
+        },
+        sbedylChange: function (value) {
+            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+                this.$message.warning({
+                    message: "请输入数字或小数！",
+                    showClose: true
+                });
+                this.addForm.sbedyl = '';
+            } 
+        },
+        czmhjlChange: function (value) {
+            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+                this.$message.warning({
+                    message: "请输入数字或小数！",
+                    showClose: true
+                });
+                this.addForm.czmhjl = '';
+            } 
+        },
+        pickerOptions0: {
+            disabledDate(time) {
+                return time.getTime() < Date.now() - 8.64e7;
+            }
+        },
         //点击保存事件
         save: function () {
             //必填项
@@ -369,7 +429,6 @@ new Vue({
                     } else {
                         this.addForm.ssdz = '';
                     }
-                    // debugger;
                     axios.post('/dpapi/fireengine/insertByVO', this.addForm).then(function (res) {
                         if (res.data.result >= 1) {
                             this.$alert('成功保存' + res.data.result + '条车辆信息', '提示', {
