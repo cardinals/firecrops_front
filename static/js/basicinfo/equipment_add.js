@@ -75,9 +75,9 @@ new Vue({
         /**面包屑 by li.xue 20180628*/
         var type = getQueryString("type");
         if (type == "XZ") {
-            loadBreadcrumb("装备器材", "装备器材管理");
+            loadBreadcrumb("装备器材管理", "装备器材管理新增");
         } else if (type == "BJ") {
-            loadBreadcrumb("装备器材", "装备器材管理");
+            loadBreadcrumb("装备器材管理", "装备器材管理编辑");
         }
         this.status = getQueryString("ID");
         this.getAllTypesDataTree();//装备类型级联选择数据
