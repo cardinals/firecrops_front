@@ -28,13 +28,13 @@
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 							<el-input size="small" v-model="addForm.zbmc" placeholder="装备名称" clearable></el-input>
 						</el-col>
-						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 							<el-label class="mr5 vbm">装备编码</el-label>
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 							<el-input size="small" v-model="addForm.zbbm" placeholder="装备编码" clearable></el-input>
 						</el-col>
-						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 					</el-row>
 					<el-row class="tr mb5">
 						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -44,13 +44,13 @@
 							<el-cascader :options="allTypesDataTree" :props="defaultProps" size="small" v-model="addForm.zblx" placeholder="装备类型" class="searchSelect"
 							 clearable change-on-select :show-all-levels="false"></el-cascader>
 						</el-col>
-						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 							<el-label class="mr5 vbm">生产厂家</el-label>
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 							<el-input size="small" v-model="addForm.sccj" placeholder="生产厂家" clearable></el-input>
 						</el-col>
-						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 					</el-row>
 					<el-row class="tr mb5">
 						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -60,14 +60,14 @@
 							<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="行政区划" class="searchSelect"
 							 clearable change-on-select :show-all-levels="false"></el-cascader>
 						</el-col>
-						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 							<el-label class="mr5 vbm">所属队站</el-label>
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 							<el-cascader :options="allSsdzDataTree" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="所属队站" class="searchSelect"
 							 clearable change-on-select :show-all-levels="false"></el-cascader>
 						</el-col>
-						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 					</el-row>
 					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
 						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
@@ -81,13 +81,13 @@
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 							<el-input-number v-model="addForm.kysl" size="small" :min="0"></el-input-number>
 						</el-col>
-						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 							<el-label class="mr5 vbm">库存数量(损坏)</el-label>
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 							<el-input-number v-model="addForm.shsl" size="small" :min="0"></el-input-number>
 						</el-col>
-						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 					</el-row>
 					<!-- <el-row class="tr mb5">
 						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -123,7 +123,7 @@
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" class="tl">
 								<el-button icon="search" size="small" style="border: none;background-color: #FFFFFF;" @click="engineList(index)"></el-button>
 							</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">装载数量</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
@@ -132,7 +132,7 @@
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
 								<el-button type="danger" icon="minus " size="small" @click.prevent="removeDomain(domain)" class="r"></el-button>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<!-- <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col> -->
 						</el-row>
 					</el-form>
 					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
