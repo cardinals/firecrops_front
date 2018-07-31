@@ -323,86 +323,25 @@ new Vue({
         },
         //对数据进行校验
 
-        jglgdChange: function (value) {
-            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
-                this.$message.warning({
-                    message: "请输入数字或小数！",
-                    showClose: true
-                });
-                this.addForm.jglgd = '';
-            } 
-        },
-        sbllChange: function (value) {
-            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
-                this.$message.warning({
-                    message: "请输入数字或小数！",
-                    showClose: true
-                });
-                this.addForm.sbll = '';
-            } 
-        },
-        zslChange: function (value) {
-            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
-                this.$message.warning({
-                    message: "请输入数字或小数！",
-                    showClose: true
-                });
-                this.addForm.zsl = '';
-            } 
-        },
-        xfpllChange: function (value) {
-            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
-                this.$message.warning({
-                    message: "请输入数字或小数！",
-                    showClose: true
-                });
-                this.addForm.xfpll = '';
-            } 
-        },
-        sbedylChange: function (value) {
-            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
-                this.$message.warning({
-                    message: "请输入数字或小数！",
-                    showClose: true
-                });
-                this.addForm.sbedyl = '';
-            } 
-        },
-        czmhjlChange: function (value) {
-            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
-                this.$message.warning({
-                    message: "请输入数字或小数！",
-                    showClose: true
-                });
-                this.addForm.czmhjl = '';
-            } 
-        },
-        gisXChange: function (value) {
-            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
-                this.$message.warning({
-                    message: "请输入数字或小数！",
-                    showClose: true
-                });
-                this.addForm.gisX = '';
-            } 
-        },
-        gisYChange: function (value) {
-            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
-                this.$message.warning({
-                    message: "请输入数字或小数！",
-                    showClose: true
-                });
-                this.addForm.gisY = '';
-            } 
-        },
+        // jglgdChange: function (value) {
+        //     if (!(/(^\d+$)/.test(value.replace(".", "")))) {
+        //         this.$message.warning({
+        //             message: "请输入数字或小数！",
+        //             showClose: true
+        //         });
+        //         this.addForm.jglgd = '';
+        //     } 
+        // },
+       
+       
         pickerOptions0: {
             disabledDate(time) {
                 return time.getTime() < Date.now() - 8.64e7;
             }
         },
-        //点击保存事件
-        save: function () {
-            //必填项
+
+        //保存前校验
+        validateSave: function(){  
             if (this.addForm.ssdz == null || this.addForm.ssdz == "") {
                 this.$message.warning({
                     message: "请选择所属队站！",
@@ -429,8 +368,66 @@ new Vue({
                     showClose: true
                 });
                 return false;
-            } else {
+            }else if(!this.validateNum(this.addForm.lon, "经度应为数值型", "num")){
+                return false;
+            }else if(!this.validateNum(this.addForm.lat, "纬度应为数值型", "num")){
+                return false;
+            }else if(!this.validateNum(this.addForm.gisX, "GIS_X应为数值型", "num")){
+                return false;
+            }else if(!this.validateNum(this.addForm.gisY, "GIS_Y应为数值型", "num")){
+                return false;
+            }else if(!this.validateNum(this.addForm.czmhjl, "车载灭火剂量应为非负整数", "int")){
+                return false;
+            }else if(!this.validateNum(this.addForm.sbedyl, "水泵额定压力应为非负整数", "int")){
+                return false;
+            }else if(!this.validateNum(this.addForm.xfpll, "消防炮流量应为非负整数", "int")){
+                return false;
+            }else if(!this.validateNum(this.addForm.zsl, "载水量应为非负整数", "int")){
+                return false;
+            }else if(!this.validateNum(this.addForm.sbll, "水泵流量应为非负整数", "int")){
+                return false;
+            }else if(!this.validateNum(this.addForm.jglgd, "举高类车辆高度应为非负整数", "int")){
+                return false;
+            }
+            return true;
+        },
+        //数值校验
+        validateNum: function(val, message, type){
+            var regPos = /^\d+(\.\d+)?$/;  
+            if(type == "num"){
+            }else if(type == "int"){
+                regPos = /^\d+$/;
+            }
+            
+            if(val!="" && val!=null){
+                if(!regPos.test(val)){
+                    this.$message.warning({
+                        message: message,
+                        showClose: true
+                    });
+                    return false;
+                }              
+            }
+            return true;
+        },
 
+        //非负整数校验
+        validateInt: function(val){
+            var regPos = /^\d+$/; //非负整数
+            if(val!="" && val!=null){
+                if(!regPos.test(val)){
+                    this.$message.warning({
+                        message: "请输入非负整数",
+                        showClose: true
+                    });
+                }              
+            }
+        },
+
+
+        //点击保存事件
+        save: function () {
+            if(this.validateSave()){
                 if (this.status == 0) {//新增
                     this.addForm.cjrid = this.role_data.userid;
                     this.addForm.cjrmc = this.role_data.realName;

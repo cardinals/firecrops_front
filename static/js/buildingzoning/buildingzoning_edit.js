@@ -38,6 +38,7 @@ new Vue({
                 cjrmc: "",
                 xgrid: "",
                 xgrmc: "",
+
                 //总队VO
                 zongdVO: {
                     dzid: "",
@@ -269,7 +270,7 @@ new Vue({
                     showClose: true
                 });
                 return false;
-            }else if(this.editForm.dzlx == "" || this.editForm.dzlx == null){
+            }else if(this.editForm.jzlx == "" || this.editForm.jzlx == null){
                 this.$message.warning({
                     message: '请选择建筑类型',
                     showClose: true
@@ -323,16 +324,16 @@ new Vue({
                         } else {
                             this.editForm.cjrid = this.shiroData.userid;
                             this.editForm.cjrmc = this.shiroData.realName;
-                            this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
-                            this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
-                            this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
+                            this.editForm.jzlx = this.editForm.jzlx[this.editForm.jzlx.length-1];//建筑类型
+                            // this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];                            
+                            // this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
                             axios.post('/dpapi/xfdz/insertByXfdzVO', this.editForm).then(function (res) {
                                 if (res.data.result != null) {
-                                    this.$alert('成功保存队站信息', '提示', {
+                                    this.$alert('成功保存单位建筑信息', '提示', {
                                         type: 'success',
                                         confirmButtonText: '确定',
                                         callback: action => {
-                                            loadDiv("basicinfo/firestation_list");
+                                            loadDiv("buildingzoning/buildingzoning_list");
                                         }
                                     });
                                 } else {
@@ -340,7 +341,7 @@ new Vue({
                                         type: 'error',
                                         confirmButtonText: '确定',
                                         callback: action => {
-                                            loadDiv("basicinfo/firestation_list");
+                                            loadDiv("buildingzoning/buildingzoning_list");
                                         }
                                     });
                                 }
@@ -359,11 +360,11 @@ new Vue({
                     this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
                     axios.post('/dpapi/xfdz/updateByXfdzVO', this.editForm).then(function (res) {
                         if (res.data.result != null) {
-                            this.$alert('成功修改队站信息', '提示', {
+                            this.$alert('成功修改单位建筑信息', '提示', {
                                 type: 'success',
                                 confirmButtonText: '确定',
                                 callback: action => {
-                                    loadDiv("basicinfo/firestation_list");
+                                    loadDiv("buildingzoning/buildingzoning_list");
                                 }
                             });
                         } else {
@@ -371,7 +372,7 @@ new Vue({
                                 type: 'error',
                                 confirmButtonText: '确定',
                                 callback: action => {
-                                    loadDiv("basicinfo/firestation_list");
+                                    loadDiv("buildingzoning/buildingzoning_list");
                                 }
                             });
                         }

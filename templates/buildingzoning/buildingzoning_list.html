@@ -60,7 +60,8 @@
 						<div class="table_container"> 
 							<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
 							 @selection-change="selectionChange" class="tableStyle" :height="tableheight">
-								<el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
+							 	<el-table-column type="selection" width="45"></el-table-column>
+							    <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
 								<el-table-column prop="name" label="建筑名称" show-overflow-tooltip min-width="18%" align="center">
                                     <template slot-scope="scope">
                                         <a @click="detailClick(scope.row)" v-text="scope.row.jzmc"></a>

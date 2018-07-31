@@ -99,13 +99,13 @@
 									<el-label class="mr5 vbm">经度</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" @change="gisXChange" v-model="addForm.gisX" placeholder="经度" clearable></el-input>
+									<el-input type="number" size="small" @change="validateInt" v-model="addForm.gisX" placeholder="经度" clearable></el-input>
 								</el-col>
 								<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 									<el-label class="mr5 vbm">纬度</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" @change="gisYChange" v-model="addForm.gisY" placeholder="纬度" clearable></el-input>
+									<el-input type="number" size="small" @change="validateInt" v-model="addForm.gisY" placeholder="纬度" clearable></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
 									<span class="space">&nbsp;</span>
@@ -139,13 +139,13 @@
 								<el-label class="mr5 vbm">水泵流量(L/s)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" @change="sbllChange" v-model="addForm.sbll" placeholder="水泵流量" clearable></el-input>
+								<el-input type="number" size="small" @change="validateInt" v-model="addForm.sbll" placeholder="水泵流量" clearable></el-input>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">载水量(t)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" @change="zslChange" v-model="addForm.zsl" placeholder="载水量(t)" clearable></el-input>
+								<el-input type="number" size="small" @change="validateInt" v-model="addForm.zsl" placeholder="载水量(t)" clearable></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -154,13 +154,13 @@
 								<el-label class="mr5 vbm">消防炮流量(L/s)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" @change="xfpllChange" v-model="addForm.xfpll" placeholder="消防炮流量" clearable></el-input>
+								<el-input type="number" size="small" @change="validateInt" v-model="addForm.xfpll" placeholder="消防炮流量" clearable></el-input>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm" >水泵额定压力</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" @change="sbedylChange" v-model="addForm.sbedyl" placeholder="水泵额定压力(Mpa)" clearable></el-input>
+								<el-input type="number" size="small" @change="validateInt" v-model="addForm.sbedyl" placeholder="水泵额定压力(Mpa)" clearable></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -170,7 +170,7 @@
 									<el-label class="mr5 vbm">车载灭火剂量(t)</el-label>
 								</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" @change="czmhjlChange" v-model="addForm.czmhjl" placeholder="车载灭火剂量(t)" clearable></el-input>
+								<el-input type="number" size="small" @change="validateInt" v-model="addForm.czmhjl" placeholder="车载灭火剂量(t)" clearable></el-input>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">车载灭火剂类别</el-label>
@@ -191,7 +191,7 @@
 								<el-label class="mr5 vbm">举高类车辆高度</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" @change="jglgdChange" v-model="addForm.jglgd" placeholder="举高类车辆高度(m)" clearable></el-input>
+								<el-input type="number" size="small" @change="validateInt" v-model="addForm.jglgd" placeholder="举高类车辆高度(m)" clearable></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
