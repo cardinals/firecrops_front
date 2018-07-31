@@ -324,7 +324,7 @@ new Vue({
         //对数据进行校验
 
         jglgdChange: function (value) {
-            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
                 this.$message.warning({
                     message: "请输入数字或小数！",
                     showClose: true
@@ -333,7 +333,7 @@ new Vue({
             } 
         },
         sbllChange: function (value) {
-            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
                 this.$message.warning({
                     message: "请输入数字或小数！",
                     showClose: true
@@ -342,7 +342,7 @@ new Vue({
             } 
         },
         zslChange: function (value) {
-            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
                 this.$message.warning({
                     message: "请输入数字或小数！",
                     showClose: true
@@ -351,7 +351,7 @@ new Vue({
             } 
         },
         xfpllChange: function (value) {
-            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
                 this.$message.warning({
                     message: "请输入数字或小数！",
                     showClose: true
@@ -360,7 +360,7 @@ new Vue({
             } 
         },
         sbedylChange: function (value) {
-            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
                 this.$message.warning({
                     message: "请输入数字或小数！",
                     showClose: true
@@ -369,7 +369,7 @@ new Vue({
             } 
         },
         czmhjlChange: function (value) {
-            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
                 this.$message.warning({
                     message: "请输入数字或小数！",
                     showClose: true
@@ -378,7 +378,7 @@ new Vue({
             } 
         },
         gisXChange: function (value) {
-            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
                 this.$message.warning({
                     message: "请输入数字或小数！",
                     showClose: true
@@ -387,7 +387,7 @@ new Vue({
             } 
         },
         gisYChange: function (value) {
-            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+            if (!(/(^\d+$)/.test(value.replace(".", "")))) {
                 this.$message.warning({
                     message: "请输入数字或小数！",
                     showClose: true
