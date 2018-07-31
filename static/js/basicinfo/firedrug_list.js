@@ -20,7 +20,7 @@ var vue = new Vue({
             allYjlxDataTree: [],//药剂类型级联选择器数据
             allSsdzData: [],//所属队站下拉框数据
             //表高度变量
-            tableheight: 450,
+            tableheight: 443,
             //显示加载中样
             loading: false,
             loading_detail: false,
