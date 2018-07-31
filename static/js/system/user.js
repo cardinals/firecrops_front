@@ -135,7 +135,6 @@ var vue = new Vue({
     methods: {
         //表格查询事件
         searchClick: function(type) {
-            debugger;
             //按钮事件的选择
             if(type == 'page'){
                 this.tableData = [];

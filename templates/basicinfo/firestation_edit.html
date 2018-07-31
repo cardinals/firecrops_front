@@ -76,13 +76,13 @@
 								<el-label class="mr5 vbm">经度</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="editForm.lon" placeholder="经度"></el-input>
+								<el-input type="number" size="small" v-model="editForm.lon" placeholder="经度"></el-input>
 							</el-col>
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">纬度</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="editForm.lat" placeholder="纬度"></el-input>
+								<el-input type="number" size="small" v-model="editForm.lat" placeholder="纬度"></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -99,13 +99,13 @@
 								<el-label class="mr5 vbm">GIS_X</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="editForm.gisX" placeholder="GIS_X"></el-input>
+								<el-input type="number" size="small" v-model="editForm.gisX" placeholder="GIS_X"></el-input>
 							</el-col>
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">GIS_Y</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="editForm.gisY" placeholder="GIS_Y"></el-input>
+								<el-input type="number" size="small" v-model="editForm.gisY" placeholder="GIS_Y"></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -116,13 +116,13 @@
 								<el-label class="mr5 vbm">管辖水源数</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="editForm.gxsys" placeholder="管辖水源数"></el-input>
+								<el-input type="number" size="small" v-model="editForm.gxsys" placeholder="管辖水源数" @change="validateInt"></el-input>
 							</el-col>
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">管辖重点单位数</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="editForm.gxzddws" placeholder="管辖重点单位数"></el-input>
+								<el-input type="number" size="small" v-model="editForm.gxzddws" placeholder="管辖重点单位数" @change="validateInt"></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -137,7 +137,7 @@
 								<el-label class="mr5 vbm">辖区面积</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="editForm.xqmj" placeholder="辖区面积"></el-input>
+								<el-input type="number" size="small" v-model="editForm.xqmj" placeholder="辖区面积"></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -178,19 +178,19 @@
 								<el-label class="mr5 vbm">执勤车辆数</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="editForm.zqcls" placeholder="执勤车辆数(台)"></el-input>
+								<el-input type="number" size="small" v-model="editForm.zqcls" placeholder="执勤车辆数(台)" @change="validateInt"></el-input>
 							</el-col>
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">装备器材数(个)</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="editForm.zbqcs" placeholder="装备器材数(个)"></el-input>
+								<el-input type="number" size="small" v-model="editForm.zbqcs" placeholder="装备器材数(个)" @change="validateInt"></el-input>
 							</el-col>
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">灭火剂总量(t)</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="editForm.mhjzl" placeholder="灭火剂总量(t)"></el-input>
+								<el-input type="number" size="small" v-model="editForm.mhjzl" placeholder="灭火剂总量(t)"></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -207,14 +207,14 @@
 									<el-label class="mr5 vbm">现役官兵人数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zongdVO.xygbrs" placeholder="现役官兵人数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.zongdVO.xygbrs" placeholder="现役官兵人数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 									<el-label class="mr5 vbm">政府专职消防员数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zongdVO.zfzzxfys" placeholder="政府专职消防员数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.zongdVO.zfzzxfys" placeholder="政府专职消防员数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
@@ -223,7 +223,7 @@
 									<el-label class="mr5 vbm">文职雇员数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zongdVO.wzgys" placeholder="文职雇员数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.zongdVO.wzgys" placeholder="文职雇员数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
@@ -232,14 +232,14 @@
 									<el-label class="mr5 vbm">下辖支队数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zongdVO.xxzhids" placeholder="下辖支队数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.zongdVO.xxzhids" placeholder="下辖支队数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 									<el-label class="mr5 vbm">下辖中队数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zongdVO.xxzhongds" placeholder="下辖中队数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.zongdVO.xxzhongds" placeholder="下辖中队数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
@@ -289,14 +289,14 @@
 									<el-label class="mr5 vbm">现役官兵人数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zhidVO.xygbrs" placeholder="现役官兵人数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.zhidVO.xygbrs" placeholder="现役官兵人数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 									<el-label class="mr5 vbm">政府专职消防员数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zhidVO.zfzzxfys" placeholder="政府专职消防员数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.zhidVO.zfzzxfys" placeholder="政府专职消防员数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
@@ -305,7 +305,7 @@
 									<el-label class="mr5 vbm">消防文员数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zhidVO.xfwys" placeholder="消防文员数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.zhidVO.xfwys" placeholder="消防文员数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -323,14 +323,14 @@
 									<el-label class="mr5 vbm">下辖大队数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zhidVO.xxdads" placeholder="下辖大队数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.zhidVO.xxdads" placeholder="下辖大队数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 									<el-label class="mr5 vbm">下辖中队数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zhidVO.xxzhongds" placeholder="下辖中队数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.zhidVO.xxzhongds" placeholder="下辖中队数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
@@ -380,14 +380,14 @@
 									<el-label class="mr5 vbm">现役官兵人数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.dadVO.xygbrs" placeholder="现役官兵人数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.dadVO.xygbrs" placeholder="现役官兵人数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 									<el-label class="mr5 vbm">政府专职消防员数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.dadVO.zfzzxfys" placeholder="政府专职消防员数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.dadVO.zfzzxfys" placeholder="政府专职消防员数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
@@ -396,7 +396,7 @@
 									<el-label class="mr5 vbm">消防文员数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.dadVO.xfwys" placeholder="消防文员数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.dadVO.xfwys" placeholder="消防文员数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -414,7 +414,7 @@
 									<el-label class="mr5 vbm">下辖中队数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.dadVO.xxzhongds" placeholder="下辖中队数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.dadVO.xxzhongds" placeholder="下辖中队数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
@@ -496,14 +496,14 @@
 									<el-label class="mr5 vbm">现役人数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zhongdVO.xyrs" placeholder="现役人数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.zhongdVO.xyrs" placeholder="现役人数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 									<el-label class="mr5 vbm">政府专职消防员数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zhongdVO.zfzzxfys" placeholder="政府专职消防员数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.zhongdVO.zfzzxfys" placeholder="政府专职消防员数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
@@ -512,7 +512,7 @@
 									<el-label class="mr5 vbm">每日执勤人数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zhongdVO.mrzqrs" placeholder="每日执勤人数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.zhongdVO.mrzqrs" placeholder="每日执勤人数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
@@ -621,14 +621,14 @@
 									<el-label class="mr5 vbm">消防队员总人数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.qtxfdwVO.xfdyzrs" placeholder="消防队员总人数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.qtxfdwVO.xfdyzrs" placeholder="消防队员总人数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 									<el-label class="mr5 vbm">每日执勤人数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.qtxfdwVO.mrzqrs" placeholder="每日执勤人数"></el-input>
+									<el-input type="number" size="small" v-model="editForm.qtxfdwVO.mrzqrs" placeholder="每日执勤人数" @change="validateInt"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>

@@ -270,39 +270,44 @@ new Vue({
                     this.editForm.dzlx = dzlxArray;
                     //行政区划
                     var xzqhArray = [];
-                    if(result.xzqh!=null && result.xzqh!="" && result.xzqh.substr(2,4)!="0000"){
-                        xzqhArray.push(result.xzqh.substr(0,2) + "0000");
-                        if(result.xzqh.substr(4,2)!="00"){
-                            xzqhArray.push(result.xzqh.substr(0,4) + "00");
+                    if(result.xzqh!=null && result.xzqh!=""){
+                        if(result.xzqh.substr(2,4)!="0000"){
+                            xzqhArray.push(result.xzqh.substr(0,2) + "0000");
+                            if(result.xzqh.substr(4,2)!="00"){
+                                xzqhArray.push(result.xzqh.substr(0,4) + "00");
+                            }
                         }
+                        xzqhArray.push(this.editForm.xzqh); 
                     }
-                    xzqhArray.push(result.xzqh);
                     this.editForm.xzqh = xzqhArray;
+
                     //上级消防队站
                     var sjdzArray = [];
-                    var temp = this.editForm.sjdzid;
-                    for(var i in this.sjdzData){
-                        if(temp == this.sjdzData[i].dzid){
-                            sjdzArray.push(this.sjdzData[i].dzid);
-                        }else{
-                            for(var j in this.sjdzData[i].children){
-                                if(temp == this.sjdzData[i].children[j].dzid){
-                                    sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid);
-                                }else{
-                                    for(var k in this.sjdzData[i].children[j].children){
-                                        if(temp == this.sjdzData[i].children[j].children[k].dzid){
-                                            sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid, this.sjdzData[i].children[j].children[k].dzid);
-                                        }else{
-                                            for(var n in this.sjdzData[i].children[j].children[k].children){
-                                                if(temp == this.sjdzData[i].children[j].children[k].children[n].dzid){
-                                                    sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid, this.sjdzData[i].children[j].children[k].dzid, this.sjdzData[i].children[j].children[k].children[n].dzid);
+                    var temp = result.sjdzid;
+                    if(temp!=null && temp!=""){
+                        for(var i in this.sjdzData){
+                            if(temp == this.sjdzData[i].dzid){
+                                sjdzArray.push(this.sjdzData[i].dzid);
+                            }else{
+                                for(var j in this.sjdzData[i].children){
+                                    if(temp == this.sjdzData[i].children[j].dzid){
+                                        sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid);
+                                    }else{
+                                        for(var k in this.sjdzData[i].children[j].children){
+                                            if(temp == this.sjdzData[i].children[j].children[k].dzid){
+                                                sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid, this.sjdzData[i].children[j].children[k].dzid);
+                                            }else{
+                                                for(var n in this.sjdzData[i].children[j].children[k].children){
+                                                    if(temp == this.sjdzData[i].children[j].children[k].children[n].dzid){
+                                                        sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid, this.sjdzData[i].children[j].children[k].dzid, this.sjdzData[i].children[j].children[k].children[n].dzid);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
+                        }  
                     }
                     this.editForm.sjdzid = sjdzArray;
                     this.loading = false;
@@ -313,42 +318,47 @@ new Vue({
         },
         //保存前校验
         validateSave: function(){   
-            if (this.editForm.dzmc == "" || this.editForm.dzmc == null) {
+            if (this.editForm.dzmc=="" || this.editForm.dzmc==null) {
                 this.$message.warning({
                     message: '请输入队站名称',
                     showClose: true
                 });
                 return false;
-            }else if(this.editForm.dzlx == "" || this.editForm.dzlx == null){
+            }else if(this.editForm.dzlx=="" || this.editForm.dzlx==null){
                 this.$message.warning({
                     message: '请选择队站类型',
                     showClose: true
                 });
                 return false;
-            }else if(!this.validateNum(this.editForm.lon, "经度应为数值型")){
+            }else if(!this.validateNum(this.editForm.lon, "经度应为数值型", "num")){
                 return false;
-            }else if(!this.validateNum(this.editForm.lat, "纬度应为数值型")){
+            }else if(!this.validateNum(this.editForm.lat, "纬度应为数值型", "num")){
                 return false;
-            }else if(!this.validateNum(this.editForm.gisX, "GIS_X应为数值型")){
+            }else if(!this.validateNum(this.editForm.gisX, "GIS_X应为数值型", "num")){
                 return false;
-            }else if(!this.validateNum(this.editForm.gisY, "GIS_Y应为数值型")){
+            }else if(!this.validateNum(this.editForm.gisY, "GIS_Y应为数值型", "num")){
                 return false;
-            }else if(!this.validateNum(this.editForm.gxsys, "管辖水源数应为数值型")){
+            }else if(!this.validateNum(this.editForm.gxsys, "管辖水源数应为非负整数", "int")){
                 return false;
-            }else if(!this.validateNum(this.editForm.gxzddws, "管辖重点单位数应为数值型")){
+            }else if(!this.validateNum(this.editForm.gxzddws, "管辖重点单位数应为非负整数", "int")){
                 return false;
-            }else if(!this.validateNum(this.editForm.xqmj, "执勤车辆数应为整数型")){
+            }else if(!this.validateNum(this.editForm.xqmj, "执勤车辆数应为非负整数", "int")){
                 return false;
-            }else if(!this.validateNum(this.editForm.zbqcs, "装备器材数应为整数型")){
+            }else if(!this.validateNum(this.editForm.zbqcs, "装备器材数应为非负整数", "int")){
                 return false;
-            }else if(!this.validateNum(this.editForm.mhjzl, "灭火剂总量应为数值型")){
+            }else if(!this.validateNum(this.editForm.mhjzl, "灭火剂总量应为非负整数", "int")){
                 return false;
             }
             return true;
         },
-        //数值型校验
-        validateNum: function(val, message){
-            var regPos = /^\d+(\.\d+)?$/; //非负浮点数
+        //数值校验
+        validateNum: function(val, message, type){
+            var regPos = /^\d+(\.\d+)?$/;  
+            if(type == "num"){
+            }else if(type == "int"){
+                regPos = /^\d+$/;
+            }
+            
             if(val!="" && val!=null){
                 if(!regPos.test(val)){
                     this.$message.warning({
@@ -359,6 +369,19 @@ new Vue({
                 }              
             }
             return true;
+        },
+
+        //非负整数校验
+        validateInt: function(val){
+            var regPos = /^\d+$/; //非负整数
+            if(val!="" && val!=null){
+                if(!regPos.test(val)){
+                    this.$message.warning({
+                        message: "请输入非负整数",
+                        showClose: true
+                    });
+                }              
+            }
         },
         //保存
         save: function (formName) {
@@ -371,8 +394,6 @@ new Vue({
                                 showClose: true
                             });
                         } else {
-                            console.log(44444444);
-                            console.log(this.editForm);
                             this.editForm.cjrid = this.shiroData.userid;
                             this.editForm.cjrmc = this.shiroData.realName;
                             this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
@@ -407,8 +428,16 @@ new Vue({
                     this.editForm.xgrid = this.shiroData.userid;
                     this.editForm.xgrmc = this.shiroData.realName;
                     this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
-                    this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
-                    this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
+                    if(this.editForm.xzqh.length>0){
+                        this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
+                    }else{
+                        this.editForm.xzqh = null;
+                    }
+                    if(this.editForm.sjdzid.length>0){
+                        this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
+                    }else{
+                        this.editForm.sjdzid = null;
+                    }
                     axios.post('/dpapi/xfdz/updateByXfdzVO', this.editForm).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功修改队站信息', '提示', {
