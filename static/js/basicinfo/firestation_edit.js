@@ -164,10 +164,11 @@ new Vue({
         }
         this.shiroData = shiroGlobal;
         this.status = getQueryString("ID");
-        //队站类型下拉框
-        this.getDzlxData();
+        
         //上级队站下拉框
         this.getSjdzData();
+        //队站类型下拉框
+        this.getDzlxData();
         //行政区划下拉框
         this.getXzqhData();
     },
