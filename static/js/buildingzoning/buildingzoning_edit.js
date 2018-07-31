@@ -24,6 +24,7 @@ new Vue({
             isCgl: false,
             //编辑表单
             editForm: {
+                //单位建筑新增
                 jzmc: "",
                 jzlx: "",
                 jzwz: "",
@@ -262,15 +263,15 @@ new Vue({
         },
         //保存前校验
         validateSave: function(){   
-            if (this.editForm.dzmc == "" || this.editForm.dzmc == null) {
+            if (this.editForm.jzmc == "" || this.editForm.jzmc == null) {
                 this.$message.warning({
-                    message: '请输入队站名称',
+                    message: '请输入建筑名称',
                     showClose: true
                 });
                 return false;
             }else if(this.editForm.dzlx == "" || this.editForm.dzlx == null){
                 this.$message.warning({
-                    message: '请选择队站类型',
+                    message: '请选择建筑类型',
                     showClose: true
                 });
                 return false;
@@ -313,7 +314,7 @@ new Vue({
         save: function (formName) {
             if(this.validateSave()){
                 if (this.status == 0) {//新增
-                    axios.get('/dpapi/xfdz/doCheckName/' + this.editForm.dzmc).then(function (res) {
+                    axios.get('/dpapi/xfdz/doCheckName/' + this.editForm.jzmc).then(function (res) {
                         if (res.data.result > 0) {
                             this.$message.warning({
                                 message: '中文名已存在，请重新命名',
@@ -381,7 +382,7 @@ new Vue({
             }
         },
         cancel: function () {
-            loadDiv("basicinfo/firestation_list");
+            loadDiv("buildingzoning/buildingzoning_list");
         },
         //建筑类型变化
         jzlxChange: function(){
