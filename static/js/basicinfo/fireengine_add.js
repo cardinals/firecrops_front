@@ -116,6 +116,7 @@ new Vue({
                 label: 'codeName',
                 value: 'codeValue'
             },
+
             //所属队站
             ssdzProps: {
                 children: 'children',
