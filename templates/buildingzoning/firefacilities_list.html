@@ -50,7 +50,6 @@
 							</div>
 						</el-form>
 					</el-row>
-
 					<div class="table_container">
 						<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" @selection-change="selectionChange"
 						 class="tableStyle" :height="tableheight">
@@ -64,7 +63,7 @@
 							<el-table-column prop="jbxx_xfsslxmc" label="消防设施类型" show-overflow-tooltip min-width="18%" align="center"></el-table-column>
 							<el-table-column prop="jbxx_jzmc" label="所属建筑名称" show-overflow-tooltip min-width="16%" align="center"></el-table-column>
 							<el-table-column prop="jbxx_iszddw" label="是否重点单位消防设施" show-overflow-tooltip min-width="18%" align="center" :formatter="isZddwFormat"></el-table-column>
-							<el-table-column prop="jbxx_zddwmc" label="重点单位" show-overflow-tooltip min-width="18%" align="center" :formatter="zddwFormat"></el-table-column>
+							<el-table-column prop="jbxx_zddwmc" label="所属重点单位" show-overflow-tooltip min-width="18%" align="center" :formatter="zddwFormat"></el-table-column>
 							<!-- <el-table-column label="操作" min-width="7%" align="center">
 									<template slot-scope="scope">
 										<el-button type="text" @click="editClick(scope.row)">编辑</el-button>
@@ -82,7 +81,522 @@
 						</el-row>
 					</div>
 				</div>
-				
+				<!--消防设施详情界面-->
+				<el-dialog title="消防设施详情" :visible.sync="detailVisible" @close="closeDialog()" :close-on-click-modal="false">
+					<div v-loading="loading_detail" element-loading-text="加载中">
+						<el-row class="inform-text">
+							<el-col :span="24">
+								<div>
+									<strong class="dtdlStyle">消防设施名称：</strong>
+									<v-text v-text="rowdata.jbxx_xfssmc||'无'"></v-text>
+								</div>
+							</el-col>
+						</el-row>
+						<el-row class="inform-text inform-margin">
+							<el-col :span="24">
+								<div>
+									<strong class="dtdlStyle">消防设施类型：</strong>
+									<v-text v-text="rowdata.jbxx_xfsslxmc||'无'"></v-text>
+								</div>
+							</el-col>
+						</el-row>
+						<el-row class="inform-text inform-margin">
+							<el-col :span="24">
+								<div>
+									<strong class="dtdlStyle">所属建筑名称：</strong>
+									<v-text v-text="rowdata.jbxx_jzmc||'无'"></v-text>
+								</div>
+							</el-col>
+						</el-row>
+						<el-row class="inform-text inform-margin" v-if="rowdata.jbxx_iszddw==='1'">
+							<el-col :span="24">
+								<div>
+									<strong class="dtdlStyle">所属重点单位：</strong>
+									<v-text v-text="rowdata.jbxx_zddwmc"></v-text>
+								</div>
+							</el-col>
+						</el-row>
+						<div class="mt10">
+							<el-tabs v-model="activeName" class="mb5">
+								<el-tab-pane name="first" label="基本信息">
+									<!-- 1001安全出口\1002疏散楼梯\1003消防电梯\2010半固定设施\3005半固定泡沫设施 -->
+									<div v-if="rowdata.jbxx_xfsslx === '1001'||rowdata.jbxx_xfsslx === '1002'||
+											   rowdata.jbxx_xfsslx === '1003'||rowdata.jbxx_xfsslx === '2010'||
+											   rowdata.jbxx_xfsslx === '3005'">
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">位置：</strong>
+													<v-text v-text="detailData.wz"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">数量：</strong>
+													<v-text v-text="detailData.sl"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 避难层（间） -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '1004'">
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">位置：</strong>
+												<v-text v-text="detailData.wz"></v-text>
+											</div>
+										</el-row>
+									</div>
+									<!-- 应急广播 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '1005'">
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">位置：</strong>
+													<v-text v-text="detailData.wz"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">有无应急广播：</strong>
+													<v-text v-text="detailData.ywyjgb"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 消防泵房 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '2001'">
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">位置：</strong>
+												<v-text v-text="detailData.wz"></v-text>
+											</div>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">消火栓泵数量：</strong>
+													<v-text v-text="detailData.xhssl"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">消火栓最大流量(L/s)：</strong>
+													<v-text v-text="detailData.xhszdll"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">喷淋泵数量：</strong>
+													<v-text v-text="detailData.plbsl"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">喷淋泵最大流量(L/s)：</strong>
+													<v-text v-text="detailData.plbzdll"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 消防水箱 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '2002'">
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">位置：</strong>
+												<v-text v-text="detailData.wz"></v-text>
+											</div>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">水箱容量(m³)：</strong>
+													<v-text v-text="detailData.sxrl"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">补给速度(L/s)：</strong>
+													<v-text v-text="detailData.bjsd"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 消防水池 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '2003'">
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">位置：</strong>
+												<v-text v-text="detailData.wz"></v-text>
+											</div>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">水箱容量(m³)：</strong>
+													<v-text v-text="detailData.xhssl"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">补给速度(L/s)：</strong>
+													<v-text v-text="detailData.xhszdll"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">是否有取水口(井)：</strong>
+													<v-text v-text="detailData.ywqsj"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">取水口(井)位置：</strong>
+													<v-text v-text="detailData.qsjwz"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 2004室内消火栓\2005室外消火栓\3003固定泡沫炮 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '2004'||rowdata.jbxx_xfsslx === '2005'||rowdata.jbxx_xfsslx === '3003'">
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">位置：</strong>
+												<v-text v-text="detailData.wz"></v-text>
+											</div>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">数量：</strong>
+													<v-text v-text="detailData.sl"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">是否可用：</strong>
+													<v-text v-text="detailData.sfky"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 水泵接合器 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '2006'">
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">位置：</strong>
+													<v-text v-text="detailData.wz"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">安装形式：</strong>
+													<v-text v-text="detailData.azxs"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">型号：</strong>
+													<v-text v-text="detailData.xh"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">进水口尺寸：</strong>
+													<v-text v-text="detailData.jskcc"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 喷淋系统 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '2007'">
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">位置：</strong>
+													<v-text v-text="detailData.wz"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">有无喷淋系统：</strong>
+													<v-text v-text="detailData.ywplxt"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 冷却水系统 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '2008'">
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">位置：</strong>
+												<v-text v-text="detailData.wz"></v-text>
+											</div>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">有无冷却水系统：</strong>
+													<v-text v-text="detailData.ywlqsxt"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">供水强度(L/min.㎡)：</strong>
+													<v-text v-text="detailData.gsqd"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 固定水炮 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '2009'">
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">位置：</strong>
+												<v-text v-text="detailData.wz"></v-text>
+											</div>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">数量：</strong>
+													<v-text v-text="detailData.sl"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">是否可用：</strong>
+													<v-text v-text="detailData.isky"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 泡沫泵房 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '3001'">
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">位置：</strong>
+													<v-text v-text="detailData.wz"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">泡沫液类型：</strong>
+													<v-text v-text="detailData.pmylx"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">泡沫液储量(t)：</strong>
+													<v-text v-text="detailData.pmycl"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">泡沫泵最大流量(L/s)：</strong>
+													<v-text v-text="detailData.pmbzdll"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 泡沫消火栓 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '3002'">
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">位置：</strong>
+													<v-text v-text="detailData.wz"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">是否可用：</strong>
+													<v-text v-text="detailData.isky"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 泡沫发生器 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '3004'">
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">位置：</strong>
+													<v-text v-text="detailData.wz"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">型号：</strong>
+													<v-text v-text="detailData.xh"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">数量：</strong>
+													<v-text v-text="detailData.sl"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">流量(L/s)：</strong>
+													<v-text v-text="detailData.ll"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 固定式蒸汽系统\半固定式蒸汽系统 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '4001'||rowdata.jbxx_xfsslx === '4002'">
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">位置：</strong>
+												<v-text v-text="detailData.wz"></v-text>
+											</div>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">数量：</strong>
+													<v-text v-text="detailData.sl"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">额定压力(Mpa)：</strong>
+													<v-text v-text="detailData.edyl"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 消防控制室 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '5000'">
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">位置：</strong>
+												<v-text v-text="detailData.wz"></v-text>
+											</div>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">自动报警是否可用：</strong>
+													<v-text v-text="detailData.iszdbj"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">联动控制是否可用：</strong>
+													<v-text v-text="detailData.isldkz"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 排烟口/出烟口 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '6001'">
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">位置：</strong>
+												<v-text v-text="detailData.wz"></v-text>
+											</div>
+										</el-row>
+									</div>
+									<!-- 防排烟系统 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '6002'">
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">系统启闭位置：</strong>
+													<v-text v-text="detailData.qbwz"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">是否可用：</strong>
+													<v-text v-text="detailData.isky"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 防火分区 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '7000'">
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">区域面积(㎡)：</strong>
+													<v-text v-text="detailData.qymj"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">区域位置：</strong>
+													<v-text v-text="detailData.qywz"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+										<el-row class="mb10">
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">分隔设施：</strong>
+													<v-text v-text="detailData.fgss"></v-text>
+												</div>
+											</el-col>
+											<el-col :span="12">
+												<div>
+													<strong class="dtdlStyle">分隔位置：</strong>
+													<v-text v-text="detailData.fgwz"></v-text>
+												</div>
+											</el-col>
+										</el-row>
+									</div>
+									<!-- 气体灭火系统\干粉灭火系统 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '8001'||rowdata.jbxx_xfsslx === '8002'">
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">起闭位置：</strong>
+												<v-text v-text="detailData.qbwz"></v-text>
+											</div>
+										</el-row>
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">作用范围：</strong>
+												<v-text v-text="detailData.zyfw"></v-text>
+											</div>
+										</el-row>
+									</div>
+									<!-- 其他消防设施 -->
+									<div v-else-if="rowdata.jbxx_xfsslx === '9000'">
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">位置：</strong>
+												<v-text v-text="detailData.wz"></v-text>
+											</div>
+										</el-row>
+										<el-row class="mb10">
+											<div>
+												<strong class="dtdlStyle">描述：</strong>
+												<v-text v-text="detailData.ms"></v-text>
+											</div>
+										</el-row>
+									</div>
+									<div v-else>
+									</div>
+								</el-tab-pane>
+							</el-tabs>
+						</div>
+					</div>
+				</el-dialog>
 			</div>
 			<!-- main-container -->
 		</div>

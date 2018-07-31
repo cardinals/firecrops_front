@@ -7,6 +7,7 @@ var vue = new Vue({
             visible: false,
             //菜单编码
             activeIndex: '',
+            activeName: 'first',
             //搜索表单
             searchForm: {
                 jbxx_xfssmc: "",
@@ -14,12 +15,15 @@ var vue = new Vue({
                 jbxx_jzmc: ""
             },
             tableData: [],
+            detailVisible: false,
+            detailData: [],
             XFSSLX_data: [],
 
             //表高度变量
             tableheight: 443,
             //显示加载中样
             loading: false,
+            loading_detail: false,
             labelPosition: 'right',
             //多选值
             multipleSelection: [],
@@ -29,14 +33,10 @@ var vue = new Vue({
             pageSize: 10,
             //总记录数
             total: 10,
-            //行数据保存
+            //行数据
             rowdata: {},
             //序号
             indexData: 0,
-            //选中的值显示
-            sels: [],
-            //选中的序号
-            selectIndex: -1,
             //树结构配置
             defaultProps: {
                 children: 'children',
@@ -82,25 +82,25 @@ var vue = new Vue({
             this.searchForm.jbxx_jzmc = "";
             this.searchClick('reset');
         },
-        isZddwFormat: function(row, column){
+        isZddwFormat: function (row, column) {
             var rowData = row[column.property];
             var isZddw = row.jbxx_iszddw;
-            if(isZddw == null){
+            if (isZddw == null) {
                 return null;
-            }else if(isZddw =='0'){
+            } else if (isZddw == '0') {
                 return '否';
-            }else{
+            } else {
                 return '是';
             }
         },
-        zddwFormat: function(row, column){
+        zddwFormat: function (row, column) {
             var rowData = row[column.property];
             var isZddw = row.jbxx_iszddw;
-            if(isZddw == null){
+            if (isZddw == null) {
                 return null;
-            }else if(isZddw =='0'){
+            } else if (isZddw == '0') {
                 return '--';
-            }else{
+            } else {
                 return rowData;
             }
         },
@@ -115,13 +115,19 @@ var vue = new Vue({
         selectionChange: function (val) {
             this.multipleSelection = val;
         },
-        detailClick(val) {
-            // var params = {
-            //     id: val.jzid,
-            //     jzlx: val.jzlx
-            // }
-            // loadDivParam("buildingzoning/buildingzoning_detail", params);
-            //window.location.href = "building_zoning_detail.html?id=" + val.jzid +"&jzlx=" +val.jzlx + "&index=" + this.activeIndex;
+        detailClick: function (val) {
+            this.detailVisible = true;
+            this.rowdata = val;
+            axios.post('/dpapi/firefacilities/doFindXfssDetail', val).then(function (res) {
+                this.detailData = res.data.result;
+                _self.loading = false;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+            this.loading_detail = false;
+        },
+        closeDialog: function () {
+            this.detailVisible = false;
         },
         //新增
         addClick: function () {
