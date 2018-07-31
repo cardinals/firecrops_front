@@ -2,9 +2,9 @@
 window.onload = function () {
     var type = getQueryString("type");
     if (type == "XZ") {
-        loadBreadcrumb("消防车辆信息新增", "消防车辆管理新增");
+        loadBreadcrumb("消防车辆管理", "消防车辆管理新增");
     } else if (type == "BJ") {
-        loadBreadcrumb("消防车辆信息编辑", "消防车辆管理编辑");
+        loadBreadcrumb("消防车辆管理", "消防车辆管理编辑");
     }
 }
 //axios默认设置cookie
@@ -43,8 +43,8 @@ new Vue({
                 czmhjl: '0.00',//车载灭火剂量(t)
                 mhjhhb: "",//灭火剂混合比
                 clmc: "",
-                gisX: "",//
-                gisY: "",//
+                gisX: '0.00',//
+                gisY: '0.00',//
                 ssdz: [],//所属队站
                 cllx: [],//车辆类型
                 clzt: "",
@@ -129,9 +129,9 @@ new Vue({
 
         var type = getQueryString("type");
         if (type == "XZ") {
-            loadBreadcrumb("消防车辆信息新增", "消防车辆管理新增");
+            loadBreadcrumb("消防车辆管理", "消防车辆管理新增");
         } else if (type == "BJ") {
-            loadBreadcrumb("消防车辆信息编辑", "消防车辆管理编辑");
+            loadBreadcrumb("消防车辆管理", "消防车辆管理编辑");
         }
 
         this.searchClick('click');
@@ -375,6 +375,24 @@ new Vue({
                     showClose: true
                 });
                 this.addForm.czmhjl = '';
+            } 
+        },
+        gisXChange: function (value) {
+            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+                this.$message.warning({
+                    message: "请输入数字或小数！",
+                    showClose: true
+                });
+                this.addForm.gisX = '';
+            } 
+        },
+        gisYChange: function (value) {
+            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
+                this.$message.warning({
+                    message: "请输入数字或小数！",
+                    showClose: true
+                });
+                this.addForm.gisY = '';
             } 
         },
         pickerOptions0: {

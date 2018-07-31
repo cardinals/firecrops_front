@@ -27,14 +27,14 @@
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input size="small" v-model="addForm.clmc" placeholder="车辆名称" clearable></el-input>
 							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm"><span style="color:red;">* </span>车辆类型</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-cascader :options="allTypesData" :props="props" size="small" v-model="addForm.cllx" placeholder="全部" class="searchSelect"
 									clearable change-on-select :show-all-levels="false"></el-cascader>
 							</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -43,13 +43,14 @@
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input size="small" v-model="addForm.cphm" placeholder="车牌号码" clearable></el-input>
 							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm"><span style="color:red;">* </span>所属队站</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-cascader :options="allTeamsData" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="所属队站" class="searchSelect"
 									clearable change-on-select :show-all-levels="false"></el-cascader>
 							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
 						<el-row class="tr">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -60,13 +61,13 @@
 									<el-option v-for="type in allStatesData" :label="type.codeName" :value="type.codeValue" :key="type.codeName"></el-option>
 								</el-select>
 							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">车辆编码</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input size="small" v-model="addForm.clbm" placeholder="车辆编码" clearable></el-input>
 							</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
 								<span class="space">&nbsp;</span>
 							</el-col>
 						</el-row>
@@ -82,14 +83,14 @@
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input size="small" v-model="addForm.gpsbh" placeholder="GPS编号" clearable></el-input>
 							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">行政区划</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="行政区划" class="searchSelect"
 									clearable change-on-select :show-all-levels="false"></el-cascader>
 							</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
 									<span class="space">&nbsp;</span>
 							</el-col>
 						</el-row>
@@ -98,16 +99,16 @@
 									<el-label class="mr5 vbm">经度</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="addForm.gisX" placeholder="经度" clearable></el-input>
+									<el-input size="small" @change="gisXChange" v-model="addForm.gisX" placeholder="经度" clearable></el-input>
 								</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 									<el-label class="mr5 vbm">纬度</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="addForm.gisY" placeholder="纬度" clearable></el-input>
+									<el-input size="small" @change="gisYChange" v-model="addForm.gisY" placeholder="纬度" clearable></el-input>
 								</el-col>
-								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-										<span class="space">&nbsp;</span>
+								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
+									<span class="space">&nbsp;</span>
 								</el-col>
 						</el-row>
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
@@ -122,7 +123,7 @@
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input size="small" v-model="addForm.sccj" placeholder="生产厂家" clearable></el-input>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="13" :sm="13" :md="13" :lg="13" :xl="13">&nbsp;</el-col>
 						</el-row>
 					</el-form>
 				</div>
@@ -140,13 +141,13 @@
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input size="small" @change="sbllChange" v-model="addForm.sbll" placeholder="水泵流量" clearable></el-input>
 							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">载水量(t)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input size="small" @change="zslChange" v-model="addForm.zsl" placeholder="载水量(t)" clearable></el-input>
 							</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
 						<el-row class="tr">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -155,12 +156,13 @@
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input size="small" @change="xfpllChange" v-model="addForm.xfpll" placeholder="消防炮流量" clearable></el-input>
 							</el-col>
-							<el-col :xs="4" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm" >水泵额定压力</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input size="small" @change="sbedylChange" v-model="addForm.sbedyl" placeholder="水泵额定压力(Mpa)" clearable></el-input>
 							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
 						<el-row class="tr mt5">
 							<el-row class="tr">
@@ -170,7 +172,7 @@
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input size="small" @change="czmhjlChange" v-model="addForm.czmhjl" placeholder="车载灭火剂量(t)" clearable></el-input>
 							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">车载灭火剂类别</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
@@ -185,12 +187,13 @@
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input size="small" v-model="addForm.mhjhhb" placeholder="灭火剂混合比" clearable></el-input>
 							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">举高类车辆高度</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input size="small" @change="jglgdChange" v-model="addForm.jglgd" placeholder="举高类车辆高度(m)" clearable></el-input>
 							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
 					</el-form>
 					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
@@ -202,10 +205,10 @@
 						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 							<el-label class="mr5 vbm">备注</el-label>
 						</el-col>
-						<el-col :xs="19" :sm="19" :md="19" :lg="19" :xl="19">
+						<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
 							<el-input size="small" v-model="addForm.bz" type="textarea" placeholder="备注" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
 						</el-col>
-						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp; </el-col>
 					</el-row>
 				</div>
 				<el-row class="mt20 mb20">
