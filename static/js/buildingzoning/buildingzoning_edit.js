@@ -24,27 +24,13 @@ new Vue({
             isCgl: false,
             //编辑表单
             editForm: {
-                dzmc: "",
-                dzjc: "",
-                dzbm: "",
-                dzlx: "",
-                sjdzid: "",
-                dzdz: "",
-                xzqh: "",
+                jzmc: "",
+                jzlx: "",
+                jzwz: "",
                 lon: "",
                 lat: "",
-                gisX: "",
-                gisY: "",
-                gxsys: "",
-                gxzddws: "",
-                xqfw: "",
-                xqmj: "",
-                lxr: "",
-                lxdh: "",
-                czhm: "",
-                zqcls: "",
-                zbqcs: "",
-                mhjzl: "",
+                xqxclx: "",
+                yjddsc: "",
                 bz: "",
                 //创建人、修改人
                 cjrid: "",
@@ -156,10 +142,6 @@ new Vue({
         this.status = getQueryString("ID");
         //建筑类型下拉框
         this.getJzlxData();
-        //上级队站下拉框
-        this.getSjdzData();
-        //行政区划下拉框
-        this.getXzqhData();
     },
     methods: {
         handleNodeClick(data) {
@@ -171,30 +153,7 @@ new Vue({
             }.bind(this),function(error){
                 console.log(error);
             })
-        },
-        //上级机构下拉框
-        getSjdzData: function(){
-            var organization = this.shiroData.organizationVO;
-            var params = {
-                dzid: organization.uuid,
-                dzjc: organization.jgjc,
-                dzbm: organization.jgid
-            };
-            axios.post('/dpapi/xfdz/findSjdzByUser', params).then(function(res){
-                this.sjdzData = res.data.result;
-                this.searchClick();
-            }.bind(this),function(error){
-                console.log(error);
-            })      
-        },
-        //行政区划下拉框
-        getXzqhData: function(){
-            axios.get('/api/codelist/getXzqhTreeByUser').then(function(res){
-                this.xzqhData = res.data.result;
-            }.bind(this),function(error){
-                console.log(error);
-            })
-        },
+        },    
         
         //表格查询事件
         searchClick: function () {
