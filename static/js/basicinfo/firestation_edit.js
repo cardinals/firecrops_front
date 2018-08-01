@@ -347,8 +347,70 @@ new Vue({
                 return false;
             }else if(!this.validateNum(this.editForm.zbqcs, "装备器材数应为非负整数", "int")){
                 return false;
-            }else if(!this.validateNum(this.editForm.mhjzl, "灭火剂总量应为非负整数", "int")){
+            }else if(!this.validateNum(this.editForm.mhjzl, "灭火剂总量应为非负整数", "num")){
                 return false;
+            }
+            //总队校验
+            if(isZongDui){
+                if(!this.validateNum(this.editForm.zongdVO.xygbrs, "现役官兵人数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.zongdVO.zfzzxfys, "政府专职消防员数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.zongdVO.wzgys, "文职雇员数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.zongdVO.xxzhids, "下辖支队数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.zongdVO.xxzhongds, "下辖中队数应为非负整数","int")){
+                    return false;
+                }
+            }
+
+            //支队校验
+            if(isZhiDui){
+                if(!this.validateNum(this.editForm.zhidVO.xygbrs, "现役官兵人数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.zhidVO.zfzzxfys, "政府专职消防员数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.zhidVO.xfwys, "消防文员数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.zhidVO.xxdads, "下辖大队数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.zhidVO.xxzhongds, "下辖中队数应为非负整数","int")){
+                    return false;
+                }
+            }
+
+            //大队校验
+            if(isDaDui){
+                if(!this.validateNum(this.editForm.dadVO.xygbrs, "现役官兵人数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.dadVO.zfzzxfys, "政府专职消防员数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.dadVO.xfwys, "消防文员数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.dadVO.xxzhongds, "下辖中队数应为非负整数","int")){
+                    return false;
+                }
+            }
+
+            //中队校验
+            if(isZhongDui){
+                if(!this.validateNum(this.editForm.zhongdVO.xyrs, "现役人数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.zhongdVO.zfzzxfys, "政府专职消防员数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.zhongdVO.mrzqrs, "每日执勤人数应为非负整数","int")){
+                    return false;
+                }
+            }
+
+            //其他消防队伍校验
+            if(isQiTaXiaoFangDuiWu){
+                if(!this.validateNum(this.editForm.qtxfdwVO.xfdyzrs, "消防队员总人数应为非负整数","int")){
+                    return false;
+                }else if(!this.validateNum(this.editForm.qtxfdwVO.mrzqrs, "每日执勤人数应为非负整数","int")){
+                    return false;
+                }
             }
             return true;
         },
