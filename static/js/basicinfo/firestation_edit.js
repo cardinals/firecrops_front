@@ -331,13 +331,13 @@ new Vue({
                     showClose: true
                 });
                 return false;
-            }else if(!this.validateNum(this.editForm.lon, "经度应为数值型", "num")){
+            }else if(!this.validateNum(this.editForm.lon, "经度应为数值型", "figure")){
                 return false;
-            }else if(!this.validateNum(this.editForm.lat, "纬度应为数值型", "num")){
+            }else if(!this.validateNum(this.editForm.lat, "纬度应为数值型", "figure")){
                 return false;
-            }else if(!this.validateNum(this.editForm.gisX, "GIS_X应为数值型", "num")){
+            }else if(!this.validateNum(this.editForm.gisX, "GIS_X应为数值型", "figure")){
                 return false;
-            }else if(!this.validateNum(this.editForm.gisY, "GIS_Y应为数值型", "num")){
+            }else if(!this.validateNum(this.editForm.gisY, "GIS_Y应为数值型", "figure")){
                 return false;
             }else if(!this.validateNum(this.editForm.gxsys, "管辖水源数应为非负整数", "int")){
                 return false;
@@ -354,10 +354,13 @@ new Vue({
         },
         //数值校验
         validateNum: function(val, message, type){
+            //type=num:非负数，figure：数值，int：整数
             var regPos = /^\d+(\.\d+)?$/;  
             if(type == "num"){
             }else if(type == "int"){
                 regPos = /^\d+$/;
+            }else if(type == "figure"){
+                regPos = /^(-)\d+(\.\d+)?$/;  
             }
             
             if(val!="" && val!=null){
