@@ -135,7 +135,7 @@ var vue = new Vue({
                     this.multipleSelection[i].xgrid = this.role_data.userid;
                     this.multipleSelection[i].xgrmc = this.role_data.realName;
                 }
-                axios.post('/dpapi/fireengine/doDeleteFireengine', this.multipleSelection).then(function (res) {
+                axios.post('/dpapi/building/doDeleteBuildingzoning', this.multipleSelection).then(function (res) {
                     this.$message({
                         message: "成功删除" + res.data.result + "条车辆信息",
                         showClose: true,

@@ -26,7 +26,7 @@ new Vue({
             editForm: {
                 //单位建筑新增
                 jzmc: "",
-                jzlx: "",
+                option_JZLX: "",
                 jzwz: "",
                 lon: "",
                 lat: "",
@@ -39,79 +39,46 @@ new Vue({
                 xgrid: "",
                 xgrmc: "",
 
-                //总队VO
-                zongdVO: {
-                    dzid: "",
-                    xygbrs: "",
-                    zfzzxfys: "",
-                    wzgys: "",
-                    xxzhids: "",
-                    xxzhongds: "",
-                    zdzxm: "",
-                    zdzlxfs: "",
-                    zdzwxm: "",
-                    zdzwlxfs: "",
+                //建筑类VO
+                jzlVO: {
+                    jzid: "",
+                    jzqk: "",
+                    jzsyxz:"",
+                    jzjg:"",
+                    gnms:"",
+                    zdmj:"",
+                    jzmj:"",
+                    dsgd:"",
+                    dxgd:"",
+                    dscs:"",
                 },
-                //支队VO
-                zhidVO: {
-                    dzid: "",
-                    xygbrs: "",
-                    zfzzxfys: "",
-                    xfwys: "",
-                    xxdads: "",
-                    xxzhongds: "",
-                    sfdljj: "",
-                    zdzxm: "",
-                    zdzlxfs: "",
-                    zdzwxm: "",
-                    zdzwlxfs: "",
+                //装置类VO
+                zzlVO:{
+                    jzid: "",
+                    jzjg: "",
+                    zdmj: "",
+                    zzgd: "",
+                    jsfzr: "",
+                    jsfzrdh: "",
+                    zzzc: "",
+                    ylxx: "",
+                    cwxx: "",
+                    gylc:""
                 },
-                //大队VO
-                dadVO: {
-                    dzid: "",
-                    xygbrs: "",
-                    zfzzxfys: "",
-                    xfwys: "",
-                    xxzhongds: "",
-                    sfdljj: "",
-                    ddzxm: "",
-                    ddzlxfs: "",
-                    jdyxm: "",
-                    jdylxfs: "",
-                    fddzxm: "",
-                    fddzlxfs: "",
-                    fjdyxm: "",
-                    fjdylxfs: "",
-                },
-                //中队VO
-                zhongdVO: {
-                    dzid: "",
-                    xyrs: "",
-                    zfzzxfys: "",
-                    mrzqrs: "",
-                    zdzxm: "",
-                    zdzlxfs: "",
-                    zdyxm: "",
-                    zdylxfs: "",
-                    fzdyxm: "",
-                    fzdylxfs: "",
-                    fzdzxm1: "",
-                    fzdzlxfs1: "",
-                    fzdzxm2: "",
-                    fzdzlxfs2: "",
-                    fzdzxm3: "",
-                    fzdzlxfs3: ""
-                },
-                //其他消防队伍VO
-                qtxfdwVO: {
-                    dzid: "",
-                    xfdyzrs: "",
-                    mrzqrs: "",
-                    gxdw: "",
-                    gxdwlxfs: "",
-                    dzxm: "",
-                    dzlxfs: "",
-                },
+                //储罐类VO
+                cglVO:{
+                    jzid: "",
+                    zrj: "",
+                    cgsl: "",
+                    cgjg: "",
+                    ccjzms: "",
+                    jsfzr: "",
+                    jsfzrdh: "",
+                    plqkd: "",
+                    plqkx: "",
+                    plqkn:"",
+                    plqkb:""
+                    },
             },
             props: {
                 value: 'codeValue',
@@ -126,28 +93,26 @@ new Vue({
         }
     },
     created: function () {
-        /**菜单选中 by li.xue 20180628*/
-        /**
-        var index = getQueryString("index");
-        $("#activeIndex").val(index);
-        this.activeIndex = index;
-         */
-        
-        /**面包屑 by li.xue 20180628*/
+
+        /**面包屑 by zjc 20180801*/
         var type = getQueryString("type");
         if (type == "XZ") {
             loadBreadcrumb("单位建筑信息", "单位建筑信息新增");
         } else if (type == "BJ") {
             loadBreadcrumb("单位建筑信息", "单位建筑信息编辑");
         }
+        this.searchClick('click');
         this.shiroData = shiroGlobal;
-        this.status = getQueryString("ID");
         //建筑类型下拉框
         this.getJzlxData();
     },
+    mounted: function () {
+        this.status = getQueryString("ID");
+       
+    },
     methods: {
-        handleNodeClick(data) {
-        },
+        // handleNodeClick(data) {
+        // },
         //建筑类型下拉框
         getJzlxData: function(){
             axios.get('/api/codelist/getCodetype/JZLX').then(function(res){
@@ -157,105 +122,17 @@ new Vue({
             })
         },    
         
-        //表格查询事件
-        searchClick: function () {
+        //初始化查询事件
+        searchClick: function (type) {
+            debugger;
             this.loading = true;
             if (this.status == 0) {  //新增
                 this.loading = false;
             } else {//修改
-                var dzlxParam = getQueryString("dzlx");
-                var params = {
-                    dzid : this.status,
-                    dzlx : dzlxParam
-                };
-                axios.post('/dpapi/xfdz/findDzDetailByVo',params).then(function (res) {
-                    var result = res.data.result;
+                axios.post('/dpapi/building/'+ this.status).then(function (res) {
+                   
+                    // var result = res.data.result;
                     this.editForm = res.data.result;
-                    //队站子属性信息
-                    if(dzlxParam!=null && dzlxParam!=""){
-                        switch(dzlxParam.substr(0,2)){
-                            case "02":
-                                this.isZongDui = true;
-                                this.editForm.zhidVO = {};
-                                this.editForm.dadVO = {};
-                                this.editForm.zhongdVO = {};
-                                this.editForm.qtxfdwVO = {};
-                                break;
-                            case "03":
-                                this.isZhiDui = true;
-                                this.editForm.zongdVO = {};
-                                this.editForm.dadVO = {};
-                                this.editForm.zhongdVO = {};
-                                this.editForm.qtxfdwVO = {};
-                                break;
-                            case "05":
-                                this.isDaDui = true;
-                                this.editForm.zongdVO = {};
-                                this.editForm.zhidVO = {};
-                                this.editForm.zhongdVO = {};
-                                this.editForm.qtxfdwVO = {};
-                                break;
-                            case "09":
-                                this.isZhongDui = true;
-                                this.editForm.zongdVO = {};
-                                this.editForm.zhidVO = {};
-                                this.editForm.dadVO = {};
-                                this.editForm.qtxfdwVO = {};
-                                break;
-                            case "0A":
-                                this.isQiTaXiaoFangDuiWu = true;
-                                this.editForm.zongdVO = {};
-                                this.editForm.zhidVO = {};
-                                this.editForm.dadVO = {};
-                                this.editForm.zhongdVO = {};
-                                break;
-                        }
-                    }
-                    
-                    //队站类型
-                    var dzlxArray = [];
-                    if(result.dzlx!=null && result.dzlx!="" && result.dzlx.substr(0,2)=="0A" &&result.dzlx!="0A00"){
-                        dzlxArray.push("0A00");
-                    }
-                    dzlxArray.push(result.dzlx);
-                    this.editForm.dzlx = dzlxArray;
-                    //行政区划
-                    var xzqhArray = [];
-                    if(result.xzqh!=null && result.xzqh!="" && result.xzqh.substr(2,4)!="0000"){
-                        xzqhArray.push(result.xzqh.substr(0,2) + "0000");
-                        if(result.xzqh.substr(4,2)!="00"){
-                            xzqhArray.push(result.xzqh.substr(0,4) + "00");
-                        }
-                    }
-                    xzqhArray.push(result.xzqh);
-                    this.editForm.xzqh = xzqhArray;
-                    //上级消防队站
-                    var sjdzArray = [];
-                    var temp = this.editForm.sjdzid;
-                    for(var i in this.sjdzData){
-                        if(temp == this.sjdzData[i].dzid){
-                            sjdzArray.push(this.sjdzData[i].dzid);
-                        }else{
-                            for(var j in this.sjdzData[i].children){
-                                if(temp == this.sjdzData[i].children[j].dzid){
-                                    sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid);
-                                }else{
-                                    for(var k in this.sjdzData[i].children[j].children){
-                                        if(temp == this.sjdzData[i].children[j].children[k].dzid){
-                                            sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid, this.sjdzData[i].children[j].children[k].dzid);
-                                        }else{
-                                            for(var n in this.sjdzData[i].children[j].children[k].children){
-                                                if(temp == this.sjdzData[i].children[j].children[k].children[n].dzid){
-                                                    sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid, this.sjdzData[i].children[j].children[k].dzid, this.sjdzData[i].children[j].children[k].children[n].dzid);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    this.editForm.sjdzid = sjdzArray;
                     this.loading = false;
                 }.bind(this), function (error) {
                     console.log(error);
@@ -311,11 +188,23 @@ new Vue({
             }
             return true;
         },
+        //非负整数校验
+        validateInt: function(val){
+            var regPos = /^\d+$/; //非负整数
+            if(val!="" && val!=null){
+                if(!regPos.test(val)){
+                    this.$message.warning({
+                        message: "请输入非负整数",
+                        showClose: true
+                    });
+                }              
+            }
+        },
         //保存
         save: function (formName) {
+            debugger;
             if(this.validateSave()){
                 if (this.status == 0) {//新增
-                    axios.get('/dpapi/xfdz/doCheckName/' + this.editForm.jzmc).then(function (res) {
                         if (res.data.result > 0) {
                             this.$message.warning({
                                 message: '中文名已存在，请重新命名',
@@ -324,10 +213,12 @@ new Vue({
                         } else {
                             this.editForm.cjrid = this.shiroData.userid;
                             this.editForm.cjrmc = this.shiroData.realName;
-                            this.editForm.jzlx = this.editForm.jzlx[this.editForm.jzlx.length-1];//建筑类型
+                            this.editForm.jzlx = this.editForm.jzlx;
+                            // this.editForm.jzlx = this.editForm.jzlx[this.editForm.jzlx.length-1];//建筑类型
                             // this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];                            
                             // this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
-                            axios.post('/dpapi/xfdz/insertByXfdzVO', this.editForm).then(function (res) {
+                           debugger; 
+                            axios.post('/dpapi/building/insertByVO', this.editForm).then(function (res) {
                                 if (res.data.result != null) {
                                     this.$alert('成功保存单位建筑信息', '提示', {
                                         type: 'success',
@@ -349,16 +240,13 @@ new Vue({
                                 console.log(error);
                             })
                         }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
                 } else {//修改
                     this.editForm.xgrid = this.shiroData.userid;
                     this.editForm.xgrmc = this.shiroData.realName;
-                    this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
-                    this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
-                    this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
-                    axios.post('/dpapi/xfdz/updateByXfdzVO', this.editForm).then(function (res) {
+                    this.editForm.jzlx = this.editForm.jzlx;
+                    // this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
+                    // this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
+                    axios.post('/dpapi/building/doUpdateBuildingzoning', this.editForm).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功修改单位建筑信息', '提示', {
                                 type: 'success',
@@ -379,6 +267,7 @@ new Vue({
                     }.bind(this), function (error) {
                         console.log(error);
                     })
+  
                 }
             }
         },
