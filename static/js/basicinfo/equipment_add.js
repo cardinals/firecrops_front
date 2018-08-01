@@ -106,10 +106,16 @@ new Vue({
             }
         },
         //消防车辆弹出页---------------------------------------------------------------
-        engineList: function (val) {
+        engineList: function (val,type) {
+            if(type == 'page'){
+                this.tableData = [];
+            }else{
+                this.currentPage = 1;
+            }
             this.clIndex = val;
             this.engineListVisible = true;
             this.loading_engine = true;
+            
             var params = {
                 clmc: this.searchForm.clmc,
                 cphm: this.searchForm.cphm,
@@ -125,22 +131,6 @@ new Vue({
                 console.log(error);
             })
         },
-        //当前页修改事件
-        currentPageChange: function (val) {
-            this.currentPage = val;
-            // console.log("当前页: " + val);
-            var _self = this;
-            _self.loadingData(); //重新加载数据
-        },
-        //表格重新加载数据
-        loadingData: function () {
-            var _self = this;
-            _self.loading_engine = true;
-            setTimeout(function () {
-                console.info("加载数据成功");
-                _self.loading_engine = false;
-            }, 300);
-        },
         //选择车辆，返回车辆名称和id
         selectRow: function (val) {
             var index = this.clIndex;
@@ -152,7 +142,7 @@ new Vue({
         clearEngineList: function (val) {
             this.searchForm.clmc = "";
             this.searchForm.cphm = "";
-            this.engineList();
+            this.engineList(this.clIndex, 'reset');
         },
 
         //当前登录用户信息
