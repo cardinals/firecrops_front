@@ -33,3 +33,6 @@ input[type=file] {
 .el-message{
     z-index: 10005 !important;
 }
+.el-input-number--small {
+    width: 100%;
+    }

@@ -368,62 +368,10 @@ new Vue({
                     showClose: true
                 });
                 return false;
-            }else if(!this.validateNum(this.addForm.lon, "经度应为数值型", "num")){
-                return false;
-            }else if(!this.validateNum(this.addForm.lat, "纬度应为数值型", "num")){
-                return false;
-            }else if(!this.validateNum(this.addForm.gisX, "GIS_X应为数值型", "num")){
-                return false;
-            }else if(!this.validateNum(this.addForm.gisY, "GIS_Y应为数值型", "num")){
-                return false;
-            }else if(!this.validateNum(this.addForm.czmhjl, "车载灭火剂量应为非负整数", "int")){
-                return false;
-            }else if(!this.validateNum(this.addForm.sbedyl, "水泵额定压力应为非负整数", "int")){
-                return false;
-            }else if(!this.validateNum(this.addForm.xfpll, "消防炮流量应为非负整数", "int")){
-                return false;
-            }else if(!this.validateNum(this.addForm.zsl, "载水量应为非负整数", "int")){
-                return false;
-            }else if(!this.validateNum(this.addForm.sbll, "水泵流量应为非负整数", "int")){
-                return false;
-            }else if(!this.validateNum(this.addForm.jglgd, "举高类车辆高度应为非负整数", "int")){
-                return false;
             }
             return true;
         },
-        //数值校验
-        validateNum: function(val, message, type){
-            var regPos = /^\d+(\.\d+)?$/;  
-            if(type == "num"){
-            }else if(type == "int"){
-                regPos = /^\d+$/;
-            }
-            
-            if(val!="" && val!=null){
-                if(!regPos.test(val)){
-                    this.$message.warning({
-                        message: message,
-                        showClose: true
-                    });
-                    return false;
-                }              
-            }
-            return true;
-        },
-
-        //非负整数校验
-        validateInt: function(val){
-            var regPos = /^\d+$/; //非负整数
-            if(val!="" && val!=null){
-                if(!regPos.test(val)){
-                    this.$message.warning({
-                        message: "请输入非负整数",
-                        showClose: true
-                    });
-                }              
-            }
-        },
-
+       
 
         //点击保存事件
         save: function () {
