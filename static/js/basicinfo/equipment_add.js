@@ -106,7 +106,7 @@ new Vue({
             }
         },
         //消防车辆弹出页---------------------------------------------------------------
-        engineList: function (val,type) {
+        engineList: function (type,val) {
             if(type == 'page'){
                 this.tableData = [];
             }else{
@@ -142,7 +142,7 @@ new Vue({
         clearEngineList: function (val) {
             this.searchForm.clmc = "";
             this.searchForm.cphm = "";
-            this.engineList(this.clIndex, 'reset');
+            this.engineList('reset',this.clIndex);
         },
 
         //当前登录用户信息

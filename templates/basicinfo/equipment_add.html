@@ -121,7 +121,7 @@
 								<el-input v-model="domain.clmc" size="small" placeholder="车辆名称" disabled></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" class="tl">
-								<el-button icon="search" size="small" style="border: none;background-color: #FFFFFF;" @click="engineList(index,'click')"></el-button>
+								<el-button icon="search" size="small" style="border: none;background-color: #FFFFFF;" @click="engineList('click',index)"></el-button>
 							</el-col>
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">装载数量</el-label>
@@ -175,7 +175,7 @@
 										<el-input size="small" v-model="searchForm.cphm" placeholder="车牌号码" clearable></el-input>
 									</el-col>
 									<el-col :span="6" class="btnSearchPlus">
-										<el-button type="primary" icon="search" size="small" @click="engineList">查询</el-button>
+										<el-button type="primary" icon="search" size="small" @click="engineList('click',clIndex)">查询</el-button>
 										<el-button type="clear" icon="delete" size="small" @click="clearEngineList">清空</el-button>
 									</el-col>
 								</el-row>
