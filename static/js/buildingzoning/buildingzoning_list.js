@@ -15,7 +15,7 @@ var vue = new Vue({
             },
             tableData: [],
             JZFL_data:[],
-            
+            role_data: [],//当前用户信息
             //表高度变量
             tableheight: 450,
             //显示加载中样
@@ -55,6 +55,14 @@ var vue = new Vue({
     methods: {
         handleNodeClick(data) {
         },
+        //获取当前用户信息
+        roleData: function () {
+            axios.post('/api/shiro').then(function (res) {
+                this.role_data = res.data;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
         //表格查询事件
         searchClick: function (type) {
             if(type == 'page'){
@@ -64,7 +72,9 @@ var vue = new Vue({
             }
             var _self = this;
             _self.loading = true;//表格重新加载
+            this.searchForm.jzid = this.GetQueryString("jzid");//获取队站ID
             var params={
+                jzid:this.searchForm.jzid,
                 jzmc:this.searchForm.jzmc,
                 jzlx:this.searchForm.option_JZLX,
                 jzwz:this.searchForm.jzwz,
@@ -93,13 +103,7 @@ var vue = new Vue({
                 console.log(error);
             })
         },
-        //表格勾选事件
-        selectionChange: function (val) {
-            for (var i = 0; i < val.length; i++) {
-                var row = val[i];
-            }
-            this.multipleSelection = val;
-        },
+      
         detailClick(val) {
             var params = {
                 id: val.jzid,
@@ -107,6 +111,12 @@ var vue = new Vue({
             }
             loadDivParam("buildingzoning/buildingzoning_detail", params);
             //window.location.href = "building_zoning_detail.html?id=" + val.jzid +"&jzlx=" +val.jzlx + "&index=" + this.activeIndex;
+        },
+        //根据参数部分和参数名来获取参数值 
+        GetQueryString(name) {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
         },
         //新增
         addClick: function(){
@@ -119,10 +129,14 @@ var vue = new Vue({
         editClick: function(val){
             var params = {
                 ID: val.jzid,
-                dzlx: val.jzlx,
+                jzlx: val.jzlx,
                 type: "BJ"
             }
             loadDivParam("buildingzoning/buildingzoning_edit", params);
+        },
+        //表格勾选事件
+        selectionChange: function (val) {
+            this.multipleSelection = val;
         },
         //删除
         deleteClick: function(){

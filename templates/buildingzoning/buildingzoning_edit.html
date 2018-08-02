@@ -30,8 +30,8 @@
 								<el-label class="mr5 vbm"><span style="color:red;">* </span>建筑类型</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-select size="small" v-model="editForm.jzlx" placeholder="请选择" class="searchSelect" clearable >
-									<el-option v-for="item in jzlxData" :key="item.codeName" :label="item.codeName" :value="item.codeValue"></el-option>
+								<el-select size="small" v-model="editForm.jzlx" placeholder="请选择" class="searchSelect" clearable change-on-select :show-all-levels="true" @change="jzlxChange">
+									<el-option v-for="item in jzlxData" :key="item.codeName" :label="item.codeName" :value="item.codeValue" ></el-option>
 								</el-select>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
