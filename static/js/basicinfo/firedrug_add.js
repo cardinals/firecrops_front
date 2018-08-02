@@ -213,27 +213,10 @@ new Vue({
             })
         },
         czlChange: function (value) {
-            // if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
-                if (!(/(^\d+$)/.test(value.replace(".", "")))) {
-                this.$message.warning({
-                    message: "请输入数字或小数！",
-                    showClose: true
-                });
-                this.addForm.czl = 0;
-            } else {
-                this.addForm.zcbl = parseFloat(value) + parseFloat(this.addForm.kcl);
-            }
+            this.addForm.zcbl = parseFloat(value) + parseFloat(this.addForm.kcl);
         },
         kclChange: function (value) {
-            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
-                this.$message.warning({
-                    message: "请输入数字或小数！",
-                    showClose: true
-                });
-                this.addForm.kcl = 0;
-            } else {
-                this.addForm.zcbl = parseFloat(value) + parseFloat(this.addForm.czl);
-            }
+            this.addForm.zcbl = parseFloat(value) + parseFloat(this.addForm.czl);
         },
         pickerOptions0: {
             disabledDate(time) {

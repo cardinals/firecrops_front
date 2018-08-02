@@ -11,7 +11,8 @@ var vue = new Vue({
             //查询表单
             searchForm: {
                 rolename: '',
-                createTime:new Array()
+                roleinfo: '',
+                createTime: new Array()
             },
             //表数据
             tableData: [],
@@ -130,12 +131,12 @@ var vue = new Vue({
             _self.loading = true;//表格重新加载
             var params = {
                 rolename: this.searchForm.rolename,
+                roleinfo: this.searchForm.roleinfo,
                 createTimeBegin: this.searchForm.createTime[0],
                 createTimeEnd: this.searchForm.createTime[1],
                 pageSize: this.pageSize,
                 pageNum: this.currentPage
             };
-
             axios.post('/api/role/findByVO', params).then(function (res) {
                 this.tableData = res.data.result;
                 this.total = res.data.result.length;
@@ -163,6 +164,13 @@ var vue = new Vue({
         //表格勾选事件
         selectionChange: function (val) {
             this.multipleSelection = val;
+        },
+        //清空查询条件
+        clearClick: function () {
+            this.searchForm.rolename = "",
+            this.searchForm.roleinfo = "",
+            this.searchForm.createTime = new Array(),
+            this.searchClick('reset');
         },
 
         //新建：弹出Dialog
@@ -261,26 +269,9 @@ var vue = new Vue({
         },
 
         //修改：弹出Dialog
-        editClick: function () {
+        editClick: function (val) {
             var _self = this;
-            var multipleSelection = this.multipleSelection;
-            if (multipleSelection.length < 1) {
-                _self.$message({
-                    message: "请至少选中一条记录",
-                    type: "error"
-                });
-                return;
-            }
-            else if (multipleSelection.length > 1) {
-                _self.$message({
-                    message: "只能选一条记录进行编辑",
-                    type: "error"
-                });
-                return;
-            }
-
-            var roleid = multipleSelection[0].roleid;
-
+            var roleid = val.roleid;
             axios.get('/api/resource/getChildren/' + roleid).then(function (res) {
                 this.defaultCheckKeys = res.data.result;
                 //获取选择的行号
