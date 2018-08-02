@@ -42,9 +42,6 @@ var vue = new Vue({
                     { required: true, message: '请输入用户名', trigger: 'blur' },
                     { min: 2, max: 16, message: '长度在 2 到 16 个字符', trigger: 'blur' }
                 ],
-                birth: [
-                    { type: 'date', required: false, message: '请选择出生日期', trigger: 'change' }
-                ],
                 sex: [
                     { required: false, message: '请选择性别', trigger: 'change' }
                 ],
@@ -60,13 +57,24 @@ var vue = new Vue({
                     { required: true, message: '请输入密码', trigger: 'blur' },
                     { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
                 ],
-
+                checkPass: [
+                    { required: true, message: '请输入密码', trigger: 'blur' },
+                    { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+                ],
+            },
+            //组织机构
+            zzjgData: [],
+            jgidprops: {
+                value: 'uuid',
+                label: 'jgjc',
+                children: 'children'
             },
             //新建数据
             addForm: {
                 userid: "",
                 username: "",
                 password: "",
+                organizationId: "", 
                 checkPass: "",
                 realname: "",
                 birth: "",
@@ -89,9 +97,6 @@ var vue = new Vue({
                     { required: true, message: '请输入用户名', trigger: 'blur' },
                     { min: 2, max: 16, message: '长度在 2 到 16 个字符', trigger: 'blur' }
                 ],
-                birth: [
-                    { type: 'date', required: false, message: '请选择出生日期', trigger: 'change' }
-                ],
                 phone: [
                     { required: false, message: '请输入手机号', trigger: 'blur' },
                     { min: 11, max: 11, message: '手机号格式不正确', trigger: 'blur' }
@@ -110,6 +115,7 @@ var vue = new Vue({
                 userid: "",
                 username: "",
                 password: "",
+                organizationId: "", 
                 checkPass: "",
                 realname: "",
                 birth: "",
@@ -156,6 +162,21 @@ var vue = new Vue({
             }.bind(this), function (error) {
                 console.log(error)
             })
+        },
+        //制作机构级联选择
+        getZzjgData: function () {
+            axios.post('/api/organization/getOrganizationtree').then(function (res) {
+                this.zzjgData = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
+        //清空查询条件
+        clearClick: function () {
+            this.searchForm.id = "",
+            this.searchForm.username = "",
+            this.searchForm.realname = "",
+            this.searchClick('reset');
         },
         //表格勾选事件
         selectionChange: function (val) {
@@ -220,6 +241,7 @@ var vue = new Vue({
             var _self = this;
             /*POST请求全部的角色role列表项传给add页面数据*/
             this.getAllRoles();
+            this.getZzjgData();
             _self.addFormVisible = true;
         },
         //新建提交点击事件
@@ -240,10 +262,15 @@ var vue = new Vue({
                             type: "error"
                         });
                     }else{
+                        var organizationIdString = "";
+                        if(val.organizationId.length>0){
+                            organizationIdString = val.organizationId[val.organizationId.length-1];
+                        }
                         var params = {
                             username: val.username,
                             password: val.password,
                             realname: val.realname,
+                            organizationId: organizationIdString,
                             birth: val.birth,
                             sex: val.sex,
                             mobile: val.mobile,
@@ -266,35 +293,30 @@ var vue = new Vue({
             }
         },
         //表格修改事件
-        editClick: function () {
-            var _self = this;
-            var multipleSelection = this.multipleSelection;
-            if (multipleSelection.length < 1) {
-                _self.$message({
-                    message: "请至少选中一条记录",
-                    type: "error"
-                });
-                return;
-            }
-            else if (multipleSelection.length > 1) {
-                _self.$message({
-                    message: "只能选一条记录进行修改",
-                    type: "error"
-                });
-                return;
-            }
-            //获取选择行userid
-            var userid = multipleSelection[0].userid;
-            for (var k = 0; k < _self.tableData.length; k++) {
-                if (_self.tableData[k].userid == userid) {
-                    _self.selectIndex = k;
+        editClick: function (val) {
+            this.getAllRoles();
+            this.getZzjgData();
+            //获取选择行主键
+            var pkid = val.pkid;
+            var userid = val.userid;
+            // axios.get('/api/user/' + pkid).then(function(res){
+
+            //     this.editForm = res.data.result;
+            //     console.log(this.editForm);
+            // }.bind(this),function(error){
+            //     console.log(error)
+            // })
+
+            for (var k = 0; k < this.tableData.length; k++) {
+                if (this.tableData[k].userid == userid) {
+                    this.selectIndex = k;
                 }
             }
 
-            this.editForm = Object.assign({}, _self.tableData[_self.selectIndex]);
+            this.editForm = Object.assign({}, this.tableData[this.selectIndex]);
             this.editForm.password = '';
             this.editForm.checkPass = '';
-            this.getAllRoles();
+            
             this.editFormSelect = [];
             for (var i = 0; i < this.editForm.roles.length; i++) {
                 this.editFormSelect.push(this.editForm.roles[i].rolename);
@@ -425,7 +447,20 @@ var vue = new Vue({
             val.mobile = '';
             val.email ='';
             this.$refs["addForm"].resetFields();
-        }
+        },
+        //展开 收起
+        spread: function(){
+            debugger;
+            var a = document.getElementById("roleSpread").innerText;  
+            if(a == "展开"){
+                document.getElementById('roleDiv').style.height='auto';
+                document.getElementById("roleSpread").innerText="收起";
+            }else if(a == "收起"){
+                document.getElementById('roleDiv').style.height='34px';
+                document.getElementById("roleSpread").innerText="展开";
+            }
+        
+        },
     },
-
+    
 })
