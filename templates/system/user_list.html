@@ -3,7 +3,7 @@
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 	<link rel="stylesheet" type="text/css" href="../../static/css/system/userlist.css">
-	<title>资源管理</title>
+	<title>用户管理</title>
 </head>
 
 <body class="fw f14 main-index-body">
@@ -33,7 +33,8 @@
 									<el-form>
 										<el-col :span="12" class="btnEditDelete">
 											<el-form-item align="left">
-												<el-button type="primary" icon="edit" size="small" @click="editClick">修改</el-button>
+												<!-- <el-button type="primary" icon="edit" size="small" @click="editClick">修改</el-button> -->
+												<el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
 												<el-button type="danger" icon="delete2" size="small" @click="removeSelection">删除</el-button>
 											</el-form-item>
 										</el-col>
@@ -41,7 +42,7 @@
 										<el-col :span="12" class="btnSearchPlus">
 											<el-form-item>
 												<el-button type="primary" icon="search" size="small" @click="searchClick">查询</el-button>
-												<el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
+												<el-button type="clear" icon="delete" size="small" @click="clearClick">重置</el-button>
 											</el-form-item>
 										</el-col>
 									</el-form>
@@ -51,23 +52,14 @@
 						<div class="table_container">
 							<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
 								@selection-change="selectionChange" class="tableStyle" :height="tableheight">
-	
-								<el-table-column type="selection" min-width="5%">
-								</el-table-column>
-								<el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center">
-								</el-table-column>
-								<el-table-column prop="username" show-overflow-tooltip label="用户名" min-width="13%" align="center">
-								</el-table-column>
-								<el-table-column prop="realname" show-overflow-tooltip label="真实姓名" min-width="13%" align="center">
-								</el-table-column>
-								<el-table-column prop="birth" show-overflow-tooltip label="生日" min-width="12%" align="center" :formatter="tableDateFormat">
-								</el-table-column>
-								<el-table-column prop="sex" show-overflow-tooltip label="性别" min-width="7%" align="center" :formatter="sexFormat">
-								</el-table-column>
-								<el-table-column prop="mobile" show-overflow-tooltip label="手机号" min-width="15%" align="center">
-								</el-table-column>
-								<el-table-column prop="email" show-overflow-tooltip label="邮箱" min-width="15%" align="center">
-								</el-table-column>
+								<el-table-column type="selection" width="45"></el-table-column>
+								<el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
+								<el-table-column prop="username" show-overflow-tooltip label="用户名" min-width="13%" align="center"></el-table-column>
+								<el-table-column prop="realname" show-overflow-tooltip label="真实姓名" min-width="13%" align="center"></el-table-column>
+								<el-table-column prop="birth" show-overflow-tooltip label="生日" min-width="12%" align="center" :formatter="tableDateFormat"></el-table-column>
+								<el-table-column prop="sex" show-overflow-tooltip label="性别" min-width="7%" align="center" :formatter="sexFormat"></el-table-column>
+								<el-table-column prop="mobile" show-overflow-tooltip label="手机号" min-width="15%" align="center"></el-table-column>
+								<el-table-column prop="email" show-overflow-tooltip label="邮箱" min-width="15%" align="center"></el-table-column>
 								<el-table-column prop="role" show-overflow-tooltip label="角色" min-width="12%" align="center">
 									<template slot-scope="scope">
 										<el-button type="text" @click="roleDetails(scope.row.userid)">查看详情</el-button>
