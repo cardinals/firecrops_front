@@ -198,3 +198,39 @@ window.jumpDetail = function(){
     }
     return shortURL;
 }
+
+//数值校验
+window.validateNum = function(val, message, type){
+    //type=num:非负数，figure：数值，int：整数
+    var regPos = /^\d+(\.\d+)?$/;  
+    if(type == "num"){
+    }else if(type == "int"){
+        regPos = /^\d+$/;
+    }else if(type == "figure"){
+        regPos = /^(-)\d+(\.\d+)?$/;  
+    }
+    
+    if(val!="" && val!=null){
+        if(!regPos.test(val)){
+            this.$message.warning({
+                message: message,
+                showClose: true
+            });
+            return false;
+        }              
+    }
+    return true;
+}
+
+//非负整数校验
+window.validateInt = function(val){
+    var regPos = /^\d+$/; //非负整数
+    if(val!="" && val!=null){
+        if(!regPos.test(val)){
+            this.$message.warning({
+                message: "请输入非负整数",
+                showClose: true
+            });
+        }              
+    }
+}
