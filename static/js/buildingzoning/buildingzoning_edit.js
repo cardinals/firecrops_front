@@ -26,7 +26,6 @@ new Vue({
             editForm: {
                 //单位建筑新增
                 jzmc: "",
-                option_JZLX: "",
                 jzwz: "",
                 lon: "",
                 lat: "",
@@ -38,7 +37,7 @@ new Vue({
                 cjrmc: "",
                 xgrid: "",
                 xgrmc: "",
-
+                jzlx:"",
                 //建筑类VO
                 jzlVO: {
                     jzid: "",
@@ -93,7 +92,7 @@ new Vue({
         }
     },
     created: function () {
-
+        this.status = getQueryString("ID");
         /**面包屑 by zjc 20180801*/
         var type = getQueryString("type");
         if (type == "XZ") {
@@ -103,12 +102,9 @@ new Vue({
         }
         this.searchClick('click');
         this.shiroData = shiroGlobal;
+        
         //建筑类型下拉框
         this.getJzlxData();
-    },
-    mounted: function () {
-        this.status = getQueryString("ID");
-       
     },
     methods: {
         // handleNodeClick(data) {
@@ -123,14 +119,21 @@ new Vue({
         },    
         
         //初始化查询事件
-        searchClick: function (type) {
-            debugger;
+        searchClick: function (type) { 
             this.loading = true;
+            debugger
             if (this.status == 0) {  //新增
                 this.loading = false;
             } else {//修改
-                axios.post('/dpapi/building/'+ this.status).then(function (res) {
-                   
+                // var jzlx = getQueryString("jzlx");
+                var params = {
+                    jzid : this.status,
+                    jzlx: getQueryString("jzlx")
+                    // jzlx : dzlxParam
+                };
+                axios.post('/dpapi/building/findFqDetailByVo', params).then(function (res) {
+                    debugger;
+
                     // var result = res.data.result;
                     this.editForm = res.data.result;
                     this.loading = false;
@@ -153,71 +156,27 @@ new Vue({
                     showClose: true
                 });
                 return false;
-            }else if(!this.validateNum(this.editForm.lon, "经度应为数值型")){
-                return false;
-            }else if(!this.validateNum(this.editForm.lat, "纬度应为数值型")){
-                return false;
-            }else if(!this.validateNum(this.editForm.gisX, "GIS_X应为数值型")){
-                return false;
-            }else if(!this.validateNum(this.editForm.gisY, "GIS_Y应为数值型")){
-                return false;
-            }else if(!this.validateNum(this.editForm.gxsys, "管辖水源数应为数值型")){
-                return false;
-            }else if(!this.validateNum(this.editForm.gxzddws, "管辖重点单位数应为数值型")){
-                return false;
-            }else if(!this.validateNum(this.editForm.xqmj, "执勤车辆数应为整数型")){
-                return false;
-            }else if(!this.validateNum(this.editForm.zbqcs, "装备器材数应为整数型")){
-                return false;
-            }else if(!this.validateNum(this.editForm.mhjzl, "灭火剂总量应为数值型")){
-                return false;
             }
             return true;
         },
-        //数值型校验
-        validateNum: function(val, message){
-            var regPos = /^\d+(\.\d+)?$/; //非负浮点数
-            if(val!="" && val!=null){
-                if(!regPos.test(val)){
-                    this.$message.warning({
-                        message: message,
-                        showClose: true
-                    });
-                    return false;
-                }              
-            }
-            return true;
-        },
-        //非负整数校验
-        validateInt: function(val){
-            var regPos = /^\d+$/; //非负整数
-            if(val!="" && val!=null){
-                if(!regPos.test(val)){
-                    this.$message.warning({
-                        message: "请输入非负整数",
-                        showClose: true
-                    });
-                }              
-            }
-        },
+        
         //保存
         save: function (formName) {
-            debugger;
             if(this.validateSave()){
                 if (this.status == 0) {//新增
-                        if (res.data.result > 0) {
-                            this.$message.warning({
-                                message: '中文名已存在，请重新命名',
-                                showClose: true
-                            });
-                        } else {
+                        // if (res.data.result > 0) {
+                        //     this.$message.warning({
+                        //         message: '中文名已存在，请重新命名',
+                        //         showClose: true
+                        //     });
+                        // } else {
                             this.editForm.cjrid = this.shiroData.userid;
                             this.editForm.cjrmc = this.shiroData.realName;
                             this.editForm.jzlx = this.editForm.jzlx;
                             // this.editForm.jzlx = this.editForm.jzlx[this.editForm.jzlx.length-1];//建筑类型
                             // this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];                            
-                            // this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
-                           debugger; 
+                            // this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];   
+                      debugger;
                             axios.post('/dpapi/building/insertByVO', this.editForm).then(function (res) {
                                 if (res.data.result != null) {
                                     this.$alert('成功保存单位建筑信息', '提示', {
@@ -239,13 +198,14 @@ new Vue({
                             }.bind(this), function (error) {
                                 console.log(error);
                             })
-                        }
+                        // }
                 } else {//修改
                     this.editForm.xgrid = this.shiroData.userid;
                     this.editForm.xgrmc = this.shiroData.realName;
                     this.editForm.jzlx = this.editForm.jzlx;
                     // this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
                     // this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
+                  debugger;
                     axios.post('/dpapi/building/doUpdateBuildingzoning', this.editForm).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功修改单位建筑信息', '提示', {
@@ -287,8 +247,8 @@ new Vue({
                 this.isCgl = false;
             }else if(type == "40"){
                 this.isJzl = false;
-                this.isZzl = true;
-                this.isCgl = false;
+                this.isZzl = false;
+                this.isCgl = true;
             }else{
                 this.isJzl = false;
                 this.isZzl = false;
