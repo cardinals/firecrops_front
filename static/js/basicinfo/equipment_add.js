@@ -135,7 +135,7 @@ new Vue({
         currentPageChange: function(val) {
             if(this.currentPage != val){
                 this.currentPage = val;
-                this.engineList('page');
+                this.engineList('page',this.clIndex);
             }
         },
 
