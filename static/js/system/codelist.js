@@ -10,6 +10,7 @@ var vue = new Vue({
             //搜索表单
             searchForm: {
                 codetype: "",
+                codetypeName: "",
                 createTime:new Array()
             },
             tableData: [],
@@ -33,8 +34,10 @@ var vue = new Vue({
             },
             //新建数据
             addForm: {
-                permissionname: "",
-                permissioninfo: ""
+                codetype: "",
+                codetypeName: "",
+                remark: "",
+                language: "zh_CN"
             },
             //选中的序号
             selectIndex: -1,
@@ -104,12 +107,12 @@ var vue = new Vue({
             _self.loading = true;//表格重新加载
             var params = {
                 codetype: this.searchForm.codetype,
+                codetypeName: this.searchForm.codetypeName,
                 createTimeBegin: this.searchForm.createTime[0],
                 createTimeEnd: this.searchForm.createTime[1],
                 pageSize: this.pageSize,
                 pageNum: this.currentPage
             };
-
             axios.post('/api/codelist/findByVO', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage-1)*this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
@@ -152,7 +155,8 @@ var vue = new Vue({
                 } else {
                     var params = {
                         codetype: val.codetype.trim(),
-                        codetypeName: val.codetypeName.trim()
+                        codetypeName: val.codetypeName.trim(),
+                        remark: val.remark.trim()
                     }
                     axios.post('/api/codelist/insertByVO', params).then(function (res) {
                         var addData = res.data.result;
@@ -171,25 +175,9 @@ var vue = new Vue({
         },
 
         //修改：弹出Dialog
-        editClick: function () {
+        editClick: function(val) {
             var _self = this;
-            var multipleSelection = this.multipleSelection;
-            if (multipleSelection.length < 1) {
-                _self.$message({
-                    message: "请至少选中一条记录",
-                    type: "error"
-                });
-                return;
-            }
-            else if (multipleSelection.length > 1) {
-                _self.$message({
-                    message: "只能选一条记录进行编辑",
-                    type: "error"
-                });
-                return;
-            }
-
-            var codeid = multipleSelection[0].codeid;
+            var codeid = val.codeid;
 
             //获取选择的行号
             for (var k = 0; k < _self.tableData.length; k++) {
@@ -239,48 +227,27 @@ var vue = new Vue({
         },
 
         //删除:批量删除
-        removeSelection: function () {
-            var _self = this;
-            var multipleSelection = this.multipleSelection;
-            if (multipleSelection.length < 1) {
-                _self.$message({
-                    message: "请至少选中一条记录",
-                    type: "error"
-                });
-                return;
-            }
-            var ids = [];
-            for (var i = 0; i < multipleSelection.length; i++) {
-                var row = multipleSelection[i];
-                ids.push(row.codeid);
-            }
-            this.$confirm("确认删除吗？", "提示", { type: "warning" })
-                .then(function () {
-                    var params = {
-                        ids: ids
-                    }
-                    axios.post('/api/codelist/deleteByIds', params).then(function (res) {
-                        for (var d = 0; d < ids.length; d++) {
-                            for (var k = 0; k < _self.tableData.length; k++) {
-                                if (_self.tableData[k].codeid == ids[d]) {
-                                    _self.tableData.splice(k, 1);
-                                }
-                            }
-                        }
-                        _self.$message({
-                            message: "删除成功",
-                            type: "success"
-                        });
-                        _self.total = _self.tableData.length;
-                        _self.loadingData(); //重新加载数据
-                    }.bind(this), function (error) {
-                        console.log(error)
-                    })
-
+        removeSelection: function(){
+            this.$confirm('确认删除选中信息?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                axios.post('/api/codelist/deleteByIds', this.multipleSelection).then(function (res) {
+                    this.$message({
+                        message: "成功删除" + res.data.result + "条代码集信息",
+                        showClose: true,
+                        onClose: this.searchClick('delete')
+                    });
+                }.bind(this), function (error) {
+                    console.log(error)
                 })
-                .catch(function (e) {
-                    if (e != "cancel") console.log("出现错误：" + e);
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
                 });
+            });
         },
 
         closeDialog: function (val) {
@@ -290,6 +257,14 @@ var vue = new Vue({
             val.permissioninfo = "";
             this.$refs[val].resetFields();
             this.editFormFlag = false;
-        }
+        },
+
+        //清空查询条件
+        clearClick: function () {
+            this.searchForm.codetype = "",
+            this.searchForm.codetypeName = "",
+            this.searchForm.createTime = new Array(),
+            this.searchClick('reset');
+        },
     },
 })

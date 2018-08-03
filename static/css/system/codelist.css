@@ -1,8 +1,4 @@
 @charset "utf-8";
-
-.el-dialog--small {
-    width: 25%;
-}
 .addEditFormInput {
     width: 220px;
 }
