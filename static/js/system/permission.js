@@ -163,24 +163,9 @@ var vue = new Vue({
         },
 
         //修改：弹出Dialog
-        editClick: function () {
+        editClick: function(val) {
             var _self = this;
-            var multipleSelection = this.multipleSelection;
-            if (multipleSelection.length < 1) {
-                _self.$message({
-                    message: "请至少选中一条记录",
-                    type: "error"
-                });
-                return;
-            }
-            else if (multipleSelection.length > 1) {
-                _self.$message({
-                    message: "只能选一条记录进行编辑",
-                    type: "error"
-                });
-                return;
-            }
-            var permissionid = multipleSelection[0].permissionid;
+            var permissionid = val.permissionid;
             //获取选择的行号
             for (var k = 0; k < _self.tableData.length; k++) {
                 if (_self.tableData[k].permissionid == permissionid) {
@@ -258,7 +243,13 @@ var vue = new Vue({
             val.permissionname = "";
             val.permissioninfo = "";
             this.$refs["addForm"].resetFields();
-        }
+        },
+        //清空查询条件
+        clearClick: function () {
+            this.searchForm.permissionname = "",
+            this.searchForm.createTime = new Array(),
+            this.searchClick('reset');
+        },
     },
 
 })
