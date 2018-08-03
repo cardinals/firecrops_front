@@ -255,18 +255,6 @@ var vue = new Vue({
                     if (e != "cancel") console.log("出现错误：" + e);
                 });
         },
-        //分页大小修改事件
-        pageSizeChange: function (val) {
-            this.pageSize = val;
-            var _self = this;
-            loadingData(); //重新加载数据
-        },
-        //当前页修改事件
-        currentPageChange: function (val) {
-            this.currentPage = val;
-            var _self = this;
-            loadingData(); //重新加载数据
-        },
 
         //修改：弹出Dialog
         editClick: function (val) {
