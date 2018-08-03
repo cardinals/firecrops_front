@@ -113,8 +113,8 @@
 									<el-form>
 										<el-col :span="12" class="btnEditDelete">
 											<el-form-item align="left">
-												<!--<el-button type="primary" icon="edit" size="small" @click="editClick">编辑</el-button>-->
-												<!-- <el-button type="danger" icon="delete" size="small" @click="removeSelection">删除</el-button>   -->
+												<el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
+												<el-button type="danger" icon="delete2" size="small" @click="removeSelection">删除</el-button>
 											</el-form-item>
 										</el-col>
 										<el-col :span="12"></el-col>
@@ -131,19 +131,25 @@
 
 						<div class="table_container">
 							<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-							 class="tableStyle" :height="tableheight">
-								<el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
-								<el-table-column prop="symc" label="水源名称" min-width="18%" show-overflow-tooltip align="center">
+							 class="tableStyle" :height="tableheight" @selection-change="selectionChange">
+							 	<el-table-column type="selection" width="45px"></el-table-column>
+								<el-table-column type="index" label="序号" show-overflow-tooltip width="65px" align="center"></el-table-column>
+								<el-table-column prop="symc" label="水源名称" min-width="16%" show-overflow-tooltip align="center">
 									<template slot-scope="scope">
 										<a @click="informClick(scope.row)" type="text" v-text="scope.row.symc"></a>
 									</template>
 								</el-table-column>
-								<el-table-column prop="sybm" label="水源编码" min-width="16%" show-overflow-tooltip align="center"></el-table-column>
-								<el-table-column prop="sydz" label="水源地址" min-width="16%" show-overflow-tooltip align="center"></el-table-column>
-								<el-table-column prop="sylxmc" label="水源类型" min-width="12%" show-overflow-tooltip align="center"></el-table-column>
-								<el-table-column prop="dzjc" label="管辖队站" min-width="12%" show-overflow-tooltip align="center"></el-table-column>
+								<el-table-column prop="sybm" label="水源编码" min-width="14%" show-overflow-tooltip align="center"></el-table-column>
+								<el-table-column prop="sydz" label="水源地址" min-width="14%" show-overflow-tooltip align="center"></el-table-column>
+								<el-table-column prop="sylxmc" label="水源类型" min-width="10%" show-overflow-tooltip align="center"></el-table-column>
+								<el-table-column prop="dzjc" label="管辖队站" min-width="11%" show-overflow-tooltip align="center"></el-table-column>
 								<el-table-column prop="kyztmc" label="可用状态" min-width="10%" show-overflow-tooltip align="center"></el-table-column>
 								<el-table-column prop="sygsmc" label="水源归属" min-width="10%" show-overflow-tooltip align="center"></el-table-column>
+								<el-table-column label="操作" min-width="7%" align="center">
+									<template slot-scope="scope">
+										<el-button type="text" @click="editClick(scope.row)">编辑</el-button>
+									</template>
+								</el-table-column>
 							</el-table>
 
 							<!--列表底部工具条和分页符-->

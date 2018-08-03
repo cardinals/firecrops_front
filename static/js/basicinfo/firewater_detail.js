@@ -73,7 +73,7 @@ new Vue({
                 console.log(error);
             })
         },
-         //跳转到地图页面并带上UUID和点击参数水源
+        //跳转到地图页面并带上UUID和点击参数水源
         tz:function(){
             // console.log(this.tableData);
             var uuid = this.detailData.uuid;

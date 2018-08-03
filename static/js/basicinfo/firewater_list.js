@@ -324,6 +324,59 @@ var vue = new Vue({
             var r = window.location.search.substr(1).match(reg);
             if(r!=null)return  unescape(r[2]); return null;
         },
+         //删除复选框
+        selectionChange: function(val) {
+            this.multipleSelection = val;
+        },
+        //编辑
+        editClick: function(val){
+            var params = {
+                ID: val.uuid,
+                sylx: val.sylx,
+                type: "BJ"
+            }
+            loadDivParam("basicinfo/firewater_edit", params);
+        },
+        //删除
+        removeSelection: function(){
+            this.$confirm('确认删除选中信息?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                axios.post('/api/shiro').then(function (res) {
+                    this.shiroData = res.data;
+                    for(var i=0;i<this.multipleSelection.length;i++){
+                        this.multipleSelection[i].xgrid = this.shiroData.userid;
+                        this.multipleSelection[i].xgrmc = this.shiroData.realName;
+                    }
+                    axios.post('/dpapi/xfsy/doDeleteBatch', this.multipleSelection).then(function (res) {
+                        this.$message({
+                            message: "成功删除" + this.multipleSelection.length + "条队站信息",
+                            showClose: true,
+                            onClose: this.searchClick('delete')
+                        });
+                    }.bind(this), function (error) {
+                        console.log(error)
+                    })
+                }.bind(this), function (error) {
+                    console.log(error);
+                }); 
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
+        //新增
+        addClick: function(){
+            var params = {
+                ID: 0,
+                type: "XZ"
+            }
+            loadDivParam("basicinfo/firewater_edit", params);
+        },
     },
 
 })
