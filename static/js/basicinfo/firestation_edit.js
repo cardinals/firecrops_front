@@ -145,6 +145,8 @@ new Vue({
                 label: 'dzjc',
                 children: 'children'
             },
+            //上级队站Disabled
+            dzlxDisabled: false,
         }
     },
     created: function () {
@@ -164,7 +166,8 @@ new Vue({
         }
         this.shiroData = shiroGlobal;
         this.status = getQueryString("ID");
-        
+        //方法加载完成之前，页面转圈
+        this.loading = true;
         //上级队站下拉框
         this.getSjdzData();
         //队站类型下拉框
@@ -185,6 +188,11 @@ new Vue({
         },
         //上级机构下拉框
         getSjdzData: function(){
+            if(this.status == 0){
+                this.dzlxDisabled = false;
+            }else{
+                this.dzlxDisabled = true;
+            }
             var organization = this.shiroData.organizationVO;
             var params = {
                 dzid: organization.uuid,
@@ -210,9 +218,9 @@ new Vue({
         //表格查询事件
         searchClick: function () {
             this.loading = true;
-            if (this.status == 0) {  //新增
+            if(this.status == 0){  //新增
                 this.loading = false;
-            } else {//修改
+            }else{//修改
                 var dzlxParam = getQueryString("dzlx");
                 var params = {
                     dzid : this.status,
@@ -258,6 +266,13 @@ new Vue({
                                 this.editForm.zhidVO = {};
                                 this.editForm.dadVO = {};
                                 this.editForm.zhongdVO = {};
+                                break;
+                            default:
+                                this.editForm.zongdVO = {};
+                                this.editForm.zhidVO = {};
+                                this.editForm.dadVO = {};
+                                this.editForm.zhongdVO = {};
+                                this.editForm.qtxfdwVO = {};
                                 break;
                         }
                     }

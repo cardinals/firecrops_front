@@ -8,6 +8,12 @@ $(function () {
 var shiroGlobal = "";
 var realname = "";
 axios.get('/api/shiro').then(function (res) {
+    if(res.data.organizationVO == null){
+        res.data.organizationVO = {
+            uuid: "",
+            jgjc: ""
+        }
+    }
     shiroGlobal = res.data;
     realname = res.data.realName;
     document.querySelector("#realname").innerHTML = realname;
