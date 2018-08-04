@@ -30,6 +30,8 @@ var vue = new Vue({
             indexData: 0,
             //详情页是否显示
             itemFormVisible: false,
+            //Dialog Title
+            dialogTitle: "用户编辑",
             //组织机构
             zzjgData: [],
             jgidprops: {
@@ -37,8 +39,6 @@ var vue = new Vue({
                 label: 'jgjc',
                 children: 'children'
             },
-            //Dialog标题
-            dialogTitle: "",
             //选中的序号
             editIndex: -1,
             //修改界面是否显示
@@ -65,10 +65,6 @@ var vue = new Vue({
                     { required: true, message: '请输入密码', trigger: 'blur' },
                     { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
                 ],
-                checkPass: [
-                    { required: true, message: '请输入密码', trigger: 'blur' },
-                    { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
-                ]
             },
             //修改界面数据
             editForm: {
@@ -79,7 +75,7 @@ var vue = new Vue({
                 checkPass: "",
                 realname: "",
                 birth: "",
-                sex: -1,
+                sex: 0,
                 phone: "",
                 email: "",
                 roles: []
@@ -89,8 +85,8 @@ var vue = new Vue({
             roleDetailVisible: false,
             roleDetailList: [],
             roleDetailSelect: [],
-            //操作类型
-            operation: "",
+            //操作方式
+            operation: "insert",
         }
     },
     created: function () {
@@ -129,7 +125,7 @@ var vue = new Vue({
         getZzjgData: function(val) {
             axios.post('/api/organization/getOrganizationtree').then(function (res) {
                 this.zzjgData = res.data.result;
-                if(this.operation == "update"){
+                if(this.dialogTitle == "用户编辑"){
                     this.editSearch(val);
                 }
             }.bind(this), function (error) {
@@ -200,24 +196,22 @@ var vue = new Vue({
             })
         },
 
-        //新建事件
+        //新增事件
         addClick: function () {
-            this.operation = "insert";
-            this.dialogTitle = "新增用户";
+            this.dialogTitle = "用户新增";
             this.getAllRoles();
-            this.getZzjgData();
+            this.getZzjgData(null);
             this.editFormVisible = true;
         },
-
         //表格修改事件
-        editClick: function(val,index){
+        editClick: function(val, index) {
             this.editIndex = index;
-            this.operation = "update";
-            this.dialogTitle = "修改用户";
+            this.dialogTitle = "用户编辑";
             this.getAllRoles();
             this.getZzjgData(val);
             this.editFormVisible = true;
         },
+
         //修改时查询方法
         editSearch: function(val){
             //获取选择行主键
@@ -268,73 +262,69 @@ var vue = new Vue({
                 console.log(error)
             }) 
         },
-        //获取表单提交数据
-        getFormData: function(val){
-            //组织机构
-            var organizationIdString = "";
-            if(val.organizationId.length>0){
-                organizationIdString = val.organizationId[val.organizationId.length-1];
-            }
-            //角色
-            var roleList = [];
-            for(var i=0;i<val.roles.length;i++){
-                for(var j=0;j<this.allRoles.length;j++){
-                    if(val.roles[i] == this.allRoles[j].rolename){
-                        var temp = {
-                            roleid : this.allRoles[j].roleid,
-                            rolename: this.allRoles[j].rolename,
-                            roleinfo: this.allRoles[j].roleinfo
-                        }
-                        roleList.push(temp);
-                        break;
-                    }
-                }
-            }
-            return params = {
-                username: val.username,
-                password: val.password,
-                realname: val.realname,
-                organizationId: organizationIdString,
-                birth: val.birth,
-                sex: val.sex,
-                mobile: val.mobile,
-                email: val.email,
-                roles: roleList
-            };
-        },
-        //新建提交点击事件
+
+        //编辑提交点击事件
         editSubmit: function(val) {
-            var _self = this;
+            /*POST请求递交editForm数据传入之后再对前台加载*/
             if(val.password != val.checkPass){
-                _self.$message({
+                this.$message({
                     message: "两次密码输入不一致！",
                     type: "error"
                 });
                 return;
             }else{
-                if(this.operation == "insert"){
+                //组织机构
+                var organizationIdString = "";
+                if(val.organizationId.length>0){
+                    organizationIdString = val.organizationId[val.organizationId.length-1];
+                }
+                //角色
+                var roleList = [];
+                for(var i=0;i<val.roles.length;i++){
+                    for(var j=0;j<this.allRoles.length;j++){
+                        if(val.roles[i] == this.allRoles[j].rolename){
+                            var temp = {
+                                roleid : this.allRoles[j].roleid,
+                                rolename: this.allRoles[j].rolename,
+                                roleinfo: this.allRoles[j].roleinfo
+                            }
+                            roleList.push(temp);
+                            break;
+                        }
+                    }
+                }
+                var params = {
+                    username: val.username,
+                    password: val.password,
+                    realname: val.realname,
+                    organizationId: organizationIdString,
+                    birth: val.birth,
+                    sex: val.sex,
+                    mobile: val.mobile,
+                    email: val.email,
+                    roles: roleList
+                }
+                if(this.dialogTitle == "用户新增"){
                     axios.get('/api/account/getNum/' + this.editForm.username).then(function(res){
                         if(res.data.result != 0){
-                            _self.$message({
+                            this.$message({
                                 message: "用户名已存在!",
                                 type: "error"
                             });
-                            return;
                         }else{
-                            var params = this.getFormData(val);
                             axios.post('/api/user/insertByVO', params).then(function(res){
                                 var addData = res.data.result;
-                                _self.tableData.unshift(addData);
-                                _self.total = _self.tableData.length;
+                                this.tableData.unshift(addData);
+                                this.total = this.tableData.length;
                             }.bind(this),function(error){
                                 console.log(error)
                             })
+                            this.editFormVisible = false;
                         }
                     }.bind(this),function(error){
                         console.log(error)
                     })
-                }else if(this.operation == "update"){
-                    var params = this.getFormData(val);
+                }else if(this.dialogTitle == "用户编辑"){
                     params.pkid = val.pkid;
                     params.userid = val.userid;
                     axios.post('/api/user/updateByVO', params).then(function (res){
@@ -347,16 +337,74 @@ var vue = new Vue({
                         this.tableData[this.editIndex].mobile = result.mobile;
                         this.tableData[this.editIndex].email = result.email;
                         this.tableData[this.editIndex].roles = result.roles;
+                        this.editFormVisible = false;
                     }.bind(this), function (error) {
                         console.log(error)
                     })
                 }
             }
-            this.editFormVisible = false;
         },
         
+        //获取复选框选中值
+        getCheckValue(val){
+            this.editFormSelect = val;
+        },
+        
+        //保存点击事件
+        editSubmit2: function (val) {
+            var _self = this;
+            this.editRoles = [];
+            for (var i = 0; i < this.editFormSelect.length; i++) {
+                for (var k = 0; k < this.allRoles.length; k++) {
+                    if (this.allRoles[k].rolename == this.editFormSelect[i]) {
+                        this.editRoles.push(this.allRoles[k]);
+                    }
+                }
+            }
+            this.editForm.roles.splice(0, this.editForm.roles.length);
+            for (var i = 0; i < this.editRoles.length; i++) {
+                this.editForm.roles.push(this.editRoles[i]);
+            }
+
+            if (val.password == val.checkPass) {
+                var params = {
+                    pkid: val.pkid,
+                    userid: val.userid,
+                    username: val.username,
+                    password: val.password,
+                    realname: val.realname,
+                    birth: val.birth,
+                    sex: val.sex,
+                    mobile: val.mobile,
+                    email: val.email,
+                    roles: val.roles
+                };
+                axios.post('/api/user/updateByVO', params).then(function (res) {
+                    this.tableData[this.selectIndex].username = val.username;
+                    this.tableData[this.selectIndex].realname = val.realname;
+                    this.tableData[this.selectIndex].birth = val.birth;
+                    this.tableData[this.selectIndex].sex = val.sex;
+                    this.tableData[this.selectIndex].mobile = val.mobile;
+                    this.tableData[this.selectIndex].email = val.email;
+                    this.tableData[this.selectIndex].roles = val.roles;
+                    this.editFormVisible = false;
+                }.bind(this), function (error) {
+                    console.log(error)
+                })
+
+                this.editFormVisible = false;
+                _self.loadingData();
+            }
+            else {
+                _self.$message({
+                    message: "两次密码输入不一致！",
+                    type: "error"
+                });
+                return;
+            }
+        },
         //删除所选，批量删除
-        removeSelection: function(){
+        removeSelection: function () {
             this.$confirm('确认删除选中信息?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
@@ -377,23 +425,24 @@ var vue = new Vue({
                     message: '已取消删除'
                 });
             });
+
         },
-        //关闭编辑Dialog
+        //查看详情
         closeDialog: function (val) {
             this.editFormVisible = false;
-            val.username ='';
-            val.realname = '';
-            val.password = '';
-            val.checkPass = '';
-            val.birth = '';
-            val.sex = '';
-            val.mobile = '';
-            val.email ='';
+            // val.username ='';
+            // val.realname = '';
+            // val.password = '';
+            // val.checkPass = '';
+            // val.birth = '';
+            // val.sex = '';
+            // val.mobile = '';
+            // val.email ='';
             this.$refs["editForm"].resetFields();
-            this.operation = "none";
         },
         //展开 收起
         spread: function(){
+            debugger;
             var a = document.getElementById("roleSpread").innerText;  
             if(a == "展开"){
                 document.getElementById('roleDiv').style.height='auto';
