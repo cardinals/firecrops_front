@@ -14,6 +14,7 @@ var vue = new Vue({
                 jbxx_xfsslx: "",
                 jbxx_jzmc: ""
             },
+            role_data: [],
             tableData: [],
             detailVisible: false,
             detailData: [],
@@ -47,10 +48,19 @@ var vue = new Vue({
     },
     created: function () {
         loadBreadcrumb("消防设施信息", "-1");
+        this.roleData();
         this.getXFSSLXData();
         this.searchClick('click');
     },
     methods: {
+        //当前登录用户信息
+        roleData: function () {
+            axios.post('/api/shiro').then(function (res) {
+                this.role_data = res.data;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
         //表格查询事件
         searchClick: function (type) {
             if (type == 'page') {
@@ -153,7 +163,7 @@ var vue = new Vue({
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                for (var i = 0; i < this.multipleSelection.length; i++) {
+                for (var i in this.multipleSelection) {
                     this.multipleSelection[i].xgrid = this.role_data.userid;
                     this.multipleSelection[i].xgrmc = this.role_data.realName;
                 }
