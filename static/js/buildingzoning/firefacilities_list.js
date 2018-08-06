@@ -135,28 +135,43 @@ var vue = new Vue({
                 ID: 0,
                 type: "XZ"
             }
-            loadDivParam("buildingzoning/buildingzoning_edit", params);
+            loadDivParam("buildingzoning/firefacilities_add", params);
         },
+        //编辑
         editClick: function (val) {
             var params = {
-                ID: val.jzid,
-                dzlx: val.jzlx,
+                ID: val.jbxx_xfssid,
+                xfsslx: val.jbxx_xfsslx,
                 type: "BJ"
             }
-            loadDivParam("buildingzoning/buildingzoning_edit", params);
+            loadDivParam("buildingzoning/firefacilities_add", params);
         },
         //删除
         deleteClick: function () {
-
-        },
-        //表格重新加载数据
-        loadingData: function () {
-            var _self = this;
-            _self.loading = true;
-            setTimeout(function () {
-                console.info("加载数据成功");
-                _self.loading = false;
-            }, 300);
+            this.$confirm('确认删除选中信息?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                for (var i = 0; i < this.multipleSelection.length; i++) {
+                    this.multipleSelection[i].xgrid = this.role_data.userid;
+                    this.multipleSelection[i].xgrmc = this.role_data.realName;
+                }
+                axios.post('/dpapi/firefacilities/doDeleteFacilities', this.multipleSelection).then(function (res) {
+                    this.$message({
+                        message: "成功删除" + res.data.result + "条消防设施信息",
+                        showClose: true,
+                        onClose: this.searchClick('delete')
+                    });
+                }.bind(this), function (error) {
+                    console.log(error)
+                })
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
         }
     },
 

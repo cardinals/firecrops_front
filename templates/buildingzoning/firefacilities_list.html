@@ -35,8 +35,8 @@
 								<el-form>
 									<el-col :span="12" class="btnEditDelete">
 										<el-form-item align="left">
-											<!-- <el-button type="success" icon="plus" size="small" @click="editClick">新增</el-button>
-												<el-button type="danger" icon="delete2" size="small" @click="deleteClick">删除</el-button>   -->
+											<el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
+											<el-button type="danger" icon="delete2" size="small" @click="deleteClick">删除</el-button>
 										</el-form-item>
 									</el-col>
 									<el-col :span="12"></el-col>
@@ -54,21 +54,21 @@
 						<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" @selection-change="selectionChange"
 						 class="tableStyle" :height="tableheight">
 							<el-table-column type="selection" width="45"></el-table-column>
-							<el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
-							<el-table-column prop="jbxx_xfssmc" label="消防设施名称" show-overflow-tooltip min-width="18%" align="center">
+							<el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
+							<el-table-column prop="jbxx_xfssmc" label="消防设施名称" show-overflow-tooltip min-width="16%" align="center">
 								<template slot-scope="scope">
 									<a @click="detailClick(scope.row)" v-text="scope.row.jbxx_xfssmc"></a>
 								</template>
 							</el-table-column>
-							<el-table-column prop="jbxx_xfsslxmc" label="消防设施类型" show-overflow-tooltip min-width="18%" align="center"></el-table-column>
+							<el-table-column prop="jbxx_xfsslxmc" label="消防设施类型" show-overflow-tooltip min-width="17%" align="center"></el-table-column>
 							<el-table-column prop="jbxx_jzmc" label="所属建筑名称" show-overflow-tooltip min-width="16%" align="center"></el-table-column>
-							<el-table-column prop="jbxx_iszddw" label="是否重点单位消防设施" show-overflow-tooltip min-width="18%" align="center" :formatter="isZddwFormat"></el-table-column>
-							<el-table-column prop="jbxx_zddwmc" label="所属重点单位" show-overflow-tooltip min-width="18%" align="center" :formatter="zddwFormat"></el-table-column>
-							<!-- <el-table-column label="操作" min-width="7%" align="center">
+							<el-table-column prop="jbxx_iszddw" label="是否重点单位消防设施" show-overflow-tooltip min-width="19%" align="center" :formatter="isZddwFormat"></el-table-column>
+							<el-table-column prop="jbxx_zddwmc" label="所属重点单位" show-overflow-tooltip min-width="16%" align="center" :formatter="zddwFormat"></el-table-column>
+							<el-table-column label="操作" min-width="7%" align="center">
 									<template slot-scope="scope">
 										<el-button type="text" @click="editClick(scope.row)">编辑</el-button>
 									</template>
-								</el-table-column> -->
+								</el-table-column>
 						</el-table>
 
 						<!--列表底部工具条和分页符-->
@@ -236,13 +236,13 @@
 											<el-col :span="12">
 												<div>
 													<strong class="dtdlStyle">水箱容量(m³)：</strong>
-													<v-text v-text="detailData.xhssl"></v-text>
+													<v-text v-text="detailData.sxrl"></v-text>
 												</div>
 											</el-col>
 											<el-col :span="12">
 												<div>
 													<strong class="dtdlStyle">补给速度(L/s)：</strong>
-													<v-text v-text="detailData.xhszdll"></v-text>
+													<v-text v-text="detailData.bjsd"></v-text>
 												</div>
 											</el-col>
 										</el-row>
@@ -589,8 +589,6 @@
 												<v-text v-text="detailData.ms"></v-text>
 											</div>
 										</el-row>
-									</div>
-									<div v-else>
 									</div>
 								</el-tab-pane>
 							</el-tabs>
