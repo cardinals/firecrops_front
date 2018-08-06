@@ -79,13 +79,13 @@
 							<el-label class="mr5 vbm">库存数量(可用)</el-label>
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-							<el-input-number v-model="addForm.kysl" size="small" :min="0"></el-input-number>
+							<el-input-number v-model="addForm.kysl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small" :min="0"></el-input-number>
 						</el-col>
 						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 							<el-label class="mr5 vbm">库存数量(损坏)</el-label>
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-							<el-input-number v-model="addForm.shsl" size="small" :min="0"></el-input-number>
+							<el-input-number v-model="addForm.shsl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small" :min="0"></el-input-number>
 						</el-col>
 						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 					</el-row>
@@ -127,7 +127,7 @@
 								<el-label class="mr5 vbm">装载数量</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="domain.clzzs" size="small" placeholder="装载数量"></el-input-number>
+								<el-input-number v-model="domain.clzzs" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small" placeholder="装载数量"></el-input-number>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
 								<el-button type="danger" icon="minus " size="small" @click.prevent="removeDomain(domain)" class="r"></el-button>

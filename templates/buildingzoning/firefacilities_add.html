@@ -91,7 +91,7 @@
 								<el-label class="mr5 vbm">数量</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="detailForm.sl" size="small" :min="0"></el-input-number>
+								<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small" :min="0"></el-input-number>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -145,7 +145,7 @@
 								<el-label class="mr5 vbm">消火栓泵数量</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="detailForm.xhssl" size="small" :min="0"></el-input-number>
+								<el-input-number v-model="detailForm.xhssl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"size="small" :min="0"></el-input-number>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">消火栓最大流量(L/s)</el-label>
@@ -160,7 +160,7 @@
 								<el-label class="mr5 vbm">喷淋泵数量</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="detailForm.plbsl" size="small" :min="0"></el-input-number>
+								<el-input-number v-model="detailForm.plbsl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small" :min="0"></el-input-number>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">喷淋泵最大流量(L/s)</el-label>
@@ -264,7 +264,7 @@
 								<el-label class="mr5 vbm">数量</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="detailForm.sl" size="small" :min="0"></el-input-number>
+								<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small" :min="0"></el-input-number>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">是否可用</el-label>
@@ -380,7 +380,7 @@
 								<el-label class="mr5 vbm">数量</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="detailForm.sl" size="small" :min="0"></el-input-number>
+								<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small" :min="0"></el-input-number>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">是否可用</el-label>
@@ -471,7 +471,7 @@
 								<el-label class="mr5 vbm">数量</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="detailForm.sl" size="small" :min="0"></el-input-number>
+								<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small" :min="0"></el-input-number>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">流量(L/s)</el-label>
@@ -498,7 +498,7 @@
 								<el-label class="mr5 vbm">数量</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="detailForm.sl" size="small" :min="0"></el-input-number>
+								<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small" :min="0"></el-input-number>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">额定压力(Mpa)</el-label>
