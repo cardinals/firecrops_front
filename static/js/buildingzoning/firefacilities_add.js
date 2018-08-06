@@ -226,6 +226,9 @@ new Vue({
             if (type == 'page') {
                 this.tableData_building = [];
             } else {
+                if (type == 'init') {
+                    this.searchForm_building.jzmc = '';
+                }
                 this.currentPage_building = 1;
             }
             this.buildingListVisible = true;
@@ -268,12 +271,15 @@ new Vue({
             if (type == 'page') {
                 this.tableData_units = [];
             } else {
+                if (type == 'init') {
+                    this.searchForm_units.dwmc = '';
+                }
                 this.currentPage_units = 1;
             }
             this.unitsListVisible = true;
             this.loading_units = true;
             var params = {
-                jzmc: this.searchForm_units.clmc,
+                dwmc: this.searchForm_units.dwmc,
                 pageSize: this.pageSize_units,
                 pageNum: this.currentPage_units
             };

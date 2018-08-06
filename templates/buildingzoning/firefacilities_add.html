@@ -35,7 +35,7 @@
 							<el-input size="small" v-model="addForm.jbxx_jzmc" placeholder="所属建筑" disabled></el-input>
 						</el-col>
 						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
-							<el-button icon="search" size="small" style="border: none;background-color: #FFFFFF;" @click="buildingList('click')" class="l"></el-button>
+							<el-button icon="search" size="small" style="border: none;background-color: #FFFFFF;" @click="buildingList('init')" class="l"></el-button>
 						</el-col>
 					</el-row>
 					<el-row class="tr mb5">
@@ -55,7 +55,7 @@
 							<el-input size="small" v-model="addForm.jbxx_zddwmc" placeholder="所属重点单位" disabled></el-input>
 						</el-col>
 						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" v-if="addForm.jbxx_iszddw==='1'">
-							<el-button icon="search" size="small" style="border: none;background-color: #FFFFFF;" @click="unitsList('click')"  class="l"></el-button>
+							<el-button icon="search" size="small" style="border: none;background-color: #FFFFFF;" @click="unitsList('init')"  class="l"></el-button>
 						</el-col>
 						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" v-else>&nbsp;</el-col>
 					</el-row>
@@ -713,8 +713,8 @@
 							<el-form :inline="true" class="el-form demo-form-inline">
 								<el-row class="mb5">
 									<el-col :span="12" class="searchInline">
-										<label class="el-form-item__label" style="width:95px;" class="tr vbm">建筑名称</label>
-										<el-input size="small" v-model="searchForm_units.jzmc" placeholder="建筑名称" clearable></el-input>
+										<label class="el-form-item__label" style="width:95px;" class="tr vbm">单位名称</label>
+										<el-input size="small" v-model="searchForm_units.dwmc" placeholder="单位名称" clearable></el-input>
 									</el-col>
 									<el-col :span="12" class="btnSearchPlus">
 										<el-button type="primary" icon="search" size="small" @click="unitsList('click')">查询</el-button>

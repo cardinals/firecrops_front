@@ -106,16 +106,20 @@ new Vue({
             }
         },
         //消防车辆弹出页---------------------------------------------------------------
-        engineList: function (type,val) {
-            if(type == 'page'){
+        engineList: function (type, val) {
+            if (type == 'page') {
                 this.tableData = [];
-            }else{
+            } else {
+                if (type == 'init') {
+                    this.searchForm.clmc = '';
+                    this.searchForm.cphm = '';
+                }
                 this.currentPage = 1;
             }
             this.clIndex = val;
             this.engineListVisible = true;
             this.loading_engine = true;
-            
+
             var params = {
                 clmc: this.searchForm.clmc,
                 cphm: this.searchForm.cphm,
@@ -123,7 +127,7 @@ new Vue({
                 pageNum: this.currentPage
             };
             axios.post('/dpapi/fireengine/page', params).then(function (res) {
-                var tableTemp = new Array((this.currentPage-1)*this.pageSize);
+                var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
                 this.loading_engine = false;
@@ -132,10 +136,10 @@ new Vue({
             })
         },
         //车辆弹出页翻页
-        currentPageChange: function(val) {
-            if(this.currentPage != val){
+        currentPageChange: function (val) {
+            if (this.currentPage != val) {
                 this.currentPage = val;
-                this.engineList('page',this.clIndex);
+                this.engineList('page', this.clIndex);
             }
         },
 
@@ -150,7 +154,7 @@ new Vue({
         clearEngineList: function (val) {
             this.searchForm.clmc = "";
             this.searchForm.cphm = "";
-            this.engineList('reset',this.clIndex);
+            this.engineList('reset', this.clIndex);
         },
 
         //当前登录用户信息
