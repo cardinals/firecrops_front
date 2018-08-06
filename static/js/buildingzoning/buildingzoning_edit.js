@@ -22,6 +22,8 @@ new Vue({
             isJzl: false,
             isZzl: false,
             isCgl: false,
+            //储罐设定
+            dynamicValidateForm: [],
             //编辑表单
             editForm: {
                 //单位建筑新增
@@ -37,47 +39,48 @@ new Vue({
                 cjrmc: "",
                 xgrid: "",
                 xgrmc: "",
-                jzlx:"",
-                //建筑类VO
-                jzlVO: {
-                    jzid: "",
-                    jzqk: "",
-                    jzsyxz:"",
-                    jzjg:"",
-                    gnms:"",
-                    zdmj:"",
-                    jzmj:"",
-                    dsgd:"",
-                    dxgd:"",
-                    dscs:"",
-                },
-                //装置类VO
-                zzlVO:{
-                    jzid: "",
-                    jzjg: "",
-                    zdmj: "",
-                    zzgd: "",
-                    jsfzr: "",
-                    jsfzrdh: "",
-                    zzzc: "",
-                    ylxx: "",
-                    cwxx: "",
-                    gylc:""
-                },
-                //储罐类VO
-                cglVO:{
-                    jzid: "",
-                    zrj: "",
-                    cgsl: "",
-                    cgjg: "",
-                    ccjzms: "",
-                    jsfzr: "",
-                    jsfzrdh: "",
-                    plqkd: "",
-                    plqkx: "",
-                    plqkn:"",
-                    plqkb:""
-                    },
+                jzlx: "",
+                buildingVO: {}
+            },
+            //建筑类VO
+            jzlVO: {
+                jzl_jzid: "",
+                jzl_jzqk: "",
+                jzl_jzsyxz: "",
+                jzl_jzjg: "",
+                jzl_gnms: "",
+                jzl_zdmj: "",
+                jzl_jzmj: "",
+                jzl_dsgd: "",
+                jzl_dxgd: "",
+                jzl_dscs: "",
+            },
+            //装置类VO
+            zzlVO: {
+                zzl_jzid: "",
+                zzl_jzjg: "",
+                zzl_zdmj: "",
+                zzl_zzgd: "",
+                zzl_jsfzr: "",
+                zzl_jsfzrdh: "",
+                zzl_zzzc: "",
+                zzl_ylxx: "",
+                zzl_cwxx: "",
+                zzl_gylc: ""
+            },
+            //储罐类VO
+            cglVO: {
+                cgl_jzid: "",
+                cgl_zrj: "",
+                cgl_cgsl: "",
+                cgl_cgjg: "",
+                cgl_ccjzms: "",
+                cgl_jsfzr: "",
+                cgl_jsfzrdh: "",
+                cgl_plqkd: "",
+                cgl_plqkx: "",
+                cgl_plqkn: "",
+                cgl_plqkb: ""
             },
             props: {
                 value: 'codeValue',
@@ -102,7 +105,7 @@ new Vue({
         }
         this.searchClick('click');
         this.shiroData = shiroGlobal;
-        
+
         //建筑类型下拉框
         this.getJzlxData();
     },
@@ -110,32 +113,50 @@ new Vue({
         // handleNodeClick(data) {
         // },
         //建筑类型下拉框
-        getJzlxData: function(){
-            axios.get('/api/codelist/getCodetype/JZLX').then(function(res){
+        getJzlxData: function () {
+            axios.get('/api/codelist/getCodetype/JZLX').then(function (res) {
                 this.jzlxData = res.data.result;
-            }.bind(this),function(error){
+            }.bind(this), function (error) {
                 console.log(error);
             })
-        },    
-        
+        },
+
         //初始化查询事件
-        searchClick: function (type) { 
+        searchClick: function (type) {
             this.loading = true;
-            debugger
             if (this.status == 0) {  //新增
                 this.loading = false;
             } else {//修改
-                // var jzlx = getQueryString("jzlx");
+                var jzlxParam = getQueryString("jzlx");
                 var params = {
-                    jzid : this.status,
-                    jzlx: getQueryString("jzlx")
+                    jzid: this.status,
+                    jzlx: jzlxParam
                     // jzlx : dzlxParam
                 };
                 axios.post('/dpapi/building/findFqDetailByVo', params).then(function (res) {
-                    debugger;
-
                     // var result = res.data.result;
                     this.editForm = res.data.result;
+                    var type = this.editForm.jzlx;
+                    if (type == "10" || type == "20") {
+                        this.isJzl = true;
+                        this.jzlVO = res.data.result;
+                        this.zzlVO = {};
+                        this.cglVO = {};
+                    } else if (type == "30") {
+                        this.isZzl = true;
+                        this.jzlVO = {};
+                        this.zzlVO = res.data.result;
+                        this.cglVO = {};
+                    } else if (type == "40") {
+                        this.isCgl = true;
+                        this.jzlVO = {};
+                        this.zzlVO = {};
+                        this.cglVO = res.data.result;
+                    } else {
+                        this.isJzl = false;
+                        this.isZzl = false;
+                        this.isCgl = false;
+                    }
                     this.loading = false;
                 }.bind(this), function (error) {
                     console.log(error);
@@ -143,14 +164,14 @@ new Vue({
             }
         },
         //保存前校验
-        validateSave: function(){   
+        validateSave: function () {
             if (this.editForm.jzmc == "" || this.editForm.jzmc == null) {
                 this.$message.warning({
                     message: '请输入建筑名称',
                     showClose: true
                 });
                 return false;
-            }else if(this.editForm.jzlx == "" || this.editForm.jzlx == null){
+            } else if (this.editForm.jzlx == "" || this.editForm.jzlx == null) {
                 this.$message.warning({
                     message: '请选择建筑类型',
                     showClose: true
@@ -159,53 +180,83 @@ new Vue({
             }
             return true;
         },
-        
+        //储罐增加
+        addDomain: function () {
+            this.dynamicValidateForm.push({
+                cgl_jzid: "",
+                cgl_zrj: "",
+                cgl_cgsl: "",
+                cgl_cgjg: "",
+                cgl_ccjzms: "",
+                cgl_jsfzr: "",
+                cgl_jsfzrdh: "",
+                cgl_plqkd: "",
+                cgl_plqkx: "",
+                cgl_plqkn: "",
+                cgl_plqkb: ""
+            });
+        },
+        //储罐删除
+        removeDomain: function (item) {
+            var index = this.dynamicValidateForm.indexOf(item)
+            if (index !== -1) {
+                this.dynamicValidateForm.splice(index, 1)
+            }
+        },
         //保存
         save: function (formName) {
-            if(this.validateSave()){
+            if (this.validateSave()) {
                 if (this.status == 0) {//新增
-                        // if (res.data.result > 0) {
-                        //     this.$message.warning({
-                        //         message: '中文名已存在，请重新命名',
-                        //         showClose: true
-                        //     });
-                        // } else {
-                            this.editForm.cjrid = this.shiroData.userid;
-                            this.editForm.cjrmc = this.shiroData.realName;
-                            this.editForm.jzlx = this.editForm.jzlx;
-                            // this.editForm.jzlx = this.editForm.jzlx[this.editForm.jzlx.length-1];//建筑类型
-                            // this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];                            
-                            // this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];   
-                      debugger;
-                            axios.post('/dpapi/building/insertByVO', this.editForm).then(function (res) {
-                                if (res.data.result != null) {
-                                    this.$alert('成功保存单位建筑信息', '提示', {
-                                        type: 'success',
-                                        confirmButtonText: '确定',
-                                        callback: action => {
-                                            loadDiv("buildingzoning/buildingzoning_list");
-                                        }
-                                    });
-                                } else {
-                                    this.$alert('保存失败', '提示', {
-                                        type: 'error',
-                                        confirmButtonText: '确定',
-                                        callback: action => {
-                                            loadDiv("buildingzoning/buildingzoning_list");
-                                        }
-                                    });
+                    // if (res.data.result > 0) {
+                    //     this.$message.warning({
+                    //         message: '中文名已存在，请重新命名',
+                    //         showClose: true
+                    //     });
+                    // } else {
+                    this.editForm.cjrid = this.shiroData.userid;
+                    this.editForm.cjrmc = this.shiroData.realName;
+                    if (this.editForm.jzlx == '10' || this.editForm.jzlx == '20' ) {
+                       this.editForm.buildingVO = this.jzlVO;
+                    }else if(this.editForm.jzlx == '30'){
+                        this.editForm.buildingVO = this.zzlVO;
+                    }else if(this.editForm.jzlx == '40'){
+                        this.editForm.buildingVO = this.cglVO;
+                    }
+                    axios.post('/dpapi/building/insertByVO', this.editForm).then(function (res) {
+                        if (res.data.result != null) {
+                            this.$alert('成功保存单位建筑信息', '提示', {
+                                type: 'success',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("buildingzoning/buildingzoning_list");
                                 }
-                            }.bind(this), function (error) {
-                                console.log(error);
-                            })
-                        // }
+                            });
+                        } else {
+                            this.$alert('保存失败', '提示', {
+                                type: 'error',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("buildingzoning/buildingzoning_list");
+                                }
+                            });
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
+                    // }
                 } else {//修改
                     this.editForm.xgrid = this.shiroData.userid;
                     this.editForm.xgrmc = this.shiroData.realName;
-                    this.editForm.jzlx = this.editForm.jzlx;
+                    // this.editForm.jzlx = this.editForm.jzlx;
+                    if (this.editForm.jzlx == '10' || this.editForm.jzlx == '20' ) {
+                        this.editForm.buildingVO = this.jzlVO;
+                    }else if(this.editForm.jzlx == '30'){
+                        this.editForm.buildingVO = this.zzlVO;
+                    }else if(this.editForm.jzlx == '40'){
+                        this.editForm.buildingVO = this.cglVO;
+                    }
                     // this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
                     // this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
-                  debugger;
                     axios.post('/dpapi/building/doUpdateBuildingzoning', this.editForm).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功修改单位建筑信息', '提示', {
@@ -227,7 +278,7 @@ new Vue({
                     }.bind(this), function (error) {
                         console.log(error);
                     })
-  
+
                 }
             }
         },
@@ -235,26 +286,26 @@ new Vue({
             loadDiv("buildingzoning/buildingzoning_list");
         },
         //建筑类型变化
-        jzlxChange: function(){
+        jzlxChange: function () {
             var type = this.editForm.jzlx;
-            if(type == "10" || type == "20"){
+            if (type == "10" || type == "20") {
                 this.isJzl = true;
                 this.isZzl = false;
                 this.isCgl = false;
-            }else if(type == "30"){
+            } else if (type == "30") {
                 this.isJzl = false;
                 this.isZzl = true;
                 this.isCgl = false;
-            }else if(type == "40"){
+            } else if (type == "40") {
                 this.isJzl = false;
                 this.isZzl = false;
                 this.isCgl = true;
-            }else{
+            } else {
                 this.isJzl = false;
                 this.isZzl = false;
                 this.isCgl = false;
             }
         }
     },
-    
+
 })

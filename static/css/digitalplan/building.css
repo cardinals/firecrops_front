@@ -1,0 +1,23 @@
+input[type=file] {
+    display: none;
+}
+.el-cascader,.el-select{
+    width: 100%;
+}
+
+.el-form-item__content {
+    margin-left: 0 !important; 
+}
+.el-form-item__error {
+    padding-top: 0;
+}
+.el-card__header{
+    padding: 0px 20px;
+    /* color: #20a0ff; */
+}
+.el-card__body{
+    padding: 15px;    
+}
+.el-message{
+    z-index: 10005 !important;
+}
