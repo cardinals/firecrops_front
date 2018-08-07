@@ -80,7 +80,8 @@ var vue = new Vue({
             },
             radio:"",
             data_index:"",
-
+            //登录用户
+            shiroData: [],
         }
     },
     created: function () {
@@ -99,6 +100,8 @@ var vue = new Vue({
 
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("预案分发", "-1");
+        /**当前登陆用户 by li.xue 20180807*/
+        this.shiroData = shiroGlobal;
 
         this.searchClick('click');//条件查询
     },
@@ -164,7 +167,9 @@ var vue = new Vue({
                 jgbm:this.searchForm.ZZJG[this.searchForm.ZZJG.length - 1],
                 yazt: yaztbm,
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
+                pageNum: this.currentPage,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             }
             axios.post('/dpapi/digitalplanlist/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage-1)*this.pageSize);
