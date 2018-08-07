@@ -123,7 +123,7 @@ var vue = new Vue({
             }
             dzlx = dzlx.substr(0,2);
             if(dzlx =="0A"){
-                return '——';
+                return '-';
             }else{
                 return rowData;
             }

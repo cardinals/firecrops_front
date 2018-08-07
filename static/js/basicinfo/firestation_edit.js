@@ -363,6 +363,7 @@ new Vue({
                         } else {
                             this.editForm.cjrid = this.shiroData.userid;
                             this.editForm.cjrmc = this.shiroData.realName;
+                            this.editForm.jdh = this.shiroData.organizationVO.jgid;
                             this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
                             this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
                             this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
@@ -394,6 +395,7 @@ new Vue({
                 } else {//修改
                     this.editForm.xgrid = this.shiroData.userid;
                     this.editForm.xgrmc = this.shiroData.realName;
+                    this.editForm.jdh = this.shiroData.organizationVO.jgid;
                     this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
                     if(this.editForm.xzqh.length>0){
                         this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
