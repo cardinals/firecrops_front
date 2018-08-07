@@ -82,7 +82,7 @@ var vue = new Vue({
                 pageNum: this.currentPage
             };
             axios.post('/dpapi/building/page',params).then(function(res){
-                var tableTemp = new Array((this.currentPage-1)*this.pageSize);
+               var tableTemp = new Array((this.currentPage-1)*this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
                 _self.loading = false;
@@ -151,7 +151,7 @@ var vue = new Vue({
                 }
                 axios.post('/dpapi/building/doDeleteBuildingzoning', this.multipleSelection).then(function (res) {
                     this.$message({
-                        message: "成功删除" + res.data.result + "条车辆信息",
+                        message: "成功删除" + res.data.result + "条建筑信息",
                         showClose: true,
                         onClose: this.searchClick('delete')
                     });
