@@ -67,7 +67,8 @@ new Vue({
                 ssdw:"",
                 gsdw:"",
                 gsdwlxfs:"",
-                bz: "",
+                bz:"",
+                jdh:"",
                 //创建人、修改人
                 cjrid: "",
                 cjrmc: "",
@@ -381,6 +382,7 @@ new Vue({
                 if (this.status == 0) {//新增
                     this.editForm.cjrid = this.shiroData.userid;
                     this.editForm.cjrmc = this.shiroData.realName;
+                    this.editForm.jdh = this.shiroData.organizationVO.jgid;
                     this.editForm.gxdz = this.editForm.gxdz[this.editForm.gxdz.length-1];
                     this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
                     axios.post('/dpapi/xfsy/insertByXfsyVO', this.editForm).then(function (res) {
@@ -407,6 +409,7 @@ new Vue({
                 } else {//修改
                     this.editForm.xgrid = this.shiroData.userid;
                     this.editForm.xgrmc = this.shiroData.realName;
+                    this.editForm.jdh = this.shiroData.organizationVO.jgid;
                     this.editForm.gxdz = this.editForm.gxdz[this.editForm.gxdz.length-1];
                     this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
                     axios.post('/dpapi/xfsy/updateByXfsyVO', this.editForm).then(function (res) {
