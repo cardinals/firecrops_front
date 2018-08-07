@@ -46,6 +46,7 @@ var vue = new Vue({
         // $("#activeIndex").val(getQueryString("index"));
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("消防队站管理", "-1");
+        /**当前登陆用户 by li.xue 20180807*/
         this.shiroData = shiroGlobal;
         this.getDzlxData();
         this.searchClick('click');
