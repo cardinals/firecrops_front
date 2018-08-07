@@ -25,6 +25,7 @@ new Vue({
                 jbxx_zddwmc: '',
                 jbxx_xfsslx: [],
                 jbxx_bz: '',
+                jbxx_jdh:'',
                 cjrid: '',
                 cjrmc: '',
                 xgrid: '',
@@ -421,6 +422,7 @@ new Vue({
                 if (this.status == 0) {//新增
                     this.addForm.cjrid = this.role_data.userid;
                     this.addForm.cjrmc = this.role_data.realName;
+                    this.addForm.jbxx_jdh = this.role_data.organizationVO.jgid;
                     this.addForm.detailMap = this.detailForm;
                     var params = this.addForm;
                     if (params.jbxx_xfsslx.length > 0) {
