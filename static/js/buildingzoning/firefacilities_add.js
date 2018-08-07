@@ -449,7 +449,7 @@ new Vue({
                     if (params.jbxx_xfsslx == '3001') {
                         params.detailMap.pmylx = params.detailMap.pmylx[params.detailMap.pmylx.length - 1];
                     }
-                    axios.post('/dpapi/firefacilities/insertByVO', this.addForm).then(function (res) {
+                    axios.post('/dpapi/firefacilities/insertByVO', params).then(function (res) {
                         if (res.data.result != null && res.data.result != '') {
                             this.$alert('保存成功', '提示', {
                                 type: 'success',
@@ -481,7 +481,7 @@ new Vue({
                     if (params.jbxx_xfsslx == '3001') {
                         params.detailMap.pmylx = params.detailMap.pmylx[params.detailMap.pmylx.length - 1];
                     }
-                    axios.post('/dpapi/firefacilities/doUpdateFirefacilities', this.addForm).then(function (res) {
+                    axios.post('/dpapi/firefacilities/doUpdateFirefacilities', params).then(function (res) {
                         if (res.data.result != null && res.data.result != '') {
                             this.$alert('修改成功', '提示', {
                                 type: 'success',
