@@ -422,11 +422,11 @@ new Vue({
                     this.addForm.cjrid = this.role_data.userid;
                     this.addForm.cjrmc = this.role_data.realName;
                     this.addForm.detailMap = this.detailForm;
-                    var params=this.addForm;
+                    var params = this.addForm;
                     if (params.jbxx_xfsslx.length > 0) {
-                        params.jbxx_xfsslx =params.jbxx_xfsslx[params.jbxx_xfsslx.length - 1];
+                        params.jbxx_xfsslx = params.jbxx_xfsslx[params.jbxx_xfsslx.length - 1];
                     }
-                    if(params.jbxx_xfsslx = '3001'){
+                    if (params.jbxx_xfsslx == '3001') {
                         params.detailMap.pmylx = params.detailMap.pmylx[params.detailMap.pmylx.length - 1];
                     }
                     axios.post('/dpapi/firefacilities/insertByVO', this.addForm).then(function (res) {
@@ -454,11 +454,11 @@ new Vue({
                     this.addForm.xgrid = this.role_data.userid;
                     this.addForm.xgrmc = this.role_data.realName;
                     this.addForm.detailMap = this.detailForm;
-                    var params=this.addForm;
+                    var params = this.addForm;
                     if (params.jbxx_xfsslx.length > 0) {
-                        params.jbxx_xfsslx =params.jbxx_xfsslx[params.jbxx_xfsslx.length - 1];
+                        params.jbxx_xfsslx = params.jbxx_xfsslx[params.jbxx_xfsslx.length - 1];
                     }
-                    if(params.jbxx_xfsslx = '3001'){
+                    if (params.jbxx_xfsslx == '3001') {
                         params.detailMap.pmylx = params.detailMap.pmylx[params.detailMap.pmylx.length - 1];
                     }
                     axios.post('/dpapi/firefacilities/doUpdateFirefacilities', this.addForm).then(function (res) {
