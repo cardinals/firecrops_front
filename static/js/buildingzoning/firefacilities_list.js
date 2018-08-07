@@ -10,9 +10,10 @@ var vue = new Vue({
             activeName: 'first',
             //搜索表单
             searchForm: {
-                jbxx_xfssmc: "",
-                jbxx_xfsslx: "",
-                jbxx_jzmc: ""
+                jbxx_xfssmc: '',
+                jbxx_xfsslx: [],
+                jbxx_jzmc: '',
+                jbxx_iszddw:''
             },
             role_data: [],
             tableData: [],
@@ -68,12 +69,12 @@ var vue = new Vue({
             } else {
                 this.currentPage = 1;
             }
-            var _self = this;
-            _self.loading = true;//表格重新加载
+            this.loading = true;//表格重新加载
             var params = {
                 jbxx_xfssmc: this.searchForm.jbxx_xfssmc,
                 jbxx_xfsslx: this.searchForm.jbxx_xfsslx[this.searchForm.jbxx_xfsslx.length - 1],
                 jbxx_jzmc: this.searchForm.jbxx_jzmc,
+                jbxx_iszddw: this.searchForm.jbxx_iszddw,
                 pageSize: this.pageSize,
                 pageNum: this.currentPage
             };
@@ -81,14 +82,14 @@ var vue = new Vue({
                 var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
-                _self.loading = false;
+                this.loading = false;
             }.bind(this), function (error) {
                 console.log(error);
             })
         },
         clearClick: function () {
             this.searchForm.jbxx_xfssmc = "";
-            this.searchForm.jbxx_xfsslx = "";
+            this.searchForm.jbxx_xfsslx = [];
             this.searchForm.jbxx_jzmc = "";
             this.searchClick('reset');
         },
@@ -109,7 +110,7 @@ var vue = new Vue({
             if (isZddw == null) {
                 return null;
             } else if (isZddw == '0') {
-                return '--';
+                return '-';
             } else {
                 return rowData;
             }
@@ -130,7 +131,7 @@ var vue = new Vue({
             this.rowdata = val;
             axios.post('/dpapi/firefacilities/doFindXfssDetail', val).then(function (res) {
                 this.detailData = res.data.result;
-                _self.loading = false;
+                this.loading = false;
             }.bind(this), function (error) {
                 console.log(error);
             })
