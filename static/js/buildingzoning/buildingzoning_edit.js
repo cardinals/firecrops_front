@@ -207,23 +207,18 @@ new Vue({
         save: function (formName) {
             if (this.validateSave()) {
                 if (this.status == 0) {//新增
-                    // if (res.data.result > 0) {
-                    //     this.$message.warning({
-                    //         message: '中文名已存在，请重新命名',
-                    //         showClose: true
-                    //     });
-                    // } else {
                     this.editForm.cjrid = this.shiroData.userid;
                     this.editForm.cjrmc = this.shiroData.realName;
-                    if (this.editForm.jzlx == '10' || this.editForm.jzlx == '20' ) {
-                       this.editForm.buildingVO = this.jzlVO;
-                    }else if(this.editForm.jzlx == '30'){
+                    this.editForm.jdh = this.shiroData.organizationVO.jgid;
+                    if (this.editForm.jzlx == '10' || this.editForm.jzlx == '20') {
+                        this.editForm.buildingVO = this.jzlVO;
+                    } else if (this.editForm.jzlx == '30') {
                         this.editForm.buildingVO = this.zzlVO;
-                    }else if(this.editForm.jzlx == '40'){
+                    } else if (this.editForm.jzlx == '40') {
                         this.editForm.buildingVO = this.cglVO;
                     }
                     axios.post('/dpapi/building/insertByVO', this.editForm).then(function (res) {
-                        if (res.data.result != null) {
+                        if (res.data.result == 1) {
                             this.$alert('成功保存单位建筑信息', '提示', {
                                 type: 'success',
                                 confirmButtonText: '确定',
@@ -245,18 +240,16 @@ new Vue({
                     })
                     // }
                 } else {//修改
+                    debugger;
                     this.editForm.xgrid = this.shiroData.userid;
                     this.editForm.xgrmc = this.shiroData.realName;
-                    // this.editForm.jzlx = this.editForm.jzlx;
-                    if (this.editForm.jzlx == '10' || this.editForm.jzlx == '20' ) {
+                    if (this.editForm.jzlx == '10' || this.editForm.jzlx == '20') {
                         this.editForm.buildingVO = this.jzlVO;
-                    }else if(this.editForm.jzlx == '30'){
+                    } else if (this.editForm.jzlx == '30') {
                         this.editForm.buildingVO = this.zzlVO;
-                    }else if(this.editForm.jzlx == '40'){
+                    } else if (this.editForm.jzlx == '40') {
                         this.editForm.buildingVO = this.cglVO;
                     }
-                    // this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
-                    // this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
                     axios.post('/dpapi/building/doUpdateBuildingzoning', this.editForm).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功修改单位建筑信息', '提示', {
