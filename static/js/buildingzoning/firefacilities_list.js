@@ -91,6 +91,7 @@ var vue = new Vue({
             this.searchForm.jbxx_xfssmc = "";
             this.searchForm.jbxx_xfsslx = [];
             this.searchForm.jbxx_jzmc = "";
+            this.searchForm.jbxx_iszddw = "";
             this.searchClick('reset');
         },
         isZddwFormat: function (row, column) {
