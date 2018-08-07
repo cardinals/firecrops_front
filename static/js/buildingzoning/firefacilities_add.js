@@ -413,6 +413,24 @@ new Vue({
                     showClose: true
                 });
                 return false;
+            }else if (this.addForm.jbxx_iszddw == '') {
+                this.$message.warning({
+                    message: '请选择是否属于重点单位',
+                    showClose: true
+                });
+                return false;
+            }else if (this.addForm.jbxx_iszddw == '1' && this.addForm.jbxx_zddwid == '') {
+                this.$message.warning({
+                    message: '请选择所属重点单位',
+                    showClose: true
+                });
+                return false;
+            }else if (this.addForm.jbxx_xfsslx.length==0) {
+                this.$message.warning({
+                    message: '请选择消防设施类型',
+                    showClose: true
+                });
+                return false;
             }
             return true;
         },

@@ -77,15 +77,15 @@
 						 class="tableStyle" :height="tableheight">
 							<el-table-column type="selection" width="45"></el-table-column>
 							<el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
-							<el-table-column prop="jbxx_xfssmc" label="消防设施名称" show-overflow-tooltip min-width="16%" align="center">
+							<el-table-column prop="jbxx_xfssmc" label="消防设施名称" show-overflow-tooltip min-width="17%" align="center">
 								<template slot-scope="scope">
 									<a @click="detailClick(scope.row)" v-text="scope.row.jbxx_xfssmc"></a>
 								</template>
 							</el-table-column>
-							<el-table-column prop="jbxx_xfsslxmc" label="消防设施类型" show-overflow-tooltip min-width="17%" align="center"></el-table-column>
-							<el-table-column prop="jbxx_jzmc" label="所属建筑名称" show-overflow-tooltip min-width="16%" align="center"></el-table-column>
-							<el-table-column prop="jbxx_iszddw" label="是否重点单位消防设施" show-overflow-tooltip min-width="19%" align="center" :formatter="isZddwFormat"></el-table-column>
-							<el-table-column prop="jbxx_zddwmc" label="所属重点单位" show-overflow-tooltip min-width="16%" align="center" :formatter="zddwFormat"></el-table-column>
+							<el-table-column prop="jbxx_xfsslxmc" label="消防设施类型" show-overflow-tooltip min-width="16%" align="center"></el-table-column>
+							<el-table-column prop="jbxx_jzmc" label="所属建筑名称" show-overflow-tooltip min-width="18%" align="center"></el-table-column>
+							<el-table-column prop="jbxx_iszddw" label="是否属于重点单位" show-overflow-tooltip min-width="16%" align="center" :formatter="isZddwFormat"></el-table-column>
+							<el-table-column prop="jbxx_zddwmc" label="所属重点单位" show-overflow-tooltip min-width="17%" align="center" :formatter="zddwFormat"></el-table-column>
 							<el-table-column label="操作" min-width="7%" align="center">
 								<template slot-scope="scope">
 									<el-button type="text" @click="editClick(scope.row)">编辑</el-button>
