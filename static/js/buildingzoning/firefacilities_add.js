@@ -354,7 +354,7 @@ new Vue({
                     }
                     axios.post('/dpapi/firefacilities/doFindXfssDetail', params).then(function (res) {
                         this.detailForm = res.data.result;
-                        if (this.addForm.jbxx_xfsslx == '3001') {
+                        if (this.addForm.jbxx_xfsslx[1] == '3001') {
                             //泡沫液类型格式化
                             if (this.detailForm.pmylx != '' && this.detailForm.pmylx != null) {
                                 if (this.detailForm.pmylx.endsWith("0000")) {
@@ -421,10 +421,14 @@ new Vue({
                 if (this.status == 0) {//新增
                     this.addForm.cjrid = this.role_data.userid;
                     this.addForm.cjrmc = this.role_data.realName;
-                    if (this.addForm.jbxx_xfsslx.length > 0) {
-                        this.addForm.jbxx_xfsslx = this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1];
-                    }
                     this.addForm.detailMap = this.detailForm;
+                    var params=this.addForm;
+                    if (params.jbxx_xfsslx.length > 0) {
+                        params.jbxx_xfsslx =params.jbxx_xfsslx[params.jbxx_xfsslx.length - 1];
+                    }
+                    if(params.jbxx_xfsslx = '3001'){
+                        params.detailMap.pmylx = params.detailMap.pmylx[params.detailMap.pmylx.length - 1];
+                    }
                     axios.post('/dpapi/firefacilities/insertByVO', this.addForm).then(function (res) {
                         if (res.data.result != null && res.data.result != '') {
                             this.$alert('保存成功', '提示', {
@@ -449,10 +453,14 @@ new Vue({
                 } else {//修改
                     this.addForm.xgrid = this.role_data.userid;
                     this.addForm.xgrmc = this.role_data.realName;
-                    if (this.addForm.jbxx_xfsslx.length > 0) {
-                        this.addForm.jbxx_xfsslx = this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1];
-                    }
                     this.addForm.detailMap = this.detailForm;
+                    var params=this.addForm;
+                    if (params.jbxx_xfsslx.length > 0) {
+                        params.jbxx_xfsslx =params.jbxx_xfsslx[params.jbxx_xfsslx.length - 1];
+                    }
+                    if(params.jbxx_xfsslx = '3001'){
+                        params.detailMap.pmylx = params.detailMap.pmylx[params.detailMap.pmylx.length - 1];
+                    }
                     axios.post('/dpapi/firefacilities/doUpdateFirefacilities', this.addForm).then(function (res) {
                         if (res.data.result != null && res.data.result != '') {
                             this.$alert('修改成功', '提示', {
