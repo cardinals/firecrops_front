@@ -271,8 +271,8 @@
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-select size="small" v-model="detailForm.sfky" placeholder="是否可用" class="searchSelect" clearable>
-									<el-option label="有" value="1"></el-option>
-									<el-option label="无" value="0"></el-option>
+									<el-option label="是" value="1"></el-option>
+									<el-option label="否" value="0"></el-option>
 								</el-select>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
@@ -387,8 +387,8 @@
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-select size="small" v-model="detailForm.isky" placeholder="是否可用" class="searchSelect" clearable>
-									<el-option label="有" value="1"></el-option>
-									<el-option label="无" value="0"></el-option>
+									<el-option label="是" value="1"></el-option>
+									<el-option label="否" value="0"></el-option>
 								</el-select>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
@@ -442,8 +442,8 @@
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-select size="small" v-model="detailForm.isky" placeholder="是否可用" class="searchSelect" clearable>
-									<el-option label="有" value="1"></el-option>
-									<el-option label="无" value="0"></el-option>
+									<el-option label="是" value="1"></el-option>
+									<el-option label="否" value="0"></el-option>
 								</el-select>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
@@ -568,8 +568,8 @@
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-select size="small" v-model="detailForm.isky" placeholder="是否可用" class="searchSelect" clearable>
-									<el-option label="有" value="1"></el-option>
-									<el-option label="无" value="0"></el-option>
+									<el-option label="是" value="1"></el-option>
+									<el-option label="否" value="0"></el-option>
 								</el-select>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
@@ -691,9 +691,9 @@
 							<el-table border id="table" :data="tableData_building.slice((currentPage_building-1)*pageSize_building,currentPage_building*pageSize_building)"
 							 class="tableStyle" :height="tableheight" @row-click="selectRow_building">
 								<el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
-								<el-table-column prop="jzmc" label="建筑名称" show-overflow-tooltip min-width="40%" align="center"></el-table-column>
-								<el-table-column prop="jzlx" label="建筑类型" show-overflow-tooltip min-width="25%" align="center"></el-table-column>
-								<el-table-column prop="jzwz" label="建筑位置" show-overflow-tooltip min-width="25%" align="center"></el-table-column>
+								<el-table-column prop="jzmc" label="建筑名称" show-overflow-tooltip min-width="33%" align="center"></el-table-column>
+								<el-table-column prop="jzlxmc" label="建筑类型" show-overflow-tooltip min-width="27%" align="center"></el-table-column>
+								<el-table-column prop="jzwz" label="建筑位置" show-overflow-tooltip min-width="30%" align="center"></el-table-column>
 							</el-table>
 							<!--列表底部工具条和分页符-->
 							<el-row type="flex" justify="end">
@@ -727,9 +727,9 @@
 							<el-table border id="table" :data="tableData_units.slice((currentPage_units-1)*pageSize_units,currentPage_units*pageSize_units)"
 							 class="tableStyle" :height="tableheight" @row-click="selectRow_units">
 								<el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
-								<el-table-column prop="dwmc" label="单位名称" show-overflow-tooltip min-width="40%" align="center"></el-table-column>
-								<el-table-column prop="dwxzmc" label="单位类别" show-overflow-tooltip min-width="25%" align="center"></el-table-column>
-								<el-table-column prop="xzqhmc" label="行政区划" show-overflow-tooltip min-width="25%" align="center"></el-table-column>
+								<el-table-column prop="dwmc" label="单位名称" show-overflow-tooltip min-width="38%" align="center"></el-table-column>
+								<el-table-column prop="dwxzmc" label="单位类别" show-overflow-tooltip min-width="32%" align="center"></el-table-column>
+								<el-table-column prop="xzqhmc" label="行政区划" show-overflow-tooltip min-width="20%" align="center"></el-table-column>
 							</el-table>
 							<!--列表底部工具条和分页符-->
 							<el-row type="flex" justify="end">
