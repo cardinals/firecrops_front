@@ -98,8 +98,9 @@ var vue = new Vue({
             defaultProps:{
                 value:'codeValue',
                 label:'codeName'
-            }
-          
+            },
+            //当前用户
+            shiroData: [],
         }
     },
     created:function(){
@@ -108,6 +109,7 @@ var vue = new Vue({
         
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("其他对象预案", "-1");
+        this.shiroData = shiroGlobal;
         this.getYalxdmData();
         this.getJgidData();
         this.searchClick('click');
@@ -150,7 +152,9 @@ var vue = new Vue({
                 sfkqy :this.searchForm.sfkqy,
                 jgid :this.searchForm.jgid[this.searchForm.jgid.length-1],
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
+                pageNum: this.currentPage,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/otherobjectsplan/findByVO',params).then(function(res){
                 var tableTemp = new Array((this.currentPage-1)*this.pageSize);
