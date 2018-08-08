@@ -83,6 +83,7 @@ new Vue({
                 xhs_jkxs:"",
                 xhs_jkkj:"",
                 xhs_zdll:"",
+                xhs_jdh:"",
                 //消防水鹤VO
                 xfsh_gwzj: "",
                 xfsh_gwyl: "",
@@ -383,6 +384,7 @@ new Vue({
                     this.editForm.cjrid = this.shiroData.userid;
                     this.editForm.cjrmc = this.shiroData.realName;
                     this.editForm.jdh = this.shiroData.organizationVO.jgid;
+                    this.editForm.xhs_jdh = this.shiroData.organizationVO.jgid;
                     this.editForm.gxdz = this.editForm.gxdz[this.editForm.gxdz.length-1];
                     this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
                     axios.post('/dpapi/xfsy/insertByXfsyVO', this.editForm).then(function (res) {
@@ -410,6 +412,7 @@ new Vue({
                     this.editForm.xgrid = this.shiroData.userid;
                     this.editForm.xgrmc = this.shiroData.realName;
                     this.editForm.jdh = this.shiroData.organizationVO.jgid;
+                    this.editForm.xhs_jdh = this.shiroData.organizationVO.jgid;
                     this.editForm.gxdz = this.editForm.gxdz[this.editForm.gxdz.length-1];
                     this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
                     axios.post('/dpapi/xfsy/updateByXfsyVO', this.editForm).then(function (res) {
