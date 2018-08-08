@@ -71,6 +71,8 @@ var vue = new Vue({
             selectIndex: -1,
             //详情页显示flag
             detailVisible:false,
+            //当前登陆用户
+            shiroData: [],
         }
     },
     created: function () {
@@ -78,6 +80,8 @@ var vue = new Vue({
         //$("#activeIndex").val(getQueryString("index"));
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("消防水源管理", "-1");
+        /**当前登陆用户信息 by li.xue 20180808 */
+        this.shiroData = shiroGlobal;
         this.searchClick('page');
         this.searchSYLX_data();
         this.searchGXZD_data();
@@ -129,7 +133,9 @@ var vue = new Vue({
                 trsy_ywksq: this.searchForm.trsy_ywksq,
                 trsy_sz: this.searchForm.trsy_sz,
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
+                pageNum: this.currentPage,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             }
             axios.post('/dpapi/xfsy/findlistPage', params).then(function (res) {
                 // this.tableData = res.data.result;
@@ -344,24 +350,19 @@ var vue = new Vue({
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                axios.post('/api/shiro').then(function (res) {
-                    this.shiroData = res.data;
-                    for(var i=0;i<this.multipleSelection.length;i++){
-                        this.multipleSelection[i].xgrid = this.shiroData.userid;
-                        this.multipleSelection[i].xgrmc = this.shiroData.realName;
-                    }
-                    axios.post('/dpapi/xfsy/doDeleteBatch', this.multipleSelection).then(function (res) {
-                        this.$message({
-                            message: "成功删除" + this.multipleSelection.length + "条队站信息",
-                            showClose: true,
-                            onClose: this.searchClick('delete')
-                        });
-                    }.bind(this), function (error) {
-                        console.log(error)
-                    })
+                for(var i=0;i<this.multipleSelection.length;i++){
+                    this.multipleSelection[i].xgrid = this.shiroData.userid;
+                    this.multipleSelection[i].xgrmc = this.shiroData.realName;
+                }
+                axios.post('/dpapi/xfsy/doDeleteBatch', this.multipleSelection).then(function (res) {
+                    this.$message({
+                        message: "成功删除" + this.multipleSelection.length + "条队站信息",
+                        showClose: true,
+                        onClose: this.searchClick('delete')
+                    });
                 }.bind(this), function (error) {
-                    console.log(error);
-                }); 
+                    console.log(error)
+                })
             }).catch(() => {
                 this.$message({
                     type: 'info',

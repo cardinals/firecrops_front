@@ -241,7 +241,7 @@
 												<el-input v-model="llbs.dzmc" size="small" placeholder="消防队站" disabled></el-input>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" class="tl">
-												<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="fireStaList(index,index1)"></el-button>
+												<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="fireStaList('init',index,index1)"></el-button>
 											</el-col>
 											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
 												<el-label class="mr5">方案类型</el-label>
@@ -448,7 +448,7 @@
 										<el-input size="small" v-model="searchForm_fireSta.dzmc" placeholder="队站名称" clearable></el-input>
 									</el-col>
 									<el-col :span="6" class="btnSearchPlus">
-										<el-button type="primary" icon="search" size="small" @click="fireStaList">查询</el-button>
+										<el-button type="primary" icon="search" size="small" @click="fireStaList('click','','')">查询</el-button>
 										<el-button type="clear" icon="delete" size="small" @click="clearfireStaList">清空</el-button>
 									</el-col>
 								</el-row>
@@ -458,9 +458,9 @@
 							<el-table border id="table" :data="tableData_fireSta.slice((currentPage_fireSta-1)*pageSize_fireSta,currentPage_fireSta*pageSize_fireSta)"
 							 class="tableStyle" :height="tableheight_fireSta" @row-click="selectRow_fireSta">
 								<el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
-								<el-table-column prop="dzmc" label="队站名称" show-overflow-tooltip min-width="30%" align="center"></el-table-column>
-								<el-table-column prop="dzlxmc" label="队站类型" show-overflow-tooltip min-width="30%" align="center"></el-table-column>
-								<el-table-column prop="dzdz" label="队站地址" show-overflow-tooltip min-width="30%" align="center"></el-table-column>
+								<el-table-column prop="dzmc" label="队站名称" show-overflow-tooltip min-width="35%" align="center"></el-table-column>
+								<el-table-column prop="dzlxmc" label="队站类型" show-overflow-tooltip min-width="20%" align="center"></el-table-column>
+								<el-table-column prop="dzdz" label="队站地址" show-overflow-tooltip min-width="35%" align="center"></el-table-column>
 							</el-table>
 							<!--列表底部工具条和分页符-->
 							<el-row type="flex" justify="end">

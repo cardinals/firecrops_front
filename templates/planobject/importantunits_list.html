@@ -59,8 +59,8 @@
 								<el-form>
 									<el-col :span="12" class="btnEditDelete">
 										<el-form-item align="left">
-											<!--<el-button type="primary" icon="edit" size="small" @click="editClick">编辑</el-button>-->
-											<!-- <el-button type="danger" icon="delete" size="small" @click="removeSelection">删除</el-button>   -->
+											<el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
+											<el-button type="danger" icon="delete2" size="small" @click="deleteClick">删除</el-button>  
 										</el-form-item>
 									</el-col>
 									<el-col :span="12"></el-col>
@@ -76,17 +76,23 @@
 					</el-row>
 					<div class="table_container">
 						<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" class="tableStyle" :height="tableheight">
+							<el-table-column type="selection" width="45"></el-table-column>
 							<el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
-							<el-table-column prop="dwmc" label="单位名称" show-overflow-tooltip min-width="25%" align="center">
+							<el-table-column prop="dwmc" label="单位名称" show-overflow-tooltip min-width="23%" align="center">
 								<template slot-scope="scope">
 									<a @click="informClick(scope.row)" type="text" v-text="scope.row.dwmc||'无'"></a>
 								</template>
 							</el-table-column>
-							<el-table-column prop="dwxzmc" label="单位性质" show-overflow-tooltip min-width="25%" align="center"></el-table-column>
-							<el-table-column prop="mhdzidmc" label="灭火队站" show-overflow-tooltip min-width="15%" align="center"></el-table-column>
+							<el-table-column prop="dwxzmc" label="单位性质" show-overflow-tooltip min-width="20%" align="center"></el-table-column>
+							<el-table-column prop="mhdzidmc" label="灭火队站" show-overflow-tooltip min-width="13%" align="center"></el-table-column>
 							<el-table-column prop="fhdjmc" label="防火等级" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
-							<el-table-column prop="jzflmc" label="建筑情况" show-overflow-tooltip min-width="13%" align="center"></el-table-column>
+							<el-table-column prop="jzflmc" label="建筑情况" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
 							<el-table-column prop="xfdwlxmc" label="消防队伍" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
+							<el-table-column label="操作" min-width="11%" align="center">
+								<template slot-scope="scope">
+									<el-button type="text" @click="editClick(scope.row)">编辑</el-button>
+								</template>
+							</el-table-column>
 						</el-table>
 
 						<!--列表底部工具条和分页符-->

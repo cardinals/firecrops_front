@@ -175,6 +175,58 @@ var vue = new Vue({
             this.searchForm.xfdwlxmc="";
             this.searchClick('reset');
         },
+        //新增
+        addClick: function(){
+            var params = {
+                ID: 0,
+                type: "XZ"
+            }
+            loadDivParam("planobject/importantunits_edit", params);
+        },
+        //编辑
+        editClick: function(val){
+            var params = {
+                ID: val.uuid,
+                type: "BJ"
+            }
+            loadDivParam("planobject/importantunits_edit", params);
+        },
+        //删除
+        deleteClick: function(){
+            this.$confirm('确认删除选中信息?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                axios.post('/api/shiro').then(function (res) {
+                    this.shiroData = res.data;
+                    for(var i=0;i<this.multipleSelection.length;i++){
+                        this.multipleSelection[i].xgrid = this.shiroData.userid;
+                        this.multipleSelection[i].xgrmc = this.shiroData.realName;
+                    }
+                    axios.post('/dpapi/xfdz/doDeleteBatch', this.multipleSelection).then(function (res) {
+                        this.$message({
+                            message: "成功删除" + this.multipleSelection.length + "条重点单位信息",
+                            showClose: true,
+                            onClose: this.searchClick('delete')
+                        });
+                    }.bind(this), function (error) {
+                        console.log(error)
+                    })
+                }.bind(this), function (error) {
+                    console.log(error);
+                }); 
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
+        //删除复选框
+        selectionChange: function(val) {
+            this.multipleSelection = val;
+        },
         getdwxzData: function () {
             axios.get('/api/codelist/getCodeTypeOrderByNum/DWXZ').then(function (res) {
                 this.dwxzData = res.data.result;

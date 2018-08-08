@@ -13,7 +13,7 @@ new Vue({
             allTypesDataTree: [],
             azxsDataTree: [],
             pmylxDataTree: [],
-            role_data: [],
+            shiroData: [],
             detailForm: {},
             //搜索表单
             addForm: {
@@ -80,14 +80,13 @@ new Vue({
         } else if (type == "BJ") {
             loadBreadcrumb("消防设施管理", "消防设施管理编辑");
         }
+        this.shiroData = shiroGlobal;
         this.status = getQueryString("ID");
         this.getAllTypesDataTree();//消防设施类型级联选择数据
         this.getAzxsDataTree();
         this.getPmylxDataTree();
-        this.roleData();
     },
     mounted: function () {
-
         this.searchClick();
     },
     methods: {
@@ -317,15 +316,6 @@ new Vue({
                 this.addForm.jbxx_zddwmc = '';
             }
         },
-
-        //当前登录用户信息
-        roleData: function () {
-            axios.post('/api/shiro').then(function (res) {
-                this.role_data = res.data;
-            }.bind(this), function (error) {
-                console.log(error);
-            })
-        },
         //表格查询事件
         searchClick: function () {
             this.loading = true;
@@ -497,9 +487,9 @@ new Vue({
         save: function () {
             if (this.checkForm() == true) {
                 if (this.status == 0) {//新增
-                    this.addForm.cjrid = this.role_data.userid;
-                    this.addForm.cjrmc = this.role_data.realName;
-                    this.addForm.jbxx_jdh = this.role_data.organizationVO.jgid;
+                    this.addForm.cjrid = this.shiroData.userid;
+                    this.addForm.cjrmc = this.shiroData.realName;
+                    this.addForm.jbxx_jdh = this.shiroData.organizationVO.jgid;
                     this.addForm.detailMap = this.detailForm;
                     var params = this.addForm;
                     if (params.jbxx_xfsslx.length > 0) {
@@ -530,8 +520,8 @@ new Vue({
                         console.log(error);
                     })
                 } else {//修改
-                    this.addForm.xgrid = this.role_data.userid;
-                    this.addForm.xgrmc = this.role_data.realName;
+                    this.addForm.xgrid = this.shiroData.userid;
+                    this.addForm.xgrmc = this.shiroData.realName;
                     this.addForm.detailMap = this.detailForm;
                     var params = this.addForm;
                     if (params.jbxx_xfsslx.length > 0) {

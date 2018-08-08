@@ -13,9 +13,9 @@ var vue = new Vue({
                 jbxx_xfssmc: '',
                 jbxx_xfsslx: [],
                 jbxx_jzmc: '',
-                jbxx_iszddw:''
+                jbxx_iszddw: ''
             },
-            role_data: [],
+            shiroData: [],
             tableData: [],
             detailVisible: false,
             detailData: [],
@@ -49,19 +49,11 @@ var vue = new Vue({
     },
     created: function () {
         loadBreadcrumb("消防设施信息", "-1");
-        this.roleData();
+        this.shiroData = shiroGlobal;
         this.getXFSSLXData();
         this.searchClick('click');
     },
     methods: {
-        //当前登录用户信息
-        roleData: function () {
-            axios.post('/api/shiro').then(function (res) {
-                this.role_data = res.data;
-            }.bind(this), function (error) {
-                console.log(error);
-            })
-        },
         //表格查询事件
         searchClick: function (type) {
             if (type == 'page') {
@@ -76,7 +68,10 @@ var vue = new Vue({
                 jbxx_jzmc: this.searchForm.jbxx_jzmc,
                 jbxx_iszddw: this.searchForm.jbxx_iszddw,
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
+                pageNum: this.currentPage,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
+
             };
             axios.post('/dpapi/firefacilities/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
@@ -87,6 +82,7 @@ var vue = new Vue({
                 console.log(error);
             })
         },
+        //清空
         clearClick: function () {
             this.searchForm.jbxx_xfssmc = "";
             this.searchForm.jbxx_xfsslx = [];
@@ -94,6 +90,7 @@ var vue = new Vue({
             this.searchForm.jbxx_iszddw = "";
             this.searchClick('reset');
         },
+        //是否属于重点单位格式化
         isZddwFormat: function (row, column) {
             var rowData = row[column.property];
             var isZddw = row.jbxx_iszddw;
@@ -105,6 +102,7 @@ var vue = new Vue({
                 return '是';
             }
         },
+        //所属重点单位格式化
         zddwFormat: function (row, column) {
             var rowData = row[column.property];
             var isZddw = row.jbxx_iszddw;
@@ -116,6 +114,7 @@ var vue = new Vue({
                 return rowData;
             }
         },
+        //消防设施类型树结构数据查询
         getXFSSLXData: function () {
             axios.get('/api/codelist/getDzlxTree/XFSSLX').then(function (res) {
                 this.XFSSLX_data = res.data.result;
@@ -127,6 +126,7 @@ var vue = new Vue({
         selectionChange: function (val) {
             this.multipleSelection = val;
         },
+        //点击查看详情
         detailClick: function (val) {
             this.detailVisible = true;
             this.rowdata = val;
@@ -166,8 +166,8 @@ var vue = new Vue({
                 type: 'warning'
             }).then(() => {
                 for (var i in this.multipleSelection) {
-                    this.multipleSelection[i].xgrid = this.role_data.userid;
-                    this.multipleSelection[i].xgrmc = this.role_data.realName;
+                    this.multipleSelection[i].xgrid = this.shiroData.userid;
+                    this.multipleSelection[i].xgrmc = this.shiroData.realName;
                 }
                 axios.post('/dpapi/firefacilities/doDeleteFacilities', this.multipleSelection).then(function (res) {
                     this.$message({

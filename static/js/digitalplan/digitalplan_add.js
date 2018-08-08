@@ -41,7 +41,7 @@ new Vue({
             YALX_dataTree: [],
             YAJB_data: [],
             YAZT_data: [],
-            role_data: {},
+            shiroData: [],
             // detailData: {},
             //灾情信息data
             zqIndex: '',
@@ -146,27 +146,17 @@ new Vue({
             tableData_fireSta: [],
             //表高度变量
             tableheight_fireSta: 243,
-            // labelPosition: 'right',
-            //多选值
-            // multipleSelection: [],
-
-            //序号
-            // indexData: 0,
-            //选中的值显示
-            // sels: [],
-            //选中的序号
-            // selectIndex: -1,
 
         }
     },
     created: function () {
-       /**菜单选中 by li.xue 20180628*/
+        /**菜单选中 by li.xue 20180628*/
         /**
         var index = getQueryString("index");
         $("#activeIndex").val(index);
         this.activeIndex = index;
          */
-        
+
         /**面包屑 by li.xue 20180628*/
         var type = getQueryString("type");
         if (type == "XZ") {
@@ -188,30 +178,25 @@ new Vue({
     },
     mounted: function () {
         this.status = getQueryString("ID");
-        // var url = location.search;
-        // if (url.indexOf("?") != -1) {
-        //     var str = url.substr(1);
-        //     this.status = str.substring(3);
-        // }
         this.searchClick();
     },
     methods: {
         //灾情删除
-        removeDomain:function(item) {
+        removeDomain: function (item) {
             var index = this.dynamicValidateForm.indexOf(item)
             if (index !== -1) {
                 this.dynamicValidateForm.splice(index, 1)
             }
         },
         //力量部署删除
-        removellbs:function(item, num) {
+        removellbs: function (item, num) {
             var index = this.dynamicValidateForm[num].forcedevList.indexOf(item)
             if (index !== -1) {
                 this.dynamicValidateForm[num].forcedevList.splice(index, 1)
             }
         },
         //灾情增加
-        addDomain:function() {
+        addDomain: function () {
             this.dynamicValidateForm.push({
                 zqbw: '',
                 zdbwid: '',
@@ -235,7 +220,7 @@ new Vue({
             });
         },
         //力量部署增加
-        addDomainllbs:function(val) {
+        addDomainllbs: function (val) {
             this.dynamicValidateForm[val].forcedevList.push({
                 dzid: '',
                 dzmc: '',
@@ -321,14 +306,6 @@ new Vue({
                 console.log(error);
             })
         },
-        //当前登录用户信息
-        roleData: function () {
-            axios.post('/api/shiro').then(function (res) {
-                this.role_data = res.data;
-            }.bind(this), function (error) {
-                console.log(error);
-            })
-        },
         //初始化查询
         searchClick: function () {
             this.loading1 = true;
@@ -405,7 +382,7 @@ new Vue({
                         this.fileList = [{
                             uuid: res.data.result[0].uuid,
                             name: res.data.result[0].wjm,
-                            url: baseUrl+"/upload/" + res.data.result[0].xzlj
+                            url: baseUrl + "/upload/" + res.data.result[0].xzlj
                         }]
                     }
 
@@ -426,7 +403,7 @@ new Vue({
                 pageNum: this.currentPage_units
             };
             axios.post('/dpapi/importantunits/page', params).then(function (res) {
-                var tableTemp = new Array((this.currentPage_units-1)*this.pageSize_units);
+                var tableTemp = new Array((this.currentPage_units - 1) * this.pageSize_units);
                 this.tableData_units = tableTemp.concat(res.data.result.list);
                 this.total_units = res.data.result.total;
                 // this.tableData_units = res.data.result;
@@ -554,25 +531,36 @@ new Vue({
             this.searchForm_building.jzmc = "";
         },
         //消防队站选择弹出页---------------------------------------------------------------
-        fireStaList: function (val, val1) {
-            this.zqIndex = val;
-            this.dzIndex = val1;
+        fireStaList: function (type, val, val1) {
             if (this.addForm.dxid == null || this.addForm.dxid == "") {
                 this.$message({
                     message: "请先选择预案对象",
                     showClose: true,
                 });
             } else {
+                if (type == 'page') {
+                    this.tableData = [];
+                } else {
+                    if (type == 'init') {
+                        this.zqIndex = val;
+                        this.dzIndex = val1;
+                        this.searchForm_fireSta.dzmc = ''
+                    }
+                    this.currentPage = 1;
+                }
                 this.fireStaListVisible = true;
                 this.loading_fireSta = true;
                 if (this.addForm.xzqh != null && this.addForm.xzqh != '') {
                     var params = {
                         xzqh: this.addForm.xzqh.substring(0, 2),
-                        dzmc: this.searchForm_fireSta.dzmc
+                        dzmc: this.searchForm_fireSta.dzmc,
+                        pageSize: this.pageSize_fireSta,
+                        pageNum: this.currentPage_fireSta
                     };
                     axios.post('/dpapi/xfdz/doSearchProvinceList', params).then(function (res) {
-                        this.tableData_fireSta = res.data.result;
-                        this.total_fireSta = res.data.result.length;
+                        var tableTemp = new Array((this.currentPage_fireSta - 1) * this.pageSize_fireSta);
+                        this.tableData_fireSta = tableTemp.concat(res.data.result.list);
+                        this.total_fireSta = res.data.result.total;
                         this.loading_fireSta = false;
                     }.bind(this), function (error) {
                         console.log(error);
@@ -584,10 +572,10 @@ new Vue({
         },
         //当前页修改事件
         currentPageChange_fireSta: function (val) {
-            this.currentPage_fireSta = val;
-            // console.log("当前页: " + val);
-            var _self = this;
-            _self.loadingData(); //重新加载数据
+            if (this.currentPage_fireSta != val) {
+                this.currentPage_fireSta = val;
+                this.fireStaList('page', '', '');
+            }
         },
         //选择消防队站，返回消防队站名称和id
         selectRow_fireSta: function (val) {
@@ -665,7 +653,6 @@ new Vue({
         },
         //点击保存事件
         save: function (formName) {
-            // this.$refs[formName].validate((valid) => {
             if (this.checkedBefore() == true) {
                 if (this.status == 0) {//新增
                     var params = {
@@ -677,11 +664,11 @@ new Vue({
                         yajb: this.addForm.yajb,
                         bz: this.addForm.bz,
                         disasterList: this.dynamicValidateForm,
-                        zzrid: this.role_data.userid,
-                        zzrmc: this.role_data.realName,
-                        jgid: this.role_data.organizationVO.uuid,
-                        jgbm: this.role_data.organizationVO.jgid,
-                        jgmc: this.role_data.organizationVO.jgmc
+                        zzrid: this.shiroData.userid,
+                        zzrmc: this.shiroData.realName,
+                        jgid: this.shiroData.organizationVO.uuid,
+                        jgbm: this.shiroData.organizationVO.jgid,
+                        jgmc: this.shiroData.organizationVO.jgmc
                     };
                     axios.post('/dpapi/digitalplanlist/insertByVO', params).then(function (res) {
                         this.upLoadData.yaid = res.data.result.uuid;
@@ -709,8 +696,8 @@ new Vue({
                         yajb: this.addForm.yajb,
                         bz: this.addForm.bz,
                         disasterList: this.dynamicValidateForm,
-                        zzrid: this.role_data.userid,
-                        zzrmc: this.role_data.realName
+                        zzrid: this.shiroData.userid,
+                        zzrmc: this.shiroData.realName
                     };
                     axios.post('/dpapi/digitalplanlist/doUpdateByVO', params).then(function (res) {
                         if (this.isFile) {
@@ -718,8 +705,8 @@ new Vue({
                                 yaid: this.status,
                                 deleteFlag: 'Y',
                                 xgsj: '1',
-                                xgrid: this.role_data.userid,
-                                xgrmc: this.role_data.realName
+                                xgrid: this.shiroData.userid,
+                                xgrmc: this.shiroData.realName
                             };
                             axios.post('/dpapi/yafjxz/doUpdateByVO', params1).then(function (res) {
                                 this.submitUpload();//附件上传
@@ -732,7 +719,6 @@ new Vue({
                                 showClose: true
                             });
                             loadDiv("digitalplan/digitalplan_list");
-                            //window.location.href = "digitalplan_list.html?index=" + this.activeIndex;
                         }
                     }.bind(this), function (error) {
                         console.log(error);
@@ -746,93 +732,90 @@ new Vue({
         },
         //提交点击事件
         submit: function (formName) {
-            // this.$refs[formName].validate((valid) => {
-                if (this.checkedBefore() == true) {
-                    if (this.status == 0) { //新增
-                        var params = {
-                            dxid: this.addForm.dxid,
-                            dxmc: this.addForm.dxmc,
-                            yamc: this.addForm.yamc,
-                            yalx: this.addForm.yalx[this.addForm.yalx.length - 1],
-                            yazt: '03',
-                            shzt: '01',
-                            yajb: this.addForm.yajb,
-                            bz: this.addForm.bz,
-                            disasterList: this.dynamicValidateForm,
-                            zzrid: this.role_data.userid,
-                            zzrmc: this.role_data.realName,
-                            jgid: this.role_data.organizationVO.uuid,
-                            jgbm: this.role_data.organizationVO.jgid,
-                            jgmc: this.role_data.organizationVO.jgmc
-                        };
-                        axios.post('/dpapi/digitalplanlist/insertByVO', params).then(function (res) {
-                            this.upLoadData.yaid = res.data.result.uuid;
-                            if (this.isFile) {
+            if (this.checkedBefore() == true) {
+                if (this.status == 0) { //新增
+                    var params = {
+                        dxid: this.addForm.dxid,
+                        dxmc: this.addForm.dxmc,
+                        yamc: this.addForm.yamc,
+                        yalx: this.addForm.yalx[this.addForm.yalx.length - 1],
+                        yazt: '03',
+                        shzt: '01',
+                        yajb: this.addForm.yajb,
+                        bz: this.addForm.bz,
+                        disasterList: this.dynamicValidateForm,
+                        zzrid: this.shiroData.userid,
+                        zzrmc: this.shiroData.realName,
+                        jgid: this.shiroData.organizationVO.uuid,
+                        jgbm: this.shiroData.organizationVO.jgid,
+                        jgmc: this.shiroData.organizationVO.jgmc
+                    };
+                    axios.post('/dpapi/digitalplanlist/insertByVO', params).then(function (res) {
+                        this.upLoadData.yaid = res.data.result.uuid;
+                        if (this.isFile) {
+                            this.submitUpload();//附件上传
+                        } else {
+                            this.$message({
+                                message: "成功保存并提交预案信息",
+                                showClose: true
+                            });
+                            loadDiv("digitalplan/digitalplan_list");
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
+                } else { //修改
+                    var params = {
+                        uuid: this.status,
+                        dxid: this.addForm.dxid,
+                        dxmc: this.addForm.dxmc,
+                        yamc: this.addForm.yamc,
+                        yalx: this.addForm.yalx[this.addForm.yalx.length - 1],
+                        yazt: '03',
+                        shzt: '01',
+                        yajb: this.addForm.yajb,
+                        bz: this.addForm.bz,
+                        disasterList: this.dynamicValidateForm,
+                        zzrid: this.shiroData.userid,
+                        zzrmc: this.shiroData.realName
+                    };
+                    axios.post('/dpapi/digitalplanlist/doUpdateByVO', params).then(function (res) {
+                        if (this.isFile) {
+                            var params1 = {
+                                yaid: this.status,
+                                deleteFlag: 'Y',
+                                xgsj: '1',
+                                xgrid: this.shiroData.userid,
+                                xgrmc: this.shiroData.realName
+                            };
+                            axios.post('/dpapi/yafjxz/doUpdateByVO', params1).then(function (res) {
                                 this.submitUpload();//附件上传
-                            } else {
-                                this.$message({
-                                    message: "成功保存并提交预案信息",
-                                    showClose: true
-                                });
-                                loadDiv("digitalplan/digitalplan_list");
-                                //window.location.href = "digitalplan_list.html?index=" + this.activeIndex;
-                            }
-                        }.bind(this), function (error) {
-                            console.log(error);
-                        })
-                    } else { //修改
-                        var params = {
-                            uuid: this.status,
-                            dxid: this.addForm.dxid,
-                            dxmc: this.addForm.dxmc,
-                            yamc: this.addForm.yamc,
-                            yalx: this.addForm.yalx[this.addForm.yalx.length - 1],
-                            yazt: '03',
-                            shzt: '01',
-                            yajb: this.addForm.yajb,
-                            bz: this.addForm.bz,
-                            disasterList: this.dynamicValidateForm,
-                            zzrid: this.role_data.userid,
-                            zzrmc: this.role_data.realName
-                        };
-                        axios.post('/dpapi/digitalplanlist/doUpdateByVO', params).then(function (res) {
-                            if (this.isFile) {
-                                var params1 = {
-                                    yaid: this.status,
-                                    deleteFlag: 'Y',
-                                    xgsj: '1',
-                                    xgrid: this.role_data.userid,
-                                    xgrmc: this.role_data.realName
-                                };
-                                axios.post('/dpapi/yafjxz/doUpdateByVO', params1).then(function (res) {
-                                    this.submitUpload();//附件上传
-                                }.bind(this), function (error) {
-                                    console.log(error);
-                                })
-                            } else {
-                                this.$message({
-                                    message: "成功保存预案信息",
-                                    showClose: true
-                                });
-                                loadDiv("digitalplan/digitalplan_list");
-                                //window.location.href = "digitalplan_list.html?index=" + this.activeIndex;
-                            }
-                        }.bind(this), function (error) {
-                            console.log(error);
-                        })
-                    }
-                } else {
-                    console.log('error submit!!');
-                    return false;
+                            }.bind(this), function (error) {
+                                console.log(error);
+                            })
+                        } else {
+                            this.$message({
+                                message: "成功保存预案信息",
+                                showClose: true
+                            });
+                            loadDiv("digitalplan/digitalplan_list");
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
                 }
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
             // });
         },
         //附件上传
-        submitUpload:function() {
+        submitUpload: function () {
             this.$refs.upload.submit();
         },
         //附件上传成功回调方法
-        handleSuccess:function(response, file, fileList) {
+        handleSuccess: function (response, file, fileList) {
             if (response) {
                 this.$message({
                     message: "成功保存预案信息",
@@ -841,10 +824,10 @@ new Vue({
                 });
             }
             loadDiv("digitalplan/digitalplan_list");
-           //window.location.href = "digitalplan_list.html?index=" + this.activeIndex;
+            //window.location.href = "digitalplan_list.html?index=" + this.activeIndex;
         },
         //附件移除
-        handleRemove:function(file, fileList) {
+        handleRemove: function (file, fileList) {
             var fs = document.getElementsByName('file');
             if (fs.length > 0) {
                 fs[0].value = null
@@ -852,22 +835,17 @@ new Vue({
             console.log(file, fileList);
             this.isFile = false;
         },
-        handlePreview:function(file) {
+        handlePreview: function (file) {
             console.log(file);
         },
         handleChange: function (file, fileList) {
             if (fileList.length == 1) {
-                // this.isFile = true;
                 const isZip = file.name.endsWith("zip");
                 const isRAR = file.name.endsWith("rar");
-                // if (isZip || isRAR) {
-                //     this.isFile = true;
-                // } 
                 if (isZip) {
                     this.isFile = true;
                 }
                 else {
-                    // this.$message.error('仅可上传zip/rar格式压缩文件!');
                     this.$message.error('仅可上传zip格式压缩文件!');
                     this.fileList.splice(0, this.fileList.length);
                 }
@@ -877,20 +855,20 @@ new Vue({
                 fileList.splice(1, fileList.length - 1);
             }
         },
-        ifShowDown:function(val){
+        ifShowDown: function (val) {
             var templete = $('.templete'),
                 space = $('.space'),
                 $this = $(this);
-            if(val=='03'){
+            if (val == '03') {
                 templete.css('display', 'block');
                 space.css('display', 'none');
-            }else{
+            } else {
                 templete.css('display', 'none');
                 space.css('display', 'block');
             }
         },
-        templeteDown:function(val){
-            window.open(baseUrl+"/dpapi/yafjxz/downTemplet");
+        templeteDown: function (val) {
+            window.open(baseUrl + "/dpapi/yafjxz/downTemplet");
         }
     },
 

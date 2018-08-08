@@ -111,12 +111,12 @@ new Vue({
                 this.tableData = [];
             } else {
                 if (type == 'init') {
+                    this.clIndex = val;
                     this.searchForm.clmc = '';
                     this.searchForm.cphm = '';
                 }
                 this.currentPage = 1;
             }
-            this.clIndex = val;
             this.engineListVisible = true;
             this.loading_engine = true;
 

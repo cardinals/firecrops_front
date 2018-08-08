@@ -4,19 +4,34 @@ new Vue({
     el: '#app',
     data: function () {
         return {
-            activeName: "first",//tab页缺省标签
-            uuid: "",
+            //菜单编号
+            activeIndex: '',
+            //新增修改标识（0新增，uuid修改）
+            status: '',
+            //显示加载中样
+            loading: false,
+            allTypesDataTree: [],
+            allXzqhDataTree: [],
+            allSsdzDataTree: [],
+            role_data: [],
+            uuid: "4bb4d6da5a78416d9f923c16965dead0",
+            
             //表数据
             tableData: [],//基本数据
+            allDwxzData: [],
+            allFhdjData: [],
+            allXfdwlxData: [{codeName:'企业专职消防队',codeValue:'0A01'},{codeName:'微型消防站',codeValue:'0A03'}],
+            allJzflData: [],
             //重点部位显示标识：
             ZDBW: false,
             jzl_zdbwData: [],//建筑类重点部位数据
             zzl_zdbwData: [],//装置类重点部位数据
             cgl_zdbwData: [],//储罐类重点部位数据
-            jzfqData:[],//建筑分区原始数据
+            jzfqData: [],//建筑分区原始数据
+            JZFQ: false,
             jzl_jzfqData: [],//建筑群-建筑类数据
             zzl_jzfqData: [],//建筑群-装置类数据
-            cgl_jzfqData: [],//建筑类建筑分区数据
+            cgl_jzfqData: [],//建筑群-储罐类数据
             //消防力量显示标识：
             XFLL: false,
             //消防力量数据：
@@ -155,115 +170,103 @@ new Vue({
             YA: false,
             //预案数据
             yaData: [],
-            //表高度变量
-            tableheight: 474,
-            //显示加载中样
-            loading: false,
-            labelPosition: 'right',
-            //多选值
-            multipleSelection: [],
+
+
+            engineForm: [{
+                clid: '',
+                clmc: '',
+                clzzs: ''
+            }],
+            clIndex: '',
+            //树结构配置
+            defaultProps: {
+                children: 'children',
+                label: 'codeName',
+                value: 'codeValue'
+            },
+            ssdzProps: {
+                children: 'children',
+                label: 'dzjc',
+                value: 'dzid'
+            },
+            //消防车辆弹出页---------------------------------------------------
+            engineListVisible: false,
+            loading_engine: false,
             //当前页
             currentPage: 1,
             //分页大小
-            pageSize: 10,
+            pageSize: 5,
             //总记录数
             total: 0,
-            //基本数据保存
-            rowdata: {},
-            //序号
-            indexData: 0,
-            //发送至邮箱是否显示
-            emailDialogVisible: false,
-            email: "",
-            //信息分享是否显示
-            shareDialogVisible: false,
-            //信息打印是否显示
-            printDialogVisible: false,
-            //删除的弹出框
-            deleteVisible: false,
-            //新建页面是否显示
-            addFormVisible: false,
-            addLoading: false,
-            addFormRules: {
-
+            //搜索表单
+            searchForm: {
+                clmc: '',
+                cphm: ''
             },
-            //新建数据
-            addForm: {
-                DWMC: "",
-                DWDJ: "",
-                DWXZ: "",
-                XZQY: "",
-                DWDZ: "",
-                ZDMJ: "",
-                XFGXJGID: ""
-            },
-            //选中的值显示
-            sels: [],
-            //选中的序号
-            selectIndex: -1,
-            //编辑界面是否显示
-            editFormVisible: false,
-            //菜单选中
-            activeIndex: ''
+            tableData: [],
+            //表高度变量
+            tableheight: 243,
         }
     },
-    mounted: function () {
-        /**菜单选中 by li.xue 20180628*/
-        /**
-        this.activeIndex = getQueryString("index")
-        $("#activeIndex").val(this.activeIndex);
-         */
+    created: function () {
         /**面包屑 by li.xue 20180628*/
         var type = getQueryString("type");
-        if(type == "GJSS"){
-            loadBreadcrumb("高级搜索", "重点单位详情");
-        }else if(type == "DT"){
-            loadBreadcrumb("地图", "重点单位详情");
-        }else if(type == "XZ"){
+        if (type == "XZ") {
             loadBreadcrumb("重点单位", "重点单位新增");
-        }else if(type == "BJ"){
+        } else if (type == "BJ") {
             loadBreadcrumb("重点单位", "重点单位编辑");
-        }else{
-            loadBreadcrumb("重点单位", "重点单位详情");
         }
-
+        // this.uuid = getQueryString("ID");
+        this.getallDwxzData();
+        this.getallFhdjData();
+        this.getallJzflData();
         //根据重点单位id获取重点单位详情
         this.getDetails();
+    },
+    mounted: function () {
 
+        // this.searchClick();
     },
     methods: {
-        handleNodeClick(data) {
-            // console.log(data);
+        getallDwxzData: function () {
+            axios.get('/api/codelist/getCodeTypeOrderByNum/DWXZ').then(function (res) {
+                this.allDwxzData = res.data.result;
+                // this.allDwxzData.sort(this.compare('value'));
+                // console.log(this.allDwxzData);
+            }.bind(this), function (error) {
+                console.log(error);
+            })
         },
-        //标签页
-        handleClick: function (e) {
-            // console.log(e);
+        getallFhdjData: function () {
+            axios.get('/api/codelist/getCodetype/FHDJ').then(function (res) {
+                this.allFhdjData = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
         },
         //获取重点单位详情
         getDetails: function () {
             this.loading = true;
-            var ID = getQueryString("ID");
-            axios.get('/dpapi/importantunits/' + ID).then(function (res) {
+            axios.get('/dpapi/importantunits/' + this.uuid).then(function (res) {
                 this.tableData = res.data.result;
                 this.loading = false;
-                this.uuid = ID;
-                //显示图片
-                doFindPhoto("DWXZ", res.data.result.dwxz);
-                // if (this.tableData !== []) {
+                // //显示图片
+                // doFindPhoto("DWXZ", res.data.result.dwxz);
+                // // if (this.tableData !== []) {
                 //根据重点单位id获取消防队伍信息
                 this.getXfllListByZddwIdo();
-                //根据重点单位id获取消防设施信息
-                this.getXfssDetailByVo();
-                //根据重点单位id获取建筑类重点部位详情集合
-                this.getJzlListByZddwId();
-                //根据重点单位id获取装置类重点部位详情集合
-                this.getZzlListByZddwId();
-                //根据重点单位id获取储罐类重点部位详情集合
-                this.getCglListByZddwId();
-                //根据重点单位id获取包含的分区详情
-                this.getJzfqDetailByVo();
-                //根据重点单位id获取预案信息
-                this.getYaListByVo();
+                // //根据重点单位id获取消防设施信息
+                // this.getXfssDetailByVo();
+                // //根据重点单位id获取建筑类重点部位详情集合
+                // this.getJzlListByZddwId();
+                // //根据重点单位id获取装置类重点部位详情集合
+                // this.getZzlListByZddwId();
+                // //根据重点单位id获取储罐类重点部位详情集合
+                // this.getCglListByZddwId();
+                // //根据重点单位id获取包含的分区详情
+                // this.getJzfqDetailByVo();
+                // //根据重点单位id获取预案信息
+                // this.getYaListByVo();
                 // }
             }.bind(this), function (error) {
                 console.log(error)
@@ -338,7 +341,7 @@ new Vue({
                         };
                     }
                 }
-                
+
                 // if (this.tableData.jzfl == 10 || this.tableData.jzfl == 20) {
                 //     this.jzl_jzfqData = res.data.result;
                 // } else if (this.tableData.jzfl == 30) {
@@ -528,6 +531,13 @@ new Vue({
                 console.log(error);
             })
         },
+        getallJzflData: function () {
+            axios.get('/api/codelist/getCodetype/JZFL').then(function (res) {
+                this.allJzflData = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
         //根据重点单位id获取预案信息
         getYaListByVo: function () {
             var params = {
@@ -535,8 +545,8 @@ new Vue({
             }
             axios.post('/dpapi/digitalplanlist/list', params).then(function (res) {
                 var tempData = res.data.result;
-                for(var i=0;i<tempData.length;i++){
-                    tempData[i].zzsj = tempData[i].zzsj.substring(0,10);
+                for (var i = 0; i < tempData.length; i++) {
+                    tempData[i].zzsj = tempData[i].zzsj.substring(0, 10);
                 }
                 this.yaData = tempData;
                 if (this.yaData.length !== 0) {
@@ -547,112 +557,122 @@ new Vue({
                 console.log(error)
             })
         },
-        //预案预览
-        openPlan: function (val) {
-            if (val.yajb == '03') {
-                window.open(baseUrl+"/planShare/page/" + val.uuid + "/" + 'detail' + "/web");
-            } else if (val.yajb == '01' || val.yajb == '02') {
-                var fjDate = [];
-                var fjCount = 0;
-                axios.get('/dpapi/yafjxz/doFindByPlanId/' + val.uuid).then(function (res) {
-                    fjDate = res.data.result;
-                    fjCount = fjDate.length;
-                    if (fjCount > 0) {
-                        var yllj = fjDate[0].yllj;
-                        if (yllj == null || yllj == '') {
-                            this.$message({
-                                message: "无可预览文件",
-                                showClose: true
+        //增加消防力量
+        addXfllData:function() {
+            this.xfllData.push({
+                xfdwlx: '',
+                xfdwrs: '',
+                xfdwcls: '',
+                xfdwlxr: '',
+                xfdwdh: '',
+                bz: ''
+            });
+        },
+        //灾情删除
+        removeXfllData:function(item) {
+            var index = this.xfllData.indexOf(item)
+            if (index !== -1) {
+                this.xfllData.splice(index, 1)
+            }
+        },
+
+        checkForm: function () {
+            if (this.addForm.zbmc == '' || this.addForm == null) {
+                this.$message.warning({
+                    message: '请输入装备名称',
+                    showClose: true
+                });
+                return false;
+            }
+            for (var i in this.engineForm) {
+                if (this.engineForm[i].clid == '' && this.engineForm[i].clzzs == 0) {
+                    this.removeDomain(this.engineForm[i]);
+                    return true;
+                } else if (this.engineForm[i].clid == '' && this.engineForm[i].clzzs > 0) {
+                    this.$message.warning({
+                        message: '请选择消防车辆',
+                        showClose: true
+                    });
+                    return false;
+                }
+            }
+            return true;
+        },
+        //保存
+        save: function () {
+            if (this.checkForm() == true) {
+                if (this.status == 0) {//新增
+                    this.addForm.cjrid = this.role_data.userid;
+                    this.addForm.cjrmc = this.role_data.realName;
+                    this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
+                    for (var i in this.engineForm) {
+                        this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.engineForm[i].clzzs);
+                    }
+                    this.addForm.zcbl = parseInt(this.addForm.kysl) + parseInt(this.addForm.shsl) + parseInt(this.addForm.zzsl);
+                    if (this.addForm.zblx.length > 0) {
+                        this.addForm.zblx = this.addForm.zblx[this.addForm.zblx.length - 1];
+                    }
+                    if (this.addForm.xzqh.length > 0) {
+                        this.addForm.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
+                    }
+                    if (this.addForm.ssdz.length > 0) {
+                        this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
+                    }
+                    this.addForm.equipengineVOList = this.engineForm;
+                    axios.post('/dpapi/equipmentsource/insertByVO', this.addForm).then(function (res) {
+                        if (res.data.result.uuid != null && res.data.result.uuid != '') {
+                            this.$alert('保存成功', '提示', {
+                                type: 'success',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("basicinfo/equipment_list");
+                                }
                             });
                         } else {
-                            window.open(baseUrl+"/upload/" + yllj);
+                            this.$alert('保存失败', '提示', {
+                                type: 'error',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("basicinfo/equipment_list");
+                                }
+                            });
                         }
-                    } else {
-                        this.$message({
-                            message: "该预案无附件",
-                            showClose: true
-                        });
-                    }
-                }.bind(this), function (error) {
-                    console.log(error)
-                })
-            }
-        },
-        //预案下载
-        downloadPlan: function (val) {
-            if (val.yajb == '03') {
-                if (val.dxid == 'dlwd') {
-                    window.open(baseUrl+"/dpapi/yafjxz/downTempYa?yawjmc=大连万达_简版.docx");
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
+                } else {//修改
+                    this.addForm.xgrid = this.role_data.userid;
+                    this.addForm.xgrmc = this.role_data.realName;
+                    this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
+                    this.addForm.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];
+                    axios.post('/dpapi/firedrug/doUpdateDrug', this.addForm).then(function (res) {
+                        if (res.data.result >= 1) {
+                            this.$alert('成功修改' + res.data.result + '条消防药剂信息', '提示', {
+                                type: 'success',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("basicinfo/equipment_list");
+                                }
+                            });
+                        } else {
+                            this.$alert('修改失败', '提示', {
+                                type: 'error',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("basicinfo/equipment_list");
+                                }
+                            });
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
                 }
-            } else if (val.yajb == '01' || val.yajb == '02') {
-                var fjDate = [];
-                var fjCount = 0;
-                axios.get('/dpapi/yafjxz/doFindByPlanId/' + val.uuid).then(function (res) {
-                    fjDate = res.data.result;
-                    fjCount = fjDate.length;
-                    if (fjCount > 0) {
-                        axios.get('/dpapi/yafjxz/doFindByPlanId/' + val.uuid).then(function (res) {
-                            var xzlj = res.data.result[0].xzlj;
-                            window.open(baseUrl+"/upload/" + xzlj);
-                        }.bind(this), function (error) {
-                            console.log(error)
-                        })
-                    }
-                }.bind(this), function (error) {
-                    console.log(error)
-                })
             }
         },
-        //预案详情跳转
-        planDetails(val) {
-            window.location.href = "../digitalplan/digitalplan_detail.html?ID=" + val.uuid + "&index=" + this.activeIndex + "&type=ZDDW";
-            //     window.location.href = this.$http.options.root + "/dpapi" + "/keyunit/detail/" + val.pkid;
-        },
-        //发送至邮箱
-        openEmail: function () {
-            this.emailDialogVisible = true;
-        },
-        closeEmailDialog: function () {
-            this.emailDialogVisible = false;
-            this.email = "";
-        },
-        //信息分享
-        openShare: function () {
-            // this.shareDialogVisible = true;
-            var ID = getQueryString("ID");
-            window.open(baseUrl+"/planShare/pageZddw/" + ID +  "/web");
-        },
-        closeShareDialog: function () {
-            this.shareDialogVisible = false;
-        },
-        //信息打印
-        openPrinter: function () {
-            // 1.设置要打印的区域 div的className
-            var newstr = document.getElementsByClassName('main-box')[0].innerHTML;
-            // 2. 复制给body，并执行window.print打印功能
-            document.body.innerHTML = newstr
-            window.print()
-            // 重新加载页面，以刷新数据
-            window.location.reload();
-
-        },
-        //表格重新加载数据
-        loadingData: function () {
-            var _self = this;
-            _self.loading = true;
-            setTimeout(function () {
-                console.info("加载数据成功");
-                _self.loading = false;
-            }, 300);
-        },
-        //跳转到地图页面并带上UUID和点击参数
-        tz:function(){
-            // console.log(this.tableData);
-            var uuid = this.tableData.uuid;
-            var cityCode = this.tableData.xzqh;
-            //行政区划代码，跳转后需要截取前四位补0后查一下市的名称
-            window.location.href = "bigscreen/big_screen_map_pro.html?cityCode="+cityCode+"&uuid="+uuid+"&sydj=1";
+        //取消
+        cancel: function () {
+            loadDiv("basicinfo/equipment_list");
         }
-    }
+    },
 
 })
