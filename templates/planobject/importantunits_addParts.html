@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script src="../../static/js/zzzlib/vue.js"></script>
+    <script src="../../static/js/zzzlib/elementUI.js"></script>
+    <script src="../../static/js/planobject/importantunits_addParts.js"></script>
+</head>
+
+<body class="fw f14 main-index-body">
+    <!--详情界面-->
+    <div id="detailDisplay">
+        <div id="tableView"  v-loading="loading" element-loading-text="加载中">
+            <el-row>
+                <el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
+                    <el-row>
+                        <el-col :span="12" class="searchInline">
+                            <label class="el-form-item__label searchLabel">单位名称</label>
+                            <el-input size="small" v-model="searchForm.dwmc" placeholder="单位名称"></el-input>
+                        </el-col>
+                        <el-col :span="12" class="btnSearchPlus">
+                            <el-button type="primary" icon="search" size="small" @click="searchClick">查询</el-button>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </el-row>
+            <div class="table_container">
+                <el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+                    class="tableStyle" :height="tableheight" @row-click="selectRow">
+                    <el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
+                    <el-table-column prop="dwmc" label="单位名称" show-overflow-tooltip min-width="40%" align="center"></el-table-column>
+                    <el-table-column prop="dwlbmc" label="单位类别" show-overflow-tooltip min-width="25%" align="center"></el-table-column>
+                    <el-table-column prop="xzqhmc" label="行政区划" show-overflow-tooltip min-width="25%" align="center"></el-table-column>
+                </el-table>
+
+                <!--列表底部工具条和分页符-->
+                <el-row type="flex" justify="end">
+                    <el-col :span="18">
+                        <el-pagination @size-change="pageSizeChange" @current-change="currentPageChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 50]"
+                            :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total=parseInt(total)>
+                        </el-pagination>
+                    </el-col>
+                </el-row>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
