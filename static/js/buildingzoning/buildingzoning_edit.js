@@ -14,9 +14,9 @@ new Vue({
             jzlxData: [],
             //qk
             jzl_jzqkData: [],
-            jzl_jzsyxzData:[],
-            jzl_jzjgData:[],
-            zzl_jzjgData:[],
+            jzl_jzsyxzData: [],
+            jzl_jzjgData: [],
+            zzl_jzjgData: [],
             //上级队站
             sjdzData: [],
             //行政区划
@@ -51,7 +51,7 @@ new Vue({
             jzlVO: {
                 jzl_jzid: "",
                 jzl_jzqk: "",
-                jzl_jzsyxz: "",
+                jzl_jzsyxz: [],
                 jzl_jzjg: "",
                 jzl_gnms: "",
                 jzl_zdmj: "",
@@ -97,6 +97,7 @@ new Vue({
                 label: 'dzjc',
                 children: 'children'
             },
+            
         }
     },
     created: function () {
@@ -129,32 +130,32 @@ new Vue({
                 console.log(error);
             })
         },
-         //jzqkData
-         getJzqkData: function () {
+        //jzqkData
+        getJzqkData: function () {
             axios.get('/api/codelist/getCodetype/JZQK').then(function (res) {
                 this.jzl_jzqkData = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
             })
         },
-         //jzsyxzData
-         getJzsyxzData: function () {
-            axios.get('/api/codelist/getCodetype/JZSYXZ').then(function (res) {
+        //jzsyxzData
+        getJzsyxzData: function () {
+            axios.get('/api/codelist/getDzlxTree/JZSYXZ').then(function (res) {
                 this.jzl_jzsyxzData = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
             })
         },
-         //jzjgData
-         getJzjgData: function () {
+        //jzjgData
+        getJzjgData: function () {
             axios.get('/api/codelist/getCodetype/JZJG').then(function (res) {
                 this.jzl_jzjgData = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
             })
         },
-         //zzl_jzjgData
-         getZzljzjgata: function () {
+        //zzl_jzjgData
+        getZzljzjgata: function () {
             axios.get('/api/codelist/getCodetype/JZJG').then(function (res) {
                 this.zzl_jzjgData = res.data.result;
             }.bind(this), function (error) {
@@ -175,11 +176,26 @@ new Vue({
                 };
                 axios.post('/dpapi/building/findFqDetailByVo', params).then(function (res) {
                     // var result = res.data.result;
+                    debugger
                     this.editForm = res.data.result;
                     var type = this.editForm.jzlx;
                     if (type == "10" || type == "20") {
                         this.isJzl = true;
                         this.jzlVO = res.data.result;
+                        if (this.jzlVO.jzl_jzsyxz != '' && this.jzlVO.jzl_jzsyxz != null) {
+                            if (this.jzlVO.jzl_jzsyxz.endsWith("000")) {
+                                var xzqh = this.jzlVO.jzl_jzsyxz;
+                                this.jzlVO.jzl_jzsyxz = [];
+                                this.jzlVO.jzl_jzsyxz.push(xzqh);
+                            } else {
+                                var xzqh1 = this.jzlVO.jzl_jzsyxz.substring(0, 1) + '000';
+                                var xzqh2 = this.jzlVO.jzl_jzsyxz;
+                                this.jzlVO.jzl_jzsyxz = [];
+                                this.jzlVO.jzl_jzsyxz.push(xzqh1, xzqh2);
+                            } 
+                        }else{
+                            this.jzlVO.jzl_jzsyxz = [];
+                        }
                         this.zzlVO = {};
                         this.cglVO = {};
                     } else if (type == "30") {
@@ -202,6 +218,11 @@ new Vue({
                     console.log(error);
                 })
             }
+
+
+
+
+
         },
         //保存前校验
         validateSave: function () {
@@ -257,6 +278,11 @@ new Vue({
                     } else if (this.editForm.jzlx == '40') {
                         this.editForm.buildingVO = this.cglVO;
                     }
+                    if (this.jzlVO.jzl_jzsyxz.length > 0) {
+                        this.jzlVO.jzl_jzsyxz = this.jzlVO.jzl_jzsyxz[this.jzlVO.jzl_jzsyxz.length - 1];
+                    } else {
+                        this.jzlVO.jzl_jzsyxz = '';
+                    }
                     axios.post('/dpapi/building/insertByVO', this.editForm).then(function (res) {
                         if (res.data.result == 1) {
                             this.$alert('成功保存单位建筑信息', '提示', {
@@ -290,6 +316,11 @@ new Vue({
                     } else if (this.editForm.jzlx == '40') {
                         this.editForm.buildingVO = this.cglVO;
                     }
+                    if (this.jzlVO.jzl_jzsyxz.length > 0) {
+                        this.jzlVO.jzl_jzsyxz = this.jzlVO.jzl_jzsyxz[this.jzlVO.jzl_jzsyxz.length - 1];
+                    } else {
+                        this.jzlVO.jzl_jzsyxz = '';
+                    }
                     axios.post('/dpapi/building/doUpdateBuildingzoning', this.editForm).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功修改单位建筑信息', '提示', {
@@ -322,6 +353,11 @@ new Vue({
         jzlxChange: function () {
             var type = this.editForm.jzlx;
             if (type == "10" || type == "20") {
+                if (type == "10") {
+                    this.jzlVO.jzl_jzqk = '1'
+                } else if (type == "20") {
+                    this.jzlVO.jzl_jzqk = '2'
+                }
                 this.isJzl = true;
                 this.isZzl = false;
                 this.isCgl = false;

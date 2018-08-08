@@ -38,6 +38,7 @@ var vue = new Vue({
             //选中的序号
             selectIndex: -1,
 
+
         }
     },
     created:function(){
