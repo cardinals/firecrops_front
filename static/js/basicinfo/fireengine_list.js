@@ -72,22 +72,15 @@ var vue = new Vue({
         // $("#activeIndex").val(getQueryString("index"));
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("消防车辆管理", "-1");
+        /**当前用户信息 by li.xue 20180808 */
+        this.role_data = shiroGlobal;
         this.searchClick('click');
         this.getAllTypesData();
         this.getAllStatesData();
         this.getAllTeamsData();
-        this.roleData();
     },
     methods: {
         handleNodeClick(data) {
-        },
-        //获取当前用户信息
-         roleData: function () {
-            axios.post('/api/shiro').then(function (res) {
-                this.role_data = res.data;
-            }.bind(this), function (error) {
-                console.log(error);
-            })
         },
         //表格勾选事件
         selectionChange: function (val) {
@@ -161,7 +154,9 @@ var vue = new Vue({
                 gpsbh :this.searchForm.gpsbh,
                 clmc:this.searchForm.clmc,
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
+                pageNum: this.currentPage,
+                orgUuid: this.role_data.organizationVO.uuid,
+                orgJgid: this.role_data.organizationVO.jgid
             };
             axios.post('/dpapi/fireengine/page',params).then(function(res){
                 var tableTemp = new Array((this.currentPage-1)*this.pageSize);
