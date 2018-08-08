@@ -394,7 +394,15 @@ new Vue({
             }
         },
         //重点单位选择弹出页---------------------------------------------------------------
-        keyunitList: function (val) {
+        keyunitList: function (type) {
+            if (type == 'page') {
+                this.tableData = [];
+            } else {
+                if (type == 'init') {
+                    this.searchForm_units.dwmc = ''
+                }
+                this.currentPage = 1;
+            }
             this.unitsListVisible = true;
             this.loading_units = true;
             var params = {
@@ -406,8 +414,6 @@ new Vue({
                 var tableTemp = new Array((this.currentPage_units - 1) * this.pageSize_units);
                 this.tableData_units = tableTemp.concat(res.data.result.list);
                 this.total_units = res.data.result.total;
-                // this.tableData_units = res.data.result;
-                // this.total_units = res.data.result.length;
                 this.loading_units = false;
             }.bind(this), function (error) {
                 console.log(error);
@@ -415,8 +421,10 @@ new Vue({
         },
         //当前页修改事件
         currentPageChange_units: function (val) {
-            this.currentPage_units = val;
-            this.keyunitList();
+            if (this.currentPage_units != val) {
+                this.currentPage_units = val;
+                this.keyunitList('page');
+            }
         },
         //选择重点单位，返回单位名称和id
         selectRow_units: function (val) {
@@ -432,6 +440,7 @@ new Vue({
         //重点单位查询条件清空
         clearkeyunitList: function (val) {
             this.searchForm_units.dwmc = "";
+            this.keyunitList('reset');
         },
         //重点单位删除
         clearYadx: function (val) {
@@ -439,23 +448,34 @@ new Vue({
             this.addForm.dxid = "";
         },
         //灾情部位选择弹出页---------------------------------------------------------------
-        partsList: function (val) {
-            this.zqIndex = val;
+        partsList: function (type, val) {
             if (this.addForm.dxid == null || this.addForm.dxid == "") {
                 this.$message({
                     message: "请先选择预案对象",
                     showClose: true,
                 });
             } else {
+                if (type == 'page') {
+                    this.tableData = [];
+                } else {
+                    if (type == 'init') {
+                        this.zqIndex = val;
+                        this.searchForm_parts.zdbwmc = ''
+                    }
+                    this.currentPage = 1;
+                }
                 this.partsListVisible = true;
                 this.loading_parts = true;
                 var params = {
                     zddwid: this.addForm.dxid,
-                    zdbwmc: this.searchForm_parts.zdbwmc
+                    zdbwmc: this.searchForm_parts.zdbwmc,
+                    pageSize: this.pageSize_parts,
+                    pageNum: this.currentPage_parts
                 };
-                axios.post('/dpapi/importantparts/list', params).then(function (res) {
-                    this.tableData_parts = res.data.result;
-                    this.total_parts = res.data.result.length;
+                axios.post('/dpapi/importantparts/page', params).then(function (res) {
+                    var tableTemp = new Array((this.currentPage_parts - 1) * this.pageSize_parts);
+                    this.tableData_parts = tableTemp.concat(res.data.result.list);
+                    this.total_parts = res.data.result.total;
                     this.loading_parts = false;
                 }.bind(this), function (error) {
                     console.log(error);
@@ -464,10 +484,10 @@ new Vue({
         },
         //当前页修改事件
         currentPageChange_parts: function (val) {
-            this.currentPage_parts = val;
-            // console.log("当前页: " + val);
-            var _self = this;
-            _self.loadingData(); //重新加载数据
+            if (this.currentPage_parts != val) {
+                this.currentPage_parts = val;
+                this.partsList('page', '');
+            }
         },
         //选择重点部位，返回重点部位名称和id
         selectRow_parts: function (val) {
@@ -483,25 +503,37 @@ new Vue({
         //灾情部位查询条件清空
         clearpartsList: function (val) {
             this.searchForm_parts.zdbwmc = "";
+            this.partsList('reset', '');
         },
         //所属建筑选择弹出页---------------------------------------------------------------
-        buildingList: function (val) {
-            this.zqIndex = val;
+        buildingList: function (type, val) {
             if (this.addForm.dxid == null || this.addForm.dxid == "") {
                 this.$message({
                     message: "请先选择预案对象",
                     showClose: true,
                 });
             } else {
+                if (type == 'page') {
+                    this.tableData = [];
+                } else {
+                    if (type == 'init') {
+                        this.zqIndex = val;
+                        this.searchForm_building.jzmc = ''
+                    }
+                    this.currentPage = 1;
+                }
                 this.buildingListVisible = true;
                 this.loading_building = true;
                 var params = {
                     zddwid: this.addForm.dxid,
-                    jzmc: this.searchForm_building.jzmc
+                    jzmc: this.searchForm_building.jzmc,
+                    pageSize: this.pageSize_building,
+                    pageNum: this.currentPage_building
                 };
                 axios.post('/dpapi/digitalplanlist/doSearchJzListByZddwId', params).then(function (res) {
-                    this.tableData_building = res.data.result;
-                    this.total_building = res.data.result.length;
+                    var tableTemp = new Array((this.currentPage_building - 1) * this.pageSize_building);
+                    this.tableData_building = tableTemp.concat(res.data.result.list);
+                    this.total_building = res.data.result.total;
                     this.loading_building = false;
                 }.bind(this), function (error) {
                     console.log(error);
@@ -510,10 +542,10 @@ new Vue({
         },
         //当前页修改事件
         currentPageChange_building: function (val) {
-            this.currentPage_building = val;
-            // console.log("当前页: " + val);
-            var _self = this;
-            _self.loadingData(); //重新加载数据
+            if (this.currentPage_building != val) {
+                this.currentPage_building = val;
+                this.buildingList('page', '');
+            }
         },
         //选择建筑，返回建筑名称和id
         selectRow_building: function (val) {
@@ -529,6 +561,7 @@ new Vue({
         //所属建筑查询条件清空
         clearbuildingList: function (val) {
             this.searchForm_building.jzmc = "";
+            this.buildingList('reset', '');
         },
         //消防队站选择弹出页---------------------------------------------------------------
         fireStaList: function (type, val, val1) {
@@ -592,15 +625,7 @@ new Vue({
         //消防队站查询条件清空
         clearfireStaList: function (val) {
             this.searchForm_fireSta.dzmc = "";
-        },
-        //表格重新加载数据
-        loadingData: function () {
-            var _self = this;
-            _self.loading = true;
-            setTimeout(function () {
-                console.info("加载数据成功");
-                _self.loading = false;
-            }, 300);
+            this.fireStaList('reset', '', '');
         },
 
         //保存/提交前校验
