@@ -16,7 +16,7 @@ var vue = new Vue({
                 YAZT: ""
             },
             tableData: [],
-            role_data: {},//当前用户信息
+            shiroData: [],//当前用户信息
             YALX_dataTree: [],//预案类型级联选择
             ZZJG_dataTree: [],//制作机构级联选择
             YAJB_data: [],//预案级别下拉框
@@ -64,7 +64,7 @@ var vue = new Vue({
         
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("重点单位预案", "-1");
-
+        this.shiroData = shiroGlobal;
         this.YALX_tree();//预案类型级联选择
         this.ZZJG_tree();//制作机构级联选择
         this.YAJB();//预案级别下拉框
@@ -72,25 +72,11 @@ var vue = new Vue({
     },
     mounted: function () {
         this.searchClick('click');//条件查询
-        this.roleData();//当前用户信息
     },
 
     methods: {
-        //获取当前用户信息
-        roleData: function () {
-            axios.post('/api/shiro').then(function (res) {
-                this.role_data = res.data;
-            }.bind(this), function (error) {
-                console.log(error);
-            })
-        },
         //预案类型级联选择
         YALX_tree: function () {
-            // axios.get('/api/codelist/getCarTypes/YALX').then(function (res) {
-            //     this.YALX_dataTree = res.data.result;
-            // }.bind(this), function (error) {
-            //     console.log(error);
-            // })
             var params = {
                 codetype: "YALX",
                 list: [1, 2, 4, 6, 8]
@@ -143,7 +129,9 @@ var vue = new Vue({
                 jgid: this.searchForm.ZZJG[this.searchForm.ZZJG.length - 1],
                 yazt: this.searchForm.YAZT,
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
+                pageNum: this.currentPage,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             }
             axios.post('/dpapi/digitalplanlist/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage-1)*this.pageSize);
@@ -218,8 +206,8 @@ var vue = new Vue({
                 type: 'warning'
             }).then(() => {
                 var params = {
-                    xgrid: this.role_data.userid,
-                    xgrmc: this.role_data.realName
+                    xgrid: this.shiroData.userid,
+                    xgrmc: this.shiroData.realName
                 }
                 axios.post('/dpapi/digitalplanlist/doDeleteDigitalplan', this.multipleSelection).then(function (res) {
                     this.$message({
