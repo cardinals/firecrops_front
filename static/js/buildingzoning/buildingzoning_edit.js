@@ -12,6 +12,11 @@ new Vue({
             loading: false,
             //队站类型
             jzlxData: [],
+            //qk
+            jzl_jzqkData: [],
+            jzl_jzsyxzData:[],
+            jzl_jzjgData:[],
+            zzl_jzjgData:[],
             //上级队站
             sjdzData: [],
             //行政区划
@@ -108,6 +113,10 @@ new Vue({
 
         //建筑类型下拉框
         this.getJzlxData();
+        this.getJzqkData();
+        this.getJzsyxzData();
+        this.getJzjgData();
+        this.getZzljzjgata();
     },
     methods: {
         // handleNodeClick(data) {
@@ -120,7 +129,38 @@ new Vue({
                 console.log(error);
             })
         },
-
+         //jzqkData
+         getJzqkData: function () {
+            axios.get('/api/codelist/getCodetype/JZQK').then(function (res) {
+                this.jzl_jzqkData = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
+         //jzsyxzData
+         getJzsyxzData: function () {
+            axios.get('/api/codelist/getCodetype/JZSYXZ').then(function (res) {
+                this.jzl_jzsyxzData = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
+         //jzjgData
+         getJzjgData: function () {
+            axios.get('/api/codelist/getCodetype/JZJG').then(function (res) {
+                this.jzl_jzjgData = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
+         //zzl_jzjgData
+         getZzljzjgata: function () {
+            axios.get('/api/codelist/getCodetype/JZJG').then(function (res) {
+                this.zzl_jzjgData = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
         //初始化查询事件
         searchClick: function (type) {
             this.loading = true;
