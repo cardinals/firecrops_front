@@ -357,8 +357,8 @@ new Vue({
         
         //保存
         save: function (formName) {
-            var jdh = this.shiroData.organizationVO.jgid;
             if(this.validateSave()){
+                var jdh = this.shiroData.organizationVO.jgid;
                 if (this.status == 0) {//新增
                     axios.get('/dpapi/xfdz/doCheckName/' + this.editForm.dzmc).then(function (res) {
                         if (res.data.result > 0) {
@@ -443,7 +443,7 @@ new Vue({
                                 this.editForm.zhidVO.jdh = jdh;
                                 break;
                             case "05":
-                                this.editForm.DadVO.jdh = jdh;
+                                this.editForm.dadVO.jdh = jdh;
                                 break;
                             case "09":
                                 this.editForm.zhongdVO.jdh = jdh;

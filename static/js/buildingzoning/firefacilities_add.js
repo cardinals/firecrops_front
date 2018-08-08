@@ -25,7 +25,7 @@ new Vue({
                 jbxx_zddwmc: '',
                 jbxx_xfsslx: [],
                 jbxx_bz: '',
-                jbxx_jdh:'',
+                jbxx_jdh: '',
                 cjrid: '',
                 cjrmc: '',
                 xgrid: '',
@@ -355,22 +355,81 @@ new Vue({
                     }
                     axios.post('/dpapi/firefacilities/doFindXfssDetail', params).then(function (res) {
                         this.detailForm = res.data.result;
-                        if (this.addForm.jbxx_xfsslx[1] == '3001') {
-                            //泡沫液类型格式化
-                            if (this.detailForm.pmylx != '' && this.detailForm.pmylx != null) {
-                                if (this.detailForm.pmylx.endsWith("0000")) {
-                                    var pmylx = this.detailForm.pmylx;
-                                    this.detailForm.pmylx = [];
-                                    this.detailForm.pmylx.push(pmylx);
+                        switch (this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1]) {
+                            case "3001"://安全疏散措施
+                                if (this.detailForm.pmylx != '' && this.detailForm.pmylx != null) {
+                                    if (this.detailForm.pmylx.endsWith("0000")) {
+                                        var pmylx = this.detailForm.pmylx;
+                                        this.detailForm.pmylx = [];
+                                        this.detailForm.pmylx.push(pmylx);
+                                    } else {
+                                        var pmylx1 = this.detailForm.pmylx.substring(0, 4) + '0000';
+                                        var pmylx2 = this.detailForm.pmylx;
+                                        this.detailForm.pmylx = [];
+                                        this.detailForm.pmylx.push(pmylx1, pmylx2);
+                                    }
                                 } else {
-                                    var pmylx1 = this.detailForm.pmylx.substring(0, 4) + '0000';
-                                    var pmylx2 = this.detailForm.pmylx;
                                     this.detailForm.pmylx = [];
-                                    this.detailForm.pmylx.push(pmylx1, pmylx2);
                                 }
-                            } else {
-                                this.detailForm.pmylx = [];
-                            }
+                                break;
+                            case "1005"://应急广播
+                                if (this.detailForm.ywyjgb == '有') {
+                                    this.detailForm.ywyjgb = '1';
+                                } else if (this.detailForm.ywyjgb == '无') {
+                                    this.detailForm.ywyjgb = '0';
+                                }
+
+                            case "2003"://消防水池
+                                if (this.detailForm.ywqsj == '有') {
+                                    this.detailForm.ywqsj = '1';
+                                } else if (this.detailForm.ywqsj == '无') {
+                                    this.detailForm.ywqsj = '0';
+                                }
+                                break;
+                            case "2004"://室内消火栓
+                            case "2005"://室外消火栓
+                            case "3003"://室外消火栓
+                                if (this.detailForm.sfky == '可用') {
+                                    this.detailForm.sfky = '1';
+                                } else if (this.detailForm.sfky == '不可用') {
+                                    this.detailForm.sfky = '0';
+                                }
+                                break;
+                            case "2007"://喷淋系统
+                                if (this.detailForm.ywplxt == '有') {
+                                    this.detailForm.ywplxt = '1';
+                                } else if (this.detailForm.ywplxt == '无') {
+                                    this.detailForm.ywplxt = '0';
+                                }
+                                break;
+                            case "2008"://冷却水系统
+                                if (this.detailForm.ywlqsxt == '有') {
+                                    this.detailForm.ywlqsxt = '1';
+                                } else if (this.detailForm.ywlqsxt == '无') {
+                                    this.detailForm.ywlqsxt = '0';
+                                }
+                                break;
+                            case "2009"://固定水炮
+                            case "3002"://泡沫消火栓
+                            case "6002"://防排烟系统
+                                if (this.detailForm.isky == '可用') {
+                                    this.detailForm.isky = '1';
+                                } else if (this.detailForm.isky == '不可用') {
+                                    this.detailForm.isky = '0';
+                                }
+                                break;
+                            case "5000"://消防控制室
+                                if (this.detailForm.iszdbj == '可用') {
+                                    this.detailForm.iszdbj = '1';
+                                } else if (this.detailForm.iszdbj == '不可用') {
+                                    this.detailForm.iszdbj = '0';
+                                }
+                                if (this.detailForm.isldkz == '可用') {
+                                    this.detailForm.isldkz = '1';
+                                } else if (this.detailForm.isldkz == '不可用') {
+                                    this.detailForm.isldkz = '0';
+                                }
+                                break;
                         }
                     }.bind(this), function (error) {
                         console.log(error);
@@ -413,19 +472,19 @@ new Vue({
                     showClose: true
                 });
                 return false;
-            }else if (this.addForm.jbxx_iszddw == '') {
+            } else if (this.addForm.jbxx_iszddw == '') {
                 this.$message.warning({
                     message: '请选择是否属于重点单位',
                     showClose: true
                 });
                 return false;
-            }else if (this.addForm.jbxx_iszddw == '1' && this.addForm.jbxx_zddwid == '') {
+            } else if (this.addForm.jbxx_iszddw == '1' && this.addForm.jbxx_zddwid == '') {
                 this.$message.warning({
                     message: '请选择所属重点单位',
                     showClose: true
                 });
                 return false;
-            }else if (this.addForm.jbxx_xfsslx.length==0) {
+            } else if (this.addForm.jbxx_xfsslx.length == 0) {
                 this.$message.warning({
                     message: '请选择消防设施类型',
                     showClose: true
