@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="../../static/css/basicinfo/equipment_add.css">
+	<title>重点单位</title>
+</head>
+
+<body class="fw f14 main-index-body">
+	<div id="app">
+		<div class="main-box">
+			<div class="main-container" v-loading="loading" element-loading-text="加载中">
+				<!-- 面包屑 -->
+				<div id="breadcrumb_box"></div>
+				<div id="inforView" class="pt15">
+					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<strong style="color: #20a0ff;">基本信息</strong>
+						</el-col>
+					</el-row>
+					<el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">
+								<span style="color:red;">* </span>单位名称
+							</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input size="small" v-model="tableData.dwmc" placeholder="单位名称" clearable></el-input>
+						</el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">单位性质</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-select size="small" v-model="tableData.dwxz" placeholder="单位性质" class="searchSelect" clearable>
+								<el-option v-for="item in allDwxzData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+							</el-select>
+						</el-col>
+						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+					</el-row>
+					<el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">单位地址</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input size="small" v-model="tableData.dwdz" placeholder="单位地址" clearable></el-input>
+						</el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">防火等级</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-select size="small" v-model="tableData.fhdjmc" placeholder="防火等级" class="searchSelect" clearable>
+								<el-option v-for="item in allFhdjData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+							</el-select>
+						</el-col>
+						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+					</el-row>
+					<el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">值班电话</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input size="small" v-model="tableData.zbdh" placeholder="值班电话" clearable></el-input>
+						</el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">单位概况</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input size="small" v-model="tableData.dwgk" placeholder="单位概况" clearable></el-input>
+						</el-col>
+						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+					</el-row>
+					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<strong style="color: #20a0ff;">单位信息</strong>
+						</el-col>
+					</el-row>
+					<el-card class="card_style">
+						<div slot="header" class="clearfix">
+							<strong class="card_title_font">位置信息</strong>
+						</div>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">GIS_X</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.gisX" placeholder="GIS_X" clearable></el-input>
+							</el-col>
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">GIS_Y</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.gisY" placeholder="GIS_Y" clearable></el-input>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">经度</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.lon" placeholder="经度" clearable></el-input>
+							</el-col>
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">纬度</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.lat" placeholder="纬度" clearable></el-input>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						</el-row>
+					</el-card>
+					<el-card class="card_style">
+						<div slot="header" class="clearfix">
+							<strong class="card_title_font">毗邻信息</strong>
+						</div>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">东</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.plqkd" placeholder="东" clearable></el-input>
+							</el-col>
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">西</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.plqkx" placeholder="西" clearable></el-input>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">南</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.plqkn" placeholder="南" clearable></el-input>
+							</el-col>
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">北</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.plqkb" placeholder="北" clearable></el-input>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						</el-row>
+					</el-card>
+					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<strong style="color: #20a0ff;">消防信息</strong>
+						</el-col>
+					</el-row>
+					<el-card class="card_style">
+						<div slot="header" class="clearfix">
+							<strong class="card_title_font">队站及人员信息</strong>
+						</div>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">防火队站</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.fhdzidmc" placeholder="防火队站" clearable></el-input>
+							</el-col>
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">灭火队站</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.mhdzidmc" placeholder="灭火队站" clearable></el-input>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">消防责任人</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.xfzrr" placeholder="消防责任人" clearable></el-input>
+							</el-col>
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">消防责任人电话</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.xfzrrdh" placeholder="消防责任人电话" clearable></el-input>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						</el-row>
+						<el-row class="tr mb5">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">消防管理人</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.xfglr" placeholder="消防管理人" clearable></el-input>
+							</el-col>
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-label class="mr5 vbm">消防管理人电话</el-label>
+							</el-col>
+							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+								<el-input size="small" v-model="tableData.xfglrdh" placeholder="消防管理人电话" clearable></el-input>
+							</el-col>
+							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+						</el-row>
+					</el-card>
+					<el-card class="card_style">
+						<div slot="header" class="clearfix">
+							<strong class="card_title_font">单位消防队伍</strong>
+							<el-button type="primary" icon="plus" size="small" style="float:right;" @click="addXfllData">新增</el-button>
+						</div>
+						<div v-if="this.XFLL === false">
+							无
+						</div>
+						<div v-for="(data, index) in xfllData">
+							<el-row style="border-bottom: 1px solid #d1dbe5;line-height: 29px;" class="mb5">
+								<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+									<strong>消防队伍{{index+1}}</strong>
+								</el-col>
+								<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+									<el-button type="danger" icon="delete" size="small" style="float:right;" @click="removeXfllData(data)">删除</el-button>
+								</el-col>
+							</el-row>
+							<el-row class="tr mb5">
+								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+									<el-label class="mr5 vbm">类型</el-label>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+									<el-select size="small" v-model="data.xfdwlx" placeholder="类型" class="searchSelect" clearable>
+										<el-option v-for="item in allXfdwlxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-col>
+								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+									<el-label class="mr5 vbm">人数</el-label>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+									<el-input-number v-model="data.xfdwrs" size="small" :min="0" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"></el-input-number>
+								</el-col>
+								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+							</el-row>
+							<el-row class="tr mb5">
+								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+									<el-label class="mr5 vbm">车辆数</el-label>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+									<el-input-number v-model="data.xfdwcls" size="small" :min="0" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"></el-input-number>
+								</el-col>
+								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+									<el-label class="mr5 vbm">联系人</el-label>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+									<el-input size="small" v-model="data.xfdwlxr" placeholder="联系人" clearable></el-input>
+								</el-col>
+								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+							</el-row>
+							<el-row class="tr mb5">
+								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+									<el-label class="mr5 vbm">联系电话</el-label>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+									<el-input size="small" v-model="data.xfdwdh" placeholder="联系电话" clearable></el-input>
+								</el-col>
+								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+									<el-label class="mr5 vbm">备注</el-label>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+									<el-input size="small" v-model="data.bz" placeholder="备注" clearable></el-input>
+								</el-col>
+								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+							</el-row>
+						</div>
+					</el-card>
+					<el-card class="card_style">
+						<div slot="header" class="clearfix">
+							<strong class="card_title_font">单位消防设施</strong>
+						</div>
+						<el-row style="border-bottom: 1px solid #d1dbe5;line-height: 29px;" class="mb5">
+							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+								<strong>安全疏散措施</strong>
+							</el-col>
+						</el-row>
+						<div v-if="this.AQSSCS === false">
+							无
+						</div>
+						<div v-if="this.isAqckShow">
+							<strong>安全出口</strong>
+							<el-table :data="aqckData" border class="detailTable">
+								<el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
+								<el-table-column prop="wz" label="位置" align="center" show-overflow-tooltip></el-table-column>
+								<el-table-column prop="sl" label="数量" width="130" align="center"></el-table-column>
+							</el-table>
+						</div>
+						<div v-if="this.isSsltShow">
+							<strong>疏散楼梯</strong>
+							<el-table :data="ssltData" border class="detailTable">
+								<el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
+								<el-table-column prop="wz" label="位置" align="center" show-overflow-tooltip></el-table-column>
+								<el-table-column prop="sl" label="数量" width="130" align="center"></el-table-column>
+							</el-table>
+						</div>
+						<div v-if="this.isXfdtShow">
+							<strong>消防电梯</strong>
+							<el-table :data="xfdtData" border class="detailTable">
+								<el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
+								<el-table-column prop="wz" label="位置" align="center" show-overflow-tooltip></el-table-column>
+								<el-table-column prop="sl" label="数量" width="130" align="center"></el-table-column>
+							</el-table>
+						</div>
+						<div v-if="this.isBncShow">
+							<strong>避难层</strong>
+							<el-table :data="bncData" border class="detailTable">
+								<el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
+								<el-table-column prop="wz" label="位置" align="center" show-overflow-tooltip></el-table-column>
+							</el-table>
+						</div>
+						<div v-if="this.isYjgbShow">
+							<strong>应急广播</strong>
+							<el-table :data="yjgbData" border class="detailTable">
+								<el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
+								<el-table-column prop="wz" label="位置" align="center" show-overflow-tooltip></el-table-column>
+								<el-table-column prop="ywyjgb" label="有无应急广播" align="center" width="130"></el-table-column>
+							</el-table>
+						</div>
+					</el-card>
+					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<strong style="color: #20a0ff;">单位建筑信息</strong>
+						</el-col>
+					</el-row>
+					<el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">
+								<span style="color:red;">* </span>建筑分类
+							</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-select size="small" v-model="tableData.jzfl" placeholder="建筑分类" class="searchSelect" clearable>
+								<el-option v-for="item in allJzflData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+							</el-select>
+						</el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">建筑数量</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input-number v-model="tableData.jzsl" size="small" :min="0" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"></el-input-number>
+						</el-col>
+						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+					</el-row>
+					<el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">占地面积(㎡)</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input size="small" v-model="tableData.zdmj" placeholder="占地面积(㎡)" clearable></el-input>
+						</el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">建筑面积(㎡)</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input size="small" v-model="tableData.jzmj" placeholder="建筑面积(㎡)" clearable></el-input>
+						</el-col>
+						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+					</el-row>
+					<el-card class="card_style">
+						<div slot="header" class="clearfix">
+							<strong class="card_title_font">建筑详细信息</strong>
+						</div>
+						<div v-if="this.JZFQ === false">
+							无
+						</div>
+						<div v-for="data in jzl_jzfqData">
+							<el-row class="tr mb5">
+								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+									<el-label class="mr5 vbm">建筑名称</el-label>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+									<el-input size="small" v-model="data.jzmj" placeholder="建筑名称" clearable></el-input>
+								</el-col>
+								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+									<el-label class="mr5 vbm">建筑类型</el-label>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+									<el-select size="small" v-model="data.jzlx" placeholder="建筑类型" class="searchSelect" clearable>
+										<el-option v-for="item in allXfdwlxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-col>
+								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+							</el-row>
+						</div>
+					</el-card>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../../static/js/planobject/importantunits_edit.js"></script>
+
+</html>
