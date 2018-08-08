@@ -150,21 +150,13 @@ new Vue({
         }
     },
     created: function () {
-        /**菜单选中 by li.xue 20180628*/
-        /**
-        var index = getQueryString("index");
-        $("#activeIndex").val(index);
-        this.activeIndex = index;
-         */
-
-        /**面包屑 by li.xue 20180628*/
         var type = getQueryString("type");
         if (type == "XZ") {
             loadBreadcrumb("重点单位预案", "重点单位预案新增");
         } else if (type == "BJ") {
             loadBreadcrumb("重点单位预案", "重点单位预案编辑");
         }
-
+        this.shiroData = shiroGlobal;
         this.YALX_tree();
         this.RSWZ_tree();
         this.ZQDJ_tree();
@@ -693,7 +685,8 @@ new Vue({
                         zzrmc: this.shiroData.realName,
                         jgid: this.shiroData.organizationVO.uuid,
                         jgbm: this.shiroData.organizationVO.jgid,
-                        jgmc: this.shiroData.organizationVO.jgmc
+                        jgmc: this.shiroData.organizationVO.jgmc,
+                        jdh: this.shiroData.organizationVO.jgid
                     };
                     axios.post('/dpapi/digitalplanlist/insertByVO', params).then(function (res) {
                         this.upLoadData.yaid = res.data.result.uuid;
@@ -722,7 +715,8 @@ new Vue({
                         bz: this.addForm.bz,
                         disasterList: this.dynamicValidateForm,
                         zzrid: this.shiroData.userid,
-                        zzrmc: this.shiroData.realName
+                        zzrmc: this.shiroData.realName,
+                        jdh: this.shiroData.organizationVO.jgid
                     };
                     axios.post('/dpapi/digitalplanlist/doUpdateByVO', params).then(function (res) {
                         if (this.isFile) {
@@ -773,7 +767,8 @@ new Vue({
                         zzrmc: this.shiroData.realName,
                         jgid: this.shiroData.organizationVO.uuid,
                         jgbm: this.shiroData.organizationVO.jgid,
-                        jgmc: this.shiroData.organizationVO.jgmc
+                        jgmc: this.shiroData.organizationVO.jgmc,
+                        jdh: this.shiroData.organizationVO.jgid
                     };
                     axios.post('/dpapi/digitalplanlist/insertByVO', params).then(function (res) {
                         this.upLoadData.yaid = res.data.result.uuid;
@@ -802,7 +797,8 @@ new Vue({
                         bz: this.addForm.bz,
                         disasterList: this.dynamicValidateForm,
                         zzrid: this.shiroData.userid,
-                        zzrmc: this.shiroData.realName
+                        zzrmc: this.shiroData.realName,
+                        jdh: this.shiroData.organizationVO.jgid
                     };
                     axios.post('/dpapi/digitalplanlist/doUpdateByVO', params).then(function (res) {
                         if (this.isFile) {
