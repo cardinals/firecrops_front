@@ -17,7 +17,7 @@ var vue = new Vue({
             JZFL_data:[],
             role_data: [],//当前用户信息
             //表高度变量
-            tableheight: 450,
+            tableheight: 443,
             //显示加载中样
             loading: false,
             labelPosition: 'right',

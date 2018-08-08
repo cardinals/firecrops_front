@@ -131,14 +131,14 @@
 							</el-row>
 							<el-row class="tr mb5">
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">占地面积(m2)</el-label>
+									<el-label class="mr5 vbm">占地面积(㎡)</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input-number :precision="2" :min="0" size="small" v-model="jzlVO.jzl_zdmj" placeholder="占地面积"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">建筑面积(m2)</el-label>
+									<el-label class="mr5 vbm">建筑面积(㎡)</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input-number :precision="2" :min="0" size="small" v-model="jzlVO.jzl_jzmj" placeholder="建筑面积"></el-input>
@@ -166,14 +166,14 @@
 									<el-label class="mr5 vbm">地上层数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number :min="0" size="small" v-model="jzlVO.jzl_dscs" placeholder="地上层数"></el-input>
+									<el-input-number :min="0" size="small" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" v-model="jzlVO.jzl_dscs" placeholder="地上层数"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 									<el-label class="mr5 vbm">地下层数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number  :min="0" size="small" v-model="jzlVO.jzl_dxcs" placeholder="地下层数"></el-input>
+									<el-input-number  :min="0" size="small"  onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" v-model="jzlVO.jzl_dxcs" placeholder="地下层数"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
@@ -200,7 +200,7 @@
 							</el-row>
 							<el-row class="tr mb5">
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">占地面积(m2)</el-label>
+									<el-label class="mr5 vbm">占地面积(㎡)</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input-number :precision="2" :min="0" size="small" v-model="zzlVO.zzl_zdmj" placeholder="占地面积"></el-input>
@@ -283,12 +283,12 @@
 									<el-label class="mr5 vbm">储罐数量</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number :min="0" size="small" v-model="cglVO.cgl_cgsl" placeholder="储罐数量"></el-input>
+									<el-input-number :min="0" size="small" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" v-model="cglVO.cgl_cgsl" placeholder="储罐数量"></el-input>
 								</el-col>
 							</el-row>
 							<el-row class="tr mb5">
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">储罐间隔</el-label>
+									<el-label class="mr5 vbm">储罐间隔(m)</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input-number  :min="0" size="small" v-model="cglVO.cgl_cgjg" placeholder="储罐间隔"></el-input>
