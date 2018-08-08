@@ -15,7 +15,7 @@ var vue = new Vue({
             },
             tableData: [],
             JZFL_data:[],
-            
+            role_data: [],//当前用户信息
             //表高度变量
             tableheight: 450,
             //显示加载中样
@@ -55,6 +55,14 @@ var vue = new Vue({
     methods: {
         handleNodeClick(data) {
         },
+        //获取当前用户信息
+        roleData: function () {
+            axios.post('/api/shiro').then(function (res) {
+                this.role_data = res.data;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
         //表格查询事件
         searchClick: function (type) {
             if(type == 'page'){
@@ -64,7 +72,9 @@ var vue = new Vue({
             }
             var _self = this;
             _self.loading = true;//表格重新加载
+            this.searchForm.jzid = this.GetQueryString("jzid");//获取队站ID
             var params={
+                jzid:this.searchForm.jzid,
                 jzmc:this.searchForm.jzmc,
                 jzlx:this.searchForm.option_JZLX,
                 jzwz:this.searchForm.jzwz,
@@ -72,7 +82,7 @@ var vue = new Vue({
                 pageNum: this.currentPage
             };
             axios.post('/dpapi/building/page',params).then(function(res){
-                var tableTemp = new Array((this.currentPage-1)*this.pageSize);
+               var tableTemp = new Array((this.currentPage-1)*this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
                 _self.loading = false;
@@ -93,13 +103,7 @@ var vue = new Vue({
                 console.log(error);
             })
         },
-        //表格勾选事件
-        selectionChange: function (val) {
-            for (var i = 0; i < val.length; i++) {
-                var row = val[i];
-            }
-            this.multipleSelection = val;
-        },
+      
         detailClick(val) {
             var params = {
                 id: val.jzid,
@@ -107,6 +111,59 @@ var vue = new Vue({
             }
             loadDivParam("buildingzoning/buildingzoning_detail", params);
             //window.location.href = "building_zoning_detail.html?id=" + val.jzid +"&jzlx=" +val.jzlx + "&index=" + this.activeIndex;
+        },
+        //根据参数部分和参数名来获取参数值 
+        GetQueryString(name) {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        },
+        //新增
+        addClick: function(){
+            var params = {
+                ID: 0,
+                type: "XZ"
+            }
+            loadDivParam("buildingzoning/buildingzoning_edit", params);
+        },
+        editClick: function(val){
+            var params = {
+                ID: val.jzid,
+                jzlx: val.jzlx,
+                type: "BJ"
+            }
+            loadDivParam("buildingzoning/buildingzoning_edit", params);
+        },
+        //表格勾选事件
+        selectionChange: function (val) {
+            this.multipleSelection = val;
+        },
+        //删除
+        deleteClick: function(){
+            this.$confirm('确认删除选中信息?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                for(var i=0;i<this.multipleSelection.length;i++){
+                    this.multipleSelection[i].xgrid = this.role_data.userid;
+                    this.multipleSelection[i].xgrmc = this.role_data.realName;
+                }
+                axios.post('/dpapi/building/doDeleteBuildingzoning', this.multipleSelection).then(function (res) {
+                    this.$message({
+                        message: "成功删除" + res.data.result + "条建筑信息",
+                        showClose: true,
+                        onClose: this.searchClick('delete')
+                    });
+                }.bind(this), function (error) {
+                    console.log(error)
+                })
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
         },
         //表格重新加载数据
         loadingData: function () {

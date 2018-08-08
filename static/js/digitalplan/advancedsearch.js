@@ -116,7 +116,9 @@ new Vue({
             //序号
             indexData: 0,
             //tab页
-            tabIndex: 0
+            tabIndex: 0,
+            //登录用户
+            shiroData: [],
         }
     },
     created: function () {
@@ -129,6 +131,8 @@ new Vue({
         
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("高级搜索", "-1");
+        /**当前登陆用户 by li.xue 20180807*/
+        this.shiroData = shiroGlobal;
         //this.YADX();
         this.YALX();
         this.YAJB();
@@ -181,7 +185,9 @@ new Vue({
                 begintime: this.yuAnSearchForm.begintime_create,
                 endtime: this.yuAnSearchForm.endtime_create,
                 pageSize: this.pageSizeYaxx,
-                pageNum: this.currentPageYaxx
+                pageNum: this.currentPageYaxx,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/advancedsearch/gjssYaxxList', params).then(function (res) {
                 var tableTemp = new Array((this.currentPageYaxx-1)*this.pageSizeYaxx);
@@ -212,7 +218,9 @@ new Vue({
                 fhdj : this.YADXSearchForm.FHDJ,
                 jzfl : this.YADXSearchForm.DWJZQK,
                 pageSize: this.pageSizeYadx,
-                pageNum: this.currentPageYadx
+                pageNum: this.currentPageYadx,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             console.log(params);
             axios.post('/dpapi/advancedsearch/gjssYadxList', params).then(function (res) {
@@ -244,7 +252,9 @@ new Vue({
                 jzl_jzjg:this.DWJZSearchForm.JZJG,
                 jzl_dsgd:this.DWJZSearchForm.JZGD,
                 pageSize: this.pageSizeJzxx,
-                pageNum: this.currentPageJzxx
+                pageNum: this.currentPageJzxx,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/advancedsearch/gjssDwjzList', params).then(function (res) {
                 var tableTemp = new Array((this.currentPageJzxx-1)*this.pageSizeJzxx);

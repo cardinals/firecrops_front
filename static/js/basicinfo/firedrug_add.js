@@ -52,9 +52,9 @@ new Vue({
         /**面包屑 by li.xue 20180628*/
         var type = getQueryString("type");
         if (type == "XZ") {
-            loadBreadcrumb("消防药剂", "消防药剂新增");
+            loadBreadcrumb("消防药剂管理", "消防药剂管理新增");
         } else if (type == "BJ") {
-            loadBreadcrumb("消防药剂", "消防药剂编辑");
+            loadBreadcrumb("消防药剂管理", "消防药剂管理编辑");
         }
         this.status = getQueryString("ID");
 
@@ -213,26 +213,10 @@ new Vue({
             })
         },
         czlChange: function (value) {
-            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
-                this.$message.warning({
-                    message: "请输入数字或小数！",
-                    showClose: true
-                });
-                this.addForm.czl = '';
-            } else {
-                this.addForm.zcbl = parseFloat(value) + parseFloat(this.addForm.kcl);
-            }
+            this.addForm.zcbl = parseFloat(value) + parseFloat(this.addForm.kcl);
         },
         kclChange: function (value) {
-            if (!(/(^[0-9]*[1-9][0-9]*$)/.test(value.replace(".", "")))) {
-                this.$message.warning({
-                    message: "请输入数字或小数！",
-                    showClose: true
-                });
-                this.addForm.kcl = '';
-            } else {
-                this.addForm.zcbl = parseFloat(value) + parseFloat(this.addForm.czl);
-            }
+            this.addForm.zcbl = parseFloat(value) + parseFloat(this.addForm.czl);
         },
         pickerOptions0: {
             disabledDate(time) {
@@ -251,22 +235,23 @@ new Vue({
                     this.addForm.cjrid = this.role_data.userid;
                     this.addForm.cjrmc = this.role_data.realName;
                     this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
+                    var params = this.addForm;
                     if (this.addForm.yjlx.length > 0) {
-                        this.addForm.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];
+                        params.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];
                     } else {
-                        this.addForm.yjlx = '';
+                        params.yjlx = '';
                     }
                     if (this.addForm.xzqh.length > 0) {
-                        this.addForm.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
+                        params.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
                     } else {
-                        this.addForm.xzqh = '';
+                        params.xzqh = '';
                     }
                     if (this.addForm.ssdz.length > 0) {
-                        this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
+                        params.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
                     } else {
-                        this.addForm.ssdz = '';
+                        params.ssdz = '';
                     }
-                    axios.post('/dpapi/firedrug/insertByVO', this.addForm).then(function (res) {
+                    axios.post('/dpapi/firedrug/insertByVO', params).then(function (res) {
                         if (res.data.result >= 1) {
                             this.$alert('成功保存' + res.data.result + '条消防药剂信息', '提示', {
                                 type: 'success',
@@ -291,22 +276,23 @@ new Vue({
                     this.addForm.xgrid = this.role_data.userid;
                     this.addForm.xgrmc = this.role_data.realName;
                     this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
+                    var params = this.addForm;
                     if (this.addForm.yjlx.length > 0) {
-                        this.addForm.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];
+                        params.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];
                     } else {
-                        this.addForm.yjlx = '';
+                        params.yjlx = '';
                     }
                     if (this.addForm.xzqh.length > 0) {
-                        this.addForm.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
+                        params.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
                     } else {
-                        this.addForm.xzqh = '';
+                        params.xzqh = '';
                     }
                     if (this.addForm.ssdz.length > 0) {
-                        this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
+                        params.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
                     } else {
-                        this.addForm.ssdz = '';
+                        params.ssdz = '';
                     }
-                    axios.post('/dpapi/firedrug/doUpdateDrug', this.addForm).then(function (res) {
+                    axios.post('/dpapi/firedrug/doUpdateDrug', params).then(function (res) {
                         if (res.data.result >= 1) {
                             this.$alert('成功修改' + res.data.result + '条消防药剂信息', '提示', {
                                 type: 'success',

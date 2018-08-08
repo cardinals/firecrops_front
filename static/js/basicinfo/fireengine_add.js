@@ -2,9 +2,9 @@
 window.onload = function () {
     var type = getQueryString("type");
     if (type == "XZ") {
-        loadBreadcrumb("消防车辆管理", "消防车辆信息新增");
+        loadBreadcrumb("消防车辆管理", "消防车辆管理新增");
     } else if (type == "BJ") {
-        loadBreadcrumb("消防车辆管理", "消防车辆信息编辑");
+        loadBreadcrumb("消防车辆管理", "消防车辆管理编辑");
     }
 }
 //axios默认设置cookie
@@ -34,27 +34,28 @@ new Vue({
                 sccj: "",
                 xzqh: [],	//行政区划
                 sccj: "",	//生产厂家
-                jglgd: "",	//举高类车辆高度(m)
-                sbll: "",	//水泵流量(L/s)
-                zsl: "",	 //载水量(t)
-                xfpll: "",	//消防炮流量(L/s)
-                sbedyl: "",	//水泵额定压力(Mpa)
+                jglgd: '0.00',	//举高类车辆高度(m)
+                sbll: '0.00',	//水泵流量(L/s)
+                zsl: '0.00',	 //载水量(t)
+                xfpll: '0.00',	//消防炮流量(L/s)
+                sbedyl: '0.00',	//水泵额定压力(Mpa)
                 czmhjlb: "",	//车载灭火剂类别
-                czmhjl: "",//车载灭火剂量(t)
+                czmhjl: '0.00',//车载灭火剂量(t)
                 mhjhhb: "",//灭火剂混合比
                 clmc: "",
-                gisX: "",//
-                gisY: "",//
-                ssdz: [],
-                cllx: [],
-                cphm: "",
+                gisX: '0.00',//
+                gisY: '0.00',//
+                ssdz: [],//所属队站
+                cllx: [],//车辆类型
                 clzt: "",
+                cphm: "",
                 clbm: "",
                 gpsbh: "",
                 cjrid: "",
                 cjrmc: "",
                 xgrid: "",
-                xgrmc: ""
+                xgrmc: "",
+                bz: ''
             },
             //灾情设定
             dynamicValidateForm: [],
@@ -115,11 +116,12 @@ new Vue({
                 label: 'codeName',
                 value: 'codeValue'
             },
-            //
+
+            //所属队站
             ssdzProps: {
                 children: 'children',
-                value: 'dzid',
-                label: 'dzjc'
+                label: 'dzjc',
+                value: 'dzid'
             },
         }
     },
@@ -127,9 +129,9 @@ new Vue({
 
         var type = getQueryString("type");
         if (type == "XZ") {
-            loadBreadcrumb("消防车辆管理", "消防车辆信息新增");
+            loadBreadcrumb("消防车辆管理", "消防车辆管理新增");
         } else if (type == "BJ") {
-            loadBreadcrumb("消防车辆管理", "消防车辆信息编辑");
+            loadBreadcrumb("消防车辆管理", "消防车辆管理编辑");
         }
 
         this.searchClick('click');
@@ -256,7 +258,7 @@ new Vue({
                             }
                         }
                     } else {
-                        this.addForm.xzqh = [];
+                        this.addForm.ssdz = [];
                     }
                     this.loading = false;
                 }.bind(this), function (error) {
@@ -319,10 +321,27 @@ new Vue({
                 console.log(error);
             })
         },
+        //对数据进行校验
 
-        //点击保存事件
-        save: function () {
-            //必填项
+        // jglgdChange: function (value) {
+        //     if (!(/(^\d+$)/.test(value.replace(".", "")))) {
+        //         this.$message.warning({
+        //             message: "请输入数字或小数！",
+        //             showClose: true
+        //         });
+        //         this.addForm.jglgd = '';
+        //     } 
+        // },
+       
+       
+        pickerOptions0: {
+            disabledDate(time) {
+                return time.getTime() < Date.now() - 8.64e7;
+            }
+        },
+
+        //保存前校验
+        validateSave: function(){  
             if (this.addForm.ssdz == null || this.addForm.ssdz == "") {
                 this.$message.warning({
                     message: "请选择所属队站！",
@@ -349,8 +368,14 @@ new Vue({
                     showClose: true
                 });
                 return false;
-            } else {
+            }
+            return true;
+        },
+       
 
+        //点击保存事件
+        save: function () {
+            if(this.validateSave()){
                 if (this.status == 0) {//新增
                     this.addForm.cjrid = this.role_data.userid;
                     this.addForm.cjrmc = this.role_data.realName;
@@ -369,7 +394,6 @@ new Vue({
                     } else {
                         this.addForm.ssdz = '';
                     }
-                    // debugger;
                     axios.post('/dpapi/fireengine/insertByVO', this.addForm).then(function (res) {
                         if (res.data.result >= 1) {
                             this.$alert('成功保存' + res.data.result + '条车辆信息', '提示', {

@@ -31,7 +31,7 @@
 									<el-input size="small" v-model="addForm.yjmc" placeholder="药剂名称" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">药剂编码</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
@@ -39,7 +39,7 @@
 									<el-input size="small" v-model="addForm.yjbm" placeholder="药剂编码" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -51,7 +51,7 @@
 									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">混合比</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
@@ -59,7 +59,7 @@
 									<el-input size="small" v-model="addForm.hhb" placeholder="混合比" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -71,7 +71,7 @@
 									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">所属队站</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
@@ -80,7 +80,7 @@
 									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
 							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
@@ -92,22 +92,22 @@
 								<el-label class="mr5 vbm">车载量(t)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input v-model="addForm.czl" @change="czlChange" size="small"></el-input>
+								<el-input-number v-model="addForm.czl" @change="czlChange" size="small" :min="0"></el-input-number>
 							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">总储备量(t)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input v-model="addForm.zcbl" size="small" :disabled="true"></el-input>
+								<el-input-number v-model="addForm.zcbl" size="small" :disabled="true" :min="0"></el-input-number>
 							</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">库存量(t)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input v-model="addForm.kcl" @change="kclChange" size="small"></el-input>
+								<el-input-number v-model="addForm.kcl" @change="kclChange" size="small" :min="0"></el-input-number>
 							</el-col>
 							<el-col :xs="13" :sm="13" :md="13" :lg="13" :xl="13">&nbsp;</el-col>
 						</el-row>
@@ -123,13 +123,13 @@
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input size="small" v-model="addForm.sccj" :min="0" :max="1000"></el-input>
 							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">生产时间</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-date-picker size="small" v-model="addForm.scsj" type="date" placeholder="选择日期" :picker-options="pickerOptions0"></el-date-picker>
 							</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -149,10 +149,10 @@
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">备注</el-label>
 							</el-col>
-							<el-col :xs="19" :sm="19" :md="19" :lg="19" :xl="19">
-								<el-input size="small" v-model="addForm.bz" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+							<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
+								<el-input size="small" v-model="addForm.bz" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
 							</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp; </el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp; </el-col>
 						</el-row>
 					</el-form>
 				</div>

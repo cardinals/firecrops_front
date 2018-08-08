@@ -73,6 +73,7 @@ new Vue({
                     zdzlxfs: "",
                     zdzwxm: "",
                     zdzwlxfs: "",
+                    jdh: "",
                 },
                 //支队VO
                 zhidVO: {
@@ -87,6 +88,7 @@ new Vue({
                     zdzlxfs: "",
                     zdzwxm: "",
                     zdzwlxfs: "",
+                    jdh: "",
                 },
                 //大队VO
                 dadVO: {
@@ -104,6 +106,7 @@ new Vue({
                     fddzlxfs: "",
                     fjdyxm: "",
                     fjdylxfs: "",
+                    jdh: "",
                 },
                 //中队VO
                 zhongdVO: {
@@ -122,7 +125,8 @@ new Vue({
                     fzdzxm2: "",
                     fzdzlxfs2: "",
                     fzdzxm3: "",
-                    fzdzlxfs3: ""
+                    fzdzlxfs3: "",
+                    jdh: "",
                 },
                 //其他消防队伍VO
                 qtxfdwVO: {
@@ -133,6 +137,7 @@ new Vue({
                     gxdwlxfs: "",
                     dzxm: "",
                     dzlxfs: "",
+                    jdh: "",
                 },
             },
             props: {
@@ -145,6 +150,8 @@ new Vue({
                 label: 'dzjc',
                 children: 'children'
             },
+            //上级队站Disabled
+            dzlxDisabled: false,
         }
     },
     created: function () {
@@ -164,10 +171,12 @@ new Vue({
         }
         this.shiroData = shiroGlobal;
         this.status = getQueryString("ID");
-        //队站类型下拉框
-        this.getDzlxData();
+        //方法加载完成之前，页面转圈
+        this.loading = true;
         //上级队站下拉框
         this.getSjdzData();
+        //队站类型下拉框
+        this.getDzlxData();
         //行政区划下拉框
         this.getXzqhData();
     },
@@ -184,6 +193,11 @@ new Vue({
         },
         //上级机构下拉框
         getSjdzData: function(){
+            if(this.status == 0){
+                this.dzlxDisabled = false;
+            }else{
+                this.dzlxDisabled = true;
+            }
             var organization = this.shiroData.organizationVO;
             var params = {
                 dzid: organization.uuid,
@@ -209,9 +223,9 @@ new Vue({
         //表格查询事件
         searchClick: function () {
             this.loading = true;
-            if (this.status == 0) {  //新增
+            if(this.status == 0){  //新增
                 this.loading = false;
-            } else {//修改
+            }else{//修改
                 var dzlxParam = getQueryString("dzlx");
                 var params = {
                     dzid : this.status,
@@ -258,6 +272,13 @@ new Vue({
                                 this.editForm.dadVO = {};
                                 this.editForm.zhongdVO = {};
                                 break;
+                            default:
+                                this.editForm.zongdVO = {};
+                                this.editForm.zhidVO = {};
+                                this.editForm.dadVO = {};
+                                this.editForm.zhongdVO = {};
+                                this.editForm.qtxfdwVO = {};
+                                break;
                         }
                     }
                     
@@ -270,39 +291,44 @@ new Vue({
                     this.editForm.dzlx = dzlxArray;
                     //行政区划
                     var xzqhArray = [];
-                    if(result.xzqh!=null && result.xzqh!="" && result.xzqh.substr(2,4)!="0000"){
-                        xzqhArray.push(result.xzqh.substr(0,2) + "0000");
-                        if(result.xzqh.substr(4,2)!="00"){
-                            xzqhArray.push(result.xzqh.substr(0,4) + "00");
+                    if(result.xzqh!=null && result.xzqh!=""){
+                        if(result.xzqh.substr(2,4)!="0000"){
+                            xzqhArray.push(result.xzqh.substr(0,2) + "0000");
+                            if(result.xzqh.substr(4,2)!="00"){
+                                xzqhArray.push(result.xzqh.substr(0,4) + "00");
+                            }
                         }
+                        xzqhArray.push(this.editForm.xzqh); 
                     }
-                    xzqhArray.push(result.xzqh);
                     this.editForm.xzqh = xzqhArray;
+
                     //上级消防队站
                     var sjdzArray = [];
-                    var temp = this.editForm.sjdzid;
-                    for(var i in this.sjdzData){
-                        if(temp == this.sjdzData[i].dzid){
-                            sjdzArray.push(this.sjdzData[i].dzid);
-                        }else{
-                            for(var j in this.sjdzData[i].children){
-                                if(temp == this.sjdzData[i].children[j].dzid){
-                                    sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid);
-                                }else{
-                                    for(var k in this.sjdzData[i].children[j].children){
-                                        if(temp == this.sjdzData[i].children[j].children[k].dzid){
-                                            sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid, this.sjdzData[i].children[j].children[k].dzid);
-                                        }else{
-                                            for(var n in this.sjdzData[i].children[j].children[k].children){
-                                                if(temp == this.sjdzData[i].children[j].children[k].children[n].dzid){
-                                                    sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid, this.sjdzData[i].children[j].children[k].dzid, this.sjdzData[i].children[j].children[k].children[n].dzid);
+                    var temp = result.sjdzid;
+                    if(temp!=null && temp!=""){
+                        for(var i in this.sjdzData){
+                            if(temp == this.sjdzData[i].dzid){
+                                sjdzArray.push(this.sjdzData[i].dzid);
+                            }else{
+                                for(var j in this.sjdzData[i].children){
+                                    if(temp == this.sjdzData[i].children[j].dzid){
+                                        sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid);
+                                    }else{
+                                        for(var k in this.sjdzData[i].children[j].children){
+                                            if(temp == this.sjdzData[i].children[j].children[k].dzid){
+                                                sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid, this.sjdzData[i].children[j].children[k].dzid);
+                                            }else{
+                                                for(var n in this.sjdzData[i].children[j].children[k].children){
+                                                    if(temp == this.sjdzData[i].children[j].children[k].children[n].dzid){
+                                                        sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid, this.sjdzData[i].children[j].children[k].dzid, this.sjdzData[i].children[j].children[k].children[n].dzid);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
+                        }  
                     }
                     this.editForm.sjdzid = sjdzArray;
                     this.loading = false;
@@ -312,14 +338,14 @@ new Vue({
             }
         },
         //保存前校验
-        validateSave: function(){
-            if (this.editForm.dzmc == "" || this.editForm.dzmc == null) {
+        validateSave: function(){   
+            if (this.editForm.dzmc=="" || this.editForm.dzmc==null) {
                 this.$message.warning({
                     message: '请输入队站名称',
                     showClose: true
                 });
                 return false;
-            }else if(this.editForm.dzlx == "" || this.editForm.dzlx == null){
+            }else if(this.editForm.dzlx=="" || this.editForm.dzlx==null){
                 this.$message.warning({
                     message: '请选择队站类型',
                     showClose: true
@@ -328,9 +354,11 @@ new Vue({
             }
             return true;
         },
+        
         //保存
         save: function (formName) {
             if(this.validateSave()){
+                var jdh = this.shiroData.organizationVO.jgid;
                 if (this.status == 0) {//新增
                     axios.get('/dpapi/xfdz/doCheckName/' + this.editForm.dzmc).then(function (res) {
                         if (res.data.result > 0) {
@@ -341,9 +369,30 @@ new Vue({
                         } else {
                             this.editForm.cjrid = this.shiroData.userid;
                             this.editForm.cjrmc = this.shiroData.realName;
+                            this.editForm.jdh = jdh;
                             this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
                             this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
                             this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
+                            //从表JDH
+                            if(this.editForm.dzlx!=null && this.editForm.dzlx!=""){
+                                switch(this.editForm.dzlx.substr(0,2)){
+                                    case "02":
+                                        this.editForm.zongdVO.jdh = jdh;
+                                        break;
+                                    case "03":
+                                        this.editForm.zhidVO.jdh = jdh;
+                                        break;
+                                    case "05":
+                                        this.editForm.DadVO.jdh = jdh;
+                                        break;
+                                    case "09":
+                                        this.editForm.zhongdVO.jdh = jdh;
+                                        break;
+                                    case "0A":
+                                        this.editForm.qtxfdwVO.jdh = jdh;
+                                        break;
+                                }
+                            }
                             axios.post('/dpapi/xfdz/insertByXfdzVO', this.editForm).then(function (res) {
                                 if (res.data.result != null) {
                                     this.$alert('成功保存队站信息', '提示', {
@@ -372,9 +421,38 @@ new Vue({
                 } else {//修改
                     this.editForm.xgrid = this.shiroData.userid;
                     this.editForm.xgrmc = this.shiroData.realName;
+                    this.editForm.jdh = jdh;
                     this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
-                    this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
-                    this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
+                    if(this.editForm.xzqh.length>0){
+                        this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
+                    }else{
+                        this.editForm.xzqh = null;
+                    }
+                    if(this.editForm.sjdzid.length>0){
+                        this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
+                    }else{
+                        this.editForm.sjdzid = null;
+                    }
+                    //从表JDH
+                    if(this.editForm.dzlx!=null && this.editForm.dzlx!=""){
+                        switch(this.editForm.dzlx.substr(0,2)){
+                            case "02":
+                                this.editForm.zongdVO.jdh = jdh;
+                                break;
+                            case "03":
+                                this.editForm.zhidVO.jdh = jdh;
+                                break;
+                            case "05":
+                                this.editForm.dadVO.jdh = jdh;
+                                break;
+                            case "09":
+                                this.editForm.zhongdVO.jdh = jdh;
+                                break;
+                            case "0A":
+                                this.editForm.qtxfdwVO.jdh = jdh;
+                                break;
+                        }
+                    }
                     axios.post('/dpapi/xfdz/updateByXfdzVO', this.editForm).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功修改队站信息', '提示', {
@@ -405,37 +483,45 @@ new Vue({
         //队站类型变化
         dzlxChange: function(){
             var type = this.editForm.dzlx;
-            if(type == "0200"){
-                this.isZongDui = true;
-                this.isZhiDui = false;
-                this.isDaDui = false;
-                this.isZhongDui = false;
-                this.isQiTaXiaoFangDuiWu = false;
-            }else if(type == "0300"){
-                this.isZongDui = false;
-                this.isZhiDui = true;
-                this.isDaDui = false;
-                this.isZhongDui = false;
-                this.isQiTaXiaoFangDuiWu = false;
-            }else if(type == "0500"){
-                this.isZongDui = false;
-                this.isZhiDui = false;
-                this.isDaDui = true;
-                this.isZhongDui = false;
-                this.isQiTaXiaoFangDuiWu = false;
-            }else if(type == "0900"){
+            if(type == null || type ==""){
                 this.isZongDui = false;
                 this.isZhiDui = false;
                 this.isDaDui = false;
-                this.isZhongDui = true;
+                this.isZhongDui = false;
                 this.isQiTaXiaoFangDuiWu = false;
             }else{
-                this.isZongDui = false;
-                this.isZhiDui = false;
-                this.isDaDui = false;
-                this.isZhongDui = false;
-                this.isQiTaXiaoFangDuiWu = true;
-            }
+                if(type == "0200"){
+                    this.isZongDui = true;
+                    this.isZhiDui = false;
+                    this.isDaDui = false;
+                    this.isZhongDui = false;
+                    this.isQiTaXiaoFangDuiWu = false;
+                }else if(type == "0300"){
+                    this.isZongDui = false;
+                    this.isZhiDui = true;
+                    this.isDaDui = false;
+                    this.isZhongDui = false;
+                    this.isQiTaXiaoFangDuiWu = false;
+                }else if(type == "0500"){
+                    this.isZongDui = false;
+                    this.isZhiDui = false;
+                    this.isDaDui = true;
+                    this.isZhongDui = false;
+                    this.isQiTaXiaoFangDuiWu = false;
+                }else if(type == "0900"){
+                    this.isZongDui = false;
+                    this.isZhiDui = false;
+                    this.isDaDui = false;
+                    this.isZhongDui = true;
+                    this.isQiTaXiaoFangDuiWu = false;
+                }else{
+                    this.isZongDui = false;
+                    this.isZhiDui = false;
+                    this.isDaDui = false;
+                    this.isZhongDui = false;
+                    this.isQiTaXiaoFangDuiWu = true;
+                }
+            } 
         }
     },
     

@@ -49,9 +49,7 @@ var vue = new Vue({
             //总记录数
             total: 0,
             //行数据保存
-            rowdata: {
-
-            },
+            rowdata: {},
             //序号
             indexData: 0,
             //删除的弹出框
@@ -94,7 +92,8 @@ var vue = new Vue({
                 label: 'codeName',
                 value: 'codeValue'
             },
-
+            //当前用户
+            shiroData: [],
         }
     },
     created: function () {
@@ -107,7 +106,7 @@ var vue = new Vue({
         
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("消防保卫警卫对象", "-1");
-
+        this.shiroData = shiroGlobal;
         this.getAllSszdData();
         this.searchXFGX_data();
         //this.searchXZQY_data();
@@ -158,7 +157,9 @@ var vue = new Vue({
                 zcbdw: this.searchForm.zcbdw,
                 xfgx: this.searchForm.xfgx,
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
+                pageNum: this.currentPage,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/bwjwplan/findBwjwList', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage-1)*this.pageSize);

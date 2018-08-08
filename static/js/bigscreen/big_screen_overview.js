@@ -437,22 +437,14 @@ var vm = new Vue({
             myBarChart.setOption(BarOption);
             myBarChart.on('click', function (params) {
                 //跳出父框架（iframe）
-<<<<<<< HEAD
-                window.parent.frames.location.href="../../templates/report/report3.html?type=DPYL"+"&index=92";
-=======
+                // window.parent.frames.location.href="../../templates/report/report3.html?type=DPYL"+"&index=92";
                 window.parent.frames.location.href="../../templates/all.html?url=/report/report3&type=DPYL";
-                //window.parent.frames.location.href="../../templates/report/report3.html?type=DPYL"+"&index=82";
->>>>>>> f53eaeabe7ef6ba172e3a4c16e5b4671f0459ea0
             });
         },
         barjump: function () {
             //跳出父框架（iframe）
-<<<<<<< HEAD
-            window.parent.frames.location.href="../../templates/report/report3.html?type=DPYL"+"&index=92";
-=======
             window.parent.frames.location.href="../../templates/all.html?url=/report/report3&type=DPYL";
             //window.parent.frames.location.href="../../templates/report/report3.html?type=DPYL"+"&index=82";
->>>>>>> f53eaeabe7ef6ba172e3a4c16e5b4671f0459ea0
         },
         // top10排名柱状图
         echarts5: function () {
@@ -577,22 +569,14 @@ var vm = new Vue({
             myBarChart.setOption(BarOption);
             myBarChart.on('click', function (params) {
                 //跳出父框架（iframe）
-<<<<<<< HEAD
-                window.parent.frames.location.href="../../templates/report/report1.html?type=DPYL"+"&index=91";
-=======
                 window.parent.frames.location.href="../../templates/all.html?url=/report/report1&type=DPYL";
                 //window.parent.frames.location.href="../../templates/report/report1.html?type=DPYL"+"&index=81";
->>>>>>> f53eaeabe7ef6ba172e3a4c16e5b4671f0459ea0
             });
         },
         top10jump: function () {
           //跳出父框架（iframe）
-<<<<<<< HEAD
-          window.parent.frames.location.href="../../templates/report/report1.html?type=DPYL"+"&index=91";
-=======
           window.parent.frames.location.href="../../templates/all.html?url=/report/report1&type=DPYL";
          // window.parent.frames.location.href="../../templates/report/report1.html?type=DPYL"+"&index=81";
->>>>>>> f53eaeabe7ef6ba172e3a4c16e5b4671f0459ea0
         },
         //top10 json串排序
         up: function (x, y) {

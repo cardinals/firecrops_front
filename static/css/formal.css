@@ -224,3 +224,6 @@ body{height:100%;overflow:hidden;}
 .col-edit-subtitle{
     color: #20a0ff;
 }
+.el-input-number--small {
+    width: 100%;
+    }

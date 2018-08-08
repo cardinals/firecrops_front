@@ -49,8 +49,8 @@
 								<el-form>
 									<el-col :span="12" class="btnEditDelete">
 										<el-form-item align="left">
-											<el-button type="primary" icon="plus" size="small" @click="addClick">新增</el-button>
-											<el-button type="danger" icon="delete" size="small" @click="deleteClick">删除</el-button>
+											<el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
+											<el-button type="danger" icon="delete2" size="small" @click="deleteClick">删除</el-button>
 										</el-form-item>
 									</el-col>
 									<el-col :span="12"></el-col>
@@ -105,8 +105,8 @@
 						<!--列表底部工具条和分页符-->
 						<el-row type="flex" justify="end">
 							<el-col :span="18">
-								<el-pagination @current-change="currentPageChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 50]" :page-size="pageSize"
-								 layout="total, prev, pager, next, jumper" :total=parseInt(total)>
+								<el-pagination @current-change="currentPageChange" :current-page="currentPage" :page-size="pageSize" layout="total, prev, pager, next, jumper"
+								 :total=parseInt(total)>
 								</el-pagination>
 							</el-col>
 						</el-row>

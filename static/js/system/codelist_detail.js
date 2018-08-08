@@ -148,7 +148,8 @@ var vue = new Vue({
                     var params = {
                         codeid: this.codeid,
                         codeValue: val.codeValue.trim(),
-                        codeName: val.codeName.trim()
+                        codeName: val.codeName.trim(),
+                        remark: val.remark.trim()
                     }
                     axios.post('/api/codelist/detail/insertByVO', params).then(function (res) {
                         var addData = res.data.result;
@@ -167,25 +168,9 @@ var vue = new Vue({
         },
 
         //修改：弹出Dialog
-        editClick: function () {
+        editClick: function(val) {
             var _self = this;
-            var multipleSelection = this.multipleSelection;
-            if (multipleSelection.length < 1) {
-                _self.$message({
-                    message: "请至少选中一条记录",
-                    type: "error"
-                });
-                return;
-            }
-            else if (multipleSelection.length > 1) {
-                _self.$message({
-                    message: "只能选一条记录进行编辑",
-                    type: "error"
-                });
-                return;
-            }
-
-            var pkid = multipleSelection[0].pkid;
+            var pkid = val.pkid;
 
             //获取选择的行号
             for (var k = 0; k < _self.tableData.length; k++) {
@@ -221,46 +206,26 @@ var vue = new Vue({
 
         //删除:批量删除
         removeSelection: function () {
-            var _self = this;
-            var multipleSelection = this.multipleSelection;
-            if (multipleSelection.length < 1) {
-                _self.$message({
-                    message: "请至少选中一条记录",
-                    type: "error"
-                });
-                return;
-            }
-            var ids = [];
-            for (var i = 0; i < multipleSelection.length; i++) {
-                var row = multipleSelection[i];
-                ids.push(row.pkid);
-            }
-            this.$confirm("确认删除吗？", "提示", { type: "warning" }).then(function () {
-                var params = {
-                    ids: ids
-                };
-                axios.post('/api/codelist/detail/deleteByIds', params).then(function (res) {
-                    for (var d = 0; d < ids.length; d++) {
-                        for (var k = 0; k < _self.tableData.length; k++) {
-                            if (_self.tableData[k].pkid == ids[d]) {
-                                _self.tableData.splice(k, 1);
-                            }
-                        }
-                    }
-                    _self.$message({
-                        message: "删除成功",
-                        type: "success"
+            this.$confirm('确认删除选中信息?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                axios.post('/api/codelist/detail/deleteByIds', this.multipleSelection).then(function (res) {
+                    this.$message({
+                        message: "成功删除" + res.data.result + "条代码集信息",
+                        showClose: true,
+                        onClose: this.searchClick('delete')
                     });
-                    _self.total = _self.tableData.length;
-                    _self.loadingData(); //重新加载数据
                 }.bind(this), function (error) {
                     console.log(error)
                 })
-
-            })
-                .catch(function (e) {
-                    if (e != "cancel") console.log("出现错误：" + e);
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
                 });
+            });
         },
     
         closeDialog: function (val) {
@@ -268,7 +233,13 @@ var vue = new Vue({
             val.permissionname = "";
             val.permissioninfo = "";
             this.$refs["addForm"].resetFields();
-        }
+        },
+        //清空查询条件
+        clearClick: function () {
+            this.searchForm.codeValue = "",
+            this.searchForm.codeName = "",
+            this.searchClick('reset');
+        },
     },
 
 })

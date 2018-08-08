@@ -34,7 +34,7 @@
                                 <el-form>
                                     <el-col :span="12" class="btnEditDelete">
                                         <el-form-item align="left">
-                                            <el-button type="primary" icon="edit" size="small" @click="editClick">修改</el-button>
+                                            <el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
                                             <el-button type="danger" icon="delete2" size="small" @click="removeSelection">删除</el-button>
                                         </el-form-item>
                                     </el-col>
@@ -42,7 +42,7 @@
                                     <el-col :span="12" class="btnSearchPlus">
                                         <el-form-item>
                                             <el-button type="primary" icon="search" size="small" @click="searchClick">查询</el-button>
-                                            <el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
+                                            <el-button type="clear" icon="delete" size="small" @click="clearClick">重置</el-button>
                                         </el-form-item>
                                     </el-col>
                                 </el-form>
@@ -57,11 +57,16 @@
                             <el-table-column type="index" show-overflow-tooltip label="序号" align="center" width="65"></el-table-column>
                             <el-table-column prop="codeValue" show-overflow-tooltip label="代码值" min-width="10%" align="center"></el-table-column>
                             <el-table-column prop="codeName" show-overflow-tooltip label="代码名称" min-width="15%" align="center"></el-table-column>
-                            <el-table-column prop="createName" show-overflow-tooltip label="创建人" min-width="10%" align="center"></el-table-column>
+                            <el-table-column prop="createName" show-overflow-tooltip label="创建人" min-width="11%" align="center"></el-table-column>
                             <el-table-column prop="createTime" show-overflow-tooltip label="创建时间" min-width="13%" align="center" :formatter="tableDateFormat"></el-table-column>
-                            <el-table-column prop="alterName" show-overflow-tooltip label="修改人" min-width="10%" align="center"></el-table-column>
+                            <el-table-column prop="alterName" show-overflow-tooltip label="修改人" min-width="11%" align="center"></el-table-column>
                             <el-table-column prop="alterTime" show-overflow-tooltip label="修改时间" min-width="13%" align="center" :formatter="tableDateFormat"></el-table-column>
-                            <el-table-column prop="remark" show-overflow-tooltip label="备注" min-width="10%" align="center"></el-table-column>
+                            <el-table-column prop="remark" show-overflow-tooltip label="备注" min-width="12%" align="center"></el-table-column>
+                            <el-table-column label="操作" min-width="7%" align="center">
+                                <template slot-scope="scope">
+                                    <el-button type="text" @click="editClick(scope.row,scope.$index)">编辑</el-button>
+                                </template>
+                            </el-table-column>
                         </el-table>
 
                         <!--列表底部工具条和分页符-->
@@ -79,25 +84,28 @@
                     <el-dialog title="新建代码集" :visible.sync="addFormVisible" @close="closeDialog(addForm)" :close-on-click-modal="false">
                         <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
                             <el-row>
-                                <el-col :span="22">
+                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
                                     <el-form-item label="代码值" prop="codeValue">
                                         <el-input v-model="addForm.codeValue" auto-complete="off" placeholder="代码值"></el-input>
                                     </el-form-item>
                                 </el-col>
+                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
                             </el-row>
                             <el-row>
-                                <el-col :span="22">
+                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
                                     <el-form-item label="代码名称" prop="codeName">
                                         <el-input v-model="addForm.codeName" auto-complete="off" placeholder="代码名称"></el-input>
                                     </el-form-item>
                                 </el-col>
+                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
                             </el-row>
                             <el-row>
-                                <el-col :span="22">
+                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
                                     <el-form-item label="备注" prop="remark">
                                         <el-input v-model="addForm.remark" auto-complete="off" placeholder="备注"></el-input>
                                     </el-form-item>
                                 </el-col>
+                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
                             </el-row>
                         </el-form>
                         <div slot="footer" class="dialog-footer">
@@ -110,25 +118,28 @@
                     <el-dialog title="修改代码集" :visible.sync="editFormVisible" :close-on-click-modal="false">
                         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
                             <el-row>
-                                <el-col :span="22">
+                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
                                     <el-form-item label="代码值" prop="codeValue">
                                         <el-input v-model="editForm.codeValue" auto-complete="off" placeholder="代码值"></el-input>
                                     </el-form-item>
                                 </el-col>
+                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
                             </el-row>
                             <el-row>
-                                <el-col :span="22">
+                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
                                     <el-form-item label="代码名称" prop="codeName">
                                         <el-input v-model="editForm.codeName" auto-complete="off" placeholder="代码名称"></el-input>
                                     </el-form-item>
                                 </el-col>
+                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
                             </el-row>
                             <el-row>
-                                <el-col :span="22">
+                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
                                     <el-form-item label="备注" prop="remark">
                                         <el-input v-model="editForm.remark" auto-complete="off" placeholder="备注"></el-input>
                                     </el-form-item>
                                 </el-col>
+                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
                             </el-row>
                         </el-form>
                         <div slot="footer" class="dialog-footer">

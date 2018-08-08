@@ -77,10 +77,13 @@ var vue = new Vue({
             data_index: "",
             //未通过flag
             isReject:false,
-
+            //登录用户
+            shiroData: [],
         }
     },
     created: function () {
+        /**当前登陆用户 by li.xue 20180807*/
+        this.shiroData = shiroGlobal;
         this.YALX_tree();//预案类型级联选择
         this.ZZJG_tree();//制作机构级联选择
         this.YAJB();//预案级别下拉框
@@ -167,7 +170,9 @@ var vue = new Vue({
                 begintime: this.searchForm.shsj[0],
                 endtime: this.searchForm.shsj[1],
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
+                pageNum: this.currentPage,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             }
             axios.post('/dpapi/digitalplanlist/listForApprove', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage-1)*this.pageSize);

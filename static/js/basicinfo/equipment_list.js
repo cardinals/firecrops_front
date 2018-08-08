@@ -20,20 +20,18 @@ var vue = new Vue({
             role_data: [],
             rowdata: '',
             //表高度变量
-            tableheight: 450,
+            tableheight: 443,
             //显示加载中样
             loading: false,
             labelPosition: 'right',
+            //多选值
+            multipleSelection: [],
             //当前页
             currentPage: 1,
             //分页大小
             pageSize: 10,
             //总记录数
             total: 10,
-            //行数据保存
-            rowdata: {
-
-            },
             //序号
             indexData: 0,
             //树结构配置
@@ -230,7 +228,7 @@ var vue = new Vue({
                 ID: val.uuid,
                 type: "BJ"
             }
-            loadDivParam("basicinfo/firedrug_add", params);
+            loadDivParam("basicinfo/equipment_add", params);
         },
 
     },
