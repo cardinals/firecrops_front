@@ -101,7 +101,8 @@ var vue = new Vue({
                 label: 'codeName',
                 value: 'codeValue'
             },
-
+            //当前登陆用户
+            shiroData: [],
         }
     },
     created: function () {
@@ -114,7 +115,8 @@ var vue = new Vue({
         
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("重点单位", "-1");
-
+        /**当前登陆用户 by li.xue 20180808 */
+        this.shiroData = shiroGlobal;
         this.searchClick('click');
         this.getdwxzData();
         this.getfhdjData();
@@ -151,7 +153,9 @@ var vue = new Vue({
                 mhdzbm: this.searchForm.mhdzbm,
                 xfdwlxmc: this.searchForm.xfdwlxmc,
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
+                pageNum: this.currentPage,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/importantunits/page', params).then(function(res){
                 var tableTemp = new Array((this.currentPage-1)*this.pageSize);
