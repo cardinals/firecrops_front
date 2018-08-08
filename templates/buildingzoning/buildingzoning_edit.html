@@ -254,102 +254,86 @@
 						</div>
 
 						<!-- 储罐类 -->
-						<div v-show="isCgl" id="disasterView" class="pt15">
-							<el-row class="mb5" style="border-bottom:1px solid #20a0ff;">
-								<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" style="line-height: 29px;">
-									<div style="color: #20a0ff;">
-										<strong>储罐信息</strong>
-									</div>
-								</el-col>
-								<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="pb1">
-									<el-button type="primary" icon="plus" size="small" class="r" @click="addDomain"></el-button>
+						<div v-show="isCgl" >
+							<el-row class="mb5 row-edit-subtitle">
+								<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+									<strong class="col-edit-subtitle">储罐信息</strong>
 								</el-col>
 							</el-row>
-							<el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" style="margin:0;">
-								<el-form-item v-for="(domain, index) in dynamicValidateForm" :key="domain.key" :props="'dynamicValidateForm.' + index + '.value'"
-								 label-position="right">
-									<el-card class="card_style">
-										<div slot="header" class="clearfix">
-											<strong class="card_title_font">储罐信息{{index+1}}</strong>
-											<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomain(domain)" class="r" style="margin:5px 0 0"></el-button>
-										</div>
-										<el-row class="tr">
-											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-												<el-label class="mr5">
-												总容积(m3)</el-label>
-											</el-col>
-											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input size="small" v-model="cglVO.cgl_zrj" placeholder="总容积(m3)"></el-input>
-											</el-col>
-											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-												<el-label class="mr5">储罐数量</el-label>
-											</el-col>
-											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input size="small" v-model="cglVO.cgl_cgsl" placeholder="储罐数量"></el-input>
-											</el-col>
-											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-												<el-label class="mr5">储罐间隔</el-label>
-											</el-col>
-											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input size="small" v-model="cglVO.cgl_cgjg" placeholder="储罐间隔"></el-input>
-											</el-col>
-										</el-row>
-										<el-row class="tr">
-											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-												<el-label class="mr5">存储介质描述</el-label>
-											</el-col>
-											<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-												<el-input size="small" v-model="cglVO.cgl_ccjzms" placeholder="存储介质描述" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
-											</el-col>
-										</el-row>
-										<el-row class="tr">
-											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-												<el-label class="mr5 vbm">技术负责人</el-label>
-											</el-col>
-											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input size="small" v-model="cglVO.cgl_jsfzr" placeholder="技术负责人"></el-input>
-											</el-col>
-											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-												<el-label class="mr5">技术负责人电话</el-label>
-											</el-col>
-											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input size="small" v-model="cglVO.cgl_jsfzrdh" placeholder="技术负责人电话"></el-input>
-											</el-col>
-										</el-row>
-										<el-row class="tr">
-											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-												<el-label class="mr5">罐组毗邻情况(东)</el-label>
-											</el-col>
-											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input size="small" v-model="cglVO.cgl_plqkd" placeholder="罐组毗邻情况(东)"></el-input>
-											</el-col>
-											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-												<el-label class="mr5">罐组毗邻情况(西)</el-label>
-											</el-col>
-											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input size="small" v-model="cglVO.cgl_plqkx" placeholder="罐组毗邻情况(西)"></el-input>
-											</el-col>
-										</el-row>
-										<el-row class="tr">
-											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-												<el-label class="mr5">罐组毗邻情况(南)</el-label>
-											</el-col>
-											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input size="small" v-model="cglVO.cgl_plqkn" placeholder="罐组毗邻情况(南)"></el-input>
-											</el-col>
-											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-												<el-label class="mr5">罐组毗邻情况(北)</el-label>
-											</el-col>
-											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input size="small" v-model="cglVO.cgl_plqkb" placeholder="罐组毗邻情况(北)"></el-input>
-											</el-col>
-										</el-row>
-									</el-card>
-								</el-form-item>
-							</el-form>
+							<el-row class="tr mb5">
+								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+									<el-label class="mr5">
+										总容积(m3)</el-label>
+								</el-col>
+								<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+									<el-input size="small" v-model="cglVO.cgl_zrj" placeholder="总容积(m3)"></el-input>
+								</el-col>
+								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+									<el-label class="mr5">储罐数量</el-label>
+								</el-col>
+								<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+									<el-input size="small" v-model="cglVO.cgl_cgsl" placeholder="储罐数量"></el-input>
+								</el-col>
+								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+									<el-label class="mr5">储罐间隔</el-label>
+								</el-col>
+								<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+									<el-input size="small" v-model="cglVO.cgl_cgjg" placeholder="储罐间隔"></el-input>
+								</el-col>
+							</el-row>
+							<el-row class="tr mb5">
+								<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+									<el-label class="mr5">存储介质描述</el-label>
+								</el-col>
+								<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
+									<el-input size="small" v-model="cglVO.cgl_ccjzms" placeholder="存储介质描述" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+								</el-col>
+							</el-row>
+							<el-row class="tr mb5">
+								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+									<el-label class="mr5 vbm">技术负责人</el-label>
+								</el-col>
+								<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+									<el-input size="small" v-model="cglVO.cgl_jsfzr" placeholder="技术负责人"></el-input>
+								</el-col>
+								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+									<el-label class="mr5">技术负责人电话</el-label>
+								</el-col>
+								<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+									<el-input size="small" v-model="cglVO.cgl_jsfzrdh" placeholder="技术负责人电话"></el-input>
+								</el-col>
+							</el-row>
+							<el-row class="tr mb5">
+								<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+									<el-label class="mr5">罐组毗邻情况(东)</el-label>
+								</el-col>
+								<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+									<el-input size="small" v-model="cglVO.cgl_plqkd" placeholder="罐组毗邻情况(东)"></el-input>
+								</el-col>
+								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+									<el-label class="mr5">罐组毗邻情况(西)</el-label>
+								</el-col>
+								<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+									<el-input size="small" v-model="cglVO.cgl_plqkx" placeholder="罐组毗邻情况(西)"></el-input>
+								</el-col>
+							</el-row>
+							<el-row class="tr mb5">
+								<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+									<el-label class="mr5">罐组毗邻情况(南)</el-label>
+								</el-col>
+								<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+									<el-input size="small" v-model="cglVO.cgl_plqkn" placeholder="罐组毗邻情况(南)"></el-input>
+								</el-col>
+								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+									<el-label class="mr5">罐组毗邻情况(北)</el-label>
+								</el-col>
+								<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+									<el-input size="small" v-model="cglVO.cgl_plqkb" placeholder="罐组毗邻情况(北)"></el-input>
+								</el-col>
+							</el-row>
 						</div>
 
 						<el-row class="mb5 row-edit-subtitle">

@@ -181,21 +181,21 @@ new Vue({
             return true;
         },
         //储罐增加
-        addDomain: function () {
-            this.dynamicValidateForm.push({
-                cgl_jzid: "",
-                cgl_zrj: "",
-                cgl_cgsl: "",
-                cgl_cgjg: "",
-                cgl_ccjzms: "",
-                cgl_jsfzr: "",
-                cgl_jsfzrdh: "",
-                cgl_plqkd: "",
-                cgl_plqkx: "",
-                cgl_plqkn: "",
-                cgl_plqkb: ""
-            });
-        },
+        // addDomain: function () {
+        //     this.dynamicValidateForm.push({
+        //         cgl_jzid: "",
+        //         cgl_zrj: "",
+        //         cgl_cgsl: "",
+        //         cgl_cgjg: "",
+        //         cgl_ccjzms: "",
+        //         cgl_jsfzr: "",
+        //         cgl_jsfzrdh: "",
+        //         cgl_plqkd: "",
+        //         cgl_plqkx: "",
+        //         cgl_plqkn: "",
+        //         cgl_plqkb: ""
+        //     });
+        // },
         //储罐删除
         removeDomain: function (item) {
             var index = this.dynamicValidateForm.indexOf(item)
