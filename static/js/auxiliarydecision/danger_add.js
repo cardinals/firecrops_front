@@ -11,7 +11,7 @@ new Vue({
             //显示加载中样
             loading: false,
             typeData: [],
-            role_data: [],
+            shiroData: [],
             //搜索表单
             addForm: {
                 name: "",
@@ -46,7 +46,8 @@ new Vue({
                 cjrid: "",
                 cjrmc: "",
                 xgrid: "",
-                xgrmc: ""
+                xgrmc: "",
+                jdh: ""
             },
 
         }
@@ -66,7 +67,8 @@ new Vue({
         } else if (type == "BJ") {
             loadBreadcrumb("化学危险品", "化学危险品编辑");
         }
-
+        /**当前登陆用户 by li.xue 20180808 */
+        this.shiroData = shiroGlobal;
         this.getTypeData();
         this.roleData();
     },
@@ -76,14 +78,6 @@ new Vue({
     },
     methods: {
         handleNodeClick(data) {
-        },
-        //当前登录用户信息
-        roleData: function () {
-            axios.post('/api/shiro').then(function (res) {
-                this.role_data = res.data;
-            }.bind(this), function (error) {
-                console.log(error);
-            })
         },
         //表格查询事件
         searchClick: function () {
@@ -125,8 +119,9 @@ new Vue({
                         this.$refs[formName].validate((valid) => {
                             if (valid) {
                                 if (this.status == 0) {//新增
-                                    this.addForm.cjrid = this.role_data.userid;
-                                    this.addForm.cjrmc = this.role_data.realName;
+                                    this.addForm.cjrid = this.shiroData.userid;
+                                    this.addForm.cjrmc = this.shiroData.realName;
+                                    this.addForm.jdh = this.shiroData.organizationVO.jgid;
                                     axios.post('/dpapi/danger/insertByVO', this.addForm).then(function (res) {
                                         if (res.data.result >= 1) {
                                             this.$alert('成功保存' + res.data.result + '条化危品信息', '提示', {
@@ -151,8 +146,8 @@ new Vue({
                                         console.log(error);
                                     })
                                 } else {//修改
-                                    this.addForm.xgrid = this.role_data.userid;
-                                    this.addForm.xgrmc = this.role_data.realName;
+                                    this.addForm.xgrid = this.shiroData.userid;
+                                    this.addForm.xgrmc = this.shiroData.realName;
                                     axios.post('/dpapi/danger/doUpdateDanger', this.addForm).then(function (res) {
                                         if (res.data.result >= 1) {
                                             this.$alert('成功修改' + res.data.result + '条化危品信息', '提示', {
