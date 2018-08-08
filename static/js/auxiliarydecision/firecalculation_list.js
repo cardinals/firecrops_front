@@ -147,7 +147,8 @@ var vue = new Vue({
                 children: 'zones'
             },
             count: 1,
-
+            //当前登陆用户
+            shiroData: [],
         }
     },
     created: function () {
@@ -156,7 +157,8 @@ var vue = new Vue({
 
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("火场计算", "-1");
-
+        /**当前登陆用户 by li.xue 20180808 */
+        this.shiroData = shiroGlobal;
         this.GSLB();
         this.CSLX();
         this.searchClick('click');
@@ -364,7 +366,10 @@ var vue = new Vue({
                         jsgs: this.addFormulaForm.jsgs,
                         jsgsdw: this.addFormulaForm.jsgsdw,
                         sfqy: "1",
-                        firecalculationparams:this.addParamForm.domains
+                        firecalculationparams: this.addParamForm.domains,
+                        cjrid: this.shiroData.userid,
+                        cjrmc: this.shiroData.realName,
+                        jdh: this.shiroData.organizationVO.jgid,
                     }
                     axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
                         if(res.data.msg=="算式内参数与输入参数个数不符!请重新输入。"){
@@ -476,7 +481,9 @@ var vue = new Vue({
                 jsgs: this.editFormulaForm.jsgs,
                 jsgsdw: this.editFormulaForm.jsgsdw,
                 sfqy: this.editFormulaForm.sfqy,
-                firecalculationparams:this.editParamForm.domains
+                firecalculationparams:this.editParamForm.domains,
+                xgrid: this.shiroData.userid,
+                xgrmc: this.shiroData.realName,
             };
             axios.post('/dpapi/firecalculationlist/updateByVO', params).then(function (res) {
                 if(res.data.msg=="算式内参数与输入参数个数不符!请重新输入。"){
