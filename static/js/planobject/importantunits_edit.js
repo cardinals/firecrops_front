@@ -15,13 +15,77 @@ new Vue({
             allSsdzDataTree: [],
             role_data: [],
             uuid: "4bb4d6da5a78416d9f923c16965dead0",
-            
+            //编辑表单
+            editForm:{
+                dwmc: '',
+                dwxz: '',
+                dwdz: '',
+                xzqh: '',
+                fhdj: '',
+                zbdh: '',
+                dwgk: '',
+                gisX: '',
+                gisY: '',
+                lon: '',
+                lat: '',
+                plqkd: '',
+                plqkn: '',
+                plqkx: '',
+                plqkb: '',
+                fhdzid: '',
+                mhdzid: '',
+                xfzrr: '',
+                xfzrrdh: '',
+                xfglr: '',
+                xfglrdh: '',
+                xfllList: [],
+                xfsssl: '',
+                jzfl: '',
+                jzsl: '',
+                zdmj: '',
+                jzmj: '',
+                jzxxList: [{jzmc: '', jzid: ''}],
+                zdbwList:[],
+            },
+            //消防队站下拉框Data
+            xfdzData: [],
+            //单位性质下拉框Data
+            dwxzData: [],
+            //行政区划下拉框Data
+            xzqhData: [],
+            //防火等级下拉框Data
+            fhdjData: [],
+            //建筑分类下拉框Data
+            jzflData: [],
+            //单位消防队伍类型下拉框
+            xfdwlxData: [{codeName:'企业专职消防队',codeValue:'0A01'},{codeName:'微型消防站',codeValue:'0A03'}],
+            //重点部位类型下拉框
+            zdbwlxData: [],
+            //使用性质下拉框
+            syxzData: [],
+            //建筑机构下拉框
+            jzjgData: [],
+            //储罐类型
+            cglxData: [],
+            //建筑信息弹出框--------------------------------
+            buildingListVisible: false,
+            loading_building: false,
+            //建筑序号：
+            jzIndex: '',
+            //当前页
+            currentPage_building: 1,
+            //分页大小
+            pageSize_building: 5,
+            //总记录数
+            total_building: 0,
+            //搜索表单
+            searchForm_building: {
+                jzmc: ''
+            },
+            tableData_building: [],
             //表数据
             tableData: [],//基本数据
-            allDwxzData: [],
-            allFhdjData: [],
-            allXfdwlxData: [{codeName:'企业专职消防队',codeValue:'0A01'},{codeName:'微型消防站',codeValue:'0A03'}],
-            allJzflData: [],
+            
             //重点部位显示标识：
             ZDBW: false,
             jzl_zdbwData: [],//建筑类重点部位数据
@@ -184,7 +248,7 @@ new Vue({
                 label: 'codeName',
                 value: 'codeValue'
             },
-            ssdzProps: {
+            xfdzProps: {
                 children: 'children',
                 label: 'dzjc',
                 value: 'dzid'
@@ -206,6 +270,8 @@ new Vue({
             tableData: [],
             //表高度变量
             tableheight: 243,
+            //当前登陆用户
+            shiroData: [],
         }
     },
     created: function () {
@@ -216,34 +282,307 @@ new Vue({
         } else if (type == "BJ") {
             loadBreadcrumb("重点单位", "重点单位编辑");
         }
+        /**当前登陆用户 by li.xue 20180808 */
+        this.shiroData = shiroGlobal;
         // this.uuid = getQueryString("ID");
-        this.getallDwxzData();
-        this.getallFhdjData();
-        this.getallJzflData();
+        this.getDwxzData();
+        this.getFhdjData();
+        this.getXzqhData();
+        this.getXfdzData();
+        this.getJzflData();
         //根据重点单位id获取重点单位详情
         this.getDetails();
     },
-    mounted: function () {
-
-        // this.searchClick();
-    },
     methods: {
-        getallDwxzData: function () {
+        //单位性质下拉框
+        getDwxzData: function () {
             axios.get('/api/codelist/getCodeTypeOrderByNum/DWXZ').then(function (res) {
-                this.allDwxzData = res.data.result;
-                // this.allDwxzData.sort(this.compare('value'));
-                // console.log(this.allDwxzData);
+                this.dwxzData = res.data.result;
+                // this.dwxzData.sort(this.compare('value'));
+                // console.log(this.dwxzData);
             }.bind(this), function (error) {
                 console.log(error);
             })
         },
-        getallFhdjData: function () {
+
+        //防火等级下拉框
+        getFhdjData: function () {
             axios.get('/api/codelist/getCodetype/FHDJ').then(function (res) {
-                this.allFhdjData = res.data.result;
+                this.fhdjData = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
             })
         },
+
+        //行政区划下拉框
+        getXzqhData: function(){
+            axios.get('/api/codelist/getXzqhTreeByUser').then(function(res){
+                this.xzqhData = res.data.result;
+            }.bind(this),function(error){
+                console.log(error);
+            })
+        },
+
+        //防火队站、灭火队站级联下拉框
+        getXfdzData: function () {
+            var organization = this.shiroData.organizationVO;
+            var param = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            }
+            axios.get('/api/codelist/getCodetype/ZDBWLX').then(function (res) {
+                this.zdbwlxData = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
+
+        //重点部位类型下拉框
+        getZdbwlxData: function(){
+            axios.get('/api/codelist/getCodetype/ZDBWLX').then(function (res) {
+                this.zdbwlxData = res.data.result;
+            }.bind(this),function(error){
+                console.log(error);
+            })
+        },
+
+        //使用性质下拉框
+        getSyxzData: function(){
+            axios.get('/api/codelist/getCodetype/SYXZ').then(function (res) {
+                this.syxzData = res.data.result;
+            }.bind(this),function(error){
+                console.log(error);
+            })
+        },
+
+        //建筑结构下拉框
+        getJzjgData: function(){
+            axios.get('/api/codelist/getCodetype/JZJG').then(function (res) {
+                this.jzjgData = res.data.result;
+            }.bind(this),function(error){
+                console.log(error);
+            })
+        },
+
+        //储罐类型下拉框
+        getCglxData: function(){
+            axios.get('/api/codelist/getCodetype/CGLX').then(function (res) {
+                this.cglxData = res.data.result;
+            }.bind(this),function(error){
+                console.log(error);
+            })
+        },
+
+        //单位消防力量新增
+        addDomainXfll: function(){
+            this.editForm.xfllList.push({
+                xfdwlx: '',
+                xfdwrs: '',
+                xfdwcls: '',
+                xfdwlxr: '',
+                xfdwdh: '',
+                key: Date.now()
+            });
+        },
+
+        //单位消防力量移除
+        removeDomainXfll: function(item){
+            var index = this.editForm.xfllList.indexOf(item);
+            if (index !== -1) {
+                this.editForm.xfllList.splice(item, 1);
+            }
+        },
+
+        //建筑信息新增
+        addDomainJzxx: function(){
+            this.editForm.jzxxList.push({
+                jzmc: '',
+                key: Date.now()
+            });
+        },
+
+        //建筑信息移除
+        removeDomainJzxx: function(item){
+            var index = this.editForm.jzxxList.indexOf(item);
+            if (index !== -1) {
+                this.editForm.jzxxList.splice(item, 1);
+            }
+        },
+
+        //获取建筑信息列表
+        getJzxxList: function(type, index){
+            debugger;
+            if (type == 'page') {
+                this.tableData_building = [];
+            } else {
+                if (type == 'init') {
+                    this.jzIndex = index;
+                    this.searchForm_building.jzmc = '';
+                }
+                this.currentPage_building = 1;
+            }
+            this.buildingListVisible = true;
+            this.loading_building = true;
+            var params = {
+                jzmc: this.searchForm_building.jzmc,
+                pageSize: this.pageSize_building,
+                pageNum: this.currentPage_building
+            };
+            axios.post('/dpapi/building/page', params).then(function (res) {
+                var tableTemp = new Array((this.currentPage_building - 1) * this.pageSize_building);
+                this.tableData_building = tableTemp.concat(res.data.result.list);
+                this.total_building = res.data.result.total;
+                this.loading_building = false;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
+
+        //建筑弹出页翻页
+        currentPageChange_building: function (val) {
+            if (this.currentPage_building != val) {
+                this.currentPage_building = val;
+                this.getJzxxList('page', this.jzIndex);
+            }
+        },
+
+        //选择建筑，返回建筑名称和id
+        selectRow_building: function (val) {
+            this.editForm.jzxxList[this.jzIndex].jzid = val.jzid;
+            this.editForm.jzxxList[this.jzIndex].jzmc = val.jzmc;
+            this.buildingListVisible = false;
+        },
+
+        //建筑查询条件清空
+        clearJzxxList: function (val) {
+            this.searchForm_building.jzmc = '';
+            this.getJzxxList('reset', this.jzIndex);
+        },
+
+        //重点部位新增
+        addDomainZdbw: function(){
+            this.getZdbwlxData();
+            this.editForm.zdbwList.push({
+                zdbwmc: '',
+                zdbwlx: '',
+                zdbwwz: '',
+                wxxfx: '',
+                zysx: '',
+                bz: '',
+                jzl: {
+                    syxz: '',
+                    jzjg: '',
+                    qymj: '',
+                    gnms: '',
+                    wxjzList: [],
+                },
+                zzl: {},
+                cgl: {},
+                key: Date.now()
+            });
+        },
+
+        //重点部位移除
+        removeDomainZdbw: function(item){
+            var index = this.editForm.zdbwList.indexOf(item);
+            if (index !== -1) {
+                this.editForm.zdbwList.splice(item, 1);
+            }
+        },
+
+        //危险介质新增
+        addDomainWxjz: function(index){ 
+            this.editForm.zdbwList[index].jzl.wxjzList.push({
+                jzmc: '',
+                jzsjcl: '',
+                jzlhtx: '',
+                jzbz: '',
+                key: Date.now()
+            });
+        },
+
+        //危险介质移除
+        removeDomainWxjz: function(index,item){
+            debugger;
+            var temp = this.editForm.zdbwList[index].jzl.wxjzList.indexOf(item);
+            if (temp !== -1) {
+                this.editForm.zdbwList[index].jzl.wxjzList.splice(item, 1);
+            }
+        },
+
+        //储罐新增
+        addDomainCg: function(index){
+            this.getCglxData();
+            this.editForm.zdbwList[index].cgl.cgList.push({
+                cgmc: '',
+                cglx: '',
+                cgzj: '',
+                cggd: '',
+                cgzc: '',
+                gdmj: '',
+                gzyl: '',
+                ccwd: '',
+                ccjzmc: '',
+                ccjzlhtx: '',
+                ccjzsjcl: '',
+                ccjzywgd: '',
+                bz: '',
+                key: Date.now()
+            });
+        },
+
+        //储罐移除
+        removeDomainCg: function(index,item){
+            var temp = this.editForm.zdbwList[index].cgl.cgList.indexOf(item);
+            if (temp !== -1) {
+                this.editForm.zdbwList[index].cgl.cgList.splice(item, 1);
+            }
+        },
+
+        //重点部位类型Change
+        zdbwlxChange: function(index){
+            var zdbwlx = this.editForm.zdbwList[index].zdbwlx;
+            if(zdbwlx == "10"){
+                this.getSyxzData();
+                this.getJzjgData();
+                this.editForm.zdbwList[index].jzl = {
+                    syxz: '',
+                    jzjg: '',
+                    qymj: '',
+                    gnms: '',
+                    wxjzList: [],
+                }
+            }else if(zdbwlx == "20"){
+                this.getJzjgData();
+                this.editForm.zdbwList[index].zzl = {
+                    jzjg: '',
+                    zzzc: '',
+                    zdmj: '',
+                    zzgd: '',
+                    jsfzr: '',
+                    jsfzrdh: '',
+                    ylxx: '',
+                    cwxx: '',
+                    gylc: '',
+                }
+            }else if(zdbwlx == "30"){
+                this.editForm.zdbwList[index].cgl = {
+                    cgsl: '',
+                    cgjg: '',
+                    zrj: '',
+                    ccjzms: '',
+                    jsfzr: '',
+                    jsfzrdh: '',
+                    pkqkd: '',
+                    pkqkn: '',
+                    pkqkx: '',
+                    pkqkb: '',
+                    cgList: [],
+                }
+            }
+        },
+
         //获取重点单位详情
         getDetails: function () {
             this.loading = true;
@@ -531,9 +870,9 @@ new Vue({
                 console.log(error);
             })
         },
-        getallJzflData: function () {
+        getJzflData: function () {
             axios.get('/api/codelist/getCodetype/JZFL').then(function (res) {
-                this.allJzflData = res.data.result;
+                this.jzflData = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
             })
