@@ -166,7 +166,6 @@ new Vue({
         this.ZHCS();
         this.HZWXX();
         this.DJFALX();
-        this.roleData();
     },
     mounted: function () {
         this.status = getQueryString("ID");
