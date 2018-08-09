@@ -85,19 +85,31 @@ new Vue({
                 cgl_plqkd: "",
                 cgl_plqkx: "",
                 cgl_plqkn: "",
-                cgl_plqkb: ""
+                cgl_plqkb: "",
+                chuguanList: [{
+                    cgmc: "",
+                    cglx: "",
+                    cgrl: "",
+                    cgzj: "",
+                    cggd: "",
+                    cgzc: "",
+                    gdmj: "",
+                    gzyl: "",
+                    ccwd: "",
+                    ccjzmc: "",
+                    ccjzlhxz: "",
+                    ccjzsjcl: "",
+                    ccjzywgd: "",
+                    bz: ""
+                }]
             },
+
             props: {
                 value: 'codeValue',
                 label: 'codeName',
                 children: 'children'
             },
-            sjdzprops: {
-                value: 'dzid',
-                label: 'dzjc',
-                children: 'children'
-            },
-            
+
         }
     },
     created: function () {
@@ -192,8 +204,8 @@ new Vue({
                                 var xzqh2 = this.jzlVO.jzl_jzsyxz;
                                 this.jzlVO.jzl_jzsyxz = [];
                                 this.jzlVO.jzl_jzsyxz.push(xzqh1, xzqh2);
-                            } 
-                        }else{
+                            }
+                        } else {
                             this.jzlVO.jzl_jzsyxz = [];
                         }
                         this.zzlVO = {};
@@ -241,27 +253,30 @@ new Vue({
             }
             return true;
         },
-        //储罐增加
-        // addDomain: function () {
-        //     this.dynamicValidateForm.push({
-        //         cgl_jzid: "",
-        //         cgl_zrj: "",
-        //         cgl_cgsl: "",
-        //         cgl_cgjg: "",
-        //         cgl_ccjzms: "",
-        //         cgl_jsfzr: "",
-        //         cgl_jsfzrdh: "",
-        //         cgl_plqkd: "",
-        //         cgl_plqkx: "",
-        //         cgl_plqkn: "",
-        //         cgl_plqkb: ""
-        //     });
-        // },
+        //罐体增加
+        addDomain: function () {
+            this.cglVO.chuguanList.push({
+                cgmc: "",
+                cglx: "",
+                cgrl: "",
+                cgzj: "",
+                cggd: "",
+                cgzc: "",
+                gdmj: "",
+                gzyl: "",
+                ccwd: "",
+                ccjzmc: "",
+                ccjzlhxz: "",
+                ccjzsjcl: "",
+                ccjzywgd: "",
+                bz: ""
+            });
+        },
         //储罐删除
         removeDomain: function (item) {
-            var index = this.dynamicValidateForm.indexOf(item)
+            var index = this.cglVO.chuguanList.indexOf(item)
             if (index !== -1) {
-                this.dynamicValidateForm.splice(index, 1)
+                this.cglVO.chuguanList.splice(index, 1)
             }
         },
         //保存
@@ -271,17 +286,18 @@ new Vue({
                     this.editForm.cjrid = this.shiroData.userid;
                     this.editForm.cjrmc = this.shiroData.realName;
                     this.editForm.jdh = this.shiroData.organizationVO.jgid;
+debugger
                     if (this.editForm.jzlx == '10' || this.editForm.jzlx == '20') {
+                        if (this.jzlVO.jzl_jzsyxz.length > 0) {
+                            this.jzlVO.jzl_jzsyxz = this.jzlVO.jzl_jzsyxz[this.jzlVO.jzl_jzsyxz.length - 1];
+                        } else {
+                            this.jzlVO.jzl_jzsyxz = '';
+                        }
                         this.editForm.buildingVO = this.jzlVO;
                     } else if (this.editForm.jzlx == '30') {
                         this.editForm.buildingVO = this.zzlVO;
                     } else if (this.editForm.jzlx == '40') {
                         this.editForm.buildingVO = this.cglVO;
-                    }
-                    if (this.jzlVO.jzl_jzsyxz.length > 0) {
-                        this.jzlVO.jzl_jzsyxz = this.jzlVO.jzl_jzsyxz[this.jzlVO.jzl_jzsyxz.length - 1];
-                    } else {
-                        this.jzlVO.jzl_jzsyxz = '';
                     }
                     axios.post('/dpapi/building/insertByVO', this.editForm).then(function (res) {
                         if (res.data.result == 1) {
@@ -306,7 +322,6 @@ new Vue({
                     })
                     // }
                 } else {//修改
-                    debugger;
                     this.editForm.xgrid = this.shiroData.userid;
                     this.editForm.xgrmc = this.shiroData.realName;
                     if (this.editForm.jzlx == '10' || this.editForm.jzlx == '20') {
