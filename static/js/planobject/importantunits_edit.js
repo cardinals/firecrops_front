@@ -412,7 +412,6 @@ new Vue({
 
         //获取建筑信息列表
         getJzxxList: function(type, index){
-            debugger;
             if (type == 'page') {
                 this.tableData_building = [];
             } else {
