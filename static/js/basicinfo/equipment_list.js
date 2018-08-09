@@ -17,7 +17,7 @@ var vue = new Vue({
             tableData: [],
             allTypesDataTree: [],//装备类型级联选择数据
             allSsdzData: [],//消防队站下拉框数据（到总队级）
-            role_data: [],
+            shiroData: [],
             rowdata: '',
             //表高度变量
             tableheight: 443,
@@ -50,24 +50,14 @@ var vue = new Vue({
         }
     },
     created: function () {
-        //设置菜单选中
-        // $("#activeIndex").val(getQueryString("index"));
-        /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("装备器材管理", "-1");
+        this.shiroData = shiroGlobal;
         this.getAllSszdData();//消防队站下拉框数据（到总队级）
         this.getAllTypesDataTree();//装备类型级联选择数据
-        this.roleData();
         this.searchClick('click');
     },
     methods: {
-        //当前登录用户信息
-        roleData: function () {
-            axios.post('/api/shiro').then(function (res) {
-                this.role_data = res.data;
-            }.bind(this), function (error) {
-                console.log(error);
-            })
-        },//表格查询事件
+        //表格查询事件
         searchClick: function (type) {
             //按钮事件的选择
             if (type == 'page') {
@@ -81,21 +71,15 @@ var vue = new Vue({
             if (this.searchForm.zblx.length > 0) {
                 zblx = this.searchForm.zblx[this.searchForm.zblx.length - 1];
             }
-            // var kysl_min = this.searchForm.kysl[0];
-            // var kysl_max = this.searchForm.kysl[1];
-            // if (this.searchForm.kysl[0] == 0 && this.searchForm.kysl[1] == 1000) {
-            //     kysl_min = "";
-            //     kysl_max = "";
-            // }
             var params = {
                 zbmc: this.searchForm.zbmc,
                 zbbm: this.searchForm.zbbm,
                 ssdz: this.searchForm.ssdz,
                 zblx: zblx,
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
-                // kysl_min: kysl_min,
-                // kysl_max: kysl_max
+                pageNum: this.currentPage,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/equipmentsource/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
@@ -203,8 +187,8 @@ var vue = new Vue({
                 type: 'warning'
             }).then(() => {
                 for (var i = 0; i < this.multipleSelection.length; i++) {
-                    this.multipleSelection[i].xgrid = this.role_data.userid;
-                    this.multipleSelection[i].xgrmc = this.role_data.realName;
+                    this.multipleSelection[i].xgrid = this.shiroData.userid;
+                    this.multipleSelection[i].xgrmc = this.shiroData.realName;
                 }
                 axios.post('/dpapi/equipmentsource/doDeleteEquipment', this.multipleSelection).then(function (res) {
                     this.$message({

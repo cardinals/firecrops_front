@@ -13,7 +13,7 @@ new Vue({
             allTypesDataTree: [],
             allXzqhDataTree: [],
             allSsdzDataTree: [],
-            role_data: [],
+            shiroData: [],
             //搜索表单
             addForm: {
                 zbmc: '',
@@ -33,6 +33,7 @@ new Vue({
                 xgrid: '',
                 xgrmc: '',
                 bz: '',
+                jdh: '',
                 equipengineVOList: []
             },
             engineForm: [{
@@ -72,22 +73,20 @@ new Vue({
         }
     },
     created: function () {
-        /**面包屑 by li.xue 20180628*/
         var type = getQueryString("type");
         if (type == "XZ") {
             loadBreadcrumb("装备器材管理", "装备器材管理新增");
         } else if (type == "BJ") {
             loadBreadcrumb("装备器材管理", "装备器材管理编辑");
         }
+        this.shiroData = shiroGlobal;
         this.status = getQueryString("ID");
         this.getAllTypesDataTree();//装备类型级联选择数据
         this.getAllXzqhDataTree();//行政区划
-        // this.getAllSsdzDataTree();
-        this.roleData();
+        this.getAllSsdzDataTree();
     },
     mounted: function () {
-
-        // this.searchClick();
+        this.searchClick();
     },
     methods: {
         //车辆+
@@ -157,15 +156,6 @@ new Vue({
             this.engineList('reset', this.clIndex);
         },
 
-        //当前登录用户信息
-        roleData: function () {
-            axios.post('/api/shiro').then(function (res) {
-                this.role_data = res.data;
-                this.getAllSsdzDataTree();
-            }.bind(this), function (error) {
-                console.log(error);
-            })
-        },
         //表格查询事件
         searchClick: function () {
             this.loading = true;
@@ -308,30 +298,17 @@ new Vue({
         },
         //所属队站级联选择器数据
         getAllSsdzDataTree: function () {
-            var organization = this.role_data.organizationVO;
             var param = {
-                dzid: organization.uuid,
-                dzjc: organization.jgjc,
-                dzbm: organization.jgid
+                dzid: this.shiroData.organizationVO.uuid,
+                dzjc: this.shiroData.organizationVO.jgjc,
+                dzbm: this.shiroData.organizationVO.jgid
             }
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.allSsdzDataTree = res.data.result;
-                this.searchClick();
             }.bind(this), function (error) {
                 console.log(error);
             })
         },
-        // kyslChange: function (value) {
-        //     this.addForm.zcbl = value + this.addForm.shsl;
-        // },
-        // shslChange: function (value) {
-        //     this.addForm.zcbl = value + this.addForm.kysl;
-        // },
-        // zzslChange: function (value) {
-        //     for (var i in this.engineForm) {
-        //         this.addForm.zzsl = this.addForm.zzsl + this.engineForm[i].clzzs;
-        //     }
-        // },
 
         //保存前校验
         checkForm: function () {
@@ -360,8 +337,9 @@ new Vue({
         save: function () {
             if (this.checkForm() == true) {
                 if (this.status == 0) {//新增
-                    this.addForm.cjrid = this.role_data.userid;
-                    this.addForm.cjrmc = this.role_data.realName;
+                    this.addForm.cjrid = this.shiroData.userid;
+                    this.addForm.cjrmc = this.shiroData.realName;
+                    this.addForm.jdh = this.shiroData.organizationVO.jgid;
                     for (var i in this.engineForm) {
                         this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.engineForm[i].clzzs);
                     }
@@ -398,8 +376,9 @@ new Vue({
                         console.log(error);
                     })
                 } else {//修改
-                    this.addForm.xgrid = this.role_data.userid;
-                    this.addForm.xgrmc = this.role_data.realName;
+                    this.addForm.xgrid = this.shiroData.userid;
+                    this.addForm.xgrmc = this.shiroData.realName;
+                    this.addForm.jdh = this.shiroData.organizationVO.jgid;
                     this.addForm.zzsl = 0;
                     for (var i in this.engineForm) {
                         this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.engineForm[i].clzzs);
