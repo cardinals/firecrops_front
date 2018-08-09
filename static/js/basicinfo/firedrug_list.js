@@ -15,7 +15,7 @@ var vue = new Vue({
                 cbl: [0, 1000]
             },
             tableData: [],
-            role_data: [],
+            shiroData: [],
             tableData_detail: {},
             allYjlxDataTree: [],//药剂类型级联选择器数据
             allSsdzData: [],//所属队站下拉框数据
@@ -45,24 +45,13 @@ var vue = new Vue({
         }
     },
     created: function () {
-        //设置菜单选中
-        // $("#activeIndex").val(getQueryString("index"));
-        /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("消防药剂管理", "-1");
+        this.shiroData = shiroGlobal;
         this.getAllSszdData();//消防队站下拉框数据（到总队级）
         this.getAllYjlxDataTree(); //药剂类型级联选择器数据
-        this.roleData();
         this.searchClick('click');
     },
     methods: {
-        //当前登录用户信息
-        roleData: function () {
-            axios.post('/api/shiro').then(function (res) {
-                this.role_data = res.data;
-            }.bind(this), function (error) {
-                console.log(error);
-            })
-        },
         //药剂类型级联选择器数据
         getAllYjlxDataTree: function () {
             axios.post('/api/codelist/getYjlxTree/YJLX').then(function (res) {
@@ -102,7 +91,9 @@ var vue = new Vue({
                 zcbl_min: cbl_min,
                 zcbl_max: cbl_max,
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
+                pageNum: this.currentPage,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/firedrug/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
@@ -161,8 +152,8 @@ var vue = new Vue({
                 type: 'warning'
             }).then(() => {
                 for (var i = 0; i < this.multipleSelection.length; i++) {
-                    this.multipleSelection[i].xgrid = this.role_data.userid;
-                    this.multipleSelection[i].xgrmc = this.role_data.realName;
+                    this.multipleSelection[i].xgrid = this.shiroData.userid;
+                    this.multipleSelection[i].xgrmc = this.shiroData.realName;
                 }
                 axios.post('/dpapi/firedrug/doDeleteDrug', this.multipleSelection).then(function (res) {
                     this.$message({

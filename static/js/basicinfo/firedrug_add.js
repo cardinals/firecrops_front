@@ -13,7 +13,7 @@ new Vue({
             allYjlxDataTree: [],
             allXzqhDataTree: [],
             allSsdzDataTree: [],
-            role_data: [],
+            shiroData: [],
             //搜索表单
             addForm: {
                 yjmc: "",
@@ -33,7 +33,8 @@ new Vue({
                 xzqh: [],
                 ssdz: [],
                 ssdzmc: '',
-                bz: ''
+                bz: '',
+                jdh: ''
             },
             //树结构配置
             defaultProps: {
@@ -57,26 +58,16 @@ new Vue({
             loadBreadcrumb("消防药剂管理", "消防药剂管理编辑");
         }
         this.status = getQueryString("ID");
-
+        this.shiroData = shiroGlobal;
+        this.getAllSsdzDataTree();
         this.getAllYjlxDataTree();
         this.getAllXzqhDataTree();
-        // this.getAllSsdzDataTree();
-        this.roleData();
+        
     },
     mounted: function () {
-
-        // this.searchClick();
+        this.searchClick();
     },
     methods: {
-        //当前登录用户信息
-        roleData: function () {
-            axios.post('/api/shiro').then(function (res) {
-                this.role_data = res.data;
-                this.getAllSsdzDataTree();
-            }.bind(this), function (error) {
-                console.log(error);
-            })
-        },
         //表格查询事件
         searchClick: function () {
             this.loading = true;
@@ -172,7 +163,7 @@ new Vue({
                             }
                         }
                     } else {
-                        this.addForm.xzqh = [];
+                        this.addForm.ssdz = [];
                     }
 
                     this.loading = false;
@@ -199,7 +190,7 @@ new Vue({
         },
         //所属队站级联选择器数据
         getAllSsdzDataTree: function () {
-            var organization = this.role_data.organizationVO;
+            var organization = this.shiroData.organizationVO;
             var param = {
                 dzid: organization.uuid,
                 dzjc: organization.jgjc,
@@ -207,7 +198,6 @@ new Vue({
             }
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.allSsdzDataTree = res.data.result;
-                this.searchClick();
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -232,9 +222,12 @@ new Vue({
                 });
             } else {
                 if (this.status == 0) {//新增
-                    this.addForm.cjrid = this.role_data.userid;
-                    this.addForm.cjrmc = this.role_data.realName;
-                    this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
+                    this.addForm.cjrid = this.shiroData.userid;
+                    this.addForm.cjrmc = this.shiroData.realName;
+                    this.addForm.jdh = this.shiroData.organizationVO.jgid;
+                    if (this.addForm.scsj != "") {
+                        this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
+                    }
                     var params = this.addForm;
                     if (this.addForm.yjlx.length > 0) {
                         params.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];
@@ -273,9 +266,11 @@ new Vue({
                         console.log(error);
                     })
                 } else {//修改
-                    this.addForm.xgrid = this.role_data.userid;
-                    this.addForm.xgrmc = this.role_data.realName;
-                    this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
+                    this.addForm.xgrid = this.shiroData.userid;
+                    this.addForm.xgrmc = this.shiroData.realName;
+                    if (this.addForm.scsj != "") {
+                        this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
+                    }
                     var params = this.addForm;
                     if (this.addForm.yjlx.length > 0) {
                         params.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];

@@ -123,7 +123,9 @@ new Vue({
                 clmc: this.searchForm.clmc,
                 cphm: this.searchForm.cphm,
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
+                pageNum: this.currentPage,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/fireengine/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
