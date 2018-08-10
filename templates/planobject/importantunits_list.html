@@ -43,9 +43,11 @@
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
 									<label class="el-form-item__label searchLabel">灭火队站</label>
-									<el-select size="small" v-model="searchForm.mhdzbm" placeholder="全部" class="searchSelect" clearable>
+									<!-- <el-select size="small" v-model="searchForm.mhdzbm" placeholder="全部" class="searchSelect" clearable>
 										<el-option v-for="item in mhdzidData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-									</el-select>
+									</el-select> -->
+									<el-cascader :options="mhdzidData" :props="ssdzProps" size="small" v-model="searchForm.mhdzid" placeholder="所属队站" class="searchSelect"
+									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
 									<label class="el-form-item__label searchLabel">有无消防队伍</label>
