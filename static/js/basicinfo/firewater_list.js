@@ -13,35 +13,35 @@ var vue = new Vue({
                 sylx: '',
                 gxdz: '',
                 sygs: '',
-                kyzt:'',
-                xhs_szxs:'',
-                xhs_gwxs:'',
-                xhs_jkxs:'',
-                xfsh_cskgd:'',
-                xfsc_gwxs:'',
-                xfsc_tcwz:'',
-                trsyqsd_tcwz:'',
-                trsy_ywksq:'',
-                trsy_sz:'',
-                uuid:''
+                kyzt: '',
+                xhs_szxs: '',
+                xhs_gwxs: '',
+                xhs_jkxs: '',
+                xfsh_cskgd: '',
+                xfsc_gwxs: '',
+                xfsc_tcwz: '',
+                trsyqsd_tcwz: '',
+                trsy_ywksq: '',
+                trsy_sz: '',
+                uuid: ''
             },
             tableData: [],
             SYLX_data: [],
-            GXZD_data:[],
-            XZ_data:[],
-            KYZT_data:[],
-            xhs_szxs_data:[],
-            gwxs_data:[],
-            xhs_jkxs_data:[],
-            xfmt_sz_data:[],
-            trsy_trsylx_data:[],
-            trsy_ywksq_data:[],
+            GXZD_data: [],
+            XZ_data: [],
+            KYZT_data: [],
+            xhs_szxs_data: [],
+            gwxs_data: [],
+            xhs_jkxs_data: [],
+            xfmt_sz_data: [],
+            trsy_trsylx_data: [],
+            trsy_ywksq_data: [],
             rowdata: '',
-            isXhsSelectShow:false,
-            isXfshSelectShow:false,
-            isXfscSelectShow:false,
-            isTrsyqsdSelectShow:false,
-           
+            isXhsSelectShow: false,
+            isXfshSelectShow: false,
+            isXfscSelectShow: false,
+            isTrsyqsdSelectShow: false,
+
             //表高度变量
             tableheight: 443,
             //显示加载中样
@@ -63,16 +63,21 @@ var vue = new Vue({
             indexData: 0,
             //删除的弹出框
             deleteVisible: false,
-            
-            
+
+
             //选中的值显示
             sels: [],
             //选中的序号
             selectIndex: -1,
             //详情页显示flag
-            detailVisible:false,
+            detailVisible: false,
             //当前登陆用户
             shiroData: [],
+            ssdzProps: {
+                children: 'children',
+                label: 'dzjc',
+                value: 'dzid'
+            },
         }
     },
     created: function () {
@@ -84,7 +89,6 @@ var vue = new Vue({
         this.shiroData = shiroGlobal;
         this.searchClick('page');
         this.searchSYLX_data();
-        this.searchGXZD_data();
         this.searchKYZT_data();
         this.searchXZ_data();
         this.searchXhsSZXS_data();
@@ -93,17 +97,18 @@ var vue = new Vue({
         this.searchXfmtSZ_data();
         this.searchTrsyYWKSQ_data();
         this.searchGXZD_data();
+
     },
     methods: {
         //表格查询事件
-        searchClick: function(type) {
+        searchClick: function (type) {
             //按钮事件的选择
-            if(type == 'page'){
-                this.tableData=[];     
-            }else{
+            if (type == 'page') {
+                this.tableData = [];
+            } else {
                 this.currentPage = 1;
             }
-            this.loading=true;
+            this.loading = true;
             /*水源类型多选，array拼接成字符串
              this.searchForm.sylx = '';
              if (this.selected_SYLX.length > 0) {
@@ -111,16 +116,16 @@ var vue = new Vue({
                      this.searchForm.sylx += '\'' + this.selected_SYLX[i] + '\',';
                  }
              }*/
-             //add by yushch 20180604
-             this.searchForm.uuid = this.GetQueryString("uuid");
-             var isSydj = this.GetQueryString("sydj");
-             //end add
+            //add by yushch 20180604
+            this.searchForm.uuid = this.GetQueryString("uuid");
+            var isSydj = this.GetQueryString("sydj");
+            //end add
             var params = {
                 uuid: this.searchForm.uuid,
                 symc: this.searchForm.symc,
                 sydz: this.searchForm.sydz,
                 sylx: this.searchForm.sylx,
-                dzbm: this.searchForm.gxdz.substr(0,2),
+                gxdz: this.searchForm.gxdz[this.searchForm.gxdz.length - 1],
                 sygs: this.searchForm.sygs,
                 kyzt: this.searchForm.kyzt,
                 xhs_szxs: this.searchForm.xhs_szxs,
@@ -140,15 +145,15 @@ var vue = new Vue({
             axios.post('/dpapi/xfsy/findlistPage', params).then(function (res) {
                 // this.tableData = res.data.result;
                 // this.total = this.tableData.length;
-                var tableTemp = new Array((this.currentPage-1)*this.pageSize);
+                var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
                 this.loadingData();
-                if(isSydj == 1){
+                if (isSydj == 1) {
                     var val = this.tableData[0];
                     this.informClick(val)
                 }
-                this.loading=false;
+                this.loading = false;
 
             }.bind(this), function (error) {
                 console.log(error)
@@ -159,13 +164,13 @@ var vue = new Vue({
             this.searchForm.symc = "";
             this.searchForm.sydz = "";
             this.searchForm.sylx = "";
-            this.searchForm.gxdz = "";
+            this.searchForm.gxdz = [];
             this.searchForm.sygs = "";
             this.searchForm.kyzt = "";
             this.clearOthers();
         },
         //清空关联表查询条件
-        clearOthers: function(){
+        clearOthers: function () {
             this.searchForm.xhs_szxs = "";
             this.searchForm.xhs_gwxs = "";
             this.searchForm.xhs_jkxs = "";
@@ -186,16 +191,27 @@ var vue = new Vue({
             })
         },
         //队站
-        searchGXZD_data:function () {
-            axios.get('/dpapi/util/doSearchContingents').then(function (res) {
-                this.GXZD_data = res.data.result;
+        searchGXZD_data: function () {
+            // axios.get('/dpapi/util/doSearchContingents').then(function (res) {
+            //     this.GXZD_data = res.data.result;
 
+            // }.bind(this), function (error) {
+            //     console
+            var organization = this.shiroData.organizationVO;
+            var param = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            }
+            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
+                this.GXZD_data = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
-            })
+            }).log(error);
+            // })
         },
         //水源归属
-        searchXZ_data:function () {
+        searchXZ_data: function () {
             axios.get('/api/codelist/getCodetype/SYGS').then(function (res) {
                 this.XZ_data = res.data.result;
             }.bind(this), function (error) {
@@ -203,7 +219,7 @@ var vue = new Vue({
             })
         },
         //可用状态
-        searchKYZT_data:function () {
+        searchKYZT_data: function () {
             axios.get('/api/codelist/getCodetype/SYKYZT').then(function (res) {
                 this.KYZT_data = res.data.result;
             }.bind(this), function (error) {
@@ -211,7 +227,7 @@ var vue = new Vue({
             })
         },
         //消火栓设置形式
-        searchXhsSZXS_data:function () {
+        searchXhsSZXS_data: function () {
             axios.get('/api/codelist/getCodetype/XHSSZXS').then(function (res) {
                 this.xhs_szxs_data = res.data.result;
             }.bind(this), function (error) {
@@ -219,7 +235,7 @@ var vue = new Vue({
             })
         },
         //管网形式
-        searchGWXS_data:function () {
+        searchGWXS_data: function () {
             axios.get('/api/codelist/getCodetype/GWXS').then(function (res) {
                 this.gwxs_data = res.data.result;
             }.bind(this), function (error) {
@@ -227,7 +243,7 @@ var vue = new Vue({
             })
         },
         //接口形式
-        searchXhsJKXS_data:function () {
+        searchXhsJKXS_data: function () {
             axios.get('/api/codelist/getCodetype/XHSJKXS').then(function (res) {
                 this.xhs_jkxs_data = res.data.result;
             }.bind(this), function (error) {
@@ -235,26 +251,26 @@ var vue = new Vue({
             })
         },
         //水质
-        searchXfmtSZ_data:function () {
+        searchXfmtSZ_data: function () {
             axios.get('/api/codelist/getCodetype/SYSZ').then(function (res) {
                 this.xfmt_sz_data = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
             })
         },
-        
+
         //枯水期
-        searchTrsyYWKSQ_data:function () {
+        searchTrsyYWKSQ_data: function () {
             axios.get('/api/codelist/getCodetype/SYYWKSQ').then(function (res) {
                 this.trsy_ywksq_data = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
             })
         },
-        selectsylx:function(){
-        //console.log(this.searchForm.sylx);
-           switch(this.searchForm.sylx){
-               case '01':
+        selectsylx: function () {
+            //console.log(this.searchForm.sylx);
+            switch (this.searchForm.sylx) {
+                case '01':
                     this.clearOthers();
                     this.isXfshSelectShow = false;
                     this.isXfscSelectShow = false;
@@ -282,15 +298,15 @@ var vue = new Vue({
                     this.isXfscSelectShow = false;
                     this.isTrsyqsdSelectShow = true;
                     break;
-               
-                default :
+
+                default:
                     this.clearOthers();
                     this.isXhsSelectShow = false;
                     this.isXfshSelectShow = false;
                     this.isXfscSelectShow = false;
                     this.isTrsyqsdSelectShow = false;
-                   
-           }
+
+            }
         },
         //点击进入详情页
         informClick(val) {
@@ -319,23 +335,23 @@ var vue = new Vue({
                 _self.loading = false;
             }, 300);
         },
-        
+
         closeDialog: function (val) {
             this.detailVisible = false;
-            
+
         },
         //根据参数部分和参数名来获取参数值 
         GetQueryString(name) {
-            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
-            if(r!=null)return  unescape(r[2]); return null;
+            if (r != null) return unescape(r[2]); return null;
         },
-         //删除复选框
-        selectionChange: function(val) {
+        //删除复选框
+        selectionChange: function (val) {
             this.multipleSelection = val;
         },
         //编辑
-        editClick: function(val){
+        editClick: function (val) {
             var params = {
                 ID: val.uuid,
                 sylx: val.sylx,
@@ -344,13 +360,13 @@ var vue = new Vue({
             loadDivParam("basicinfo/firewater_edit", params);
         },
         //删除
-        removeSelection: function(){
+        removeSelection: function () {
             this.$confirm('确认删除选中信息?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                for(var i=0;i<this.multipleSelection.length;i++){
+                for (var i = 0; i < this.multipleSelection.length; i++) {
                     this.multipleSelection[i].xgrid = this.shiroData.userid;
                     this.multipleSelection[i].xgrmc = this.shiroData.realName;
                 }
@@ -371,7 +387,7 @@ var vue = new Vue({
             });
         },
         //新增
-        addClick: function(){
+        addClick: function () {
             var params = {
                 ID: 0,
                 type: "XZ"

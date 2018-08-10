@@ -1,181 +1,177 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>消防水源管理</title>
-		<link rel="stylesheet" type="text/css" href="../../static/css/basicinfo/firewater_list.css">
-    </head>
-	<body class="fw f14 main-index-body">
-        <div id="app">
-            <div class="main-box">
-                <div class="main-container" v-loading="loading" element-loading-text="加载中">
-					<div id="lib :: main_container_header('消防水源管理','消防水源管理')"></div>
-					<!-- 面包屑 -->
-                    <div id="breadcrumb_box"></div>
-                    <div id="tableView">
-						<el-row>
-							<el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
-								<el-row>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-										<label class="el-form-item__label searchLabel">水源名称</label>
-										<el-input size="small" v-model="searchForm.symc" placeholder="水源名称"></el-input>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-										<label class="el-form-item__label searchLabel">水源地址</label>
-										<el-input size="small" v-model="searchForm.sydz" placeholder="水源地址"></el-input>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-										<label class="el-form-item__label searchLabel">水源类型</label>
-										<el-select size="small" v-model="searchForm.sylx" placeholder="全部" class="searchSelect" v-on:change="selectsylx()" clearable>	
-											<el-option v-for="item in SYLX_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-col>  
-								</el-row>
-								<el-row>
-                                    <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-                                        <label class="el-form-item__label searchLabel">管辖队站</label>
-										<el-select size="small" v-model="searchForm.gxdz" placeholder="全部" class="searchSelect" clearable>	
-											<el-option v-for="item in GXZD_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-										<label class="el-form-item__label searchLabel">水源归属</label>
-										<el-select size="small" v-model="searchForm.sygs" placeholder="全部" class="searchSelect" clearable>	
-											<el-option v-for="item in XZ_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-										<label class="el-form-item__label searchLabel">可用状态</label>
-										<el-select size="small" v-model="searchForm.kyzt" placeholder="全部" class="searchSelect" clearable>	
-											<el-option v-for="item in KYZT_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-col>   
-								</el-row>
-								<el-row v-show="isXhsSelectShow">
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-										<label class="el-form-item__label searchLabel">设置形式</label>
-										<el-select size="small" v-model="searchForm.xhs_szxs" placeholder="全部" class="searchSelect" clearable>	
-											<el-option v-for="item in xhs_szxs_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-										<label class="el-form-item__label searchLabel">管网形式</label>
-										<el-select size="small" v-model="searchForm.xhs_gwxs" placeholder="全部" class="searchSelect" clearable>	
-											<el-option v-for="item in gwxs_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-										<label class="el-form-item__label searchLabel">接口形式</label>
-										<el-select size="small" v-model="searchForm.xhs_jkxs" placeholder="全部" class="searchSelect" clearable>	
-											<el-option v-for="item in xhs_jkxs_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-col>   
-								</el-row>
-								<el-row v-show="isXfshSelectShow">
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-										<label class="el-form-item__label searchLabel">出水口高度</label>
-										<el-input size="small" v-model="searchForm.xfsh_cskgd" placeholder="出水口高度"></el-input>
-									</el-col>
-								</el-row>
-								<el-row v-show="isXfscSelectShow">
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-										<label class="el-form-item__label searchLabel">管网形式</label>
-										<el-select size="small" v-model="searchForm.xfsc_gwxs" placeholder="全部" class="searchSelect" clearable>	
-											<el-option v-for="item in gwxs_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-										<label class="el-form-item__label searchLabel">停车位置</label>
-										<el-input size="small" v-model="searchForm.xfsc_tcwz" placeholder="停车位置"></el-input>
-									</el-col>
-								</el-row>
-								<el-row v-show="isTrsyqsdSelectShow">
-                                    <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-                                        <label class="el-form-item__label searchLabel">停车位置</label>
-										<el-input size="small" v-model="searchForm.trsyqsd_tcwz" placeholder="停车位置"></el-input>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-										<label class="el-form-item__label searchLabel">枯水期</label>
-										<el-select size="small" v-model="searchForm.trsy_ywksq" placeholder="全部" class="searchSelect" clearable>	
-											<el-option v-for="item in trsy_ywksq_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-								
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-										<label class="el-form-item__label searchLabel">水质</label>
-										<el-select size="small" v-model="searchForm.trsy_sz" placeholder="全部" class="searchSelect" clearable>	
-											<el-option v-for="item in xfmt_sz_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-col>
-								</el-row>
-								
-								<div>
-									<el-form>
-										<el-col :span="12" class="btnEditDelete">
-											<el-form-item align="left">
-												<el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
-												<el-button type="danger" icon="delete2" size="small" @click="removeSelection">删除</el-button>
-											</el-form-item>
-										</el-col>
-										<el-col :span="12"></el-col>
-										<el-col :span="12" class="btnSearchPlus">
-											<el-form-item>
-												<el-button type="primary" icon="search" size="small" @click="searchClick">查询</el-button>
-												<el-button type="clear" icon="delete" size="small" @click="clearClick">重置</el-button>
-											</el-form-item>
-										</el-col>
-									</el-form>
-								</div>
-							</el-form>
-						</el-row>
 
-						<div class="table_container">
-							<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-							 class="tableStyle" :height="tableheight" @selection-change="selectionChange">
-							 	<el-table-column type="selection" width="45px"></el-table-column>
-								<el-table-column type="index" label="序号" show-overflow-tooltip width="65px" align="center"></el-table-column>
-								<el-table-column prop="symc" label="水源名称" min-width="16%" show-overflow-tooltip align="center">
-									<template slot-scope="scope">
-										<a @click="informClick(scope.row)" type="text" v-text="scope.row.symc"></a>
-									</template>
-								</el-table-column>
-								<el-table-column prop="sybm" label="水源编码" min-width="14%" show-overflow-tooltip align="center"></el-table-column>
-								<el-table-column prop="sydz" label="水源地址" min-width="14%" show-overflow-tooltip align="center"></el-table-column>
-								<el-table-column prop="sylxmc" label="水源类型" min-width="10%" show-overflow-tooltip align="center"></el-table-column>
-								<el-table-column prop="dzjc" label="管辖队站" min-width="11%" show-overflow-tooltip align="center"></el-table-column>
-								<el-table-column prop="kyztmc" label="可用状态" min-width="10%" show-overflow-tooltip align="center"></el-table-column>
-								<el-table-column prop="sygsmc" label="水源归属" min-width="10%" show-overflow-tooltip align="center"></el-table-column>
-								<el-table-column label="操作" min-width="7%" align="center">
-									<template slot-scope="scope">
-										<el-button type="text" @click="editClick(scope.row)">编辑</el-button>
-									</template>
-								</el-table-column>
-							</el-table>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>消防水源管理</title>
+	<link rel="stylesheet" type="text/css" href="../../static/css/basicinfo/firewater_list.css">
+</head>
 
-							<!--列表底部工具条和分页符-->
-							<el-row type="flex" justify="end">
-								<el-col :span="18">
-									<el-pagination 
-										@size-change="pageSizeChange" 
-										@current-change="currentPageChange" 
-										:current-page="currentPage" 
-										:page-sizes="[10, 20, 30, 50]"
-										 :page-size="pageSize" 
-										 layout="total, prev, pager, next, jumper" 
-										 :total=parseInt(total)>
-									</el-pagination>
+<body class="fw f14 main-index-body">
+	<div id="app">
+		<div class="main-box">
+			<div class="main-container" v-loading="loading" element-loading-text="加载中">
+				<div id="lib :: main_container_header('消防水源管理','消防水源管理')"></div>
+				<!-- 面包屑 -->
+				<div id="breadcrumb_box"></div>
+				<div id="tableView">
+					<el-row>
+						<el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
+							<el-row>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">水源名称</label>
+									<el-input size="small" v-model="searchForm.symc" placeholder="水源名称"></el-input>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">水源地址</label>
+									<el-input size="small" v-model="searchForm.sydz" placeholder="水源地址"></el-input>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">水源类型</label>
+									<el-select size="small" v-model="searchForm.sylx" placeholder="全部" class="searchSelect" v-on:change="selectsylx()" clearable>
+										<el-option v-for="item in SYLX_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
 								</el-col>
 							</el-row>
-						</div>
-						<!--详情界面-->
-						<el-dialog title="水源详情页" :visible.sync="detailVisible" @close="closeDialog()" :close-on-click-modal="false">                  
-                            <div id="detailDialog"></div>
-                        </el-dialog>
+							<el-row>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">管辖队站</label>
+									<el-cascader v-model="searchForm.gxdz" :options="GXZD_data" :props="ssdzProps" size="small" placeholder="管辖队站" class="searchSelect"
+									 clearable change-on-select :show-all-levels="false"></el-cascader>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">水源归属</label>
+									<el-select size="small" v-model="searchForm.sygs" placeholder="全部" class="searchSelect" clearable>
+										<el-option v-for="item in XZ_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">可用状态</label>
+									<el-select size="small" v-model="searchForm.kyzt" placeholder="全部" class="searchSelect" clearable>
+										<el-option v-for="item in KYZT_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-col>
+							</el-row>
+							<el-row v-show="isXhsSelectShow">
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">设置形式</label>
+									<el-select size="small" v-model="searchForm.xhs_szxs" placeholder="全部" class="searchSelect" clearable>
+										<el-option v-for="item in xhs_szxs_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">管网形式</label>
+									<el-select size="small" v-model="searchForm.xhs_gwxs" placeholder="全部" class="searchSelect" clearable>
+										<el-option v-for="item in gwxs_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">接口形式</label>
+									<el-select size="small" v-model="searchForm.xhs_jkxs" placeholder="全部" class="searchSelect" clearable>
+										<el-option v-for="item in xhs_jkxs_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-col>
+							</el-row>
+							<el-row v-show="isXfshSelectShow">
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">出水口高度</label>
+									<el-input size="small" v-model="searchForm.xfsh_cskgd" placeholder="出水口高度"></el-input>
+								</el-col>
+							</el-row>
+							<el-row v-show="isXfscSelectShow">
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">管网形式</label>
+									<el-select size="small" v-model="searchForm.xfsc_gwxs" placeholder="全部" class="searchSelect" clearable>
+										<el-option v-for="item in gwxs_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">停车位置</label>
+									<el-input size="small" v-model="searchForm.xfsc_tcwz" placeholder="停车位置"></el-input>
+								</el-col>
+							</el-row>
+							<el-row v-show="isTrsyqsdSelectShow">
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">停车位置</label>
+									<el-input size="small" v-model="searchForm.trsyqsd_tcwz" placeholder="停车位置"></el-input>
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">枯水期</label>
+									<el-select size="small" v-model="searchForm.trsy_ywksq" placeholder="全部" class="searchSelect" clearable>
+										<el-option v-for="item in trsy_ywksq_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+
+								</el-col>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">水质</label>
+									<el-select size="small" v-model="searchForm.trsy_sz" placeholder="全部" class="searchSelect" clearable>
+										<el-option v-for="item in xfmt_sz_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-col>
+							</el-row>
+
+							<div>
+								<el-form>
+									<el-col :span="12" class="btnEditDelete">
+										<el-form-item align="left">
+											<el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
+											<el-button type="danger" icon="delete2" size="small" @click="removeSelection">删除</el-button>
+										</el-form-item>
+									</el-col>
+									<el-col :span="12"></el-col>
+									<el-col :span="12" class="btnSearchPlus">
+										<el-form-item>
+											<el-button type="primary" icon="search" size="small" @click="searchClick">查询</el-button>
+											<el-button type="clear" icon="delete" size="small" @click="clearClick">重置</el-button>
+										</el-form-item>
+									</el-col>
+								</el-form>
+							</div>
+						</el-form>
+					</el-row>
+
+					<div class="table_container">
+						<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" class="tableStyle" :height="tableheight"
+						 @selection-change="selectionChange">
+							<el-table-column type="selection" width="45px"></el-table-column>
+							<el-table-column type="index" label="序号" show-overflow-tooltip width="65px" align="center"></el-table-column>
+							<el-table-column prop="symc" label="水源名称" min-width="16%" show-overflow-tooltip align="center">
+								<template slot-scope="scope">
+									<a @click="informClick(scope.row)" type="text" v-text="scope.row.symc"></a>
+								</template>
+							</el-table-column>
+							<el-table-column prop="sybm" label="水源编码" min-width="14%" show-overflow-tooltip align="center"></el-table-column>
+							<el-table-column prop="sydz" label="水源地址" min-width="14%" show-overflow-tooltip align="center"></el-table-column>
+							<el-table-column prop="sylxmc" label="水源类型" min-width="10%" show-overflow-tooltip align="center"></el-table-column>
+							<el-table-column prop="dzjc" label="管辖队站" min-width="11%" show-overflow-tooltip align="center"></el-table-column>
+							<el-table-column prop="kyztmc" label="可用状态" min-width="10%" show-overflow-tooltip align="center"></el-table-column>
+							<el-table-column prop="sygsmc" label="水源归属" min-width="10%" show-overflow-tooltip align="center"></el-table-column>
+							<el-table-column label="操作" min-width="7%" align="center">
+								<template slot-scope="scope">
+									<el-button type="text" @click="editClick(scope.row)">编辑</el-button>
+								</template>
+							</el-table-column>
+						</el-table>
+
+						<!--列表底部工具条和分页符-->
+						<el-row type="flex" justify="end">
+							<el-col :span="18">
+								<el-pagination @size-change="pageSizeChange" @current-change="currentPageChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 50]"
+								 :page-size="pageSize" layout="total, prev, pager, next, jumper" :total=parseInt(total)>
+								</el-pagination>
+							</el-col>
+						</el-row>
 					</div>
-                </div>
-                    <!-- main-container -->
-            </div>
-        </div>
-    </body>
-	<script src="../../static/js/basicinfo/firewater_list.js" ></script>
+					<!--详情界面-->
+					<el-dialog title="水源详情页" :visible.sync="detailVisible" @close="closeDialog()" :close-on-click-modal="false">
+						<div id="detailDialog"></div>
+					</el-dialog>
+				</div>
+			</div>
+			<!-- main-container -->
+		</div>
+	</div>
+</body>
+<script src="../../static/js/basicinfo/firewater_list.js"></script>
+
 </html>
