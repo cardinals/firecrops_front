@@ -13,7 +13,7 @@ var vue = new Vue({
                 dwxz: "",
                 jzfl: "",
                 fhdj: "",
-                mhdzbm: "",
+                mhdzid: "",
                 xfdwlxmc: ""
             },
             tableData: [],
@@ -101,6 +101,12 @@ var vue = new Vue({
                 label: 'codeName',
                 value: 'codeValue'
             },
+            //管辖队站Props
+            ssdzProps: {
+                children: 'children',
+                label: 'dzjc',
+                value: 'dzid'
+            },
             //当前登陆用户
             shiroData: [],
         }
@@ -150,7 +156,7 @@ var vue = new Vue({
                 dwxz: this.searchForm.dwxz,
                 jzfl: this.searchForm.jzfl,
                 fhdj: this.searchForm.fhdj,
-                mhdzbm: this.searchForm.mhdzbm,
+                mhdzid: this.searchForm.mhdzid[this.searchForm.mhdzid.length-1],
                 xfdwlxmc: this.searchForm.xfdwlxmc,
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
@@ -175,7 +181,7 @@ var vue = new Vue({
             this.searchForm.dwxz="";
             this.searchForm.jzfl="";
             this.searchForm.fhdj="";
-            this.searchForm.mhdzbm="";
+            this.searchForm.mhdzid=[];
             this.searchForm.xfdwlxmc="";
             this.searchClick('reset');
         },
@@ -255,7 +261,18 @@ var vue = new Vue({
             })
         },
         getmhdziddata:function () {
-            axios.get('/dpapi/util/doSearchContingents').then(function (res) {
+            // axios.get('/dpapi/util/doSearchContingents').then(function (res) {
+            //     this.mhdzidData = res.data.result;
+            // }.bind(this), function (error) {
+            //     console.log(error);
+            // })
+            var organization = this.shiroData.organizationVO;
+            var param = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            }
+            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.mhdzidData = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);

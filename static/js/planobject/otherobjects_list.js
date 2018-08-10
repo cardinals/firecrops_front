@@ -104,7 +104,6 @@ var vue = new Vue({
             }
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.xfgxData = res.data.result;
-                this.searchClick();
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -152,7 +151,7 @@ var vue = new Vue({
         clearClick: function () {
             this.searchForm.dxmc = "";
             this.searchForm.dxdz = "";
-            this.searchForm.xfgx = "";
+            this.searchForm.xfgx = [];
             this.searchClick('reset');
         },
 
