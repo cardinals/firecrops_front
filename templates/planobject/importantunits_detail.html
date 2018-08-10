@@ -903,7 +903,7 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">使用性质：</strong>
-                                                        <v-text v-text="data.jzl_syxz||'无'"></v-text>
+                                                        <v-text v-text="data.jzl.syxzmc||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -911,13 +911,13 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">建筑结构：</strong>
-                                                        <v-text v-text="data.jzl_jzjgmc||'无'"></v-text>
+                                                        <v-text v-text="data.jzl.jzjgmc||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">区域面积(㎡)：</strong>
-                                                        <v-text v-text="data.jzl_qymj||'无'"></v-text>
+                                                        <v-text v-text="data.jzl.qymj||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -925,14 +925,14 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">功能描述：</strong>
-                                                        <v-text v-text="data.jzl_gnms||'无'"></v-text>
+                                                        <v-text v-text="data.jzl.gnms||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                             </el-row>
                                             <!-- 危险介质 -->
-                                            <div v-if="data.weixianjiezhiList && data.weixianjiezhiList.length > 0">
+                                            <div v-if="data.jzl.wxjzList && data.jzl.wxjzList.length > 0">
                                                 <strong class="dtdlStyle">危险介质：</strong>
-                                                <el-table :data="data.weixianjiezhiList" border class="detailTable">
+                                                <el-table :data="data.jzl.wxjzList" border class="detailTable">
                                                     <el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
                                                     <el-table-column prop="jzmc" label="名称" align="center" width="200" show-overflow-tooltip></el-table-column>
                                                     <el-table-column prop="jzsjcl" label="实际储量(t)" align="center" width="120" show-overflow-tooltip></el-table-column>
@@ -977,13 +977,13 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">建筑结构：</strong>
-                                                        <v-text v-text="data.zzl_jzjgmc||'无'"></v-text>
+                                                        <v-text v-text="data.zzl.jzjgmc||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">占地面积(㎡)：</strong>
-                                                        <v-text v-text="data.zzl_zdmj||'无'"></v-text>
+                                                        <v-text v-text="data.zzl.zdmj||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -991,13 +991,13 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">装置高度(m)：</strong>
-                                                        <v-text v-text="data.zzl_zzgd||'无'"></v-text>
+                                                        <v-text v-text="data.zzl.zzgd||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">装置组成：</strong>
-                                                        <v-text v-text="data.zzl_zzzc||'无'"></v-text>
+                                                        <v-text v-text="data.zzl.zzzc||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -1005,13 +1005,13 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">技术负责人：</strong>
-                                                        <v-text v-text="data.zzl_jsfzr||'无'"></v-text>
+                                                        <v-text v-text="data.zzl.jsfzr||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">技术负责人联系方式：</strong>
-                                                        <v-text v-text="data.zzl_jsfzrdh||'无'"></v-text>
+                                                        <v-text v-text="data.zzl.jsfzrdh||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -1019,13 +1019,13 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">原料信息：</strong>
-                                                        <v-text v-text="data.zzl_ylxx||'无'"></v-text>
+                                                        <v-text v-text="data.zzl.ylxx||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">产物信息：</strong>
-                                                        <v-text v-text="data.zzl_cwxx||'无'"></v-text>
+                                                        <v-text v-text="data.zzl.cwxx||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -1033,7 +1033,7 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">工艺流程：</strong>
-                                                        <v-text v-text="data.zzl_gylc||'无'"></v-text>
+                                                        <v-text v-text="data.zzl.gylc||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                                 <el-col :span="12">
@@ -1078,7 +1078,7 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">储罐数量：</strong>
-                                                        <v-text v-text="data.cgl_cgsl||'无'"></v-text>
+                                                        <v-text v-text="data.cgl.cgsl||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -1086,13 +1086,13 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">罐组总容积(m³)：</strong>
-                                                        <v-text v-text="data.cgl_zrj||'无'"></v-text>
+                                                        <v-text v-text="data.cgl.zrj||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">储罐间距(m)：</strong>
-                                                        <v-text v-text="data.cgl_cgjg||'无'"></v-text>
+                                                        <v-text v-text="data.cgl.cgjg||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -1100,7 +1100,7 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">存储介质：</strong>
-                                                        <v-text v-text="data.cgl_ccjzms||'无'"></v-text>
+                                                        <v-text v-text="data.cgl.ccjzms||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                                 <el-col :span="12">
@@ -1202,9 +1202,9 @@
                                                                                                                             </el-collapse-item>
                                                                                                                         </span>
                                                                                                                     </el-collapse> -->
-                                            <div v-if="data.chuguanList && data.chuguanList.length > 0">
+                                            <div v-if="data.cgl.cgList && data.cgl.cgList.length > 0">
                                                 <strong class="dtdlStyle">储罐信息：</strong>
-                                                <el-table :data="data.chuguanList" border class="detailTable">
+                                                <el-table :data="data.cgl.cgList" border class="detailTable">
                                                     <el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
                                                     <el-table-column prop="cgmc" label="名称" align="center" width="100" show-overflow-tooltip></el-table-column>
                                                     <el-table-column prop="cglxmc" label="类型" align="center" width="100" show-overflow-tooltip></el-table-column>
@@ -1222,13 +1222,13 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">技术负责人：</strong>
-                                                        <v-text v-text="data.cgl_jsfzr||'无'"></v-text>
+                                                        <v-text v-text="data.cgl.jsfzr||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">技术负责人联系方式：</strong>
-                                                        <v-text v-text="data.cgl_jsfzrdh||'无'"></v-text>
+                                                        <v-text v-text="data.cgl.jsfzrdh||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -1236,13 +1236,13 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">毗邻情况(东)：</strong>
-                                                        <v-text v-text="data.cgl_plqkd||'无'"></v-text>
+                                                        <v-text v-text="data.cgl.plqkd||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">毗邻情况(西)：</strong>
-                                                        <v-text v-text="data.cgl_plqkx||'无'"></v-text>
+                                                        <v-text v-text="data.cgl.plqkx||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -1250,13 +1250,13 @@
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">毗邻情况(南)：</strong>
-                                                        <v-text v-text="data.cgl_plqkn||'无'"></v-text>
+                                                        <v-text v-text="data.cgl.plqkn||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                                 <el-col :span="12">
                                                     <div>
                                                         <strong class="dtdlStyle">毗邻情况(北)：</strong>
-                                                        <v-text v-text="data.cgl_plqkb||'无'"></v-text>
+                                                        <v-text v-text="data.cgl.plqkb||'无'"></v-text>
                                                     </div>
                                                 </el-col>
                                             </el-row>

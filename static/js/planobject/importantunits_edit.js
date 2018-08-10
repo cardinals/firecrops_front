@@ -356,9 +356,9 @@ new Vue({
 
         //使用性质下拉框
         getSyxzData: function(){
-            axios.get('/api/codelist/getCodetype/SYXZ').then(function (res) {
+            axios.get('/api/codelist/getDzlxTree/JZSYXZ').then(function (res) {
                 this.syxzData = res.data.result;
-            }.bind(this),function(error){
+            }.bind(this), function (error) {
                 console.log(error);
             })
         },
