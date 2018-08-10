@@ -127,7 +127,8 @@
 								<el-label class="mr5 vbm">生产时间</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-date-picker size="small" v-model="addForm.scsj" type="date" placeholder="选择日期" :picker-options="pickerOptions0"></el-date-picker>
+								<el-date-picker size="small" v-model="addForm.scsj" type="date" placeholder="选择日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+								 auto-complete="off"></el-date-picker>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
