@@ -23,9 +23,8 @@
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
 									<label class="el-form-item__label searchLabel">所属队站</label>
-									<el-select size="small" v-model="searchForm.ssdz" placeholder="全部" class="searchSelect" clearable>
-										<el-option v-for="type in allTeamsData" :label="type.codeName" :value="type.codeValue" :key="type.codeName"></el-option>
-									</el-select>
+									<el-cascader v-model="searchForm.ssdz" :options="allTeamsData" :props="ssdzProps" size="small" placeholder="全部" class="searchSelect"
+									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
 									<label class="el-form-item__label searchLabel">车辆类型</label>
@@ -64,7 +63,7 @@
 									<el-col :span="12"></el-col>
 									<el-col :span="12" class="btnSearchPlus">
 										<el-form-item>
-											<el-button type="primary" icon="search" size="small" @click="searchClick">查询</el-button>
+											<el-button type="primary" icon="search" size="small" @click="searchClick('click')">查询</el-button>
 											<el-button type="clear" icon="delete" size="small" @click="clearClick">重置</el-button>
 										</el-form-item>
 									</el-col>
@@ -75,7 +74,7 @@
 					<div class="table_container">
 						<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" @selection-change="selectionChange"
 						 class="tableStyle" :height="tableheight">
-						 	<el-table-column type="selection" width="45"></el-table-column>
+							<el-table-column type="selection" width="45"></el-table-column>
 							<el-table-column type="index" label="序号" show-overflow-tooltip width="65px" align="center"></el-table-column>
 							<el-table-column prop="clmc" label="车辆名称" min-width="18%" show-overflow-tooltip align="center">
 								<template slot-scope="scope">
@@ -88,18 +87,18 @@
 							<el-table-column prop="clbm" label="车辆编码" min-width="13%" show-overflow-tooltip align="center"></el-table-column>
 							<el-table-column prop="gpsbh" label="GPS编号" min-width="11%" show-overflow-tooltip align="center"></el-table-column>
 							<el-table-column prop="clztmc" label="车辆状态" min-width="11%" show-overflow-tooltip align="center"></el-table-column>
-							<el-table-column label="操作" min-width="8%"  align="center">
-                                <template slot-scope="scope">
-                                    <el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>
-                                </template>
-                            </el-table-column>
+							<el-table-column label="操作" min-width="8%" align="center">
+								<template slot-scope="scope">
+									<el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>
+								</template>
+							</el-table-column>
 						</el-table>
 
 						<!--列表底部工具条和分页符-->
 						<el-row type="flex" justify="end">
 							<el-col :span="18">
-								<el-pagination @size-change="pageSizeChange" @current-change="currentPageChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 50]"
-								 :page-size="pageSize" layout="total, prev, pager, next, jumper" :total=parseInt(total)>
+								<el-pagination @current-change="currentPageChange" :current-page="currentPage" :page-size="pageSize" layout="total, prev, pager, next, jumper"
+								 :total=parseInt(total)>
 								</el-pagination>
 							</el-col>
 						</el-row>
@@ -114,4 +113,5 @@
 	</div>
 </body>
 <script src="../../static/js/basicinfo/fireengine_list.js"></script>
+
 </html>

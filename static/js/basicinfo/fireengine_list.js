@@ -1,5 +1,5 @@
 //axios默认设置cookie
-axios.defaults.withCredentials = true;	
+axios.defaults.withCredentials = true;
 var vue = new Vue({
     el: '#app',
     data: function () {
@@ -7,13 +7,13 @@ var vue = new Vue({
             visible: false,
             //搜索表单
             searchForm: {
-                ssdz: "",
+                ssdz: [],
                 cllx: [],
                 cphm: "",
                 clzt: "",
                 clbm: "",
                 gpsbh: "",
-                clmc:""
+                clmc: ""
             },
             tableData: [],
             role_data: [],//当前用户信息
@@ -26,7 +26,6 @@ var vue = new Vue({
                 label: 'codeName',
                 children: 'children'
             },
-            rowdata: '',
             //表高度变量
             tableheight: 443,
             //显示加载中样
@@ -53,7 +52,7 @@ var vue = new Vue({
                 permissionname: [{ required: true, message: "请输入权限名称", trigger: "blur" }]
             },
             //详情页显示flag
-            detailVisible:false,
+            detailVisible: false,
             //选中的值显示
             sels: [],
             //选中的序号
@@ -64,10 +63,14 @@ var vue = new Vue({
                 label: 'codeName',
                 value: 'codeValue'
             },
-
+            ssdzProps: {
+                children: 'children',
+                label: 'dzjc',
+                value: 'dzid'
+            },
         }
     },
-    created:function(){
+    created: function () {
         //设置菜单选中
         // $("#activeIndex").val(getQueryString("index"));
         /**面包屑 by li.xue 20180628*/
@@ -92,7 +95,7 @@ var vue = new Vue({
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                for(var i=0;i<this.multipleSelection.length;i++){
+                for (var i = 0; i < this.multipleSelection.length; i++) {
                     this.multipleSelection[i].xgrid = this.role_data.userid;
                     this.multipleSelection[i].xgrmc = this.role_data.realName;
                 }
@@ -128,65 +131,65 @@ var vue = new Vue({
                 type: "BJ"
             }
             loadDivParam("basicinfo/fireengine_add", params);
-                //window.location.href = "digitalplan_add.html?ID=" + row.uuid + "&index=" + this.activeIndex + "&type=BJ";
+            //window.location.href = "digitalplan_add.html?ID=" + row.uuid + "&index=" + this.activeIndex + "&type=BJ";
         },
         //表格查询事件
-        searchClick: function(type) {
+        searchClick: function (type) {
             //按钮事件的选择
-            if(type == 'page'){
+            if (type == 'page') {
                 this.tableData = [];
-            }else{
+            } else {
                 this.currentPage = 1;
             }
-            this.loading=true;
+            this.loading = true;
             var _self = this;
             //add by zjc 20180613
             this.searchForm.uuid = this.GetQueryString("uuid");
             var isCldj = this.GetQueryString("cldj");
             //end add
-            var params={
+            var params = {
                 uuid: this.searchForm.uuid,
-                ssdz :this.searchForm.ssdz,
-                cllx :this.searchForm.cllx[this.searchForm.cllx.length-1],
-                cphm :this.searchForm.cphm,
-                clzt :this.searchForm.clzt,
-                clbm :this.searchForm.clbm,
-                gpsbh :this.searchForm.gpsbh,
-                clmc:this.searchForm.clmc,
+                ssdz: this.searchForm.ssdz[this.searchForm.ssdz.length - 1],
+                cllx: this.searchForm.cllx[this.searchForm.cllx.length - 1],
+                cphm: this.searchForm.cphm,
+                clzt: this.searchForm.clzt,
+                clbm: this.searchForm.clbm,
+                gpsbh: this.searchForm.gpsbh,
+                clmc: this.searchForm.clmc,
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.role_data.organizationVO.uuid,
                 orgJgid: this.role_data.organizationVO.jgid
             };
-            axios.post('/dpapi/fireengine/page',params).then(function(res){
-                var tableTemp = new Array((this.currentPage-1)*this.pageSize);
+            axios.post('/dpapi/fireengine/page', params).then(function (res) {
+                var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
                 this.loadingData();
-                if(isCldj == 1){
+                if (isCldj == 1) {
                     var val = this.tableData[0];
                     this.informClick(val)
                 }
                 this.rowdata = this.tableData;
-                this.loading=false;
-            }.bind(this),function(error){
+                this.loading = false;
+            }.bind(this), function (error) {
                 console.log(error);
             })
         },
         //清空查询条件
         clearClick: function () {
-            this.searchForm.ssdz="";
-            this.searchForm.cllx=[];
-            this.searchForm.cphm="";
-            this.searchForm.clzt="";
-            this.searchForm.clbm="";
-            this.searchForm.gpsbh="";
-            this.searchForm.clmc="";
+            this.searchForm.ssdz = [];
+            this.searchForm.cllx = [];
+            this.searchForm.cphm = "";
+            this.searchForm.clzt = "";
+            this.searchForm.clbm = "";
+            this.searchForm.gpsbh = "";
+            this.searchForm.clmc = "";
             this.searchClick('reset');
         },
-        
+
         //获取所有车辆类型
-        getAllTypesData: function (){
+        getAllTypesData: function () {
             axios.post('/api/codelist/getYjlxTree/CLLX').then(function (res) {
                 this.allTypesData = res.data.result;
             }.bind(this), function (error) {
@@ -194,20 +197,26 @@ var vue = new Vue({
             })
         },
         //获取所有车辆状态
-        getAllStatesData: function (){
+        getAllStatesData: function () {
             var params = {
                 codetype: "CLZT",
                 list: [2, 4]
             };
-            axios.post('/api/codelist/getCodelisttree',params).then(function(res){
-                this.allStatesData=res.data.result;
-            }.bind(this),function(error){
+            axios.post('/api/codelist/getCodelisttree', params).then(function (res) {
+                this.allStatesData = res.data.result;
+            }.bind(this), function (error) {
                 console.log(error);
             })
         },
         //获取所有队站信息
         getAllTeamsData: function () {
-            axios.get('/dpapi/util/doSearchContingents').then(function (res) {
+            var organization = this.role_data.organizationVO;
+            var param = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            }
+            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.allTeamsData = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
@@ -222,7 +231,7 @@ var vue = new Vue({
                 _self.loading = false;
             }, 300);
         },
-        
+
         //点击进入详情页
         informClick(val) {
             //window.location.href = "fireengine_detail.html?id=" + val.uuid;
@@ -251,11 +260,11 @@ var vue = new Vue({
             // val.alter_name = "";
             // val.alter_time = "";
         },
-         //根据参数部分和参数名来获取参数值 
-         GetQueryString(name) {
-            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        //根据参数部分和参数名来获取参数值 
+        GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
-            if(r!=null)return  unescape(r[2]); return null;
+            if (r != null) return unescape(r[2]); return null;
         },
     }
 })

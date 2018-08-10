@@ -11,7 +11,7 @@ var vue = new Vue({
                 symc: '',
                 sydz: '',
                 sylx: '',
-                gxdz: '',
+                gxdz: [],
                 sygs: '',
                 kyzt: '',
                 xhs_szxs: '',

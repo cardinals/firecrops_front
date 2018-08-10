@@ -10,7 +10,7 @@ var vue = new Vue({
             //搜索表单
             searchForm: {
                 yjmc: "",
-                ssdz: "",
+                ssdz: [],
                 yjlx: [],
                 cbl: [0, 1000]
             },
