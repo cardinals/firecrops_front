@@ -46,10 +46,9 @@ new Vue({
                 xgrid: "",
                 xgrmc: "",
                 jzlx: "",
-                buildingVO: {}
-            },
-            //建筑类VO
-            jzlVO: {
+                // buildingVO: {}
+
+                //建筑类
                 jzl_jzid: "",
                 jzl_jzqk: "",
                 jzl_jzsyxz: [],
@@ -60,9 +59,7 @@ new Vue({
                 jzl_dsgd: "",
                 jzl_dxgd: "",
                 jzl_dscs: "",
-            },
-            //装置类VO
-            zzlVO: {
+                //装置类
                 zzl_jzid: "",
                 zzl_jzjg: "",
                 zzl_zdmj: "",
@@ -72,10 +69,8 @@ new Vue({
                 zzl_zzzc: "",
                 zzl_ylxx: "",
                 zzl_cwxx: "",
-                zzl_gylc: ""
-            },
-            //储罐类VO
-            cglVO: {
+                zzl_gylc: "",
+                //储罐类
                 cgl_jzid: "",
                 cgl_zrj: "",
                 cgl_cgsl: "",
@@ -88,6 +83,7 @@ new Vue({
                 cgl_plqkn: "",
                 cgl_plqkb: "",
                 chuguanList: [{
+                    sjlx: 'JZ',
                     cgmc: "",
                     cglx: [],
                     cgrl: "",
@@ -198,55 +194,50 @@ new Vue({
                 };
                 axios.post('/dpapi/building/findFqDetailByVo', params).then(function (res) {
                     // var result = res.data.result;
-                    // debugger
+                    debugger
                     this.editForm = res.data.result;
                     var type = this.editForm.jzlx;
-                    if (type == "10" || type == "20") {
-                        this.isJzl = true;
-                        this.jzlVO = res.data.result;
-                        if (this.jzlVO.jzl_jzsyxz != '' && this.jzlVO.jzl_jzsyxz != null) {
-                            if (this.jzlVO.jzl_jzsyxz.endsWith("000")) {
-                                var xzqh = this.jzlVO.jzl_jzsyxz;
-                                this.jzlVO.jzl_jzsyxz = [];
-                                this.jzlVO.jzl_jzsyxz.push(xzqh);
-                            } else {
-                                var xzqh1 = this.jzlVO.jzl_jzsyxz.substring(0, 1) + '000';
-                                var xzqh2 = this.jzlVO.jzl_jzsyxz;
-                                this.jzlVO.jzl_jzsyxz = [];
-                                this.jzlVO.jzl_jzsyxz.push(xzqh1, xzqh2);
-                            }
+                    if (this.editForm.jzl_jzsyxz != '' && this.editForm.jzl_jzsyxz != null) {
+                        if (this.editForm.jzl_jzsyxz.endsWith("000")) {
+                            var xzqh = this.editForm.jzl_jzsyxz;
+                            this.editForm.jzl_jzsyxz = [];
+                            this.editForm.jzl_jzsyxz.push(xzqh);
                         } else {
-                            this.jzlVO.jzl_jzsyxz = [];
+                            var xzqh1 = this.editForm.jzl_jzsyxz.substring(0, 1) + '000';
+                            var xzqh2 = this.editForm.jzl_jzsyxz;
+                            this.editForm.jzl_jzsyxz = [];
+                            this.editForm.jzl_jzsyxz.push(xzqh1, xzqh2);
                         }
-                        this.zzlVO = {};
-                        this.cglVO = {};
-                    } else if (type == "30") {
-                        this.isZzl = true;
-                        this.jzlVO = {};
-                        this.zzlVO = res.data.result;
-                        this.cglVO = {};
-                    } else if (type == "40") {
-                        this.isCgl = true;
-                        this.jzlVO = {};
-                        this.zzlVO = {};
-                        this.cglVO = res.data.result;
-                        for(i=0;i<this.cglVO.chuguanList.length;i++){
-                            if (this.cglVO.chuguanList[i].cglx != '' && this.cglVO.chuguanList[i].cglx != null) {
-                                if (this.cglVO.chuguanList[i].cglx.endsWith("000")) {
-                                    var xzqh = this.cglVO.chuguanList[i].cglx;
-                                    this.cglVO.chuguanList[i].cglx = [];
-                                    this.cglVO.chuguanList[i].cglx.push(xzqh);
+                    } else {
+                        this.editForm.jzl_jzsyxz = [];
+                    }
+                    if (this.editForm.chuguanList != null) {
+                        for (i = 0; i < this.editForm.chuguanList.length; i++) {
+                            if (this.editForm.chuguanList[i].cglx != '' && this.editForm.chuguanList[i].cglx != null) {
+                                if (this.editForm.chuguanList[i].cglx.endsWith("000")) {
+                                    var xzqh = this.editForm.chuguanList[i].cglx;
+                                    this.editForm.chuguanList[i].cglx = [];
+                                    this.editForm.chuguanList[i].cglx.push(xzqh);
                                 } else {
-                                    var xzqh1 = this.cglVO.chuguanList[i].cglx.substring(0, 1) + '000';
-                                    var xzqh2 = this.cglVO.chuguanList[i].cglx;
-                                    this.cglVO.chuguanList[i].cglx = [];
-                                    this.cglVO.chuguanList[i].cglx.push(xzqh1, xzqh2);
+                                    var xzqh1 = this.editForm.chuguanList[i].cglx.substring(0, 1) + '000';
+                                    var xzqh2 = this.editForm.chuguanList[i].cglx;
+                                    this.editForm.chuguanList[i].cglx = [];
+                                    this.editForm.chuguanList[i].cglx.push(xzqh1, xzqh2);
                                 }
                             } else {
-                                this.cglVO.chuguanList[i].cglx = [];
+                                this.editForm.chuguanList[i].cglx = [];
                             }
-                        };    
+                        }
+                    } else {
+                        this.editForm.chuguanList = [];
+                    }
 
+                    if (type == "10" || type == "20") {
+                        this.isJzl = true;
+                    } else if (type == "30") {
+                        this.isZzl = true;
+                    } else if (type == "40") {
+                        this.isCgl = true;
                     } else {
                         this.isJzl = false;
                         this.isZzl = false;
@@ -257,11 +248,6 @@ new Vue({
                     console.log(error);
                 })
             }
-
-
-
-
-
         },
         //保存前校验
         validateSave: function () {
@@ -282,7 +268,8 @@ new Vue({
         },
         //罐体增加
         addDomain: function () {
-            this.cglVO.chuguanList.push({
+            this.editForm.chuguanList.push({
+                sjlx: 'JZ',
                 cgmc: "",
                 cglx: "",
                 cgrl: "",
@@ -301,39 +288,36 @@ new Vue({
         },
         //储罐删除
         removeDomain: function (item) {
-            var index = this.cglVO.chuguanList.indexOf(item)
+            var index = this.editForm.chuguanList.indexOf(item)
             if (index !== -1) {
-                this.cglVO.chuguanList.splice(index, 1)
+                this.editForm.chuguanList.splice(index, 1)
             }
         },
         //保存
         save: function (formName) {
             if (this.validateSave()) {
                 if (this.status == 0) {//新增
+                 
                     this.editForm.cjrid = this.shiroData.userid;
                     this.editForm.cjrmc = this.shiroData.realName;
                     this.editForm.jdh = this.shiroData.organizationVO.jgid;
-
-                    if (this.editForm.jzlx == '10' || this.editForm.jzlx == '20') {
-                        if (this.jzlVO.jzl_jzsyxz.length > 0) {
-                            this.jzlVO.jzl_jzsyxz = this.jzlVO.jzl_jzsyxz[this.jzlVO.jzl_jzsyxz.length - 1];
-                        } else {
-                            this.jzlVO.jzl_jzsyxz = '';
-                        }
-                        this.editForm.buildingVO = this.jzlVO;
-                    } else if (this.editForm.jzlx == '30') {
-                        this.editForm.buildingVO = this.zzlVO;
-                    } else if (this.editForm.jzlx == '40') {
-                       
-                        for (i=0;i<this.cglVO.chuguanList.length;i++) {
-                            if (this.cglVO.chuguanList[i].cglx.length > 0) {
-                                this.cglVO.chuguanList[i].cglx = this.cglVO.chuguanList[i].cglx[this.cglVO.chuguanList[i].cglx.length - 1];
-                            } else {
-                                this.cglVO.chuguanList[i].cglx = '';
-                            }
-                        };
-                        this.editForm.buildingVO = this.cglVO;
+                    if (this.editForm.jzl_jzsyxz != null && this.editForm.jzl_jzsyxz.length > 0) {
+                        this.editForm.jzl_jzsyxz = this.editForm.jzl_jzsyxz[this.editForm.jzl_jzsyxz.length - 1];
+                    } else {
+                        this.editForm.jzl_jzsyxz = '';
                     }
+                    if (this.editForm.chuguanList != null) {
+                        for (i = 0; i < this.editForm.chuguanList.length; i++) {
+                            if (this.editForm.chuguanList[i].cglx.length > 0) {
+                                this.editForm.chuguanList[i].cglx = this.editForm.chuguanList[i].cglx[this.editForm.chuguanList[i].cglx.length - 1];
+                            } else {
+                                this.editForm.chuguanList[i].cglx = '';
+                            }
+                        }
+                    } else {
+                        this.editForm.chuguanList = [];
+                    }
+
                     axios.post('/dpapi/building/insertByVO', this.editForm).then(function (res) {
                         if (res.data.result == 1) {
                             this.$alert('成功保存单位建筑信息', '提示', {
@@ -357,20 +341,26 @@ new Vue({
                     })
                     // }
                 } else {//修改
+                
                     this.editForm.xgrid = this.shiroData.userid;
                     this.editForm.xgrmc = this.shiroData.realName;
-                    if (this.editForm.jzlx == '10' || this.editForm.jzlx == '20') {
-                        this.editForm.buildingVO = this.jzlVO;
-                    } else if (this.editForm.jzlx == '30') {
-                        this.editForm.buildingVO = this.zzlVO;
-                    } else if (this.editForm.jzlx == '40') {
-                        this.editForm.buildingVO = this.cglVO;
-                    }
-                    if (this.jzlVO.jzl_jzsyxz.length > 0) {
-                        this.jzlVO.jzl_jzsyxz = this.jzlVO.jzl_jzsyxz[this.jzlVO.jzl_jzsyxz.length - 1];
+                    if (this.editForm.jzl_jzsyxz != null && this.editForm.jzl_jzsyxz.length > 0) {
+                        this.editForm.jzl_jzsyxz = this.editForm.jzl_jzsyxz[this.editForm.jzl_jzsyxz.length - 1];
                     } else {
-                        this.jzlVO.jzl_jzsyxz = '';
+                        this.editForm.jzl_jzsyxz = '';
                     }
+                    if (this.editForm.chuguanList != null) {
+                        for (i = 0; i < this.editForm.chuguanList.length; i++) {
+                            if (this.editForm.chuguanList[i].cglx.length > 0) {
+                                this.editForm.chuguanList[i].cglx = this.editForm.chuguanList[i].cglx[this.editForm.chuguanList[i].cglx.length - 1];
+                            } else {
+                                this.editForm.chuguanList[i].cglx = '';
+                            }
+                        }
+                    } else {
+                        this.editForm.chuguanList = [];
+                    }
+
                     axios.post('/dpapi/building/doUpdateBuildingzoning', this.editForm).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功修改单位建筑信息', '提示', {
@@ -404,9 +394,9 @@ new Vue({
             var type = this.editForm.jzlx;
             if (type == "10" || type == "20") {
                 if (type == "10") {
-                    this.jzlVO.jzl_jzqk = '1'
+                    this.editForm.jzl_jzqk = '1'
                 } else if (type == "20") {
-                    this.jzlVO.jzl_jzqk = '2'
+                    this.editForm.jzl_jzqk = '2'
                 }
                 this.isJzl = true;
                 this.isZzl = false;
