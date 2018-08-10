@@ -294,13 +294,11 @@
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input-number :min="0" size="small" v-model="editForm.cgl_cgjg" placeholder="储罐间隔"></el-input>
 								</el-col>
-							</el-row>
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+								<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 									<el-label class="mr5  vbm">存储介质描述</el-label>
 								</el-col>
-								<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-									<el-input size="small" v-model="editForm.cgl_ccjzms" placeholder="存储介质描述" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+									<el-input size="small" v-model="editForm.cgl_ccjzms" placeholder="存储介质描述" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-col>
 							</el-row>
 							<el-row class="tr mb5">
@@ -460,7 +458,7 @@
 											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="4">
 												<el-label class="mr5">理化性质</el-label>
 											</el-col>
-											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+											<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
 												<el-input size="small" v-model="domain.ccjzlhxz" placeholder="存储介质理化性质"></el-input>
 											</el-col>
 										</el-row>
@@ -469,7 +467,7 @@
 												<el-label class="mr5">备注</el-label>
 											</el-col>
 											<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-												<el-input size="small" v-model="domain.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+												<el-input size="small" v-model="domain.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 											</el-col>
 										</el-row>
 									</el-card>
