@@ -35,9 +35,11 @@
                                 <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
                                 <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
                                     <label class="el-form-item__label searchLabel">消防管辖</label>
-                                    <el-select size="small" v-model="searchForm.xfgx" placeholder="全部" class="searchSelect" clearable>
+                                    <!-- <el-select size="small" v-model="searchForm.xfgx" placeholder="全部" class="searchSelect" clearable>
                                         <el-option v-for="type in allSsdzData" :label="type.codeName" :value="type.codeValue" :key="type.codeName"></el-option>
-                                    </el-select>
+                                    </el-select> -->
+                                    <el-cascader :options="allSsdzData" :props="ssdzProps" size="small" v-model="searchForm.xfgx" placeholder="所属队站" class="searchSelect"
+									 clearable change-on-select :show-all-levels="false"></el-cascader>
                                 </el-col>
                                 <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
                                     <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">

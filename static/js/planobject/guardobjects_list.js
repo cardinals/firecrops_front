@@ -92,6 +92,12 @@ var vue = new Vue({
                 label: 'codeName',
                 value: 'codeValue'
             },
+            //管辖队站Props
+            ssdzProps: {
+                children: 'children',
+                label: 'dzjc',
+                value: 'dzid'
+            },
             //当前用户
             shiroData: [],
         }
@@ -122,12 +128,24 @@ var vue = new Vue({
         },
          //所属队站下拉框数据
          getAllSszdData: function () {
-            axios.get('/dpapi/util/doSearchContingents').then(function (res) {
+            var organization = this.shiroData.organizationVO;
+            var param = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            }
+            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.allSsdzData = res.data.result;
-
+                this.searchClick();
             }.bind(this), function (error) {
                 console.log(error);
             })
+            // axios.get('/dpapi/util/doSearchContingents').then(function (res) {
+            //     this.allSsdzData = res.data.result;
+
+            // }.bind(this), function (error) {
+            //     console.log(error);
+            // })
         },
         //表格查询事件
         searchClick: function(type) {
@@ -155,7 +173,7 @@ var vue = new Vue({
                 hdzt: this.searchForm.hdzt,
                 cxsj: this.searchForm.cxsj,
                 zcbdw: this.searchForm.zcbdw,
-                xfgx: this.searchForm.xfgx,
+                xfgx: this.searchForm.xfgx[this.searchForm.xfgx.length - 1],
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,
