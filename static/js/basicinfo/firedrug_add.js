@@ -62,7 +62,7 @@ new Vue({
         this.getAllSsdzDataTree();
         this.getAllYjlxDataTree();
         this.getAllXzqhDataTree();
-        
+
     },
     mounted: function () {
         this.searchClick();
@@ -225,9 +225,6 @@ new Vue({
                     this.addForm.cjrid = this.shiroData.userid;
                     this.addForm.cjrmc = this.shiroData.realName;
                     this.addForm.jdh = this.shiroData.organizationVO.jgid;
-                    if (this.addForm.scsj != "") {
-                        this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
-                    }
                     var params = this.addForm;
                     if (this.addForm.yjlx.length > 0) {
                         params.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];
@@ -268,9 +265,6 @@ new Vue({
                 } else {//修改
                     this.addForm.xgrid = this.shiroData.userid;
                     this.addForm.xgrmc = this.shiroData.realName;
-                    if (this.addForm.scsj != "") {
-                        this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
-                    }
                     var params = this.addForm;
                     if (this.addForm.yjlx.length > 0) {
                         params.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];

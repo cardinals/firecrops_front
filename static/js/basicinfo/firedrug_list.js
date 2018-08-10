@@ -10,7 +10,7 @@ var vue = new Vue({
             //搜索表单
             searchForm: {
                 yjmc: "",
-                ssdz: "",
+                ssdz: [],
                 yjlx: [],
                 cbl: [0, 1000]
             },
@@ -41,7 +41,11 @@ var vue = new Vue({
                 label: 'codeName',
                 value: 'codeValue'
             },
-
+            ssdzProps: {
+                children: 'children',
+                label: 'dzjc',
+                value: 'dzid'
+            },
         }
     },
     created: function () {
@@ -62,7 +66,13 @@ var vue = new Vue({
         },
         //所属队站下拉框数据
         getAllSszdData: function () {
-            axios.get('/dpapi/util/doSearchContingents').then(function (res) {
+            var organization = this.shiroData.organizationVO;
+            var param = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            }
+            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.allSsdzData = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
@@ -86,7 +96,7 @@ var vue = new Vue({
             }
             var params = {
                 yjmc: this.searchForm.yjmc,
-                ssdz: this.searchForm.ssdz,
+                ssdz: this.searchForm.ssdz[this.searchForm.ssdz.length - 1],
                 yjlx: this.searchForm.yjlx[this.searchForm.yjlx.length - 1],
                 zcbl_min: cbl_min,
                 zcbl_max: cbl_max,
@@ -118,7 +128,7 @@ var vue = new Vue({
         //清空
         clearClick: function () {
             this.searchForm.yjmc = "";
-            this.searchForm.ssdz = "";
+            this.searchForm.ssdz = [];
             this.searchForm.yjlx = [];
             this.searchForm.cbl = [0, 1000];
             this.searchClick('reset');

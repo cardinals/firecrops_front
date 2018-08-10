@@ -5,3 +5,6 @@
     display: block;
     width: 100%;
 }
+.el-date-editor.el-input {
+    width: 100%;
+}

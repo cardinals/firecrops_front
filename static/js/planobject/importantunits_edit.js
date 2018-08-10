@@ -46,6 +46,13 @@ new Vue({
                 jzmj: '',
                 jzxxList: [{jzmc: '', jzid: ''}],
                 zdbwList:[],
+                bz: "",
+                jdh: "",
+                //创建人、修改人
+                cjrid: "",
+                cjrmc: "",
+                xgrid: "",
+                xgrmc: "",
             },
             //消防队站下拉框Data
             xfdzData: [],
