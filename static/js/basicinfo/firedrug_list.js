@@ -128,7 +128,7 @@ var vue = new Vue({
         //清空
         clearClick: function () {
             this.searchForm.yjmc = "";
-            this.searchForm.ssdz = "";
+            this.searchForm.ssdz = [];
             this.searchForm.yjlx = [];
             this.searchForm.cbl = [0, 1000];
             this.searchClick('reset');

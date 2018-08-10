@@ -40,6 +40,11 @@ var vue = new Vue({
                 label: 'codeName',
                 value: 'codeValue'
             },
+            ssdzProps: {
+                children: 'children',
+                label: 'dzjc',
+                value: 'dzid'
+            },
             //装备车辆弹出页-----------------------------------------------------------
             tableData_engine: [],
             tableheight_engine: 250,
@@ -74,7 +79,7 @@ var vue = new Vue({
             var params = {
                 zbmc: this.searchForm.zbmc,
                 zbbm: this.searchForm.zbbm,
-                ssdz: this.searchForm.ssdz,
+                ssdz: this.searchForm.ssdz[this.searchForm.ssdz.length - 1],
                 zblx: zblx,
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
@@ -94,9 +99,8 @@ var vue = new Vue({
         clearClick: function () {
             this.searchForm.zbmc = "";
             this.searchForm.zbbm = "";
-            this.searchForm.ssdz = "";
+            this.searchForm.ssdz = [];
             this.searchForm.zblx = [];
-            // this.searchForm.kysl = [0,1000];
             this.searchClick('reset');
         },
         //装备类型级联选择数据
@@ -113,9 +117,14 @@ var vue = new Vue({
         },
         //所属队站下拉框数据
         getAllSszdData: function () {
-            axios.get('/dpapi/util/doSearchContingents').then(function (res) {
+            var organization = this.shiroData.organizationVO;
+            var param = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            }
+            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.allSsdzData = res.data.result;
-
             }.bind(this), function (error) {
                 console.log(error);
             })
