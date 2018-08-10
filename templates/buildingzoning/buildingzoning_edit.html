@@ -53,14 +53,14 @@
 								<el-label class="mr5 vbm">经度</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number  size="small" :precision="2"  v-model="editForm.lon" placeholder="经度"></el-input>
+								<el-input-number  size="small" :precision="2" :min="0"  v-model="editForm.lon" placeholder="经度"></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">纬度</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number size="small" :precision="2" v-model="editForm.lat" placeholder="纬度"></el-input>
+								<el-input-number size="small" :precision="2" :min="0" v-model="editForm.lat" placeholder="纬度"></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
