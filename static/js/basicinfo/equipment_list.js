@@ -9,7 +9,7 @@ var vue = new Vue({
             //搜索表单
             searchForm: {
                 zbmc: "",
-                ssdz: "",
+                ssdz: [],
                 zbbm: "",
                 zblx: [],
                 // kysl: [0, 1000]
