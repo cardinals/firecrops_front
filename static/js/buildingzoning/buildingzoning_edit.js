@@ -190,11 +190,8 @@ new Vue({
                 var params = {
                     jzid: this.status,
                     jzlx: jzlxParam
-                    // jzlx : dzlxParam
                 };
                 axios.post('/dpapi/building/findFqDetailByVo', params).then(function (res) {
-                    // var result = res.data.result;
-                    debugger
                     this.editForm = res.data.result;
                     var type = this.editForm.jzlx;
                     if (this.editForm.jzl_jzsyxz != '' && this.editForm.jzl_jzsyxz != null) {
