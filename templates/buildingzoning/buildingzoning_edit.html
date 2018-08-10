@@ -368,7 +368,9 @@
 											<el-label class="mr5">储罐类型</el-label>
 										</el-col>
 										<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-											<el-input size="small" v-model="domain.cglx" placeholder="储罐类型"></el-input>
+											<!-- <el-input size="small" v-model="domain.cglx" placeholder="储罐类型"></el-input> -->
+											<el-cascader :options="cgData" :props="props" size="small" v-model="domain.cglx" placeholder="请选择" class="searchSelect"
+											clearable change-on-select :show-all-levels="false"></el-cascader>
 										</el-col>
 										<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 											<el-label class="mr5">储罐容量(m³)</el-label>
@@ -409,13 +411,13 @@
 											<el-label class="mr5">工作压力</el-label>
 										</el-col>
 										<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-											<el-input size="small" v-model="domain.gzyl" placeholder="工作压力"></el-input>
+											<el-input-number :precision="2" :min="0" size="small" v-model="domain.gzyl" placeholder="工作压力"></el-input>
 										</el-col>
 										<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 											<el-label class="mr5">存储温度</el-label>
 										</el-col>
 										<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-											<el-input size="small" v-model="domain.ccwd" placeholder="存储温度"></el-input>
+											<el-input-number :precision="2" :min="0" size="small" v-model="domain.ccwd" placeholder="存储温度"></el-input>
 										</el-col>
 									</el-row>
 									
@@ -455,7 +457,7 @@
 										</el-col>
 									</el-row>
 									<el-row class="tr mt5">
-										<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+										<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 											<el-label class="mr5">备注</el-label>
 										</el-col>
 										<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">

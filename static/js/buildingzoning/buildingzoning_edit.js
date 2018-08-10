@@ -15,6 +15,7 @@ new Vue({
             //qk
             jzl_jzqkData: [],
             jzl_jzsyxzData: [],
+            cgData: [],
             jzl_jzjgData: [],
             zzl_jzjgData: [],
             //上级队站
@@ -88,7 +89,7 @@ new Vue({
                 cgl_plqkb: "",
                 chuguanList: [{
                     cgmc: "",
-                    cglx: "",
+                    cglx: [],
                     cgrl: "",
                     cgzj: "",
                     cggd: "",
@@ -130,6 +131,7 @@ new Vue({
         this.getJzsyxzData();
         this.getJzjgData();
         this.getZzljzjgata();
+        this.getCgData();
     },
     methods: {
         // handleNodeClick(data) {
@@ -154,6 +156,14 @@ new Vue({
         getJzsyxzData: function () {
             axios.get('/api/codelist/getDzlxTree/JZSYXZ').then(function (res) {
                 this.jzl_jzsyxzData = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
+        //cgData
+        getCgData: function () {
+            axios.get('/api/codelist/getDzlxTree/CGLX').then(function (res) {
+                this.cgData = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -188,7 +198,7 @@ new Vue({
                 };
                 axios.post('/dpapi/building/findFqDetailByVo', params).then(function (res) {
                     // var result = res.data.result;
-                    debugger
+                    // debugger
                     this.editForm = res.data.result;
                     var type = this.editForm.jzlx;
                     if (type == "10" || type == "20") {
@@ -220,6 +230,23 @@ new Vue({
                         this.jzlVO = {};
                         this.zzlVO = {};
                         this.cglVO = res.data.result;
+                        for(i=0;i<this.cglVO.chuguanList.length;i++){
+                            if (this.cglVO.chuguanList[i].cglx != '' && this.cglVO.chuguanList[i].cglx != null) {
+                                if (this.cglVO.chuguanList[i].cglx.endsWith("000")) {
+                                    var xzqh = this.cglVO.chuguanList[i].cglx;
+                                    this.cglVO.chuguanList[i].cglx = [];
+                                    this.cglVO.chuguanList[i].cglx.push(xzqh);
+                                } else {
+                                    var xzqh1 = this.cglVO.chuguanList[i].cglx.substring(0, 1) + '000';
+                                    var xzqh2 = this.cglVO.chuguanList[i].cglx;
+                                    this.cglVO.chuguanList[i].cglx = [];
+                                    this.cglVO.chuguanList[i].cglx.push(xzqh1, xzqh2);
+                                }
+                            } else {
+                                this.cglVO.chuguanList[i].cglx = [];
+                            }
+                        };    
+
                     } else {
                         this.isJzl = false;
                         this.isZzl = false;
@@ -286,7 +313,7 @@ new Vue({
                     this.editForm.cjrid = this.shiroData.userid;
                     this.editForm.cjrmc = this.shiroData.realName;
                     this.editForm.jdh = this.shiroData.organizationVO.jgid;
-debugger
+
                     if (this.editForm.jzlx == '10' || this.editForm.jzlx == '20') {
                         if (this.jzlVO.jzl_jzsyxz.length > 0) {
                             this.jzlVO.jzl_jzsyxz = this.jzlVO.jzl_jzsyxz[this.jzlVO.jzl_jzsyxz.length - 1];
@@ -297,6 +324,14 @@ debugger
                     } else if (this.editForm.jzlx == '30') {
                         this.editForm.buildingVO = this.zzlVO;
                     } else if (this.editForm.jzlx == '40') {
+                       
+                        for (i=0;i<this.cglVO.chuguanList.length;i++) {
+                            if (this.cglVO.chuguanList[i].cglx.length > 0) {
+                                this.cglVO.chuguanList[i].cglx = this.cglVO.chuguanList[i].cglx[this.cglVO.chuguanList[i].cglx.length - 1];
+                            } else {
+                                this.cglVO.chuguanList[i].cglx = '';
+                            }
+                        };
                         this.editForm.buildingVO = this.cglVO;
                     }
                     axios.post('/dpapi/building/insertByVO', this.editForm).then(function (res) {
