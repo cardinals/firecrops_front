@@ -1,5 +1,5 @@
 //axios默认设置cookie
-axios.defaults.withCredentials = true;	
+axios.defaults.withCredentials = true;
 var vue = new Vue({
     el: '#app',
     data: function () {
@@ -28,6 +28,12 @@ var vue = new Vue({
             treeDefaultProps: {
                 children: 'children',
                 label: 'formationinfo'
+            },
+            //管辖队站Props
+            ssdzProps: {
+                children: 'children',
+                label: 'dzjc',
+                value: 'dzid'
             },
             //资源列表是否显示
             planDetailVisible: false,
@@ -63,22 +69,22 @@ var vue = new Vue({
             editLoading: false,
             editFormRules: {
             },
-            defaultProps:{
-                value:'codeValue',
-                label:'codeName'
+            defaultProps: {
+                value: 'codeValue',
+                label: 'codeName'
             },
             //当前用户
             shiroData: [],
         }
     },
-    created:function(){
+    created: function () {
         /**菜单选中 by li.xue 20180628*/
         /**
         var index = getQueryString("index");
         $("#activeIndex").val(index);
         this.activeIndex = index;
          */
-        
+
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("其他对象", "-1");
         this.shiroData = shiroGlobal;
@@ -89,52 +95,64 @@ var vue = new Vue({
 
     methods: {
         //消防管辖下拉框
-        getxfgxData:function () {
-            axios.get('/dpapi/util/doSearchContingents').then(function (res) {
+        getxfgxData: function () {
+            var organization = this.shiroData.organizationVO;
+            var param = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            }
+            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.xfgxData = res.data.result;
+                this.searchClick();
             }.bind(this), function (error) {
                 console.log(error);
             })
+            // axios.get('/dpapi/util/doSearchContingents').then(function (res) {
+            //     this.xfgxData = res.data.result;
+            // }.bind(this), function (error) {
+            //     console.log(error);
+            // })
         },
         //表格查询事件
-        searchClick: function(type) {
+        searchClick: function (type) {
             //按钮事件的选择
-            if(type == 'page'){
+            if (type == 'page') {
                 this.tableData = [];
-            }else{
+            } else {
                 this.currentPage = 1;
             }
-            this.loading=true;
+            this.loading = true;
             var _self = this;
             //高级搜索-预案对象-保卫警卫 点击后跳转到查询页面，通过UUID直接查询其对象
             this.searchForm.uuid = getQueryString("id");
-            var params={
+            var params = {
                 //add by yushch
-                uuid : this.searchForm.uuid,
+                uuid: this.searchForm.uuid,
                 //end add
-                dxmc :this.searchForm.dxmc,
-                dxdz :this.searchForm.dxdz,
-                xfgx :this.searchForm.xfgx,
+                dxmc: this.searchForm.dxmc,
+                dxdz: this.searchForm.dxdz,
+                xfgx: this.searchForm.xfgx[this.searchForm.xfgx.length - 1],
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,
                 orgJgid: this.shiroData.organizationVO.jgid
             };
-            axios.post('/dpapi/otherobjects/page',params).then(function(res){
-                var tableTemp = new Array((this.currentPage-1)*this.pageSize);
+            axios.post('/dpapi/otherobjects/page', params).then(function (res) {
+                var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
                 this.rowdata = this.tableData;
-                this.loading=false;
-            }.bind(this),function(error){
+                this.loading = false;
+            }.bind(this), function (error) {
                 console.log(error);
             })
         },
         //清空查询条件
         clearClick: function () {
-            this.searchForm.dxmc="";
-            this.searchForm.dxdz="";
-            this.searchForm.xfgx="";
+            this.searchForm.dxmc = "";
+            this.searchForm.dxdz = "";
+            this.searchForm.xfgx = "";
             this.searchClick('reset');
         },
 

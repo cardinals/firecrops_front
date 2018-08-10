@@ -28,9 +28,11 @@
                                 </el-col>
                                 <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
                                     <label class="el-form-item__label searchLabel">消防管辖</label>
-                                    <el-select size="small" v-model="searchForm.xfgx" placeholder="全部" class="searchSelect" clearable>
+                                    <!-- <el-select size="small" v-model="searchForm.xfgx" placeholder="全部" class="searchSelect" clearable>
                                             <el-option v-for="item in xfgxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-                                    </el-select>
+                                    </el-select> -->
+                                    <el-cascader :options="xfgxData" :props="ssdzProps" size="small" v-model="searchForm.xfgx" placeholder="所属队站" class="searchSelect"
+									 clearable change-on-select :show-all-levels="false"></el-cascader>
                                 </el-col>
                             </el-row>
                             <div>
