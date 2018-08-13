@@ -13,7 +13,7 @@ new Vue({
             allTypesDataTree: [],
             allXzqhDataTree: [],
             allSsdzDataTree: [],
-            role_data: [],
+            shiroData: [],
             uuid: "4bb4d6da5a78416d9f923c16965dead0",
             //编辑表单
             editForm:{
@@ -44,7 +44,7 @@ new Vue({
                 jzsl: '',
                 zdmj: '',
                 jzmj: '',
-                jzxxList: [{jzmc: '', jzid: ''}],
+                jzxxList: [],
                 zdbwList:[],
                 bz: "",
                 jdh: "",
@@ -242,13 +242,6 @@ new Vue({
             //预案数据
             yaData: [],
 
-
-            engineForm: [{
-                clid: '',
-                clmc: '',
-                clzzs: ''
-            }],
-            clIndex: '',
             //树结构配置
             defaultProps: {
                 children: 'children',
@@ -260,20 +253,12 @@ new Vue({
                 label: 'dzjc',
                 value: 'dzid'
             },
-            //消防车辆弹出页---------------------------------------------------
-            engineListVisible: false,
-            loading_engine: false,
             //当前页
             currentPage: 1,
             //分页大小
             pageSize: 5,
             //总记录数
             total: 0,
-            //搜索表单
-            searchForm: {
-                clmc: '',
-                cphm: ''
-            },
             tableData: [],
             //表高度变量
             tableheight: 243,
@@ -291,7 +276,7 @@ new Vue({
         }
         /**当前登陆用户 by li.xue 20180808 */
         this.shiroData = shiroGlobal;
-        // this.uuid = getQueryString("ID");
+        this.status = getQueryString("ID");
         this.getDwxzData();
         this.getFhdjData();
         this.getXzqhData();
@@ -333,13 +318,13 @@ new Vue({
         //防火队站、灭火队站级联下拉框
         getXfdzData: function () {
             var organization = this.shiroData.organizationVO;
-            var param = {
+            var params = {
                 dzid: organization.uuid,
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
             }
-            axios.get('/api/codelist/getCodetype/ZDBWLX').then(function (res) {
-                this.zdbwlxData = res.data.result;
+            axios.post('/dpapi/xfdz/findSjdzByUser', params).then(function (res) {
+                this.xfdzData = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -476,15 +461,11 @@ new Vue({
                 wxxfx: '',
                 zysx: '',
                 bz: '',
-                jzl: {
-                    syxz: '',
-                    jzjg: '',
-                    qymj: '',
-                    gnms: '',
-                    wxjzList: [],
-                },
+                jzl: {},
                 zzl: {},
                 cgl: {},
+                cjrid: '',
+                cjrmc: '',
                 key: Date.now()
             });
         },
@@ -510,7 +491,6 @@ new Vue({
 
         //危险介质移除
         removeDomainWxjz: function(index,item){
-            debugger;
             var temp = this.editForm.zdbwList[index].jzl.wxjzList.indexOf(item);
             if (temp !== -1) {
                 this.editForm.zdbwList[index].jzl.wxjzList.splice(item, 1);
@@ -521,8 +501,10 @@ new Vue({
         addDomainCg: function(index){
             this.getCglxData();
             this.editForm.zdbwList[index].cgl.cgList.push({
+                sjlx: 'BW',
                 cgmc: '',
                 cglx: '',
+                cgrl: '',
                 cgzj: '',
                 cggd: '',
                 cgzc: '',
@@ -530,7 +512,7 @@ new Vue({
                 gzyl: '',
                 ccwd: '',
                 ccjzmc: '',
-                ccjzlhtx: '',
+                ccjzlhxz: '',
                 ccjzsjcl: '',
                 ccjzywgd: '',
                 bz: '',
@@ -553,7 +535,7 @@ new Vue({
                 this.getSyxzData();
                 this.getJzjgData();
                 this.editForm.zdbwList[index].jzl = {
-                    syxz: '',
+                    syxzList: [],
                     jzjg: '',
                     qymj: '',
                     gnms: '',
@@ -686,14 +668,6 @@ new Vue({
                         };
                     }
                 }
-
-                // if (this.tableData.jzfl == 10 || this.tableData.jzfl == 20) {
-                //     this.jzl_jzfqData = res.data.result;
-                // } else if (this.tableData.jzfl == 30) {
-                //     this.zzl_jzfqData = res.data.result;
-                // } else if (this.tableData.jzfl == 40) {
-                //     this.cgl_jzfqData = res.data.result;
-                // }
             }.bind(this), function (error) {
                 console.log(error)
             })
@@ -902,122 +876,134 @@ new Vue({
                 console.log(error)
             })
         },
-        //增加消防力量
-        addXfllData:function() {
-            this.xfllData.push({
-                xfdwlx: '',
-                xfdwrs: '',
-                xfdwcls: '',
-                xfdwlxr: '',
-                xfdwdh: '',
-                bz: ''
-            });
-        },
-        //灾情删除
-        removeXfllData:function(item) {
-            var index = this.xfllData.indexOf(item)
-            if (index !== -1) {
-                this.xfllData.splice(index, 1)
-            }
-        },
 
-        checkForm: function () {
-            if (this.addForm.zbmc == '' || this.addForm == null) {
+        //保存前校验
+        validateForm: function () {
+            if (this.editForm.dwmc=='' || this.editForm.dwmc==null) {
                 this.$message.warning({
-                    message: '请输入装备名称',
+                    message: '请输入单位名称',
                     showClose: true
                 });
                 return false;
-            }
-            for (var i in this.engineForm) {
-                if (this.engineForm[i].clid == '' && this.engineForm[i].clzzs == 0) {
-                    this.removeDomain(this.engineForm[i]);
-                    return true;
-                } else if (this.engineForm[i].clid == '' && this.engineForm[i].clzzs > 0) {
-                    this.$message.warning({
-                        message: '请选择消防车辆',
-                        showClose: true
-                    });
-                    return false;
+            }else if(this.editForm.dwxz=='' || this.editForm.dwxz==null){
+                this.$message.warning({
+                    message: '请选择单位性质',
+                    showClose: true
+                });
+                return false;
+            }else if(this.editForm.fhdj=='' || this.editForm.fhdj==null){
+                this.$message.warning({
+                    message: '请选择防火等级',
+                    showClose: true
+                });
+                return false;
+            }else if(this.editForm.fhdzid=='' || this.editForm.fhdzid==null){
+                this.$message.warning({
+                    message: '请选择单位防火队站',
+                    showClose: true
+                });
+                return false;
+            }else if(this.editForm.mhdzid=='' || this.editForm.mhdzid==null){
+                this.$message.warning({
+                    message: '请选择单位灭火队站',
+                    showClose: true
+                });
+                return false;
+            }else if(this.editForm.zdbwList.length > 0){
+                for(var i in this.editForm.zdbwList){
+                    if(this.editForm.zdbwList[i].zdbwmc=='' || this.editForm.zdbwList[i].zdbwmc==null){
+                        this.$message.warning({
+                            message: '请输入重点部位名称',
+                            showClose: true
+                        });
+                        return false;
+                    }else if(this.editForm.zdbwList[i].zdbwlx=='' || this.editForm.zdbwList[i].zdbwlx==null){
+                        this.$message.warning({
+                            message: '请选择重点部位类型',
+                            showClose: true
+                        });
+                        return false;
+                    }
                 }
+                
             }
             return true;
         },
         //保存
         save: function () {
-            if (this.checkForm() == true) {
-                if (this.status == 0) {//新增
-                    this.addForm.cjrid = this.role_data.userid;
-                    this.addForm.cjrmc = this.role_data.realName;
-                    this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
-                    for (var i in this.engineForm) {
-                        this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.engineForm[i].clzzs);
-                    }
-                    this.addForm.zcbl = parseInt(this.addForm.kysl) + parseInt(this.addForm.shsl) + parseInt(this.addForm.zzsl);
-                    if (this.addForm.zblx.length > 0) {
-                        this.addForm.zblx = this.addForm.zblx[this.addForm.zblx.length - 1];
-                    }
-                    if (this.addForm.xzqh.length > 0) {
-                        this.addForm.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
-                    }
-                    if (this.addForm.ssdz.length > 0) {
-                        this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
-                    }
-                    this.addForm.equipengineVOList = this.engineForm;
-                    axios.post('/dpapi/equipmentsource/insertByVO', this.addForm).then(function (res) {
-                        if (res.data.result.uuid != null && res.data.result.uuid != '') {
-                            this.$alert('保存成功', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/equipment_list");
-                                }
+            if(this.validateForm() == true) {
+                var jdh = this.shiroData.organizationVO.jgid;
+                if(this.status == 0) {//新增
+                    axios.get('/dpapi/importantunits/doCheckName/' + this.editForm.dwmc).then(function (res) {
+                        if(res.data.result > 0) {
+                            this.$message.warning({
+                                message: '中文名已存在，请重新命名',
+                                showClose: true
                             });
-                        } else {
-                            this.$alert('保存失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/equipment_list");
+                        }else{
+                            this.editForm.cjrid = this.shiroData.userid;
+                            this.editForm.cjrmc = this.shiroData.realName;
+                            this.editForm.jdh = jdh;
+                            //行政区划
+                            if(this.editForm.xzqh!="" && this.editForm.xzqh.length>0){
+                                this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
+                            }
+                            //防火队站ID
+                            this.editForm.fhdzid = this.editForm.fhdzid[this.editForm.fhdzid.length-1];
+                            //灭火队站ID
+                            this.editForm.mhdzid = this.editForm.mhdzid[this.editForm.mhdzid.length-1];
+
+                            //重点部位中创建人信息
+                            for(var i in this.editForm.zdbwList){
+                                this.editForm.zdbwList[i].cjrid = this.shiroData.userid;
+                                this.editForm.zdbwList[i].cjrmc = this.shiroData.realName;
+                            }
+
+                            axios.post('/dpapi/importantunits/doInsertByVO', this.editForm).then(function (res) {
+                                if(res.data.result != null) {
+                                    this.$alert('保存成功', '提示', {
+                                        type: 'success',
+                                        confirmButtonText: '确定',
+                                        callback: action => {
+                                            loadDiv("planobject/importantunits_list");
+                                        }
+                                    });
+                                }else {
+                                    this.$alert('保存失败', '提示', {
+                                        type: 'error',
+                                        confirmButtonText: '确定',
+                                        callback: action => {
+                                            loadDiv("planobject/importantunits_list");
+                                        }
+                                    });
                                 }
-                            });
+                            }.bind(this), function (error) {
+                                console.log(error);
+                            })
                         }
                     }.bind(this), function (error) {
                         console.log(error);
                     })
-                } else {//修改
-                    this.addForm.xgrid = this.role_data.userid;
-                    this.addForm.xgrmc = this.role_data.realName;
-                    this.addForm.scsj = dateFormat(new Date(this.addForm.scsj));
-                    this.addForm.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];
-                    axios.post('/dpapi/firedrug/doUpdateDrug', this.addForm).then(function (res) {
-                        if (res.data.result >= 1) {
-                            this.$alert('成功修改' + res.data.result + '条消防药剂信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/equipment_list");
-                                }
-                            });
-                        } else {
-                            this.$alert('修改失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/equipment_list");
-                                }
-                            });
-                        }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
+                    
+                    
+                }else{//修改
                 }
             }
         },
-        //取消
+
+        //取消按钮
         cancel: function () {
-            loadDiv("basicinfo/equipment_list");
-        }
+            loadDiv("planobject/importantunits_list");
+        },
+
+        //判断对象{}为空对象
+        validateIsEmptyObject: function(obj){
+            for(var key in obj){
+                return false;
+            }
+            return true;
+        },
+
     },
 
 })
