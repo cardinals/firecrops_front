@@ -46,10 +46,10 @@ input[type=checkbox]{
     margin-left: 0 !important; 
 }
 .el-card__header{
-    padding: 0px 20px;
+    padding: 3px 0px 0px 20px;
 }
 .el-card__body{
-    padding: 15px;    
+    padding: 10px 0px 10px 0px;    
 }
 .el-card{
     margin-top: 5px;
