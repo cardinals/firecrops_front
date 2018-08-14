@@ -208,24 +208,19 @@ var vue = new Vue({
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                axios.post('/api/shiro').then(function (res) {
-                    this.shiroData = res.data;
-                    for(var i=0;i<this.multipleSelection.length;i++){
-                        this.multipleSelection[i].xgrid = this.shiroData.userid;
-                        this.multipleSelection[i].xgrmc = this.shiroData.realName;
-                    }
-                    axios.post('/dpapi/xfdz/doDeleteBatch', this.multipleSelection).then(function (res) {
-                        this.$message({
-                            message: "成功删除" + this.multipleSelection.length + "条重点单位信息",
-                            showClose: true,
-                            onClose: this.searchClick('delete')
-                        });
-                    }.bind(this), function (error) {
-                        console.log(error)
-                    })
+                for(var i=0;i<this.multipleSelection.length;i++){
+                    this.multipleSelection[i].xgrid = this.shiroData.userid;
+                    this.multipleSelection[i].xgrmc = this.shiroData.realName;
+                }
+                axios.post('/dpapi/importantunits/doDeleteBatch', this.multipleSelection).then(function (res) {
+                    this.$message({
+                        message: "成功删除" + this.multipleSelection.length + "条重点单位信息",
+                        showClose: true,
+                        onClose: this.searchClick('delete')
+                    });
                 }.bind(this), function (error) {
-                    console.log(error);
-                }); 
+                    console.log(error)
+                })
             }).catch(() => {
                 this.$message({
                     type: 'info',

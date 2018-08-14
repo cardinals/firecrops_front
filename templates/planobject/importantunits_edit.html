@@ -828,7 +828,7 @@
 						</el-row>
 						<div class="table_container">
 							<el-table border id="table" :data="tableData_building.slice((currentPage_building-1)*pageSize_building,currentPage_building*pageSize_building)"
-								class="tableStyle" :height="tableheight" @row-click="selectRow_building">
+								class="tableStyle" :height="tableheight_buliding" @row-click="selectRow_building">
 								<el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
 								<el-table-column prop="jzmc" label="建筑名称" show-overflow-tooltip min-width="33%" align="center"></el-table-column>
 								<el-table-column prop="jzlxmc" label="建筑类型" show-overflow-tooltip min-width="27%" align="center"></el-table-column>
