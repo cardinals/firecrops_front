@@ -213,6 +213,8 @@ new Vue({
         getZdbwListByZddwId: function(zddwId){
             axios.get('/dpapi/importantparts/doFindZdbwListByZddwId/' + zddwId).then(function (res) {
                 if(res.data.result.length > 0){
+                    //重点部位类型
+                    this.getZdbwlxData();
                     //使用性质
                     this.getSyxzData();
                     //建筑结构
@@ -408,7 +410,9 @@ new Vue({
 
         //重点部位新增
         addDomainZdbw: function(){
-            this.getZdbwlxData();
+            if(this.zdbwlxData.length == 0){
+                this.getZdbwlxData();
+            }
             this.editForm.zdbwList.push({
                 zdbwmc: '',
                 zdbwlx: '',
@@ -421,6 +425,8 @@ new Vue({
                 cgl: {},
                 cjrid: '',
                 cjrmc: '',
+                xgrid: '',
+                xgrmc: '',
                 key: Date.now()
             });
         },
@@ -657,6 +663,12 @@ new Vue({
                     this.editForm.fhdzid = this.editForm.fhdzid[this.editForm.fhdzid.length-1];
                     //灭火队站ID
                     this.editForm.mhdzid = this.editForm.mhdzid[this.editForm.mhdzid.length-1];
+
+                    //重点部位中修改人信息
+                    for(var i in this.editForm.zdbwList){
+                        this.editForm.zdbwList[i].xgrid = this.shiroData.userid;
+                        this.editForm.zdbwList[i].xgrmc = this.shiroData.realName;
+                    }
 
                     axios.post('/dpapi/importantunits/doUpdateByVO', this.editForm).then(function (res) {
                         if(res.data.result != null) {
