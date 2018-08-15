@@ -195,6 +195,9 @@ body{height:100%;overflow:hidden;}
 .el-card__header {
     padding: 13px 15px;
 }
+.el-card__body{
+    padding: 15px;    
+}
 .detailPic {
     position: absolute;
     top: 50%;
