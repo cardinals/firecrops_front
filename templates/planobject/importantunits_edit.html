@@ -362,7 +362,7 @@
 											<el-label class="mr5 vbm"><span style="color:red;">* </span>重点部位类型</el-label>
 										</el-col>
 										<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-											<el-select size="small" v-model="zdbw.zdbwlx" placeholder="请选择" class="searchSelect" clearable @change="zdbwlxChange(index)">
+											<el-select size="small" v-model="zdbw.zdbwlx" placeholder="请选择" class="searchSelect" clearable @change="zdbwlxChange(index)" :disabled="zdbw.zdbwlxDisabled">
 												<el-option v-for="item in zdbwlxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 											</el-select>
 										</el-col>
