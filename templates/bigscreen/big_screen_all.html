@@ -45,14 +45,14 @@
 <script>
     $(function () {
             //判断是否宽屏
-            var winWide = window.screen.availHeight;
+            var winWide = document.body.clientWidth;
             alert(winWide);
             var wideScreen = false;
-            if (winWide <= 1921) {//1024及以下分辨率
-                $("#css").attr("href", "../../static/css/screena.css");
-                alert('小屏');
-            } else {
+            if (winWide = 1040) {//1024及以下分辨率
                 $("#css").attr("href", "../../static/css/screenb.css");
+                alert('小屏');
+            } else if (winWide = 1032) {
+                $("#css").attr("href", "../../static/css/screena.css");
                 alert('大屏');
                 wideScreen = true; //是宽屏
             }
