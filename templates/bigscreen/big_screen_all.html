@@ -9,11 +9,8 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/app.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/sync.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/formal.css">
-    <style> 
-          
-    </style> 
-
-
+    <link href="../../static/css/screena.css" id="css" rel="stylesheet" type="text/css" />
+    
 </head>
 <body class="fw map-bg m0">
     <div id="app" class="abc" >
@@ -45,6 +42,22 @@
 <script type="text/javascript" src="../../static/js/zzzlib/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../../static/js/zzzlib/vue.js"></script>
 <script type="text/javascript" src="../../static/js/zzzlib/element.js"></script>
+<script>
+    $(function () {
+            //判断是否宽屏
+            var winWide = window.screen.width;
+            alert(winWide);
+            var wideScreen = false;
+            if (winWide <= 1921) {//1024及以下分辨率
+                $("#css").attr("href", "../../static/css/screena.css");
+                alert('小屏');
+            } else {
+                $("#css").attr("href", "../../static/css/screenb.css");
+                alert('大屏');
+                wideScreen = true; //是宽屏
+            }
+        })
+    </script> 
 <script>
     var vm = new Vue({
         el: "#app",
