@@ -230,14 +230,23 @@ new Vue({
                         case "10":
                             this.editForm.zdbwList[i].zzl = [];
                             this.editForm.zdbwList[i].cgl = [];
+                            if(this.editForm.zdbwList[i].jzl == null){
+                                this.editForm.zdbwList[i].jzl = [];
+                            }
                             break;
                         case "20":
                             this.editForm.zdbwList[i].jzl = [];
                             this.editForm.zdbwList[i].cgl = [];
+                            if(this.editForm.zdbwList[i].zzl == null){
+                                this.editForm.zdbwList[i].zzl = [];
+                            }
                             break;
                         case "30":
                             this.editForm.zdbwList[i].jzl = [];
                             this.editForm.zdbwList[i].zzl = [];
+                            if(this.editForm.zdbwList[i].cgl == null){
+                                this.editForm.zdbwList[i].cgl = [];
+                            }
                             break;
                         default:
                             this.editForm.zdbwList[i].jzl = [];
@@ -255,8 +264,6 @@ new Vue({
         getDwxzData: function () {
             axios.get('/api/codelist/getCodeTypeOrderByNum/DWXZ').then(function (res) {
                 this.dwxzData = res.data.result;
-                // this.dwxzData.sort(this.compare('value'));
-                // console.log(this.dwxzData);
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -692,6 +699,35 @@ new Vue({
                     for(var i in this.editForm.zdbwList){
                         this.editForm.zdbwList[i].xgrid = this.shiroData.userid;
                         this.editForm.zdbwList[i].xgrmc = this.shiroData.realName;
+                        //对重点部位建筑类、装置类、储罐类对象进行处理
+                        switch(this.editForm.zdbwList[i].zdbwlx){
+                            case "10":
+                                this.editForm.zdbwList[i].zzl = null;
+                                this.editForm.zdbwList[i].cgl = null;
+                                if(this.editForm.zdbwList[i].jzl.length == 0){
+                                    this.editForm.zdbwList[i].jzl = null;
+                                }
+                                break;
+                            case "20":
+                                this.editForm.zdbwList[i].jzl = null;
+                                this.editForm.zdbwList[i].cgl = null;
+                                if(this.editForm.zdbwList[i].zzl.length == 0){
+                                    this.editForm.zdbwList[i].zzl = null;
+                                }
+                                break;
+                            case "30":
+                                this.editForm.zdbwList[i].jzl = null;
+                                this.editForm.zdbwList[i].zzl = null;
+                                if(this.editForm.zdbwList[i].cgl.length == 0){
+                                    this.editForm.zdbwList[i].cgl = null;
+                                }
+                                break;
+                            default:
+                                this.editForm.zdbwList[i].jzl = null;
+                                this.editForm.zdbwList[i].zzl = null;
+                                this.editForm.zdbwList[i].cgl = null;
+                                break;
+                        }   
                     }
 
                     axios.post('/dpapi/importantunits/doUpdateByVO', this.editForm).then(function (res) {
