@@ -225,7 +225,26 @@ new Vue({
                 this.editForm.zdbwList = res.data.result;
                 //重点部位类型不能修改
                 for(var i in this.editForm.zdbwList){
-                    this.editForm.zdbwList[i].zdbwlxDisabled = true;
+                    this.editForm.zdbwList[i].zdbwlxDisabled = false;
+                    switch(this.editForm.zdbwList[i].zdbwlx){
+                        case "10":
+                            this.editForm.zdbwList[i].zzl = [];
+                            this.editForm.zdbwList[i].cgl = [];
+                            break;
+                        case "20":
+                            this.editForm.zdbwList[i].jzl = [];
+                            this.editForm.zdbwList[i].cgl = [];
+                            break;
+                        case "30":
+                            this.editForm.zdbwList[i].jzl = [];
+                            this.editForm.zdbwList[i].zzl = [];
+                            break;
+                        default:
+                            this.editForm.zdbwList[i].jzl = [];
+                            this.editForm.zdbwList[i].zzl = [];
+                            this.editForm.zdbwList[i].cgl = [];
+                            break;
+                    }
                 }
             }.bind(this), function (error) {
                 console.log(error)
