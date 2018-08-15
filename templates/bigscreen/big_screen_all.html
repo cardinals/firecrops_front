@@ -9,10 +9,35 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/app.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/sync.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/formal.css">
+    <style> 
+            .abc{ height:100%; margin:0 auto} 
+            @media screen and (min-width: 1201px) { 
+            .abc {width: 1200px} 
+            } 
+            /* 设置了浏览器宽度不小于1201px时 abc 显示1200px宽度 */ 
+            
+            @media screen and (max-width: 1200px) { 
+            .abc {width: 900px} 
+            } 
+            /* 设置了浏览器宽度不大于1200px时 abc 显示900px宽度 */ 
+            
+            @media screen and (max-width: 900px) { 
+            .abc {width: 200px;} 
+            } 
+            /* 设置了浏览器宽度不大于900px时 abc 显示200px宽度 */ 
+            
+            @media screen and (max-width: 500px) { 
+            .abc {width: 100px;} 
+            } 
+            /* 设置了浏览器宽度不大于500px时 abc 显示100px宽度 */ 
+            
+    </style> 
+
+
 </head>
 <body class="fw map-bg m0">
-    <div id="app" style="height:100%" >
-        <el-carousel  height="880px" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+    <div id="app" class="abc" >
+        <el-carousel :height="height"  :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <el-carousel-item :key="1">
                 <iframe src="big_screen_overview.html" height="100%" width="100%" frameborder=0></iframe>
             </el-carousel-item>
@@ -43,7 +68,9 @@
 <script>
     var vm = new Vue({
         el: "#app",
-        data: {}
+        data: {      
+          height:'580px'
+        }
     })
 </script>
 
