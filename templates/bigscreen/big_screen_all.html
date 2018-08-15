@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/app.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/sync.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/formal.css">
-    <link href="../../static/css/screena.css" id="css" rel="stylesheet" type="text/css" />
+    <link href="../../static/css/screenb.css" id="css" rel="stylesheet" type="text/css" />
     
 </head>
 <body class="fw map-bg m0">
@@ -48,10 +48,10 @@
             var winWide = document.body.clientWidth;
             alert(winWide);
             var wideScreen = false;
-            if (winWide = 1040) {//1024及以下分辨率
+            if (winWide <= 1280) {//1024及以下分辨率
                 $("#css").attr("href", "../../static/css/screenb.css");
                 alert('小屏');
-            } else if (winWide = 1032) {
+            } else {
                 $("#css").attr("href", "../../static/css/screena.css");
                 alert('大屏');
                 wideScreen = true; //是宽屏
