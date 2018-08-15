@@ -316,11 +316,7 @@ new Vue({
         },
         //根据重点单位id获取建筑分区信息
         getJzfqDetailByVo: function () {
-            var params = {
-                uuid: this.uuid,
-                // jzfl: this.tableData.jzfl
-            };
-            axios.post('/dpapi/importantunits/doFindBuildingDetailsByVo/', params).then(function (res) {
+            axios.get('/dpapi/importantunits/doFindJzxxListByZddwId/' + this.uuid).then(function (res) {
                 this.jzfqData = res.data.result;
                 if (this.jzfqData.length > 0) {
                     for (var i = 0; i < this.jzfqData.length; i++) {  //循环LIST

@@ -223,6 +223,10 @@ new Vue({
                     this.getCglxData();
                 }
                 this.editForm.zdbwList = res.data.result;
+                //重点部位类型不能修改
+                for(var i in this.editForm.zdbwList){
+                    this.editForm.zdbwList[i].zdbwlxDisabled = true;
+                }
             }.bind(this), function (error) {
                 console.log(error)
             })
@@ -427,6 +431,7 @@ new Vue({
                 cjrmc: '',
                 xgrid: '',
                 xgrmc: '',
+                zdbwlxDisabled: false,
                 key: Date.now()
             });
         },
