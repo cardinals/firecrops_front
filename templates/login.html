@@ -93,14 +93,14 @@
         $(function () {
                 //判断是否宽屏
                 var winWide = document.body.clientWidth;
-                alert(winWide);
+                // alert(winWide);
                 var wideScreen = false;
                 if (winWide <= 1280) {//1024及以下分辨率
                     $("#css").attr("href", "../static/css/login.css");
-                    alert('小屏');
+                    // alert('小屏');
                 } else  {
                     $("#css").attr("href", "../static/css/loginb.css");
-                    alert('大屏');
+                    // alert('大屏');
                     wideScreen = true; //是宽屏
                 }
             })
