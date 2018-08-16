@@ -90,7 +90,6 @@
 <script src="../static/js/zzzlib/jquery-3.2.1.min.js"></script>
 <script src="../static/js/zzzlib/axios.min.js"></script>
 <script>
-    
         $(function () {
                 var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串 
                 var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器 
@@ -100,18 +99,18 @@
                 var isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1; //判断是否Safari浏览器 
                 var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器 
                 //判断是否宽屏
-                var winWide = document.body.clientWidth;
+                var winWide = window.screen.availHeight;
                 // alert(winWide);
                 var wideScreen = false;
                 if (isChrome) {
-                    if (winWide <= 1900) {//及以下分辨率
+                    if (winWide <= 1035) {//及以下分辨率
                         $("#css").attr("href", "../static/css/login.css");
                     } else  {
                         $("#css").attr("href", "../static/css/loginb.css");
                         wideScreen = true; //是宽屏
                     }   
                 }else{
-                    if (winWide <= 1900) {//及以下分辨率
+                    if (winWide <= 1035) {//及以下分辨率
                         $("#css").attr("href", "../static/css/login.css");
                     } else  {
                         $("#css").attr("href", "../static/css/loginb.css");
