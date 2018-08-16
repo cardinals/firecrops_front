@@ -103,7 +103,7 @@ new Vue({
                 //天然水源取水点VO
                 trsyqsd_trsylx: "",
                 trsyqsd_trsyid: "",
-                trsyqsd_trsymc: "",
+                trsy_trsymc: "",
                 // trsyqsd_ywksq: "",
                 // trsyqsd_ksqsj: "",
                 // trsyqsd_sz: "",
@@ -115,6 +115,7 @@ new Vue({
                 trsyqsd_qsxs: "",
                 trsyqsd_jdh: ""
             },
+            
             props: {
                 value: 'codeValue',
                 label: 'codeName',
@@ -125,6 +126,22 @@ new Vue({
                 label: 'dzjc',
                 children: 'children'
             },
+            //天然水源弹出页---------------------------------------------------
+            trsyListVisible: false,
+            loading_trsy: false,
+            //当前页
+            currentPage: 1,
+            //分页大小
+            pageSize: 5,
+            //总记录数
+            total: 0,
+            //搜索天然水源
+            searchForm: {
+                trsy_trsymc: ''
+            },
+            tableData: [],
+            //表高度变量
+            tableheight: 243,
         }
     },
     created: function () {
@@ -465,6 +482,48 @@ new Vue({
                 this.isXFSC = false;
                 this.isTRSYQSD = false;
             }
+        },
+
+        //天然水源弹出页---------------------------------------------------------------
+        trsyList: function (type, val) {
+            if (type == 'page') {
+                this.tableData = [];
+            } else {
+                if (type == 'init') {
+                    this.searchForm.trsy_trsymc = '';
+                }
+                this.currentPage = 1;
+            }
+            this.trsyListVisible = true;
+            this.loading_trsy = true;
+
+            var params = {
+                trsy_trsymc: this.searchForm.trsy_trsymc,
+                pageSize: this.pageSize,
+                pageNum: this.currentPage,
+                // orgUuid: this.shiroData.organizationVO.uuid,
+                // orgJgid: this.shiroData.organizationVO.jgid
+            };
+            axios.post('/dpapi/xfsy/doFindTrsyListByVO', params).then(function (res) {
+                var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
+                this.tableData = tableTemp.concat(res.data.result.list);
+                this.total = res.data.result.total;
+                this.loading_trsy = false;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
+
+        //选择车辆，返回车辆名称和id
+        selectRow: function (val) {
+            this.editForm.trsyqsd_trsyid = val.trsy_uuid;
+            this.editForm.trsy_trsymc = val.trsy_trsymc;
+            this.trsyListVisible = false;
+        },
+        //车辆查询条件清空
+        clearTrsyList: function (val) {
+            this.searchForm.trsy_trsymc = "";
+            this.trsyList('reset');
         },
     },
 

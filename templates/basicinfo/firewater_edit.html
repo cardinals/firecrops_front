@@ -377,9 +377,11 @@
 									<el-label class="mr5 vbm">所属天然水源</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.trsyqsd_trsymc" placeholder="天然水源名称"></el-input>
+									<el-input size="small" v-model="editForm.trsy_trsymc" placeholder="天然水源名称"></el-input>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
+									<el-button icon="search" size="small" style="border: none;background-color: #FFFFFF;" @click="trsyList('init')" class="l"></el-button>
+								</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 									<el-label class="mr5 vbm">取水形式</el-label>
 								</el-col>
@@ -443,6 +445,42 @@
 						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
 					</el-row>
 				</el-row>
+				<!--选择天然水源界面-->
+				<el-dialog title="选择天然水源" :visible.sync="trsyListVisible" :close-on-click-modal="false">
+					<div id="tableView" v-loading="loading_trsy" element-loading-text="加载中">
+						<el-row>
+							<el-form :inline="true" class="el-form demo-form-inline">
+								<el-row class="mb5">
+									<el-col :span="16" class="searchInline">
+										<label class="el-form-item__label" style="width:145px;" class="tr vbm">天然水源名称</label>
+										<el-input size="small" v-model="searchForm.trsy_trsymc" placeholder="天然水源名称" clearable></el-input>
+									</el-col>
+									<el-col :span="8" class="btnSearchPlus">
+										<el-button type="primary" icon="search" size="small" @click="trsyList('click')">查询</el-button>
+										<el-button type="clear" icon="delete" size="small" @click="clearTrsyList">清空</el-button>
+									</el-col>
+								</el-row>
+							</el-form>
+						</el-row>
+						<div class="table_container">
+							<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" class="tableStyle" :height="tableheight"
+							 @row-click="selectRow">
+								<el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
+								<el-table-column prop="trsy_trsymc" label="水源名称" show-overflow-tooltip min-width="30%" align="center"></el-table-column>
+								<el-table-column prop="trsy_trsylxmc" label="水源类型" show-overflow-tooltip min-width="30%" align="center"></el-table-column>
+								<el-table-column prop="trsy_ywksq" label="有无枯水期" show-overflow-tooltip min-width="30%" align="center"></el-table-column>
+							</el-table>
+							<!--列表底部工具条和分页符-->
+							<el-row type="flex" justify="end">
+								<el-col :span="18">
+									<el-pagination @current-change="currentPageChange" :current-page="currentPage" :page-size="pageSize" layout="total, prev, pager, next, jumper"
+									 :total=parseInt(total)>
+									</el-pagination>
+								</el-col>
+							</el-row>
+						</div>
+					</div>
+				</el-dialog>
 			</div>
 		</div>
 	</div>
