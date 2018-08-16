@@ -56,7 +56,7 @@ new Vue({
                 sylx: "",
                 sydz: "",
                 kyzt: "",
-                gxdz:"",
+                gxdz: "",
                 xzqh: "",
                 sygs: "",
                 lon: "",
@@ -64,31 +64,32 @@ new Vue({
                 gisX: "",
                 gisY: "",
                 gisH: "",
-                ssdw:"",
-                gsdw:"",
-                gsdwlxfs:"",
-                bz:"",
-                jdh:"",
+                ssdw: "",
+                gsdw: "",
+                gsdwlxfs: "",
+                bz: "",
+                jdh: "",
                 //创建人、修改人
                 cjrid: "",
                 cjrmc: "",
                 xgrid: "",
                 xgrmc: "",
                 //消火栓VO
-                xhs_szxs:"",
-                xhs_gwylfw:"",
-                xhs_gwxs:"",
-                xhs_gwzj:"",
-                xhs_gwyllx:"",
-                xhs_jkxs:"",
-                xhs_jkkj:"",
-                xhs_zdll:"",
-                xhs_jdh:"",
+                xhs_szxs: "",
+                xhs_gwylfw: "",
+                xhs_gwxs: "",
+                xhs_gwzj: "",
+                xhs_gwyllx: "",
+                xhs_jkxs: "",
+                xhs_jkkj: "",
+                xhs_zdll: "",
+                xhs_jdh: "",
                 //消防水鹤VO
                 xfsh_gwzj: "",
                 xfsh_gwyl: "",
                 xfsh_cskgd: "",
                 xfsh_zdll: "",
+                xfsh_jdh: "",
                 //消防水池VO
                 xfsc_sybgc: "",
                 xfsc_csl: "",
@@ -98,17 +99,21 @@ new Vue({
                 xfsc_tcwz: "",
                 xfsc_tsqscls: "",
                 xfsc_bssj: "",
+                xfsc_jdh: "",
                 //天然水源取水点VO
                 trsyqsd_trsylx: "",
-                trsyqsd_ywksq: "",
-                trsyqsd_ksqsj: "",
-                trsyqsd_sz:"",
-                trsyqsd_szms:"",
-                trsyqsd_ywqsd:"",
+                trsyqsd_trsyid: "",
+                trsyqsd_trsymc: "",
+                // trsyqsd_ywksq: "",
+                // trsyqsd_ksqsj: "",
+                // trsyqsd_sz: "",
+                // trsyqsd_szms: "",
+                // trsyqsd_ywqsd: "",
                 trsyqsd_sybgc: "",
-                trsyqsd_ycwz: "",
+                trsyqsd_tcwz: "",
                 trsyqsd_tsqscls: "",
                 trsyqsd_qsxs: "",
+                trsyqsd_jdh: ""
             },
             props: {
                 value: 'codeValue',
@@ -144,36 +149,34 @@ new Vue({
         this.getSygsData();
     },
     methods: {
-        handleNodeClick(data) {
-        },
         //上级机构下拉框
-        getSjdzData: function(){
+        getSjdzData: function () {
             var organization = this.shiroData.organizationVO;
             var params = {
                 dzid: organization.uuid,
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
             };
-            axios.post('/dpapi/xfdz/findSjdzByUser', params).then(function(res){
+            axios.post('/dpapi/xfdz/findSjdzByUser', params).then(function (res) {
                 this.sjdzData = res.data.result;
                 this.searchClick();
-            }.bind(this),function(error){
+            }.bind(this), function (error) {
                 console.log(error);
-            })      
+            })
         },
         //行政区划下拉框
-        getXzqhData: function(){
-            axios.get('/api/codelist/getXzqhTreeByUser').then(function(res){
+        getXzqhData: function () {
+            axios.get('/api/codelist/getXzqhTreeByUser').then(function (res) {
                 this.xzqhData = res.data.result;
-            }.bind(this),function(error){
+            }.bind(this), function (error) {
                 console.log(error);
             })
         },
         //可用状态下拉框
-        getKyztData: function(){
-            axios.get('/api/codelist/getCodetype/SYKYZT').then(function(res){
+        getKyztData: function () {
+            axios.get('/api/codelist/getCodetype/SYKYZT').then(function (res) {
                 this.kyztData = res.data.result;
-            }.bind(this),function(error){
+            }.bind(this), function (error) {
                 console.log(error);
             })
         },
@@ -186,7 +189,7 @@ new Vue({
             })
         },
         //设置形式下拉框
-        getSzxsData:function () {
+        getSzxsData: function () {
             axios.get('/api/codelist/getCodetype/XHSSZXS').then(function (res) {
                 this.szxsData = res.data.result;
             }.bind(this), function (error) {
@@ -194,7 +197,7 @@ new Vue({
             })
         },
         //管网形式
-        getGwxsData:function () {
+        getGwxsData: function () {
             axios.get('/api/codelist/getCodetype/GWXS').then(function (res) {
                 this.gwxsData = res.data.result;
             }.bind(this), function (error) {
@@ -202,7 +205,7 @@ new Vue({
             })
         },
         //管网压力类型
-        getGwyllxData:function (){
+        getGwyllxData: function () {
             axios.get('/api/codelist/getCodetype/GWYLLX').then(function (res) {
                 this.gwyllxData = res.data.result;
             }.bind(this), function (error) {
@@ -210,7 +213,7 @@ new Vue({
             })
         },
         //接口形式
-        getJkxsData:function () {
+        getJkxsData: function () {
             axios.get('/api/codelist/getCodetype/XHSJKXS').then(function (res) {
                 this.jkxsData = res.data.result;
             }.bind(this), function (error) {
@@ -218,7 +221,7 @@ new Vue({
             })
         },
         //水质
-        getSzData:function () {
+        getSzData: function () {
             axios.get('/api/codelist/getCodetype/SYSZ').then(function (res) {
                 this.szData = res.data.result;
             }.bind(this), function (error) {
@@ -226,7 +229,7 @@ new Vue({
             })
         },
         //枯水期
-        getTrsyYWKSQ_data:function () {
+        getTrsyYWKSQ_data: function () {
             axios.get('/api/codelist/getCodetype/SYYWKSQ').then(function (res) {
                 this.ywksqData = res.data.result;
             }.bind(this), function (error) {
@@ -234,7 +237,7 @@ new Vue({
             })
         },
         //天然水源类型trsylxData
-        getTrsylxData:function () {
+        getTrsylxData: function () {
             axios.get('/api/codelist/getCodetype/TRSYLX').then(function (res) {
                 this.trsylxData = res.data.result;
             }.bind(this), function (error) {
@@ -242,7 +245,7 @@ new Vue({
             })
         },
         //水源归属
-        getSygsData:function(){
+        getSygsData: function () {
             axios.get('/api/codelist/getCodetype/SYGS').then(function (res) {
                 this.sygsData = res.data.result;
             }.bind(this), function (error) {
@@ -257,14 +260,14 @@ new Vue({
             } else {//修改
                 var sylxParam = getQueryString("sylx");
                 var params = {
-                    uuid : this.status,
-                    sylx : sylxParam
+                    uuid: this.status,
+                    sylx: sylxParam
                 };
-                axios.post('/dpapi/xfsy/findSyAndSxByVo',params).then(function (res) {
+                axios.post('/dpapi/xfsy/findSyAndSxByVo', params).then(function (res) {
                     var result = res.data.result;
                     this.editForm = res.data.result;
-                    if(sylxParam!=null && sylxParam!=""){
-                        switch(sylxParam){
+                    if (sylxParam != null && sylxParam != "") {
+                        switch (sylxParam) {
                             case "01":
                                 this.isXHS = true;
                                 break;
@@ -279,13 +282,13 @@ new Vue({
                                 break;
                         }
                     }
-                    
+
                     //行政区划
                     var xzqhArray = [];
-                    if(result.xzqh!=null && result.xzqh!="" && result.xzqh.substr(2,4)!="0000"){
-                        xzqhArray.push(result.xzqh.substr(0,2) + "0000");
-                        if(result.xzqh.substr(4,2)!="00"){
-                            xzqhArray.push(result.xzqh.substr(0,4) + "00");
+                    if (result.xzqh != null && result.xzqh != "" && result.xzqh.substr(2, 4) != "0000") {
+                        xzqhArray.push(result.xzqh.substr(0, 2) + "0000");
+                        if (result.xzqh.substr(4, 2) != "00") {
+                            xzqhArray.push(result.xzqh.substr(0, 4) + "00");
                         }
                     }
                     xzqhArray.push(result.xzqh);
@@ -293,20 +296,20 @@ new Vue({
                     //上级消防队站
                     var sjdzArray = [];
                     var temp = this.editForm.gxdz;
-                    for(var i in this.sjdzData){
-                        if(temp == this.sjdzData[i].dzid){
+                    for (var i in this.sjdzData) {
+                        if (temp == this.sjdzData[i].dzid) {
                             sjdzArray.push(this.sjdzData[i].dzid);
-                        }else{
-                            for(var j in this.sjdzData[i].children){
-                                if(temp == this.sjdzData[i].children[j].dzid){
+                        } else {
+                            for (var j in this.sjdzData[i].children) {
+                                if (temp == this.sjdzData[i].children[j].dzid) {
                                     sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid);
-                                }else{
-                                    for(var k in this.sjdzData[i].children[j].children){
-                                        if(temp == this.sjdzData[i].children[j].children[k].dzid){
+                                } else {
+                                    for (var k in this.sjdzData[i].children[j].children) {
+                                        if (temp == this.sjdzData[i].children[j].children[k].dzid) {
                                             sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid, this.sjdzData[i].children[j].children[k].dzid);
-                                        }else{
-                                            for(var n in this.sjdzData[i].children[j].children[k].children){
-                                                if(temp == this.sjdzData[i].children[j].children[k].children[n].dzid){
+                                        } else {
+                                            for (var n in this.sjdzData[i].children[j].children[k].children) {
+                                                if (temp == this.sjdzData[i].children[j].children[k].children[n].dzid) {
                                                     sjdzArray.push(this.sjdzData[i].dzid, this.sjdzData[i].children[j].dzid, this.sjdzData[i].children[j].children[k].dzid, this.sjdzData[i].children[j].children[k].children[n].dzid);
                                                 }
                                             }
@@ -324,14 +327,14 @@ new Vue({
             }
         },
         //保存前校验
-        validateSave: function(){
+        validateSave: function () {
             if (this.editForm.symc == "" || this.editForm.symc == null) {
                 this.$message.warning({
                     message: '请输入水源名称',
                     showClose: true
                 });
                 return false;
-            }else if(this.editForm.sylx == "" || this.editForm.sylx == null){
+            } else if (this.editForm.sylx == "" || this.editForm.sylx == null) {
                 this.$message.warning({
                     message: '请选择水源类型',
                     showClose: true
@@ -340,81 +343,51 @@ new Vue({
             }
             return true;
         },
-        /*
-        //数值型校验
-        validateNum: function(val, message, type){
-            //type=num:非负数，figure：数值，int：整数
-            var regPos = /^\d+(\.\d+)?$/;  
-            if(type == "num"){
-            }else if(type == "int"){
-                regPos = /^\d+$/;
-            }else if(type == "figure"){
-                regPos = /^(-)\d+(\.\d+)?$/;  
-            }
-            
-            if(val!="" && val!=null){
-                if(!regPos.test(val)){
-                    this.$message.warning({
-                        message: message,
-                        showClose: true
-                    });
-                    return false;
-                }              
-            }
-            return true;
-        },
-        //非负数校验
-        validateInt: function(val){
-            //var regPos = /^\d+$/; //非负整数
-            var regPos = /^\d+(\.\d+)?$/;
-            if(val!="" && val!=null){
-                if(!regPos.test(val)){
-                    this.$message.warning({
-                        message: "请输入非负数",
-                        showClose: true
-                    });
-                }              
-            }
-        },
-        */
+
         //保存
         save: function (formName) {
-            if(this.validateSave()){
+            if (this.validateSave()) {
                 if (this.status == 0) {//新增
                     this.editForm.cjrid = this.shiroData.userid;
                     this.editForm.cjrmc = this.shiroData.realName;
                     this.editForm.jdh = this.shiroData.organizationVO.jgid;
                     this.editForm.xhs_jdh = this.shiroData.organizationVO.jgid;
-                    this.editForm.gxdz = this.editForm.gxdz[this.editForm.gxdz.length-1];
-                    this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
+                    this.editForm.xfsh_jdh = this.shiroData.organizationVO.jgid;
+                    this.editForm.xfsc_jdh = this.shiroData.organizationVO.jgid;
+                    this.editForm.trsyqsd_jdh = this.shiroData.organizationVO.jgid;
+                    this.editForm.gxdz = this.editForm.gxdz[this.editForm.gxdz.length - 1];
+                    this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length - 1];
                     axios.post('/dpapi/xfsy/insertByXfsyVO', this.editForm).then(function (res) {
-                    if (res.data.result != null) {
-                        this.$alert('成功保存消防水源信息', '提示', {
-                            type: 'success',
-                            confirmButtonText: '确定',
-                            callback: action => {
-                            loadDiv("basicinfo/firewater_list");
-                            }
-                        });
-                    } else {
-                        this.$alert('保存失败', '提示', {
-                            type: 'error',
-                            confirmButtonText: '确定',
-                            callback: action => {
-                            loadDiv("basicinfo/firewater_list");
+                        if (res.data.result != null) {
+                            this.$alert('成功保存消防水源信息', '提示', {
+                                type: 'success',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("basicinfo/firewater_list");
+                                }
+                            });
+                        } else {
+                            this.$alert('保存失败', '提示', {
+                                type: 'error',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("basicinfo/firewater_list");
+                                }
+                            });
                         }
-                    });
-                }
-                }.bind(this), function (error) {
-                    console.log(error);
-                })
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
                 } else {//修改
                     this.editForm.xgrid = this.shiroData.userid;
                     this.editForm.xgrmc = this.shiroData.realName;
                     this.editForm.jdh = this.shiroData.organizationVO.jgid;
                     this.editForm.xhs_jdh = this.shiroData.organizationVO.jgid;
-                    this.editForm.gxdz = this.editForm.gxdz[this.editForm.gxdz.length-1];
-                    this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
+                    this.editForm.xfsh_jdh = this.shiroData.organizationVO.jgid;
+                    this.editForm.xfsc_jdh = this.shiroData.organizationVO.jgid;
+                    this.editForm.trsyqsd_jdh = this.shiroData.organizationVO.jgid;
+                    this.editForm.gxdz = this.editForm.gxdz[this.editForm.gxdz.length - 1];
+                    this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length - 1];
                     axios.post('/dpapi/xfsy/updateByXfsyVO', this.editForm).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功修改消防水源信息', '提示', {
@@ -443,50 +416,50 @@ new Vue({
             loadDiv("basicinfo/firewater_list");
         },
         //水源类型变化
-        sylxChange: function(){
+        sylxChange: function () {
             var type = this.editForm.sylx;
-            if(type == "01"){
+            if (type == "01") {
                 this.isXHS = true;
                 this.isXFSH = false;
                 this.isXFSC = false;
                 this.isTRSYQSD = false;
                 //设置形式下拉框
-                if(this.szxsData.length == 0)
+                if (this.szxsData.length == 0)
                     this.getSzxsData();
                 //管网形式下拉框
-                if(this.gwxsData.length == 0)
+                if (this.gwxsData.length == 0)
                     this.getGwxsData();
                 //管网压力类型下拉框
-                if(this.gwyllxData.length == 0)
+                if (this.gwyllxData.length == 0)
                     this.getGwyllxData();
                 //接口形式下拉框
-                if(this.jkxsData.length == 0)
+                if (this.jkxsData.length == 0)
                     this.getJkxsData();
-            }else if(type == "02"){
+            } else if (type == "02") {
                 this.isXHS = false;
                 this.isXFSH = true;
                 this.isXFSC = false;
                 this.isTRSYQSD = false;
-            }else if(type == "03"){
+            } else if (type == "03") {
                 this.isXHS = false;
                 this.isXFSH = false;
                 this.isXFSC = true;
                 this.isTRSYQSD = false;
                 //管网形式下拉框
-                if(this.gwxsData.length == 0)
+                if (this.gwxsData.length == 0)
                     this.getGwxsData();
-            }else if(type == "04"){
+            } else if (type == "04") {
                 this.isXHS = false;
                 this.isXFSH = false;
                 this.isXFSC = false;
                 this.isTRSYQSD = true;
-                if(this.trsylxData.length == 0)
+                if (this.trsylxData.length == 0)
                     this.getTrsylxData();
-                if(this.ywksqData.length == 0)
+                if (this.ywksqData.length == 0)
                     this.getTrsyYWKSQ_data();
-                if(this.szData.length == 0)
+                if (this.szData.length == 0)
                     this.getSzData();
-            }else{
+            } else {
                 this.isXHS = false;
                 this.isXFSH = false;
                 this.isXFSC = false;
@@ -494,5 +467,5 @@ new Vue({
             }
         },
     },
-    
+
 })

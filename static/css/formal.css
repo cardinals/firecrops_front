@@ -184,7 +184,7 @@ body{height:100%;overflow:hidden;}
     width: 100%
 }
 .card_title_font{
-    font-size:14px;
+    font-size:15px;
 }
 .card_sytitle_font{
     font-size:12px;
@@ -200,7 +200,7 @@ body{height:100%;overflow:hidden;}
     padding: 13px 15px;
 }
 .el-card__body{
-    padding: 15px;    
+    padding: 13px 15px;    
 }
 .detailPic {
     position: absolute;
