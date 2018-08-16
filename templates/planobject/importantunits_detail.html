@@ -554,17 +554,20 @@
                                     </br/>
                                     <!-- 建筑类建筑分区详情 -->
                                     <el-card v-for="data in jzl_jzfqData" class="card_style">
+                                        <div slot="header" class="clearfix">
+                                            <strong class="card_title_font">建筑类：{{data.jzmc||'无'}}</strong>
+                                        </div>
                                         <el-row class="inform-margin-card">
-                                            <el-col :span="12">
-                                                <div>
-                                                    <strong class="dtdlStyle">建筑名称：</strong>
-                                                    <v-text v-text="data.jzmc||'无'"></v-text>
-                                                </div>
-                                            </el-col>
                                             <el-col :span="12">
                                                 <div>
                                                     <strong class="dtdlStyle">建筑类型：</strong>
                                                     <v-text v-text="data.jzlxmc||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <div>
+                                                    <strong class="dtdlStyle">建筑结构：</strong>
+                                                    <v-text v-text="data.jzl_jzjgmc||'无'"></v-text>
                                                 </div>
                                             </el-col>
                                         </el-row>
@@ -601,14 +604,6 @@
                                                 <div>
                                                     <strong class="dtdlStyle">使用性质：</strong>
                                                     <v-text v-text="data.jzl_jzsyxzmc||'无'"></v-text>
-                                                </div>
-                                            </el-col>
-                                        </el-row>
-                                        <el-row class="inform-margin-card">
-                                            <el-col :span="12">
-                                                <div>
-                                                    <strong class="dtdlStyle">建筑结构：</strong>
-                                                    <v-text v-text="data.jzl_jzjgmc||'无'"></v-text>
                                                 </div>
                                             </el-col>
                                         </el-row>
@@ -679,14 +674,9 @@
                                     </el-card>
                                     <!-- 装置类建筑分区详情 -->
                                     <el-card v-for="data in zzl_jzfqData" class="card_style">
-                                        <el-row class="inform-margin-card">
-                                            <el-col :span="24">
-                                                <div>
-                                                    <strong class="dtdlStyle">装置名称：</strong>
-                                                    <v-text v-text="data.jzmc||'无'"></v-text>
-                                                </div>
-                                            </el-col>
-                                        </el-row>
+                                        <div slot="header" class="clearfix">
+                                            <strong class="card_title_font">装置类：{{data.jzmc||'无'}}</strong>
+                                        </div>
                                         <el-row class="inform-margin-card">
                                             <el-col :span="12">
                                                 <div>
@@ -768,14 +758,9 @@
                                     </el-card>
                                     <!-- 储罐类建筑分区详情 -->
                                     <el-card v-for="data in cgl_jzfqData" class="card_style">
-                                        <el-row class="inform-margin-card">
-                                            <el-col :span="24">
-                                                <div>
-                                                    <strong class="dtdlStyle">罐组名称：</strong>
-                                                    <v-text v-text="data.jzmc||'无'"></v-text>
-                                                </div>
-                                            </el-col>
-                                        </el-row>
+                                        <div slot="header" class="clearfix">
+                                            <strong class="card_title_font">储罐类：{{data.jzmc||'无'}}</strong>
+                                        </div>
                                         <el-row class="inform-margin-card">
                                             <el-col :span="12">
                                                 <div>
@@ -876,6 +861,27 @@
                                                 </div>
                                             </el-col>
                                         </el-row>
+
+                                        <el-row>&nbsp;</el-row>
+                                        <el-row class="inform-margin-card">
+                                            <el-col :span="24">
+                                                <div>
+                                                    <strong class="dtdlStyle">储罐信息：</strong>
+                                                </div>
+                                            </el-col>
+                                        </el-row>
+                                        <div id="cg">
+                                            <el-table :data="data.chuguanList" border class="detailTable">
+                                                <el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
+                                                <el-table-column prop="cgmc" label="储罐名称" align="center" show-overflow-tooltip></el-table-column>
+                                                <el-table-column prop="cglxmc" label="储罐类型" width="160" align="center" show-overflow-tooltip></el-table-column>
+                                                <el-table-column prop="cgzj" label="储罐直径" width="95" align="center" show-overflow-tooltip></el-table-column>
+                                                <el-table-column prop="cggd" label="储罐高度" width="95" align="center" show-overflow-tooltip></el-table-column>
+                                                <el-table-column prop="cgzc" label="储罐周长" width="95" align="center" show-overflow-tooltip></el-table-column>
+                                                <el-table-column prop="gzyl" label="罐顶压力" width="95" align="center" show-overflow-tooltip></el-table-column>
+                                                <el-table-column prop="ccwd" label="存储温度" width="95" align="center" show-overflow-tooltip></el-table-column>
+                                            </el-table>
+                                        </div>
                                     </el-card>
                                 </el-tab-pane>
                                 <el-tab-pane label="重点部位信息" name="forth">
@@ -885,14 +891,9 @@
                                     <div v-if="this.ZDBW">
                                         <!-- 建筑类重点部位详情 -->
                                         <el-card v-for="data in jzl_zdbwData" class="card_style">
-                                            <el-row class="inform-margin-card">
-                                                <el-col :span="24">
-                                                    <div>
-                                                        <strong class="dtdlStyle">部位名称：</strong>
-                                                        <v-text v-text="data.zdbwmc||'无'"></v-text>
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
+                                            <div slot="header" class="clearfix">
+                                                <strong class="card_title_font">重点部位-建筑类：{{data.zdbwmc||'无'}}</strong>
+                                            </div>
                                             <el-row class="inform-margin-card">
                                                 <el-col :span="12">
                                                     <div>
@@ -965,14 +966,9 @@
                                         </el-card>
                                         <!-- 装置类重点部位详情 -->
                                         <el-card v-for="data in zzl_zdbwData" class="card_style">
-                                            <el-row class="inform-margin-card">
-                                                <el-col :span="24">
-                                                    <div>
-                                                        <strong class="dtdlStyle">部位名称：</strong>
-                                                        <v-text v-text="data.zdbwmc||'无'"></v-text>
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
+                                            <div slot="header" class="clearfix">
+                                                <strong class="card_title_font">重点部位-装置类：{{data.zdbwmc||'无'}}</strong>
+                                            </div>
                                             <el-row class="inform-margin-card">
                                                 <el-col :span="12">
                                                     <div>
@@ -1060,14 +1056,9 @@
                                         </el-card>
                                         <!-- 储罐类重点部位详情 -->
                                         <el-card v-for="data in cgl_zdbwData" class="card_style">
-                                            <el-row class="inform-margin-card">
-                                                <el-col :span="24">
-                                                    <div>
-                                                        <strong class="dtdlStyle">罐组名称：</strong>
-                                                        <v-text v-text="data.zdbwmc||'无'"></v-text>
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
+                                            <div slot="header" class="clearfix">
+                                                <strong class="card_title_font">重点部位-储罐类：{{data.zdbwmc||'无'}}</strong>
+                                            </div>
                                             <el-row class="inform-margin-card">
                                                 <el-col :span="12">
                                                     <div>
