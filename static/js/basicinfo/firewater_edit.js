@@ -115,7 +115,7 @@ new Vue({
                 trsyqsd_qsxs: "",
                 trsyqsd_jdh: ""
             },
-            
+
             props: {
                 value: 'codeValue',
                 label: 'codeName',
@@ -513,7 +513,13 @@ new Vue({
                 console.log(error);
             })
         },
-
+        //车辆弹出页翻页
+        currentPageChange: function (val) {
+            if (this.currentPage != val) {
+                this.currentPage = val;
+                this.trsyList('page');
+            }
+        },
         //选择车辆，返回车辆名称和id
         selectRow: function (val) {
             this.editForm.trsyqsd_trsyid = val.trsy_uuid;
