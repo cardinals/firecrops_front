@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/app.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/sync.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/formal.css">
-    <!-- <link href="../../static/css/screenb.css" id="css" rel="stylesheet" type="text/css" /> -->
+    <link href="../../static/css/screenb.css" id="css" rel="stylesheet" type="text/css" />
 </head>
 <body class="fw map-bg m0">
     <div id="app" style="height: 100%;" class="bk" >
@@ -51,6 +51,7 @@
             var isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1; //判断是否Safari浏览器 
             var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器 
             //判断是否宽屏
+            debugger;
             var winWide = document.body.clientHeight;
             var wideScreen = false;
             if (isChrome) {
@@ -63,7 +64,7 @@
                 }
             }
             else {
-                if (winWide <= 1035) {//及以下分辨率
+                if (winWide <= 800) {//及以下分辨率
                     $("#css").attr("href", "../../static/css/screenb.css");
                 }
                 else {
