@@ -97,7 +97,6 @@ var vue = new Vue({
         this.searchXfmtSZ_data();
         this.searchTrsyYWKSQ_data();
         this.searchGXZD_data();
-
     },
     methods: {
         //表格查询事件
@@ -196,19 +195,19 @@ var vue = new Vue({
             //     this.GXZD_data = res.data.result;
 
             // }.bind(this), function (error) {
-            //     console
+            //     console.log(error);
+            //});
             var organization = this.shiroData.organizationVO;
             var param = {
                 dzid: organization.uuid,
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
-            }
+            };
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.GXZD_data = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
-            }).log(error);
-            // })
+            });
         },
         //水源归属
         searchXZ_data: function () {
