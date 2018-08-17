@@ -9,11 +9,10 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/app.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/sync.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/formal.css">
-    <link href="../../static/css/screenb.css" id="css" rel="stylesheet" type="text/css" />
-    
+    <!-- <link href="../../static/css/screenb.css" id="css" rel="stylesheet" type="text/css" /> -->
 </head>
 <body class="fw map-bg m0">
-    <div id="app" style="height: 100%;margin-top: -70px;" >
+    <div id="app" style="height: 100%;" class="bk" >
         <el-carousel :height="height" >
             <el-carousel-item :key="1">
                 <iframe src="big_screen_overview.html" height="100%" width="100%" frameborder=0></iframe>
@@ -43,42 +42,42 @@
 <script type="text/javascript" src="../../static/js/zzzlib/vue.js"></script>
 <script type="text/javascript" src="../../static/js/zzzlib/element.js"></script>
 <script>
-    $(function () {
-            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串 
-            var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器 
-            var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器 
-            var isEdge = userAgent.indexOf("Windows NT 6.1; Trident/7.0;") > -1 && !isIE; //判断是否IE的Edge浏览器 
-            var isFF = userAgent.indexOf("Firefox") > -1; //判断是否Firefox浏览器 
-            var isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1; //判断是否Safari浏览器 
-            var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器 
-            //判断是否宽屏
-            var winWide = window.screen.availHeight;
-            var wideScreen = false;
-            if (isChrome) {
-                if (winWide <= 1035) {//及以下分辨率
-                    $("#css").attr("href", "../../static/css/screenb.css");
-                }
-                else {
-                    $("#css").attr("href", "../../static/css/screena.css");
-                    wideScreen = true; //是宽屏
-                }
-            }
-            else {
-                if (winWide <= 1035) {//及以下分辨率
-                    $("#css").attr("href", "../../static/css/screenb.css");
-                }
-                else {
-                    $("#css").attr("href", "../../static/css/screena.css");
-                    wideScreen = true; //是宽屏
-                }
-            }
-        })
+    // $(function () {
+    //         var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串 
+    //         var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器 
+    //         var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器 
+    //         var isEdge = userAgent.indexOf("Windows NT 6.1; Trident/7.0;") > -1 && !isIE; //判断是否IE的Edge浏览器 
+    //         var isFF = userAgent.indexOf("Firefox") > -1; //判断是否Firefox浏览器 
+    //         var isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1; //判断是否Safari浏览器 
+    //         var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器 
+    //         //判断是否宽屏
+    //         var winWide = window.screen.availHeight;
+    //         var wideScreen = false;
+    //         if (isChrome) {
+    //             if (winWide <= 1035) {//及以下分辨率
+    //                 $("#css").attr("href", "../../static/css/screenb.css");
+    //             }
+    //             else {
+    //                 $("#css").attr("href", "../../static/css/screena.css");
+    //                 wideScreen = true; //是宽屏
+    //             }
+    //         }
+    //         else {
+    //             if (winWide <= 1035) {//及以下分辨率
+    //                 $("#css").attr("href", "../../static/css/screenb.css");
+    //             }
+    //             else {
+    //                 $("#css").attr("href", "../../static/css/screena.css");
+    //                 wideScreen = true; //是宽屏
+    //             }
+    //         }
+    //     })
     </script> 
 <script>
     var vm = new Vue({
         el: "#app",
         data: {      
-          height:'580px'
+          height:'690px'
         }
     })
 </script>
