@@ -36,6 +36,7 @@ new Vue({
             szData: [],
             //水源归属
             sygsData: [],
+            qsxsData: [],
             //有无取水点
             ywqsdData: [{
                 codeValue: '1',
@@ -164,6 +165,7 @@ new Vue({
         this.getSylxData();
         //水源归属下拉框
         this.getSygsData();
+        this.getQsxsData();
     },
     methods: {
         //上级机构下拉框
@@ -237,6 +239,14 @@ new Vue({
                 console.log(error);
             })
         },
+        //取水形式
+        getQsxsData: function () {
+            axios.get('/api/codelist/getCodetype/QSXS').then(function (res) {
+                this.qsxsData = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
         //水质
         getSzData: function () {
             axios.get('/api/codelist/getCodetype/SYSZ').then(function (res) {
@@ -268,6 +278,11 @@ new Vue({
             }.bind(this), function (error) {
                 console.log(error);
             })
+        },
+        sygsChange: function (val) {
+            if (val == '10') {
+                this.editForm.ssdw = '';
+            }
         },
         //表格查询事件
         searchClick: function () {
