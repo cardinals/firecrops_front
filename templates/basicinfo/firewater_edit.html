@@ -3,6 +3,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="../../static/css/basicinfo/equipment_add.css">
 	<title>消防水源信息编辑</title>
 </head>
 
@@ -453,12 +454,12 @@
 					<div id="tableView" v-loading="loading_trsy" element-loading-text="加载中">
 						<el-row>
 							<el-form :inline="true" class="el-form demo-form-inline">
-								<el-row>
-									<el-col :span="18" class="searchInline">
+								<el-row class="mb5">
+									<el-col :span="12" class="searchInline">
 										<label class="el-form-item__label" style="width:145px;" class="tr vbm">天然水源名称</label>
 										<el-input size="small" v-model="searchForm.trsy_trsymc" placeholder="天然水源名称" clearable></el-input>
 									</el-col>
-									<el-col :span="6" class="btnSearchPlus">
+									<el-col :span="12" class="btnSearchPlus">
 										<el-button type="primary" icon="search" size="small" @click="trsyList('click')">查询</el-button>
 										<el-button type="clear" icon="delete" size="small" @click="clearTrsyList">清空</el-button>
 									</el-col>
