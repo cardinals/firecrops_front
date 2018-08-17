@@ -96,7 +96,7 @@ var vue = new Vue({
         this.searchXhsJKXS_data();
         this.searchXfmtSZ_data();
         this.searchTrsyYWKSQ_data();
-        this.searchGXZD_data();
+        this.searchGXDZ_data();
     },
     methods: {
         //表格查询事件
@@ -190,7 +190,7 @@ var vue = new Vue({
             })
         },
         //队站
-        searchGXZD_data: function () {
+        searchGXDZ_data: function () {
             // axios.get('/dpapi/util/doSearchContingents').then(function (res) {
             //     this.GXZD_data = res.data.result;
 
