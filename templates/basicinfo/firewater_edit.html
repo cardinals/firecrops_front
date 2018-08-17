@@ -3,6 +3,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="../../static/css/basicinfo/equipment_add.css">
 	<title>消防水源信息编辑</title>
 </head>
 
@@ -93,16 +94,17 @@
 								<el-label class="mr5 vbm">水源归属</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-select size="small" v-model="editForm.sygs" placeholder="水源归属" class="searchSelect" clearable>
+								<el-select size="small" v-model="editForm.sygs" @change="sygsChange" placeholder="水源归属" class="searchSelect" clearable>
 									<el-option v-for="item in sygsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 								</el-select>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">所属单位</el-label>
+								<el-label class="mr5 vbm">所属单位(小区)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.ssdw" placeholder="所属单位"></el-input>
+								<el-input v-if="editForm.sygs==='20'" size="small" v-model="editForm.ssdw" placeholder="所属单位(小区)"></el-input>
+								<el-input v-else size="small" v-model="editForm.ssdw" placeholder="所属单位(小区)" disabled></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -323,7 +325,7 @@
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">储水量(m3)</el-label>
+									<el-label class="mr5 vbm">储水量(m³)</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input-number v-model="editForm.xfsc_csl" size="small" :min="0"></el-input-number>
@@ -377,7 +379,7 @@
 									<el-label class="mr5 vbm">所属天然水源</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.trsy_trsymc" placeholder="天然水源名称"></el-input>
+									<el-input size="small" v-model="editForm.trsy_trsymc" placeholder="天然水源名称" disabled></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
 									<el-button icon="search" size="small" style="border: none;background-color: #FFFFFF;" @click="trsyList('init')" class="l"></el-button>
@@ -386,12 +388,14 @@
 									<el-label class="mr5 vbm">取水形式</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.trsyqsd_qsxs" placeholder="取水形式"></el-input>
+									<el-select size="small" v-model="editForm.trsyqsd_qsxs" placeholder="取水形式" class="searchSelect" clearable>
+										<el-option v-for="item in qsxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
-							
-							
+
+
 							<el-row class="tr mb5">
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 									<el-label class="mr5 vbm">停车位置</el-label>
@@ -426,10 +430,10 @@
 							</el-col>
 						</el-row>
 						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">备注</el-label>
 							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
+							<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
 								<el-input size="small" v-model="editForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
 							</el-col>
 						</el-row>
@@ -451,11 +455,11 @@
 						<el-row>
 							<el-form :inline="true" class="el-form demo-form-inline">
 								<el-row class="mb5">
-									<el-col :span="16" class="searchInline">
+									<el-col :span="12" class="searchInline">
 										<label class="el-form-item__label" style="width:145px;" class="tr vbm">天然水源名称</label>
 										<el-input size="small" v-model="searchForm.trsy_trsymc" placeholder="天然水源名称" clearable></el-input>
 									</el-col>
-									<el-col :span="8" class="btnSearchPlus">
+									<el-col :span="12" class="btnSearchPlus">
 										<el-button type="primary" icon="search" size="small" @click="trsyList('click')">查询</el-button>
 										<el-button type="clear" icon="delete" size="small" @click="clearTrsyList">清空</el-button>
 									</el-col>
