@@ -35,10 +35,10 @@
                 </el-col>
             </el-row>
             <!-- <img @click="this.tz" src="../../static/images/mapbtnmin.png" style="cursor:pointer;float:right;margin-top: -100px;"> -->
-            <div style="margin-top: 20px">
+            <div class="mt10">
                 <el-tabs v-model="activeName" style="min-height: 185px">
                     <el-tab-pane name="first" label="基本信息">
-                        <el-row>
+                        <el-row class="mb10">
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">可用状态：</strong>
@@ -52,7 +52,7 @@
                                 </div>
                             </el-col>
                         </el-row>
-                        <el-row class="inform-margin">
+                        <el-row class="mb10">
                             <el-col :span="24">
                                 <div>
                                     <strong class="dtdlStyle">所属单位（小区）：</strong>
@@ -60,7 +60,7 @@
                                 </div>
                             </el-col>
                         </el-row>
-                        <el-row class="inform-margin">
+                        <el-row class="mb10">
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">经度：</strong>
@@ -74,7 +74,7 @@
                                 </div>
                             </el-col>
                         </el-row>
-                        <el-row class="inform-margin">
+                        <el-row class="mb10">
                             <el-col :span="24">
                                 <div>
                                     <strong class="dtdlStyle">备注：</strong>
@@ -82,11 +82,16 @@
                                 </div>
                             </el-col>
                         </el-row>
-                        <HR align=center width=600 color=#987cb9SIZE=1 style="margin-bottom: 10px"></HR>
+                        <!-- <HR align=center width=600 color=#987cb9SIZE=1 style="margin-bottom: 10px"></HR>
                         <el-row>
                             <strong style="font-size: 16px">责任归属</strong>
+                        </el-row> -->
+                        <el-row style="border-bottom: 1px solid #d1dbe5;line-height: 29px;" class="mt5 mb10">
+                            <el-col :span="24">
+                                <strong>责任归属</strong>
+                            </el-col>
                         </el-row>
-                        <el-row class="inform-margin">
+                        <el-row class="mb10">
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">行政区划：</strong>
@@ -100,7 +105,7 @@
                                 </div>
                             </el-col>
                         </el-row>
-                        <el-row class="inform-margin">
+                        <el-row class="mb10">
                             <el-col :span="12">
                                 <div>
                                     <strong class="dtdlStyle">供水单位：</strong>
@@ -117,7 +122,7 @@
                     </el-tab-pane>
                     <el-tab-pane name="second" label="属性信息">
                         <div v-show="isXHS">
-                            <el-row>
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">设置形式：</strong>
@@ -131,7 +136,7 @@
                                     </div>
                                 </el-col>
                             </el-row>
-                            <el-row class="inform-margin">
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">管网形式：</strong>
@@ -145,7 +150,7 @@
                                     </div>
                                 </el-col>
                             </el-row>
-                            <el-row class="inform-margin">
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">管网压力类型：</strong>
@@ -159,7 +164,7 @@
                                     </div>
                                 </el-col>
                             </el-row>
-                            <el-row class="inform-margin">
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">接口形式：</strong>
@@ -175,7 +180,7 @@
                             </el-row>
                         </div>
                         <div v-show="isXFSH">
-                            <el-row>
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">管网直径（mm）：</strong>
@@ -189,7 +194,7 @@
                                     </div>
                                 </el-col>
                             </el-row>
-                            <el-row class="inform-margin">
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">出水口高度（m）：</strong>
@@ -205,7 +210,7 @@
                             </el-row>
                         </div>
                         <div v-show="isXFSC">
-                            <el-row>
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">水源标高差（m）：</strong>
@@ -219,7 +224,7 @@
                                     </div>
                                 </el-col>
                             </el-row>
-                            <el-row class="inform-margin">
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">进水流量（L/s）：</strong>
@@ -233,7 +238,7 @@
                                     </div>
                                 </el-col>
                             </el-row>
-                            <el-row class="inform-margin">
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">管网形式：</strong>
@@ -247,7 +252,7 @@
                                     </div>
                                 </el-col>
                             </el-row>
-                            <el-row class="inform-margin">
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">停车位置：</strong>
@@ -263,7 +268,7 @@
                             </el-row>
                         </div>
                         <div v-show="isTRSYQSD">
-                            <el-row>
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">天然水源类型：</strong>
@@ -277,7 +282,7 @@
                                     </div>
                                 </el-col>
                             </el-row>
-                            <el-row class="inform-margin">
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">水质描述：</strong>
@@ -291,7 +296,7 @@
                                     </div>
                                 </el-col>
                             </el-row>
-                            <el-row class="inform-margin">
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">枯水期时间：</strong>
@@ -305,7 +310,7 @@
                                     </div>
                                 </el-col>
                             </el-row>
-                            <el-row class="inform-margin">
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">水源标高差（m）：</strong>
@@ -319,7 +324,7 @@
                                     </div>
                                 </el-col>
                             </el-row>
-                            <el-row class="inform-margin">
+                            <el-row class="mb10">
                                 <el-col :span="12">
                                     <div>
                                         <strong class="dtdlStyle">停车位置：</strong>
