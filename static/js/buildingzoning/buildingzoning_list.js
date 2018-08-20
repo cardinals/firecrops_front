@@ -15,7 +15,7 @@ var vue = new Vue({
             },
             tableData: [],
             JZFL_data:[],
-            role_data: [],//当前用户信息
+            shiroData: [],//当前用户信息
             //表高度变量
             tableheight: 443,
             //显示加载中样
@@ -50,19 +50,12 @@ var vue = new Vue({
          */
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("单位建筑信息", "-1");
+        this.shiroData = shiroGlobal;
         this.getJZFLData();
         this.searchClick('click');
     },
     methods: {
         handleNodeClick(data) {
-        },
-        //获取当前用户信息
-        roleData: function () {
-            axios.post('/api/shiro').then(function (res) {
-                this.role_data = res.data;
-            }.bind(this), function (error) {
-                console.log(error);
-            })
         },
         //表格查询事件
         searchClick: function (type) {
@@ -80,7 +73,9 @@ var vue = new Vue({
                 jzlx:this.searchForm.option_JZLX,
                 jzwz:this.searchForm.jzwz,
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
+                pageNum: this.currentPage,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/building/page',params).then(function(res){
                var tableTemp = new Array((this.currentPage-1)*this.pageSize);
@@ -147,8 +142,8 @@ var vue = new Vue({
                 type: 'warning'
             }).then(() => {
                 for(var i=0;i<this.multipleSelection.length;i++){
-                    this.multipleSelection[i].xgrid = this.role_data.userid;
-                    this.multipleSelection[i].xgrmc = this.role_data.realName;
+                    this.multipleSelection[i].xgrid = this.shiroData.userid;
+                    this.multipleSelection[i].xgrmc = this.shiroData.realName;
                 }
                 axios.post('/dpapi/building/doDeleteBuildingzoning', this.multipleSelection).then(function (res) {
                     this.$message({

@@ -93,12 +93,12 @@
 						</el-row>
 					</div>
 					<!--新建界面-->
-					<el-dialog title="新建权限" :visible.sync="addFormVisible" @close="closeDialog(addForm)" :close-on-click-modal="false">
+					<el-dialog title="权限新增" :visible.sync="addFormVisible" @close="closeDialog(addForm)" :close-on-click-modal="false">
 						<el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
 							<el-row>
 								<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
 									<el-form-item label="权限名称" prop="permissionname">
-										<el-input v-model="addForm.permissionname" auto-complete="off" placeholder="权限名称"></el-input>
+										<el-input v-model="addForm.permissionname" auto-complete="off" placeholder="权限名称" size="small"></el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
@@ -106,25 +106,33 @@
 							<el-row>
 								<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
 									<el-form-item label="权限描述" prop="permissioninfo">
-										<el-input v-model="addForm.permissioninfo" auto-complete="off" placeholder="权限描述"></el-input>
+										<el-input v-model="addForm.permissioninfo" auto-complete="off" placeholder="权限描述" size="small"></el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
+							<el-row class="mt20 mb20">
+								<el-row>
+									<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
+										<el-button type="primary" icon="close" size="small" class="btn_submit" @click="closeDialog(addForm)"> 取消</el-button>
+										<el-button type="success" icon="check" size="small" class="btn_save" @click="addSubmit(addForm)">保存</el-button>
+									</el-col>
+								</el-row>
+							</el-row>
 						</el-form>
-						<div slot="footer" class="dialog-footer">
+						<!-- <div slot="footer" class="dialog-footer">
 							<el-button @click.native="closeDialog(addForm)">取消</el-button>
 							<el-button type="primary" @click.native="addSubmit(addForm)">提交</el-button>
-						</div>
+						</div> -->
 					</el-dialog>
 
 					<!--修改界面-->
-					<el-dialog title="修改权限" :visible.sync="editFormVisible" :close-on-click-modal="false">
+					<el-dialog title="权限编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
 						<el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
 							<el-row>
 								<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
 									<el-form-item label="权限名称" prop="permissionname">
-										<el-input v-model="editForm.permissionname" auto-complete="off" placeholder="权限名称"></el-input>
+										<el-input v-model="editForm.permissionname" auto-complete="off" placeholder="权限名称" size="small"></el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
@@ -132,16 +140,24 @@
 							<el-row>
 								<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
 									<el-form-item label="权限描述" prop="permissioninfo">
-										<el-input v-model="editForm.permissioninfo" auto-complete="off" placeholder="权限描述"></el-input>
+										<el-input v-model="editForm.permissioninfo" auto-complete="off" placeholder="权限描述" size="small"></el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
+							<el-row class="mt20 mb20">
+								<el-row>
+									<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
+										<el-button type="primary" icon="close" size="small" class="btn_submit" @click="editFormVisible = false"> 取消</el-button>
+										<el-button type="success" icon="check" size="small" class="btn_save" @click="editSubmit(editForm)">保存</el-button>
+									</el-col>
+								</el-row>
+							</el-row>
 						</el-form>
-						<div slot="footer" class="dialog-footer">
+						<!-- <div slot="footer" class="dialog-footer">
 							<el-button @click.native="editFormVisible = false">取消</el-button>
 							<el-button type="primary" @click.native="editSubmit(editForm)">提交</el-button>
-						</div>
+						</div> -->
 					</el-dialog>
 				</div>
 			</div>

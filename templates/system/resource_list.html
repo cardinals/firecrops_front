@@ -76,7 +76,7 @@
 									-->
 									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
 										<label class="el-form-item__label searchLabel" style="width: 124px;">权限列表</label>
-										<el-checkbox-group v-model="permissionDetailSelect">
+										<el-checkbox-group v-model="permissionDetailSelect" :max="1">
 											<el-checkbox v-for="permission in allPermissionList" :label="permission.permissionid" :key="permission.permissionid">{{permission.permissioninfo}}</el-checkbox>
 										</el-checkbox-group>
 									</el-col>
@@ -96,15 +96,15 @@
 										<label class="el-form-item__label searchLabel">修改时间</label>
 										<el-input size="small"  placeholder="请输入内容" v-model="resourceForm.alterTime" :disabled="true"></el-input>
 									</el-col>
-									
-								</el-from>	
-								<el-from style="float: right;margin-right: 30px;">
-										<el-button type="primary" size="small" @click="update">更新</el-button>
-										<el-button size="small" @click="cancel">取消</el-button>
+									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">&nbsp;</el-col>
+								</el-from>
+								<el-from style="float: right;margin-right: 45%;">
+									<el-button type="primary" icon="close" size="small" @click="cancel">取消</el-button>
+									<el-button type="success" icon="check" size="small" @click="update">保存</el-button>
 								</el-from>
 							</div>
 								<!--新建界面-->
-							<el-dialog title="新建资源" :visible.sync="addVisible" @close="closeDialog()" :close-on-click-modal="false">
+							<el-dialog title="资源新增" :visible.sync="addVisible" @close="closeDialog()" :close-on-click-modal="false">
 								<el-form :model="addForm" label-width="80px" ref="addForm" :rules="addFormRules">
 									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
 										<el-form-item label="资源名称" prop="resourcename">
@@ -137,16 +137,24 @@
 									-->
 									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
 										<el-form-item label="权限列表" prop="permission">
-											<el-checkbox-group v-model="addForm.permissions">
+											<el-checkbox-group v-model="addForm.permissions" :max="1">
 												<el-checkbox v-for="permission in allPermissionList" :label="permission.permissionid" :key="permission.permissionid">{{permission.permissioninfo}}</el-checkbox>
 											</el-checkbox-group>
 										</el-form-item>
 									</el-col>
+									<el-row class="mt20 mb20">
+										<el-row>
+											<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
+												<el-button type="primary" icon="close" size="small" class="btn_submit" @click="closeDialog(addForm)"> 取消</el-button>
+												<el-button type="success" icon="check" size="small" class="btn_save" @click="checkAdd(addForm)">保存</el-button>
+											</el-col>
+										</el-row>
+									</el-row>
 								</el-form>
-								<div slot="footer" class="dialog-footer">
+								<!-- <div slot="footer" class="dialog-footer">
 									<el-button size="small" @click.native="closeDialog(addForm)">取消</el-button>
 									<el-button size="small" type="primary" @click.native="checkAdd(addForm)">提交</el-button>
-								</div>
+								</div> -->
 							</el-dialog>
 						</div>
 			</div>
