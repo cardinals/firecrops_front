@@ -15,6 +15,7 @@
         width: 100%;
         padding: 0px !important;
         margin:0px !important;
+        margin: 0 auto;
     }
     </style>
 </head>
@@ -61,24 +62,24 @@
            
             var winWide = document.body.clientHeight;
             var wideScreen = false;
-            if (isChrome) {
-                if (winWide <= 800) {//及以下分辨率
-                    $("#css").attr("href", "../../static/css/screenb.css");
-                }
-                else {
-                    $("#css").attr("href", "../../static/css/screena.css");
-                    wideScreen = true; //是宽屏
-                }
-            }
-            else {
-                if (winWide <= 800) {//及以下分辨率
-                    $("#css").attr("href", "../../static/css/screenb.css");
-                }
-                else {
-                    $("#css").attr("href", "../../static/css/screena.css");
-                    wideScreen = true; //是宽屏
-                }
-            }
+            // if (isChrome) {
+            //     if (winWide <= 800) {//及以下分辨率
+            //         $("#css").attr("href", "../../static/css/screenb.css");
+            //     }
+            //     else {
+            //         $("#css").attr("href", "../../static/css/screena.css");
+            //         wideScreen = true; //是宽屏
+            //     }
+            // }
+            // else {
+            //     if (winWide <= 800) {//及以下分辨率
+            //         $("#css").attr("href", "../../static/css/screenb.css");
+            //     }
+            //     else {
+            //         $("#css").attr("href", "../../static/css/screena.css");
+            //         wideScreen = true; //是宽屏
+            //     }
+            // }
         })
     </script> 
 <script>
