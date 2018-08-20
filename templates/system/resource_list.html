@@ -96,12 +96,21 @@
 										<label class="el-form-item__label searchLabel">修改时间</label>
 										<el-input size="small"  placeholder="请输入内容" v-model="resourceForm.alterTime" :disabled="true"></el-input>
 									</el-col>
+									<el-row>&nbsp;</el-row>
+									<el-row class="mt20 mb20">
+										<el-row>
+											<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
+												<el-button type="primary" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
+												<el-button type="success" icon="check" size="small" class="btn_save" @click="update">保存</el-button>
+											</el-col>
+										</el-row>
+									</el-row>
 									
 								</el-from>	
-								<el-from style="float: right;margin-right: 30px;">
+								<!-- <el-from style="float: right;margin-right: 30px;">
 										<el-button type="primary" size="small" @click="update">更新</el-button>
 										<el-button size="small" @click="cancel">取消</el-button>
-								</el-from>
+								</el-from> -->
 							</div>
 								<!--新建界面-->
 							<el-dialog title="资源新增" :visible.sync="addVisible" @close="closeDialog()" :close-on-click-modal="false">
