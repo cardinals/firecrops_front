@@ -234,3 +234,13 @@ window.validateInt = function(val){
         }              
     }
 }
+
+//验证当前用户是否有操作权限
+window.hasPermission = function(val){
+    var index = permissions.indexOf(val);
+    if(index == -1){
+        return false;
+    }else{
+        return true;
+    }
+}

@@ -7,6 +7,7 @@ $(function () {
 /**header-box by li.xue 20180628 */
 var shiroGlobal = "";
 var realname = "";
+var permissions = [];
 axios.get('/api/shiro').then(function (res) {
     if(res.data.organizationVO == null || res.data.organizationVO == ""){
         res.data.organizationVO = {
@@ -15,6 +16,10 @@ axios.get('/api/shiro').then(function (res) {
         }
     }
     shiroGlobal = res.data;
+    //用户权限
+    for(var i in res.data.permissions){
+        permissions.push(res.data.permissions[i]);
+    }
     realname = res.data.realName;
     document.querySelector("#realname").innerHTML = realname;
     if(res.data == null && realname == null && realname == ""){
