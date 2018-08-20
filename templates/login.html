@@ -26,6 +26,12 @@
     <meta name="keywords" content="数字化预案管理平台" />
     <meta name="description" content="数字化预案管理平台" />
     <link href="../static/css/login.css" id="css" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Cache-Control" content="no-transform" /> 
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes" />
+    <style type="text/css">
+        @media(max-width:960px) {}
+    </style>
    
 </head>
 
@@ -38,7 +44,6 @@
                     <!--<img th:src="@{/images/LOGO3.png}"/>-->
                 </div>
             </div>
-
             <!--center-->
             <div class="login_center">
                 <div class="Login_img">
@@ -91,32 +96,14 @@
 <script src="../static/js/zzzlib/axios.min.js"></script>
 <script>
         $(function () {
-                var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串 
-                var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器 
-                var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器 
-                var isEdge = userAgent.indexOf("Windows NT 6.1; Trident/7.0;") > -1 && !isIE; //判断是否IE的Edge浏览器 
-                var isFF = userAgent.indexOf("Firefox") > -1; //判断是否Firefox浏览器 
-                var isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1; //判断是否Safari浏览器 
-                var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器 
                 //判断是否宽屏
-                var winWide = window.screen.availHeight;
+                var winWide = window.screen.availWidth;
                 // alert(winWide);
                 var wideScreen = false;
-                if (isChrome) {
-                    if (winWide <= 1035) {//及以下分辨率
-                        $("#css").attr("href", "../static/css/login.css");
-                    } else  {
-                        $("#css").attr("href", "../static/css/loginb.css");
-                        wideScreen = true; //是宽屏
-                    }   
-                }else{
-                    if (winWide <= 1035) {//及以下分辨率
-                        $("#css").attr("href", "../static/css/login.css");
-                    } else  {
-                        $("#css").attr("href", "../static/css/loginb.css");
-                        wideScreen = true; //是宽屏
-                    }
-                }
+                var zm =winWide/1920;
+                document.body.style.zoom = zm*1.5;
+                // body{zoom:1.25;}
+
             })
 </script> 
 <script>

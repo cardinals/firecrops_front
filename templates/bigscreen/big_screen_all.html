@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-transform" /> 
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes" />
     <title>统计分析</title>
     <!-- 引入样式 -->
     <link rel="stylesheet" type="text/css" href="../../static/css/element.css">
@@ -10,6 +13,17 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/sync.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/formal.css">
     <link href="../../static/css/screenb.css" id="css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        @media(max-width:960px) {}
+    </style>
+    <style>
+    body{
+        width: 100%;
+        padding: 0px !important;
+        margin:0px !important;
+        margin: 0 auto;
+    }
+    </style>
 </head>
 <body class="fw map-bg m0">
     <div id="app" style="height: 100%;" class="bk" >
@@ -41,6 +55,7 @@
 <script type="text/javascript" src="../../static/js/zzzlib/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../../static/js/zzzlib/vue.js"></script>
 <script type="text/javascript" src="../../static/js/zzzlib/element.js"></script>
+ 
 <script>
     $(function () {
             var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串 
@@ -54,24 +69,24 @@
            
             var winWide = document.body.clientHeight;
             var wideScreen = false;
-            if (isChrome) {
-                if (winWide <= 800) {//及以下分辨率
-                    $("#css").attr("href", "../../static/css/screenb.css");
-                }
-                else {
-                    $("#css").attr("href", "../../static/css/screena.css");
-                    wideScreen = true; //是宽屏
-                }
-            }
-            else {
-                if (winWide <= 800) {//及以下分辨率
-                    $("#css").attr("href", "../../static/css/screenb.css");
-                }
-                else {
-                    $("#css").attr("href", "../../static/css/screena.css");
-                    wideScreen = true; //是宽屏
-                }
-            }
+            // if (isChrome) {
+            //     if (winWide <= 800) {//及以下分辨率
+            //         $("#css").attr("href", "../../static/css/screenb.css");
+            //     }
+            //     else {
+            //         $("#css").attr("href", "../../static/css/screena.css");
+            //         wideScreen = true; //是宽屏
+            //     }
+            // }
+            // else {
+            //     if (winWide <= 800) {//及以下分辨率
+            //         $("#css").attr("href", "../../static/css/screenb.css");
+            //     }
+            //     else {
+            //         $("#css").attr("href", "../../static/css/screena.css");
+            //         wideScreen = true; //是宽屏
+            //     }
+            // }
         })
     </script> 
 <script>
