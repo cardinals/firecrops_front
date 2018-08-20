@@ -101,7 +101,7 @@
                     </div>
                     <!--详情界面-->
                     <el-dialog title="角色资源列表" :visible.sync="resourceVisible" @close="closeresourceDialog()" :close-on-click-modal="false">
-                        <el-tree :data="resourceList" node-key="resourceid" :default-expanded-keys="['17']" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+                        <el-tree :data="resourceList" node-key="resourceid" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
                     </el-dialog>
 
                     <!--新建界面-->
