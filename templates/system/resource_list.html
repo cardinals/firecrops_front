@@ -104,7 +104,7 @@
 								</el-from>
 							</div>
 								<!--新建界面-->
-							<el-dialog title="新建资源" :visible.sync="addVisible" @close="closeDialog()" :close-on-click-modal="false">
+							<el-dialog title="资源新增" :visible.sync="addVisible" @close="closeDialog()" :close-on-click-modal="false">
 								<el-form :model="addForm" label-width="80px" ref="addForm" :rules="addFormRules">
 									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
 										<el-form-item label="资源名称" prop="resourcename">
@@ -142,11 +142,19 @@
 											</el-checkbox-group>
 										</el-form-item>
 									</el-col>
+									<el-row class="mt20 mb20">
+										<el-row>
+											<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
+												<el-button type="primary" icon="close" size="small" class="btn_submit" @click="closeDialog(addForm)"> 取消</el-button>
+												<el-button type="success" icon="check" size="small" class="btn_save" @click="checkAdd(addForm)">保存</el-button>
+											</el-col>
+										</el-row>
+									</el-row>
 								</el-form>
-								<div slot="footer" class="dialog-footer">
+								<!-- <div slot="footer" class="dialog-footer">
 									<el-button size="small" @click.native="closeDialog(addForm)">取消</el-button>
 									<el-button size="small" type="primary" @click.native="checkAdd(addForm)">提交</el-button>
-								</div>
+								</div> -->
 							</el-dialog>
 						</div>
 			</div>

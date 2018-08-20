@@ -1,6 +1,6 @@
 .el-form-item {
     margin-bottom: 15px !important;
-    width: 90%;
+    width: 100%;
 }
 .el-form-item__error{
     padding-top:0px;
