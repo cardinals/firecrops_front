@@ -47,7 +47,7 @@ var vue = new Vue({
             editFormRules: {
                 realname: [
                     { required: true, message: '请输入真实姓名', trigger: 'blur' },
-                    { min: 2, max: 4, message: '长度在 2 到 4 个字符', trigger: 'blur' }
+                    { min: 2, max: 6, message: '长度在 2 到 4 个字符', trigger: 'blur' }
                 ],
                 username: [
                     { required: true, message: '请输入用户名', trigger: 'blur' },
