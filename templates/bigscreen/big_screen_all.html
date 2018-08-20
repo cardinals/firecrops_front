@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/app.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/sync.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/formal.css">
-    <link href="../../static/css/screenb.css" id="css" rel="stylesheet" type="text/css" />
+    
     <style type="text/css">
         @media(max-width:960px) {}
     </style>
@@ -58,37 +58,15 @@
  
 <script>
     $(function () {
-            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串 
-            var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器 
-            var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器 
-            var isEdge = userAgent.indexOf("Windows NT 6.1; Trident/7.0;") > -1 && !isIE; //判断是否IE的Edge浏览器 
-            var isFF = userAgent.indexOf("Firefox") > -1; //判断是否Firefox浏览器 
-            var isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1; //判断是否Safari浏览器 
-            var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器 
-            //判断是否宽屏
-           
-            var winWide = document.body.clientHeight;
-            var wideScreen = false;
-            // if (isChrome) {
-            //     if (winWide <= 800) {//及以下分辨率
-            //         $("#css").attr("href", "../../static/css/screenb.css");
-            //     }
-            //     else {
-            //         $("#css").attr("href", "../../static/css/screena.css");
-            //         wideScreen = true; //是宽屏
-            //     }
-            // }
-            // else {
-            //     if (winWide <= 800) {//及以下分辨率
-            //         $("#css").attr("href", "../../static/css/screenb.css");
-            //     }
-            //     else {
-            //         $("#css").attr("href", "../../static/css/screena.css");
-            //         wideScreen = true; //是宽屏
-            //     }
-            // }
-        })
-    </script> 
+                //判断是否宽屏
+                var winWide = window.screen.availWidth;
+                // alert(winWide);
+                var wideScreen = false;
+                var zm =winWide/1920;
+                document.body.style.zoom = zm*1.25;
+                // body{zoom:1.25;}
+            })
+</script> 
 <script>
     var vm = new Vue({
         el: "#app",
