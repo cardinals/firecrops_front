@@ -56,7 +56,7 @@
                                     <el-col :span="12" class="btnEditDelete">
                                         <el-form-item align="left">
                                             <!--<el-button type="primary" icon="edit" size="small" @click="editClick">编辑</el-button>-->
-                                            <el-button type="danger" icon="edit" size="small" @click="distribute">分发</el-button>
+                                            <el-button v-if="hasPermission('digitalplan/digitalplan_distribute:distribute')" type="danger" icon="edit" size="small" @click="distribute">分发</el-button>
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="12"></el-col>
