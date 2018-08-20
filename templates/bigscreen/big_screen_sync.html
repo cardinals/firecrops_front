@@ -17,7 +17,7 @@
     <script src="../../static/js/zzzlib/vue.min.js"></script>
 
     <style>
-     body{zoom:1.2;}
+     
     .sync-image {width:60px; height:60px; position: absolute; top: 12px; left: 32px;}
     .sync-text {font: 20px "微软雅黑";color: #9cc0eb;text-align: right;}
     .sync-text-strong {line-height: 1.2;font-size: 1.5em;color: #f7cb29;text-align: right;}
@@ -196,4 +196,15 @@
     </div>
 </body>
 <script src="../../static/js/bigscreen/big_screen_sync.js"></script>
+<script>
+    $(function () {
+                //判断是否宽屏
+                var winWide = window.screen.availWidth;
+                // alert(winWide);
+                var wideScreen = false;
+                var zm =winWide/1920;
+                document.body.style.zoom = zm*1.45;
+                // body{zoom:1.25;}
+            })
+</script> 
 </html>
