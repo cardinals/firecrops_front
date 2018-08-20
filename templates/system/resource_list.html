@@ -76,7 +76,7 @@
 									-->
 									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
 										<label class="el-form-item__label searchLabel" style="width: 124px;">权限列表</label>
-										<el-checkbox-group v-model="permissionDetailSelect">
+										<el-checkbox-group v-model="permissionDetailSelect" :max="1">
 											<el-checkbox v-for="permission in allPermissionList" :label="permission.permissionid" :key="permission.permissionid">{{permission.permissioninfo}}</el-checkbox>
 										</el-checkbox-group>
 									</el-col>
@@ -137,7 +137,7 @@
 									-->
 									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
 										<el-form-item label="权限列表" prop="permission">
-											<el-checkbox-group v-model="addForm.permissions">
+											<el-checkbox-group v-model="addForm.permissions" :max="1">
 												<el-checkbox v-for="permission in allPermissionList" :label="permission.permissionid" :key="permission.permissionid">{{permission.permissioninfo}}</el-checkbox>
 											</el-checkbox-group>
 										</el-form-item>
