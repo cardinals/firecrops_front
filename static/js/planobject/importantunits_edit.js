@@ -405,7 +405,9 @@ new Vue({
             var params = {
                 jzmc: this.searchForm_building.jzmc,
                 pageSize: this.pageSize_building,
-                pageNum: this.currentPage_building
+                pageNum: this.currentPage_building,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/building/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage_building - 1) * this.pageSize_building);

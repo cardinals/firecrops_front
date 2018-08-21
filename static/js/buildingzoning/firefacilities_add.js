@@ -236,7 +236,9 @@ new Vue({
             var params = {
                 jzmc: this.searchForm_building.jzmc,
                 pageSize: this.pageSize_building,
-                pageNum: this.currentPage_building
+                pageNum: this.currentPage_building,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/building/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage_building - 1) * this.pageSize_building);
@@ -281,7 +283,9 @@ new Vue({
             var params = {
                 dwmc: this.searchForm_units.dwmc,
                 pageSize: this.pageSize_units,
-                pageNum: this.currentPage_units
+                pageNum: this.currentPage_units,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/importantunits/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage_units - 1) * this.pageSize_units);
