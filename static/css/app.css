@@ -117,8 +117,11 @@ font-family:"微软雅黑";
 .yuwolegequ img {
   width: 90%;
 }
+.bg_tm{
+  background-color:rgba(0,0,0,0);
+}
 .map-bg {
-  background: url('../images/bg.png');
+  background: url('../images/bgz.png');
   height:100%;
   width:100%;
   background-size:cover; 
