@@ -12,15 +12,6 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/app.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/sync.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/formal.css">
-     
-    <style>
-    body{
-        width: 100%;
-        padding: 0px !important;
-        margin:0px !important;
-        margin: 0 auto;
-    }
-    </style>
 </head>
 <body class="fw map-bg m0" >
     <div id="app" style="height: 100%;margin-top: 25px;" >
@@ -50,20 +41,19 @@
 </body>
 <!-- 引入js -->
 <script type="text/javascript" src="../../static/js/zzzlib/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="../../static/js/zzzlib/vue.js"></script>
-<script type="text/javascript" src="../../static/js/zzzlib/element.js"></script>
- 
 <script>
     $(function () {
-                //判断是否宽屏
-                var winWide = window.screen.availWidth;
-                // alert(winWide);
-                var wideScreen = false;
-                var zm =winWide/1920;
-                document.body.style.zoom = zm*1.25;
-                // body{zoom:1.25;}
-            })
+            //判断是否宽屏
+            var winWide = window.screen.availWidth;
+            // alert(winWide);
+            var wideScreen = false;
+            var zm = winWide / 1920;
+            document.body.style.zoom = zm * 1.25;
+            // body{zoom:1.25;}
+        })
 </script> 
+<script type="text/javascript" src="../../static/js/zzzlib/vue.js"></script>
+<script type="text/javascript" src="../../static/js/zzzlib/element.js"></script>
 <script>
     var vm = new Vue({
         el: "#app",
