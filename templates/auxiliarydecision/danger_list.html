@@ -51,8 +51,8 @@
 								<el-form>
 									<el-col :span="12" class="btnEditDelete">
 										<el-form-item align="left">
-											<el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
-											<el-button type="danger" icon="delete2" size="small" @click="deleteClick">删除</el-button>  
+											<el-button v-if="hasPermission('auxiliarydecision/danger:add')" type="success" icon="plus" size="small" @click="addClick">新增</el-button>
+											<el-button v-if="hasPermission('auxiliarydecision/danger:delete')" type="danger" icon="delete2" size="small" @click="deleteClick">删除</el-button>  
 										</el-form-item>
 									</el-col>
 									<el-col :span="12"></el-col>
@@ -82,7 +82,7 @@
 							<el-table-column prop="cas" label="CAS" show-overflow-tooltip min-width="12%" align="center"></el-table-column>
 							<el-table-column prop="dangerId" label="国际危险号" show-overflow-tooltip min-width="12%" align="center"></el-table-column>
 							<el-table-column prop="expression" label="分子式" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
-							<el-table-column label="操作" min-width="7%" align="center">
+							<el-table-column label="操作" width="65" align="center" v-if="hasPermission('auxiliarydecision/danger:edit')">
                                 <template slot-scope="scope">
                                     <el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>
                                 </template>

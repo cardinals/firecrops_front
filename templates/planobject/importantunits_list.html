@@ -90,7 +90,7 @@
 							<el-table-column prop="fhdjmc" label="防火等级" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
 							<el-table-column prop="jzflmc" label="建筑情况" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
 							<el-table-column prop="xfdwlxmc" label="消防队伍" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
-							<el-table-column  v-if="hasPermission('planobject/importantunits:edit')" label="操作" min-width="11%" align="center">
+							<el-table-column v-if="hasPermission('planobject/importantunits:edit')" label="操作" width="65" align="center">
 								<template slot-scope="scope">
 									<el-button type="text" @click="editClick(scope.row)">编辑</el-button>
 								</template>

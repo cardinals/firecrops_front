@@ -47,8 +47,8 @@
                                 <el-form>
                                     <el-col :span="12" class="btnEditDelete">
                                         <el-form-item align="left">
-                                            <el-button type="success" icon="plus" size="small" @click="addClick">新增</el-button>
-                                            <el-button type="danger" icon="delete2" size="small" @click="removeSelection">删除</el-button>
+                                            <el-button v-if="hasPermission('system/codelist:add')" type="success" icon="plus" size="small" @click="addClick">新增</el-button>
+                                            <el-button v-if="hasPermission('system/codelist:delete')" type="danger" icon="delete2" size="small" @click="removeSelection">删除</el-button>
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="12"></el-col>
@@ -80,7 +80,7 @@
                             <el-table-column prop="alterName" show-overflow-tooltip label="修改人" min-width="11%" align="center"></el-table-column>
                             <el-table-column prop="alterTime" show-overflow-tooltip label="修改时间" min-width="13%" align="center" :formatter="tableDateFormat"></el-table-column>
                             <el-table-column prop="remark" show-overflow-tooltip label="备注" min-width="12%" align="center" show-overflow-tooltip></el-table-column>
-                            <el-table-column label="操作" min-width="7%" align="center">
+                            <el-table-column label="操作" width="65" align="center" v-if="hasPermission('system/codelist:edit')">
                                 <template slot-scope="scope">
                                     <el-button type="text" @click="editClick(scope.row,scope.$index)">编辑</el-button>
                                 </template>
