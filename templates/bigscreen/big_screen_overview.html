@@ -39,7 +39,7 @@
     }
 </style>
 
-<body class="fw bg_tm" style="margin-top:420px;">
+<body class="fw bg_tm">
 	<div id="app">
 		<div class="application-box tc abs">
 			<!-- 头部分 -->
@@ -187,8 +187,8 @@
 			// alert(winWide);
 			var wideScreen = false;
 			var zm = winWide / 1920;
-			// document.body.style.style.cssText="margin-top:420px;";
-		    // Transform="scale(1.5)";
+			var bmt = zm*420;
+			document.body.style.marginTop = bmt +'px';
 			document.body.style.transform = 'scale('+zm*1.5+')';
 		})
 </script> 
