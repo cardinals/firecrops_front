@@ -28,23 +28,9 @@ new Vue({
             gwyllxData: [],
             //接口形式
             jkxsData: [],
-            //天然水源类型
-            trsylxData: [],
-            //天然水源有无枯水期
-            ywksqData: [],
-            //水质
-            szData: [],
             //水源归属
             sygsData: [],
             qsxsData: [],
-            //有无取水点
-            ywqsdData: [{
-                codeValue: '1',
-                codeName: '有'
-            }, {
-                codeValue: '0',
-                codeName: '无'
-            }],
             //水源类型属性
             isXHS: false,
             isXFSH: false,
@@ -128,8 +114,37 @@ new Vue({
                 children: 'children'
             },
             //天然水源弹出页---------------------------------------------------
+            statusTrsy: '',
+            dialogTitle: "选择天然水源",
+            trsyAddForm: {
+                trsy_trsymc: '',
+                trsy_trsylx: '',
+                trsy_sz: '',
+                trsy_szms: '',
+                trsy_ywksq: '',
+                trsy_ksqsj: '',
+                trsy_ywqsd: '',
+                trsy_jdh: ''
+            },
+            //天然水源类型
+            trsylxData: [],
+            //天然水源有无枯水期
+            ywksqData: [],
+            //水质
+            szData: [],
+            //有无取水点
+            ywqsdData: [{
+                codeValue: '1',
+                codeName: '有'
+            }, {
+                codeValue: '0',
+                codeName: '无'
+            }],
+            trsySearch: true,
+            trsyAdd: false,
             trsyListVisible: false,
             loading_trsy: false,
+            loading_trsyAdd: false,
             //当前页
             currentPage: 1,
             //分页大小
@@ -140,6 +155,7 @@ new Vue({
             searchForm: {
                 trsy_trsymc: ''
             },
+            multipleSelection: [],
             tableData: [],
             //表高度变量
             tableheight: 243,
@@ -485,12 +501,12 @@ new Vue({
                 this.isXFSH = false;
                 this.isXFSC = false;
                 this.isTRSYQSD = true;
-                if (this.trsylxData.length == 0)
-                    this.getTrsylxData();
-                if (this.ywksqData.length == 0)
-                    this.getTrsyYWKSQ_data();
-                if (this.szData.length == 0)
-                    this.getSzData();
+                // if (this.trsylxData.length == 0)
+                //     this.getTrsylxData();
+                // if (this.ywksqData.length == 0)
+                //     this.getTrsyYWKSQ_data();
+                // if (this.szData.length == 0)
+                //     this.getSzData();
             } else {
                 this.isXHS = false;
                 this.isXFSH = false;
@@ -523,29 +539,148 @@ new Vue({
                 var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
+                this.getTrsylxData();
+                this.getSzData();
                 this.loading_trsy = false;
             }.bind(this), function (error) {
                 console.log(error);
             })
         },
-        //车辆弹出页翻页
+        //天然水源弹出页翻页
         currentPageChange: function (val) {
             if (this.currentPage != val) {
                 this.currentPage = val;
                 this.trsyList('page');
             }
         },
-        //选择车辆，返回车辆名称和id
+        //选择天然水源，返回天然水源名称和id
         selectRow: function (val) {
             this.editForm.trsyqsd_trsyid = val.trsy_uuid;
             this.editForm.trsy_trsymc = val.trsy_trsymc;
             this.trsyListVisible = false;
         },
-        //车辆查询条件清空
+        //天然水源查询条件清空
         clearTrsyList: function (val) {
             this.searchForm.trsy_trsymc = "";
             this.trsyList('reset');
         },
+        selectionChange: function (val) {
+            this.multipleSelection = val;
+        },
+        deleteTrsy: function () {
+            this.$confirm('确认删除选中的天然水源?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                axios.post('/dpapi/xfsy/doDeleteTrsyByUUId', this.multipleSelection).then(function (res) {
+                    this.$message({
+                        message: "成功删除" + res.data.result + "条天然水源信息",
+                        showClose: true,
+                        onClose: this.cancelTrsy()
+                    });
+                }.bind(this), function (error) {
+                    console.log(error)
+                })
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
+        addTrsy: function () {
+            this.trsyAddForm = {
+                trsy_trsymc: '',
+                trsy_trsylx: '',
+                trsy_sz: '',
+                trsy_szms: '',
+                trsy_ywksq: '',
+                trsy_ksqsj: '',
+                trsy_ywqsd: '',
+                trsy_jdh: ''
+            };
+            this.trsyAdd = true;
+            this.trsySearch = false;
+            this.dialogTitle = "新增天然水源";
+            this.statusTrsy = 0;
+        },
+        editTrsy: function (val) {
+            this.trsyAdd = true;
+            this.trsySearch = false;
+            this.dialogTitle = "修改天然水源";
+            this.statusTrsy = val.trsy_uuid;
+            var param = {
+                trsy_uuid: this.statusTrsy
+            }
+            axios.post('/dpapi/xfsy/doFindTrsyByUUId', param).then(function (res) {
+                this.trsyAddForm = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
+
+        cancelTrsy: function () {
+            this.trsyAdd = false;
+            this.trsySearch = true;
+            this.dialogTitle = "选择天然水源";
+            this.clearTrsyList();
+        },
+        saveTrsy: function () {
+            if (this.trsyAddForm.trsy_trsymc == '' || this.trsyAddForm.trsy_trsymc == null) {
+                this.$message.warning({
+                    message: '请输入天然水源名称',
+                    showClose: true
+                });
+            } else {
+                if (this.statusTrsy == 0) {//新增
+                    this.trsyAddForm.trsy_jdh = this.shiroData.organizationVO.jgid;
+                    axios.post('/dpapi/xfsy/insertTrsyByXfsyVO', this.trsyAddForm).then(function (res) {
+                        if (res.data.result != null) {
+                            this.$alert('成功保存天然水源信息', '提示', {
+                                type: 'success',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    this.cancelTrsy();
+                                }
+                            });
+                        } else {
+                            this.$alert('保存失败', '提示', {
+                                type: 'error',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    this.cancelTrsy();
+                                }
+                            });
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
+                } else {//修改
+                    axios.post('/dpapi/xfsy/doUpdateTrsyByVO', this.trsyAddForm).then(function (res) {
+                        if (res.data.result != null) {
+                            this.$alert('成功修改天然水源信息', '提示', {
+                                type: 'success',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    this.cancelTrsy();
+                                }
+                            });
+                        } else {
+                            this.$alert('修改失败', '提示', {
+                                type: 'error',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    this.cancelTrsy();
+                                }
+                            });
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
+                }
+            }
+        }
     },
 
 })
