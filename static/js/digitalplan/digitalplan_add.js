@@ -399,7 +399,9 @@ new Vue({
             var params = {
                 dwmc: this.searchForm_units.dwmc,
                 pageSize: this.pageSize_units,
-                pageNum: this.currentPage_units
+                pageNum: this.currentPage_units,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/importantunits/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage_units - 1) * this.pageSize_units);
