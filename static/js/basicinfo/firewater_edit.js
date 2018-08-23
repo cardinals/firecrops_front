@@ -124,7 +124,11 @@ new Vue({
                 trsy_ywksq: '',
                 trsy_ksqsj: '',
                 trsy_ywqsd: '',
-                trsy_jdh: ''
+                trsy_jdh: '',
+                trsy_cjrid:'',
+                trsy_cjrmc:'',
+                trsy_xgrid: '',
+                trsy_xgrmc: ''
             },
             //天然水源类型
             trsylxData: [],
@@ -521,6 +525,9 @@ new Vue({
                 this.tableData = [];
             } else {
                 if (type == 'init') {
+                    this.trsyAdd = false;
+                    this.trsySearch = true;
+                    this.dialogTitle = "选择天然水源";
                     this.searchForm.trsy_trsymc = '';
                 }
                 this.currentPage = 1;
@@ -614,6 +621,16 @@ new Vue({
                 trsy_uuid: this.statusTrsy
             }
             axios.post('/dpapi/xfsy/doFindTrsyByUUId', param).then(function (res) {
+                if (res.data.result.trsy_ywqsd == '有') {
+                    res.data.result.trsy_ywqsd = '1';
+                } else if (res.data.result.trsy_ywqsd == '无') {
+                    res.data.result.trsy_ywqsd = '0';
+                }
+                if (res.data.result.trsy_ywksq == '有') {
+                    res.data.result.trsy_ywksq = '1';
+                } else if (res.data.result.trsy_ywksq == '无') {
+                    res.data.result.trsy_ywksq = '0';
+                }
                 this.trsyAddForm = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
@@ -634,6 +651,8 @@ new Vue({
                 });
             } else {
                 if (this.statusTrsy == 0) {//新增
+                    this.trsyAddForm.trsy_cjrid = this.shiroData.userid;
+                    this.trsyAddForm.trsy_cjrmc = this.shiroData.realName;
                     this.trsyAddForm.trsy_jdh = this.shiroData.organizationVO.jgid;
                     axios.post('/dpapi/xfsy/insertTrsyByXfsyVO', this.trsyAddForm).then(function (res) {
                         if (res.data.result != null) {
@@ -657,6 +676,8 @@ new Vue({
                         console.log(error);
                     })
                 } else {//修改
+                    this.trsyAddForm.trsy_xgrid = this.shiroData.userid;
+                    this.trsyAddForm.trsy_xgrmc = this.shiroData.realName;
                     axios.post('/dpapi/xfsy/doUpdateTrsyByVO', this.trsyAddForm).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功修改天然水源信息', '提示', {
