@@ -537,10 +537,6 @@ new Vue({
                         console.log(error);
                     })
                 } else {//修改
-                    // this.addForm.xgrid = this.shiroData.userid;
-                    // this.addForm.xgrmc = this.shiroData.realName;
-                    // this.addForm.detailMap = this.detailForm;
-                    // var params = this.addForm;
                     if (this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1] == '3001') {
                         this.addForm.detailMap = {
                             wz: this.detailForm.wz,

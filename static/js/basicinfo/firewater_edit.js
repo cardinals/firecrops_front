@@ -91,11 +91,6 @@ new Vue({
                 trsyqsd_trsylx: "",
                 trsyqsd_trsyid: "",
                 trsy_trsymc: "",
-                // trsyqsd_ywksq: "",
-                // trsyqsd_ksqsj: "",
-                // trsyqsd_sz: "",
-                // trsyqsd_szms: "",
-                // trsyqsd_ywqsd: "",
                 trsyqsd_sybgc: "",
                 trsyqsd_tcwz: "",
                 trsyqsd_tsqscls: "",
@@ -125,8 +120,8 @@ new Vue({
                 trsy_ksqsj: '',
                 trsy_ywqsd: '',
                 trsy_jdh: '',
-                trsy_cjrid:'',
-                trsy_cjrmc:'',
+                trsy_cjrid: '',
+                trsy_cjrmc: '',
                 trsy_xgrid: '',
                 trsy_xgrmc: ''
             },
@@ -400,16 +395,66 @@ new Vue({
         save: function (formName) {
             if (this.validateSave()) {
                 if (this.status == 0) {//新增
-                    this.editForm.cjrid = this.shiroData.userid;
-                    this.editForm.cjrmc = this.shiroData.realName;
-                    this.editForm.jdh = this.shiroData.organizationVO.jgid;
-                    this.editForm.xhs_jdh = this.shiroData.organizationVO.jgid;
-                    this.editForm.xfsh_jdh = this.shiroData.organizationVO.jgid;
-                    this.editForm.xfsc_jdh = this.shiroData.organizationVO.jgid;
-                    this.editForm.trsyqsd_jdh = this.shiroData.organizationVO.jgid;
-                    this.editForm.gxdz = this.editForm.gxdz[this.editForm.gxdz.length - 1];
-                    this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length - 1];
-                    axios.post('/dpapi/xfsy/insertByXfsyVO', this.editForm).then(function (res) {
+                    var params = {
+                        symc: this.editForm.symc,
+                        sybm: this.editForm.sybm,
+                        sylx: this.editForm.sylx,
+                        sydz: this.editForm.sydz,
+                        kyzt: this.editForm.kyzt,
+                        gxdz: this.editForm.gxdz[this.editForm.gxdz.length - 1],
+                        xzqh: this.editForm.xzqh[this.editForm.xzqh.length - 1],
+                        sygs: this.editForm.sygs,
+                        lon: this.editForm.lon,
+                        lat: this.editForm.lat,
+                        gisX: this.editForm.gisX,
+                        gisY: this.editForm.gisY,
+                        gisH: this.editForm.gisH,
+                        ssdw: this.editForm.ssdw,
+                        gsdw: this.editForm.gsdw,
+                        gsdwlxfs: this.editForm.gsdwlxfs,
+                        bz: this.editForm.bz,
+                        jdh: this.shiroData.organizationVO.jgid,
+                        //创建人
+                        cjrid: this.shiroData.userid,
+                        cjrmc: this.shiroData.realName,
+                        //消火栓VO
+                        xhs_szxs: this.editForm.xhs_szxs,
+                        xhs_gwylfw: this.editForm.xhs_gwylfw,
+                        xhs_gwxs: this.editForm.xhs_gwxs,
+                        xhs_gwzj: this.editForm.xhs_gwzj,
+                        xhs_gwyllx: this.editForm.xhs_gwyllx,
+                        xhs_jkxs: this.editForm.xhs_jkxs,
+                        xhs_jkkj: this.editForm.xhs_jkkj,
+                        xhs_zdll: this.editForm.xhs_zdll,
+                        xhs_jdh: this.shiroData.organizationVO.jgid,
+                        //消防水鹤VO
+                        xfsh_gwzj: this.editForm.xfsh_gwzj,
+                        xfsh_gwyl: this.editForm.xfsh_gwyl,
+                        xfsh_cskgd: this.editForm.xfsh_cskgd,
+                        xfsh_zdll: this.editForm.xfsh_zdll,
+                        xfsh_jdh: this.shiroData.organizationVO.jgid,
+                        //消防水池VO
+                        xfsc_sybgc: this.editForm.xfsc_sybgc,
+                        xfsc_csl: this.editForm.xfsc_csl,
+                        xfsc_jsll: this.editForm.xfsc_jsll,
+                        xfsc_qszdll: this.editForm.xfsc_qszdll,
+                        xfsc_gwxs: this.editForm.xfsc_gwxs,
+                        xfsc_tcwz: this.editForm.xfsc_tcwz,
+                        xfsc_tsqscls: this.editForm.xfsc_tsqscls,
+                        xfsc_tsqscls: this.editForm.xfsc_tsqscls,
+                        xfsc_bssj: this.editForm.xfsc_bssj,
+                        xfsc_jdh: this.shiroData.organizationVO.jgid,
+                        //天然水源取水点VO
+                        trsyqsd_trsylx: this.editForm.trsyqsd_trsylx,
+                        trsyqsd_trsyid: this.editForm.trsyqsd_trsyid,
+                        trsy_trsymc: this.editForm.trsy_trsymc,
+                        trsyqsd_sybgc: this.editForm.trsyqsd_sybgc,
+                        trsyqsd_tcwz: this.editForm.trsyqsd_tcwz,
+                        trsyqsd_tsqscls: this.editForm.trsyqsd_tsqscls,
+                        trsyqsd_qsxs: this.editForm.trsyqsd_qsxs,
+                        trsyqsd_jdh: this.shiroData.organizationVO.jgid,
+                    }
+                    axios.post('/dpapi/xfsy/insertByXfsyVO', params).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功保存消防水源信息', '提示', {
                                 type: 'success',
@@ -431,16 +476,68 @@ new Vue({
                         console.log(error);
                     })
                 } else {//修改
-                    this.editForm.xgrid = this.shiroData.userid;
-                    this.editForm.xgrmc = this.shiroData.realName;
-                    this.editForm.jdh = this.shiroData.organizationVO.jgid;
-                    this.editForm.xhs_jdh = this.shiroData.organizationVO.jgid;
-                    this.editForm.xfsh_jdh = this.shiroData.organizationVO.jgid;
-                    this.editForm.xfsc_jdh = this.shiroData.organizationVO.jgid;
-                    this.editForm.trsyqsd_jdh = this.shiroData.organizationVO.jgid;
-                    this.editForm.gxdz = this.editForm.gxdz[this.editForm.gxdz.length - 1];
-                    this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length - 1];
-                    axios.post('/dpapi/xfsy/updateByXfsyVO', this.editForm).then(function (res) {
+                    var params = {
+                        uuid: this.editForm.uuid,
+                        sysxxxid: this.editForm.sysxxxid,
+                        symc: this.editForm.symc,
+                        sybm: this.editForm.sybm,
+                        sylx: this.editForm.sylx,
+                        sydz: this.editForm.sydz,
+                        kyzt: this.editForm.kyzt,
+                        gxdz: this.editForm.gxdz[this.editForm.gxdz.length - 1],
+                        xzqh: this.editForm.xzqh[this.editForm.xzqh.length - 1],
+                        sygs: this.editForm.sygs,
+                        lon: this.editForm.lon,
+                        lat: this.editForm.lat,
+                        gisX: this.editForm.gisX,
+                        gisY: this.editForm.gisY,
+                        gisH: this.editForm.gisH,
+                        ssdw: this.editForm.ssdw,
+                        gsdw: this.editForm.gsdw,
+                        gsdwlxfs: this.editForm.gsdwlxfs,
+                        bz: this.editForm.bz,
+                        jdh: this.shiroData.organizationVO.jgid,
+                        //修改人
+                        xgrid: this.shiroData.userid,
+                        xgrmc: this.shiroData.realName,
+                        //消火栓VO
+                        xhs_szxs: this.editForm.xhs_szxs,
+                        xhs_gwylfw: this.editForm.xhs_gwylfw,
+                        xhs_gwxs: this.editForm.xhs_gwxs,
+                        xhs_gwzj: this.editForm.xhs_gwzj,
+                        xhs_gwyllx: this.editForm.xhs_gwyllx,
+                        xhs_jkxs: this.editForm.xhs_jkxs,
+                        xhs_jkkj: this.editForm.xhs_jkkj,
+                        xhs_zdll: this.editForm.xhs_zdll,
+                        xhs_jdh: this.shiroData.organizationVO.jgid,
+                        //消防水鹤VO
+                        xfsh_gwzj: this.editForm.xfsh_gwzj,
+                        xfsh_gwyl: this.editForm.xfsh_gwyl,
+                        xfsh_cskgd: this.editForm.xfsh_cskgd,
+                        xfsh_zdll: this.editForm.xfsh_zdll,
+                        xfsh_jdh: this.shiroData.organizationVO.jgid,
+                        //消防水池VO
+                        xfsc_sybgc: this.editForm.xfsc_sybgc,
+                        xfsc_csl: this.editForm.xfsc_csl,
+                        xfsc_jsll: this.editForm.xfsc_jsll,
+                        xfsc_qszdll: this.editForm.xfsc_qszdll,
+                        xfsc_gwxs: this.editForm.xfsc_gwxs,
+                        xfsc_tcwz: this.editForm.xfsc_tcwz,
+                        xfsc_tsqscls: this.editForm.xfsc_tsqscls,
+                        xfsc_tsqscls: this.editForm.xfsc_tsqscls,
+                        xfsc_bssj: this.editForm.xfsc_bssj,
+                        xfsc_jdh: this.shiroData.organizationVO.jgid,
+                        //天然水源取水点VO
+                        trsyqsd_trsylx: this.editForm.trsyqsd_trsylx,
+                        trsyqsd_trsyid: this.editForm.trsyqsd_trsyid,
+                        trsy_trsymc: this.editForm.trsy_trsymc,
+                        trsyqsd_sybgc: this.editForm.trsyqsd_sybgc,
+                        trsyqsd_tcwz: this.editForm.trsyqsd_tcwz,
+                        trsyqsd_tsqscls: this.editForm.trsyqsd_tsqscls,
+                        trsyqsd_qsxs: this.editForm.trsyqsd_qsxs,
+                        trsyqsd_jdh: this.shiroData.organizationVO.jgid,
+                    }
+                    axios.post('/dpapi/xfsy/updateByXfsyVO', params).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功修改消防水源信息', '提示', {
                                 type: 'success',
