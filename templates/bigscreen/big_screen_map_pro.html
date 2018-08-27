@@ -262,7 +262,18 @@
 <script type="text/javascript" src="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.js"></script>
 <script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
 <script type="text/javascript" src="../../static/js/bigscreen/mapmain.js"></script>
-
+<script type="text/javascript" src="../../static/js/zzzlib/jquery-3.2.1.min.js"></script>
+<script>
+    $(function () {
+            //判断是否宽屏
+            var winWide = window.screen.availWidth;
+            // alert(winWide);
+            var wideScreen = false;
+            var zm = winWide / 1920;
+            document.body.style.zoom = zm * 1.3;
+            // body{zoom:1.25;}
+        })
+</script> 
 <!-- tooljs的引入 -->
 <script type="text/javascript"></script>
 <script>
