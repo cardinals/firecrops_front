@@ -169,7 +169,7 @@ new Vue({
         kclChange: function (value) {
             this.addForm.zcbl = parseFloat(value) + parseFloat(this.addForm.czl);
         },
-        
+
         //保存
         save: function (formName) {
             if (this.addForm.yjmc == "" || this.addForm == null) {
@@ -221,6 +221,7 @@ new Vue({
                     })
                 } else {//修改
                     var params = {
+                        uuid: this.addForm.uuid,
                         yjmc: this.addForm.yjmc,
                         yjbm: this.addForm.yjbm,
                         yjlx: this.addForm.yjlx[this.addForm.yjlx.length - 1],
