@@ -169,6 +169,9 @@ new Vue({
         kclChange: function (value) {
             this.addForm.zcbl = parseFloat(value) + parseFloat(this.addForm.czl);
         },
+        dateChangebirthday(val) {
+            this.addForm.scsj = val;
+        },
 
         //保存
         save: function (formName) {

@@ -271,8 +271,9 @@ new Vue({
         YALX: function () {
             axios.get('/api/codelist/getCodetype/YALX').then(function (res) {
                 for (var i = 0; i < res.data.result.length; i++) {
-                    if(res.data.result[i].codeValue.substr(1,4) == '0000')
+                    if(res.data.result[i].codeValue.substr(1,4) == '0000'){
                         this.yalx_data.push(res.data.result[i]);
+                    }     
                 }
             }.bind(this), function (error) {
                 console.log(error);
@@ -281,7 +282,10 @@ new Vue({
         //预案级别初始化
         YAJB:function(){
             axios.get('/api/codelist/getCodetype/YAJB').then(function (res) {
-                for (var i = 0; i < res.data.result.length; i++) {
+                if(this.shiroData.organizationVO.uuid=='eb09df352cda4902b24c54dd2b2ce656'){
+                    this.yajb_data.push(res.data.result[0]);
+                }
+                for (var i = 1; i < res.data.result.length; i++) {  
                     this.yajb_data.push(res.data.result[i]);
                 }
             }.bind(this), function (error) {
@@ -300,13 +304,21 @@ new Vue({
         },
         //消防管辖初始化
         XFGX:function(){
-            axios.get('/dpapi/util/doSearchContingents').then(function (res) {
-                for (var i = 0; i < res.data.result.length; i++) {
-                    this.xfgx_data.push(res.data.result[i]);
-                }
-            }.bind(this), function (error) {
-                console.log(error);
-            })
+            if(this.shiroData.organizationVO.uuid == 'eb09df352cda4902b24c54dd2b2ce656'){
+                axios.get('/dpapi/util/doSearchContingents').then(function (res) {
+                    for (var i = 0; i < res.data.result.length; i++) {
+                        this.xfgx_data.push(res.data.result[i]);
+                    }
+                }.bind(this), function (error) {
+                    console.log(error);
+                })
+            }else{
+                axios.get('/dpapi/util/doFindXfdzByZongdId/' + this.shiroData.organizationVO.uuid).then(function (res) {
+                    this.xfgx_data = res.data.result;
+                }.bind(this), function (error) {
+                    console.log(error);
+                })
+            }
         },
         //单位性质初始化
         DWXZ:function(){
