@@ -96,15 +96,31 @@
 <script src="../static/js/zzzlib/axios.min.js"></script>
 <script>
         $(function () {
-                //判断是否宽屏
-                var winWide = window.screen.availWidth;
-                // alert(winWide);
-                var wideScreen = false;
-                var zm =winWide/1920;
-                document.body.style.zoom = zm*1.5;
-                // body{zoom:1.25;}
-
-            })
+            //判断是否宽屏
+            var winWide = window.screen.availWidth;
+            // alert(winWide);
+            var wideScreen = false;
+            var zm =winWide/1920;
+            document.body.style.zoom = zm*1.5;
+            // body{zoom:1.25;}
+            
+            //登陆失败
+            var reg = new RegExp("(^|&)msg=([^&]*)(&|$)",'i');
+            var r = window.location.search.substr(1).match(reg);
+            var msg = null;
+            if(r!=null){
+                msg = unescape(r[2]);
+                if(msg.indexOf('UnknownAccountException') != -1){
+                    alert('账号不存在！');
+                }else if(msg.indexOf('IncorrectCredentialsException') != -1){
+                    alert('密码不正确！');
+                }else if(msg.indexOf('ExcessiveAttemptsException') != -1){
+                    alert('密码输入错误次数超过5次！');
+                }else if(msg.indexOf('kaptchaValidateFailed') != -1){
+                    alert('验证码错误！');
+                }
+            }
+        })
 </script> 
 <script>
     $('#username').focus();
