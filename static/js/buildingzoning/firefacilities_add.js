@@ -491,16 +491,29 @@ new Vue({
         save: function () {
             if (this.checkForm() == true) {
                 if (this.status == 0) {//新增
-                    this.addForm.cjrid = this.shiroData.userid;
-                    this.addForm.cjrmc = this.shiroData.realName;
-                    this.addForm.jbxx_jdh = this.shiroData.organizationVO.jgid;
-                    this.addForm.detailMap = this.detailForm;
-                    var params = this.addForm;
-                    if (params.jbxx_xfsslx.length > 0) {
-                        params.jbxx_xfsslx = params.jbxx_xfsslx[params.jbxx_xfsslx.length - 1];
+                    if (this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1] == '3001') {
+                        this.addForm.detailMap = {
+                            wz: this.detailForm.wz,
+                            pmylx: this.detailForm.pmylx[this.detailForm.pmylx.length - 1],
+                            pmycl: this.detailForm.pmycl,
+                            pmbzdll: this.detailForm.pmbzdll
+                        }
+                    } else {
+                        this.addForm.detailMap = this.detailForm;
                     }
-                    if (params.jbxx_xfsslx == '3001') {
-                        params.detailMap.pmylx = params.detailMap.pmylx[params.detailMap.pmylx.length - 1];
+                    var params = {
+                        jbxx_xfssmc: this.addForm.jbxx_xfssmc,
+                        jbxx_jzid: this.addForm.jbxx_jzid,
+                        jbxx_jzmc: this.addForm.jbxx_jzmc,
+                        jbxx_iszddw: this.addForm.jbxx_iszddw,
+                        jbxx_zddwid: this.addForm.jbxx_zddwid,
+                        jbxx_zddwmc: this.addForm.jbxx_zddwmc,
+                        jbxx_xfsslx: this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1],
+                        jbxx_bz: this.addForm.jbxx_bz,
+                        jbxx_jdh: this.shiroData.organizationVO.jgid,
+                        cjrid: this.shiroData.userid,
+                        cjrmc: this.shiroData.realName,
+                        detailMap: this.addForm.detailMap
                     }
                     axios.post('/dpapi/firefacilities/insertByVO', params).then(function (res) {
                         if (res.data.result != null && res.data.result != '') {
@@ -524,15 +537,34 @@ new Vue({
                         console.log(error);
                     })
                 } else {//修改
-                    this.addForm.xgrid = this.shiroData.userid;
-                    this.addForm.xgrmc = this.shiroData.realName;
-                    this.addForm.detailMap = this.detailForm;
-                    var params = this.addForm;
-                    if (params.jbxx_xfsslx.length > 0) {
-                        params.jbxx_xfsslx = params.jbxx_xfsslx[params.jbxx_xfsslx.length - 1];
+                    // this.addForm.xgrid = this.shiroData.userid;
+                    // this.addForm.xgrmc = this.shiroData.realName;
+                    // this.addForm.detailMap = this.detailForm;
+                    // var params = this.addForm;
+                    if (this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1] == '3001') {
+                        this.addForm.detailMap = {
+                            wz: this.detailForm.wz,
+                            pmylx: this.detailForm.pmylx[this.detailForm.pmylx.length - 1],
+                            pmycl: this.detailForm.pmycl,
+                            pmbzdll: this.detailForm.pmbzdll
+                        }
+                    } else {
+                        this.addForm.detailMap = this.detailForm;
                     }
-                    if (params.jbxx_xfsslx == '3001') {
-                        params.detailMap.pmylx = params.detailMap.pmylx[params.detailMap.pmylx.length - 1];
+                    var params = {
+                        jbxx_xfssid: this.addForm.jbxx_xfssid,
+                        jbxx_xfssmc: this.addForm.jbxx_xfssmc,
+                        jbxx_jzid: this.addForm.jbxx_jzid,
+                        jbxx_jzmc: this.addForm.jbxx_jzmc,
+                        jbxx_iszddw: this.addForm.jbxx_iszddw,
+                        jbxx_zddwid: this.addForm.jbxx_zddwid,
+                        jbxx_zddwmc: this.addForm.jbxx_zddwmc,
+                        jbxx_xfsslx: this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1],
+                        jbxx_bz: this.addForm.jbxx_bz,
+                        jbxx_jdh: this.shiroData.organizationVO.jgid,
+                        xgrid: this.shiroData.userid,
+                        xgrmc: this.shiroData.realName,
+                        detailMap: this.addForm.detailMap
                     }
                     axios.post('/dpapi/firefacilities/doUpdateFirefacilities', params).then(function (res) {
                         if (res.data.result != null && res.data.result != '') {
