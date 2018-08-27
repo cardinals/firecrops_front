@@ -670,7 +670,7 @@ new Vue({
                     jzxxList: this.editForm.jzxxList,
                     zdbwList: this.editForm.zdbwList,
                     bz: this.editForm.bz,
-                    jdh: "",
+                    jdh: jdh,
                     cjrid: "",
                     cjrmc: "",
                     xgrid: "",
@@ -686,7 +686,6 @@ new Vue({
                         }else{
                             params.cjrid = this.shiroData.userid;
                             params.cjrmc = this.shiroData.realName;
-                            params.jdh = jdh;
 
                             //重点部位中创建人信息
                             for(var i in params.zdbwList){
@@ -724,6 +723,7 @@ new Vue({
                 }else{//修改
                     params.xgrid = this.shiroData.userid;
                     params.xgrmc = this.shiroData.realName;
+                    params.uuid = this.editForm.uuid;
 
                     //重点部位中修改人信息
                     for(var i in params.zdbwList){
