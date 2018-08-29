@@ -630,6 +630,52 @@ new Vue({
         save: function () {
             if(this.validateForm() == true) {
                 var jdh = this.shiroData.organizationVO.jgid;
+                //行政区划
+                var xzqhString = "";
+                if(this.editForm.xzqh!="" && this.editForm.xzqh.length>0){
+                    xzqhString = this.editForm.xzqh[this.editForm.xzqh.length-1];
+                }
+                //防火队站ID
+                var fhdzidString = this.editForm.fhdzid[this.editForm.fhdzid.length-1];
+                //灭火队站ID
+                var mhdzidString = this.editForm.mhdzid[this.editForm.mhdzid.length-1];
+                var params = {
+                    dwmc: this.editForm.dwmc,
+                    dwxz: this.editForm.dwxz,
+                    dwdz: this.editForm.dwdz,
+                    xzqh: xzqhString,
+                    fhdj: this.editForm.fhdj,
+                    zbdh: this.editForm.zbdh,
+                    dwgk: this.editForm.dwgk,
+                    gisX: this.editForm.gisX,
+                    gisY: this.editForm.gisY,
+                    lon: this.editForm.lon,
+                    lat: this.editForm.lat,
+                    plqkd: this.editForm.plqkd,
+                    plqkn: this.editForm.plqkn,
+                    plqkx: this.editForm.plqkx,
+                    plqkb: this.editForm.plqkb,
+                    fhdzid: fhdzidString,
+                    mhdzid: mhdzidString,
+                    xfzrr: this.editForm.xfzrr,
+                    xfzrrdh: this.editForm.xfzrrdh,
+                    xfglr: this.editForm.xfglr,
+                    xfglrdh: this.editForm.xfglrdh,
+                    xfllList: this.editForm.xfllList,
+                    xfsssl: this.editForm.xfsssl,
+                    jzfl: this.editForm.jzfl,
+                    jzsl: this.editForm.jzsl,
+                    zdmj: this.editForm.zdmj,
+                    jzmj: this.editForm.jzmj,
+                    jzxxList: this.editForm.jzxxList,
+                    zdbwList: this.editForm.zdbwList,
+                    bz: this.editForm.bz,
+                    jdh: jdh,
+                    cjrid: "",
+                    cjrmc: "",
+                    xgrid: "",
+                    xgrmc: "",
+                };
                 if(this.status == 0) {//新增
                     axios.get('/dpapi/importantunits/doCheckName/' + this.editForm.dwmc).then(function (res) {
                         if(res.data.result > 0) {
@@ -638,25 +684,16 @@ new Vue({
                                 showClose: true
                             });
                         }else{
-                            this.editForm.cjrid = this.shiroData.userid;
-                            this.editForm.cjrmc = this.shiroData.realName;
-                            this.editForm.jdh = jdh;
-                            //行政区划
-                            if(this.editForm.xzqh!="" && this.editForm.xzqh.length>0){
-                                this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
-                            }
-                            //防火队站ID
-                            this.editForm.fhdzid = this.editForm.fhdzid[this.editForm.fhdzid.length-1];
-                            //灭火队站ID
-                            this.editForm.mhdzid = this.editForm.mhdzid[this.editForm.mhdzid.length-1];
+                            params.cjrid = this.shiroData.userid;
+                            params.cjrmc = this.shiroData.realName;
 
                             //重点部位中创建人信息
-                            for(var i in this.editForm.zdbwList){
-                                this.editForm.zdbwList[i].cjrid = this.shiroData.userid;
-                                this.editForm.zdbwList[i].cjrmc = this.shiroData.realName;
+                            for(var i in params.zdbwList){
+                                params.zdbwList[i].cjrid = this.shiroData.userid;
+                                params.zdbwList[i].cjrmc = this.shiroData.realName;
                             }
 
-                            axios.post('/dpapi/importantunits/doInsertByVO', this.editForm).then(function (res) {
+                            axios.post('/dpapi/importantunits/doInsertByVO', params).then(function (res) {
                                 if(res.data.result != null) {
                                     this.$alert('保存成功', '提示', {
                                         type: 'success',
@@ -684,55 +721,46 @@ new Vue({
                     
                     
                 }else{//修改
-                    this.editForm.xgrid = this.shiroData.userid;
-                    this.editForm.xgrmc = this.shiroData.realName;
-                    //行政区划
-                    if(this.editForm.xzqh!="" && this.editForm.xzqh.length>0){
-                        this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
-                    }else{
-                        this.editForm.xzqh = "";
-                    }
-                    //防火队站ID
-                    this.editForm.fhdzid = this.editForm.fhdzid[this.editForm.fhdzid.length-1];
-                    //灭火队站ID
-                    this.editForm.mhdzid = this.editForm.mhdzid[this.editForm.mhdzid.length-1];
+                    params.xgrid = this.shiroData.userid;
+                    params.xgrmc = this.shiroData.realName;
+                    params.uuid = this.editForm.uuid;
 
                     //重点部位中修改人信息
-                    for(var i in this.editForm.zdbwList){
-                        this.editForm.zdbwList[i].xgrid = this.shiroData.userid;
-                        this.editForm.zdbwList[i].xgrmc = this.shiroData.realName;
+                    for(var i in params.zdbwList){
+                        params.zdbwList[i].xgrid = this.shiroData.userid;
+                        params.zdbwList[i].xgrmc = this.shiroData.realName;
                         //对重点部位建筑类、装置类、储罐类对象进行处理
-                        switch(this.editForm.zdbwList[i].zdbwlx){
+                        switch(params.zdbwList[i].zdbwlx){
                             case "10":
-                                this.editForm.zdbwList[i].zzl = null;
-                                this.editForm.zdbwList[i].cgl = null;
-                                if(this.editForm.zdbwList[i].jzl.length == 0){
-                                    this.editForm.zdbwList[i].jzl = null;
+                                params.zdbwList[i].zzl = null;
+                                params.zdbwList[i].cgl = null;
+                                if(params.zdbwList[i].jzl.length == 0){
+                                    params.zdbwList[i].jzl = null;
                                 }
                                 break;
                             case "20":
-                                this.editForm.zdbwList[i].jzl = null;
-                                this.editForm.zdbwList[i].cgl = null;
-                                if(this.editForm.zdbwList[i].zzl.length == 0){
-                                    this.editForm.zdbwList[i].zzl = null;
+                                params.zdbwList[i].jzl = null;
+                                params.zdbwList[i].cgl = null;
+                                if(params.zdbwList[i].zzl.length == 0){
+                                    params.zdbwList[i].zzl = null;
                                 }
                                 break;
                             case "30":
-                                this.editForm.zdbwList[i].jzl = null;
-                                this.editForm.zdbwList[i].zzl = null;
-                                if(this.editForm.zdbwList[i].cgl.length == 0){
-                                    this.editForm.zdbwList[i].cgl = null;
+                                params.zdbwList[i].jzl = null;
+                                params.zdbwList[i].zzl = null;
+                                if(params.zdbwList[i].cgl.length == 0){
+                                    params.zdbwList[i].cgl = null;
                                 }
                                 break;
                             default:
-                                this.editForm.zdbwList[i].jzl = null;
-                                this.editForm.zdbwList[i].zzl = null;
-                                this.editForm.zdbwList[i].cgl = null;
+                                params.zdbwList[i].jzl = null;
+                                params.zdbwList[i].zzl = null;
+                                params.zdbwList[i].cgl = null;
                                 break;
                         }   
                     }
 
-                    axios.post('/dpapi/importantunits/doUpdateByVO', this.editForm).then(function (res) {
+                    axios.post('/dpapi/importantunits/doUpdateByVO', params).then(function (res) {
                         if(res.data.result != null) {
                             this.$alert('保存成功', '提示', {
                                 type: 'success',

@@ -86,7 +86,7 @@ new Vue({
         this.getAllSsdzDataTree();
     },
     mounted: function () {
-        this.searchClick();
+        // this.searchClick();
     },
     methods: {
         //车辆+
@@ -167,90 +167,50 @@ new Vue({
                 axios.get('/dpapi/equipmentsource/' + this.status).then(function (res) {
                     this.addForm = res.data.result;
                     //装备类型格式化
-                    if (this.addForm.zblx != '' && this.addForm.zblx != null) {
-                        if (this.addForm.zblx.endsWith("0000000")) {
-                            var zblx = this.addForm.zblx;
-                            this.addForm.zblx = [];
-                            this.addForm.zblx.push(zblx);
-                        } else if (this.addForm.zblx.endsWith("000000")) {
-                            var zblx1 = this.addForm.zblx.substring(0, 1) + '0000000';
-                            var zblx2 = this.addForm.zblx;
-                            this.addForm.zblx = [];
-                            this.addForm.zblx.push(zblx1, zblx2);
-                        } else if (this.addForm.zblx.endsWith("0000")) {
-                            var zblx1 = this.addForm.zblx.substring(0, 1) + '0000000';
-                            var zblx2 = this.addForm.zblx.substring(0, 2) + '000000';
-                            var zblx3 = this.addForm.zblx;
-                            this.addForm.zblx = [];
-                            this.addForm.zblx.push(zblx1, zblx2, zblx3);
-                        } else if (this.addForm.zblx.endsWith("00")) {
-                            var zblx1 = this.addForm.zblx.substring(0, 1) + '0000000';
-                            var zblx2 = this.addForm.zblx.substring(0, 2) + '000000';
-                            var zblx3 = this.addForm.zblx.substring(0, 4) + '0000';
-                            var zblx4 = this.addForm.zblx;
-                            this.addForm.zblx = [];
-                            this.addForm.zblx.push(zblx1, zblx2, zblx3, zblx4);
+                    var zblxArray = [];
+                    if (this.addForm.zblx != null && this.addForm.zblx != "" && !this.addForm.zblx.endsWith("0000000")) {
+                        zblxArray.push(this.addForm.zblx.substr(0, 1) + "0000000");
+                        if (!this.addForm.zblx.endsWith("000000")) {
+                            zblxArray.push(this.addForm.zblx.substr(0, 2) + '000000');
+                            if (!this.addForm.zblx.endsWith("0000")) {
+                                zblxArray.push(this.addForm.zblx.substr(0, 4) + '0000');
+                                if (!this.addForm.zblx.endsWith("00")) {
+                                    zblxArray.push(this.addForm.zblx.substr(0, 6) + '00');
+                                }
+                            }
                         }
-                    } else {
-                        this.addForm.zblx = [];
                     }
+                    zblxArray.push(this.addForm.zblx);
+                    this.addForm.zblx = zblxArray;
+
                     //行政区划格式化
-                    if (this.addForm.xzqh != '' && this.addForm.xzqh != null) {
-                        if (this.addForm.xzqh.endsWith("0000")) {
-                            var xzqh = this.addForm.xzqh;
-                            this.addForm.xzqh = [];
-                            this.addForm.xzqh.push(xzqh);
-                        } else if (this.addForm.xzqh.endsWith("00")) {
-                            var xzqh1 = this.addForm.xzqh.substring(0, 2) + '0000';
-                            var xzqh2 = this.addForm.xzqh;
-                            this.addForm.xzqh = [];
-                            this.addForm.xzqh.push(xzqh1, xzqh2);
-                        } else {
-                            var xzqh1 = this.addForm.xzqh.substring(0, 2) + '0000';
-                            var xzqh2 = this.addForm.xzqh.substring(0, 4) + '00';
-                            var xzqh3 = this.addForm.xzqh;
-                            this.addForm.xzqh = [];
-                            this.addForm.xzqh.push(xzqh1, xzqh2, xzqh3);
+                    var xzqhArray = [];
+                    if (this.addForm.xzqh != null && this.addForm.xzqh != "" && this.addForm.xzqh.substr(2, 4) != "0000") {
+                        xzqhArray.push(this.addForm.xzqh.substr(0, 2) + "0000");
+                        if (this.addForm.xzqh.substr(4, 2) != "00") {
+                            xzqhArray.push(this.addForm.xzqh.substr(0, 4) + "00");
                         }
-                    } else {
-                        this.addForm.xzqh = [];
                     }
+                    xzqhArray.push(this.addForm.xzqh);
+                    this.addForm.xzqh = xzqhArray;
                     //所属队站格式化
-                    if (this.addForm.ssdz != '' && this.addForm.ssdz != null) {
-                        for (var i in this.allSsdzDataTree) {
-                            if (this.allSsdzDataTree[i].dzid == this.addForm.ssdz) {
-                                var ssdz = this.addForm.ssdz;
-                                this.addForm.ssdz = [];
-                                this.addForm.ssdz.push(ssdz);
-                                break;
-                            } else {
-                                for (var k in this.allSsdzDataTree[i].children) {
-                                    if (this.allSsdzDataTree[i].children[k].dzid == this.addForm.ssdz) {
-                                        var ssdz1 = this.allSsdzDataTree[i].dzid;
-                                        var ssdz2 = this.allSsdzDataTree[i].children[k].dzid;
-                                        this.addForm.ssdz = [];
-                                        this.addForm.ssdz.push(ssdz1, ssdz2);
-                                        break;
-                                    } else {
-                                        for (var j in this.allSsdzDataTree[i].children[k].children) {
-                                            if (this.allSsdzDataTree[i].children[k].children[j].dzid == this.addForm.ssdz) {
-                                                var ssdz1 = this.allSsdzDataTree[i].dzid;
-                                                var ssdz2 = this.allSsdzDataTree[i].children[k].dzid;
-                                                var ssdz3 = this.allSsdzDataTree[i].children[k].children[j].dzid;
-                                                this.addForm.ssdz = [];
-                                                this.addForm.ssdz.push(ssdz1, ssdz2, ssdz3);
-                                                break;
-                                            } else {
-                                                for (var s in this.allSsdzDataTree[i].children[k].children[j].children) {
-                                                    if (this.allSsdzDataTree[i].children[k].children[j].children[s].dzid == this.addForm.ssdz) {
-                                                        var ssdz1 = this.allSsdzDataTree[i].dzid;
-                                                        var ssdz2 = this.allSsdzDataTree[i].children[k].dzid;
-                                                        var ssdz3 = this.allSsdzDataTree[i].children[k].children[j].dzid;
-                                                        var ssdz4 = this.allSsdzDataTree[i].children[k].children[j].children[s].dzid;
-                                                        this.addForm.ssdz = [];
-                                                        this.addForm.ssdz.push(ssdz1, ssdz2, ssdz3, ssdz4);
-                                                        break;
-                                                    }
+                    var sjdzArray = [];
+                    var temp = this.addForm.ssdz;
+                    for (var i in this.allSsdzDataTree) {
+                        if (temp == this.allSsdzDataTree[i].dzid) {
+                            sjdzArray.push(this.allSsdzDataTree[i].dzid);
+                        } else {
+                            for (var j in this.allSsdzDataTree[i].children) {
+                                if (temp == this.allSsdzDataTree[i].children[j].dzid) {
+                                    sjdzArray.push(this.allSsdzDataTree[i].dzid, this.allSsdzDataTree[i].children[j].dzid);
+                                } else {
+                                    for (var k in this.allSsdzDataTree[i].children[j].children) {
+                                        if (temp == this.allSsdzDataTree[i].children[j].children[k].dzid) {
+                                            sjdzArray.push(this.allSsdzDataTree[i].dzid, this.allSsdzDataTree[i].children[j].dzid, this.allSsdzDataTree[i].children[j].children[k].dzid);
+                                        } else {
+                                            for (var n in this.allSsdzDataTree[i].children[j].children[k].children) {
+                                                if (temp == this.allSsdzDataTree[i].children[j].children[k].children[n].dzid) {
+                                                    sjdzArray.push(this.allSsdzDataTree[i].dzid, this.allSsdzDataTree[i].children[j].dzid, this.allSsdzDataTree[i].children[j].children[k].dzid, this.allSsdzDataTree[i].children[j].children[k].children[n].dzid);
                                                 }
                                             }
                                         }
@@ -258,9 +218,10 @@ new Vue({
                                 }
                             }
                         }
-                    } else {
-                        this.addForm.xzqh = [];
                     }
+                    this.addForm.ssdz = sjdzArray;
+
+                    //消防车辆查询
                     var params = {
                         zbid: this.addForm.uuid
                     };
@@ -307,6 +268,7 @@ new Vue({
             }
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.allSsdzDataTree = res.data.result;
+                this.searchClick();
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -339,24 +301,30 @@ new Vue({
         save: function () {
             if (this.checkForm() == true) {
                 if (this.status == 0) {//新增
-                    this.addForm.cjrid = this.shiroData.userid;
-                    this.addForm.cjrmc = this.shiroData.realName;
-                    this.addForm.jdh = this.shiroData.organizationVO.jgid;
                     for (var i in this.engineForm) {
                         this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.engineForm[i].clzzs);
                     }
                     this.addForm.zcbl = parseInt(this.addForm.kysl) + parseInt(this.addForm.shsl) + parseInt(this.addForm.zzsl);
-                    if (this.addForm.zblx.length > 0) {
-                        this.addForm.zblx = this.addForm.zblx[this.addForm.zblx.length - 1];
+                    var params = {
+                        zbmc: this.addForm.zbmc,
+                        zbbm: this.addForm.zbbm,
+                        ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
+                        ssdzmc: this.addForm.zbbssdzmcm,
+                        xzqh: this.addForm.xzqh[this.addForm.xzqh.length - 1],
+                        zblx: this.addForm.zblx[this.addForm.zblx.length - 1],
+                        sccj: this.addForm.sccj,
+                        zcbl: this.addForm.zcbl,
+                        kysl: this.addForm.kysl,
+                        shsl: this.addForm.shsl,
+                        zzsl: this.addForm.zzsl,
+                        bz: this.addForm.bz,
+                        cjrid: this.shiroData.userid,
+                        cjrmc: this.shiroData.realName,
+                        bz: this.addForm.bz,
+                        jdh: this.shiroData.organizationVO.jgid,
+                        equipengineVOList: this.engineForm
                     }
-                    if (this.addForm.xzqh.length > 0) {
-                        this.addForm.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
-                    }
-                    if (this.addForm.ssdz.length > 0) {
-                        this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
-                    }
-                    this.addForm.equipengineVOList = this.engineForm;
-                    axios.post('/dpapi/equipmentsource/insertByVO', this.addForm).then(function (res) {
+                    axios.post('/dpapi/equipmentsource/insertByVO', params).then(function (res) {
                         if (res.data.result.uuid != null && res.data.result.uuid != '') {
                             this.$alert('保存成功', '提示', {
                                 type: 'success',
@@ -378,25 +346,32 @@ new Vue({
                         console.log(error);
                     })
                 } else {//修改
-                    this.addForm.xgrid = this.shiroData.userid;
-                    this.addForm.xgrmc = this.shiroData.realName;
-                    this.addForm.jdh = this.shiroData.organizationVO.jgid;
                     this.addForm.zzsl = 0;
                     for (var i in this.engineForm) {
                         this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.engineForm[i].clzzs);
                     }
                     this.addForm.zcbl = parseInt(this.addForm.kysl) + parseInt(this.addForm.shsl) + parseInt(this.addForm.zzsl);
-                    if (this.addForm.zblx.length > 0) {
-                        this.addForm.zblx = this.addForm.zblx[this.addForm.zblx.length - 1];
+                    var params = {
+                        uuid: this.addForm.uuid,
+                        zbmc: this.addForm.zbmc,
+                        zbbm: this.addForm.zbbm,
+                        ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
+                        ssdzmc: this.addForm.zbbssdzmcm,
+                        xzqh: this.addForm.xzqh[this.addForm.xzqh.length - 1],
+                        zblx: this.addForm.zblx[this.addForm.zblx.length - 1],
+                        sccj: this.addForm.sccj,
+                        zcbl: this.addForm.zcbl,
+                        kysl: this.addForm.kysl,
+                        shsl: this.addForm.shsl,
+                        zzsl: this.addForm.zzsl,
+                        bz: this.addForm.bz,
+                        xgrid: this.shiroData.userid,
+                        xgrmc: this.shiroData.realName,
+                        bz: this.addForm.bz,
+                        jdh: this.shiroData.organizationVO.jgid,
+                        equipengineVOList: this.engineForm
                     }
-                    if (this.addForm.xzqh.length > 0) {
-                        this.addForm.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
-                    }
-                    if (this.addForm.ssdz.length > 0) {
-                        this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
-                    }
-                    this.addForm.equipengineVOList = this.engineForm;
-                    axios.post('/dpapi/equipmentsource/doUpdateEquipment', this.addForm).then(function (res) {
+                    axios.post('/dpapi/equipmentsource/doUpdateEquipment', params).then(function (res) {
                         if (res.data.result != null && res.data.result != '') {
                             this.$alert('修改成功', '提示', {
                                 type: 'success',

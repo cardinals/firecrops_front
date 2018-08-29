@@ -359,6 +359,60 @@ new Vue({
         save: function (formName) {
             if(this.validateSave()){
                 var jdh = this.shiroData.organizationVO.jgid;
+                var params = {
+                    dzmc: this.editForm.dzmc,
+                    dzjc: this.editForm.dzjc,
+                    dzbm: this.editForm.dzbm,
+                    dzlx: this.editForm.dzlx[this.editForm.dzlx.length-1],
+                    sjdzid: this.editForm.sjdzid[this.editForm.sjdzid.length-1],
+                    dzdz: this.editForm.dzdz,
+                    xzqh: this.editForm.xzqh[this.editForm.xzqh.length-1],
+                    lon: this.editForm.lon,
+                    lat: this.editForm.lat,
+                    gisX: this.editForm.gisX,
+                    gisY: this.editForm.gisY,
+                    gxsys: this.editForm.gxsys,
+                    gxzddws: this.editForm.gxzddws,
+                    xqfw: this.editForm.xqfw,
+                    xqmj: this.editForm.xqmj,
+                    lxr: this.editForm.lxr,
+                    lxdh: this.editForm.lxdh,
+                    czhm: this.editForm.czhm,
+                    zqcls: this.editForm.zqcls,
+                    zbqcs: this.editForm.zbqcs,
+                    mhjzl: this.editForm.mhjzl,
+                    bz: this.editForm.bz,
+                    cjrid: "",
+                    cjrmc: "",
+                    xgrid: "",
+                    xgrmc: "",
+                    zongdVO: this.editForm.zongdVO,
+                    zhidVO: this.editForm.zhidVO,
+                    dadVO: this.editForm.dadVO,
+                    zhongdVO: this.editForm.zhongdVO,
+                    qtxfdwVO: this.editForm.qtxfdwVO,
+                    jdh: jdh
+                };
+                //从表JDH
+                if(params.dzlx!=null && params.dzlx!=""){
+                    switch(params.dzlx.substr(0,2)){
+                        case "02":
+                            params.zongdVO.jdh = jdh;
+                            break;
+                        case "03":
+                            params.zhidVO.jdh = jdh;
+                            break;
+                        case "05":
+                            params.DadVO.jdh = jdh;
+                            break;
+                        case "09":
+                            params.zhongdVO.jdh = jdh;
+                            break;
+                        case "0A":
+                            params.qtxfdwVO.jdh = jdh;
+                            break;
+                    }
+                }
                 if (this.status == 0) {//新增
                     axios.get('/dpapi/xfdz/doCheckName/' + this.editForm.dzmc).then(function (res) {
                         if (res.data.result > 0) {
@@ -367,33 +421,10 @@ new Vue({
                                 showClose: true
                             });
                         } else {
-                            this.editForm.cjrid = this.shiroData.userid;
-                            this.editForm.cjrmc = this.shiroData.realName;
-                            this.editForm.jdh = jdh;
-                            this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
-                            this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
-                            this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
-                            //从表JDH
-                            if(this.editForm.dzlx!=null && this.editForm.dzlx!=""){
-                                switch(this.editForm.dzlx.substr(0,2)){
-                                    case "02":
-                                        this.editForm.zongdVO.jdh = jdh;
-                                        break;
-                                    case "03":
-                                        this.editForm.zhidVO.jdh = jdh;
-                                        break;
-                                    case "05":
-                                        this.editForm.DadVO.jdh = jdh;
-                                        break;
-                                    case "09":
-                                        this.editForm.zhongdVO.jdh = jdh;
-                                        break;
-                                    case "0A":
-                                        this.editForm.qtxfdwVO.jdh = jdh;
-                                        break;
-                                }
-                            }
-                            axios.post('/dpapi/xfdz/insertByXfdzVO', this.editForm).then(function (res) {
+                            params.cjrid = this.shiroData.userid;
+                            params.cjrmc = this.shiroData.realName;
+                            
+                            axios.post('/dpapi/xfdz/insertByXfdzVO', params).then(function (res) {
                                 if (res.data.result != null) {
                                     this.$alert('成功保存队站信息', '提示', {
                                         type: 'success',
@@ -419,41 +450,11 @@ new Vue({
                         console.log(error);
                     })
                 } else {//修改
-                    this.editForm.xgrid = this.shiroData.userid;
-                    this.editForm.xgrmc = this.shiroData.realName;
-                    this.editForm.jdh = jdh;
-                    this.editForm.dzlx = this.editForm.dzlx[this.editForm.dzlx.length-1];
-                    if(this.editForm.xzqh.length>0){
-                        this.editForm.xzqh = this.editForm.xzqh[this.editForm.xzqh.length-1];
-                    }else{
-                        this.editForm.xzqh = null;
-                    }
-                    if(this.editForm.sjdzid.length>0){
-                        this.editForm.sjdzid = this.editForm.sjdzid[this.editForm.sjdzid.length-1];
-                    }else{
-                        this.editForm.sjdzid = null;
-                    }
-                    //从表JDH
-                    if(this.editForm.dzlx!=null && this.editForm.dzlx!=""){
-                        switch(this.editForm.dzlx.substr(0,2)){
-                            case "02":
-                                this.editForm.zongdVO.jdh = jdh;
-                                break;
-                            case "03":
-                                this.editForm.zhidVO.jdh = jdh;
-                                break;
-                            case "05":
-                                this.editForm.dadVO.jdh = jdh;
-                                break;
-                            case "09":
-                                this.editForm.zhongdVO.jdh = jdh;
-                                break;
-                            case "0A":
-                                this.editForm.qtxfdwVO.jdh = jdh;
-                                break;
-                        }
-                    }
-                    axios.post('/dpapi/xfdz/updateByXfdzVO', this.editForm).then(function (res) {
+                    params.xgrid = this.shiroData.userid;
+                    params.xgrmc = this.shiroData.realName;
+                    params.dzid = this.editForm.dzid;
+                    
+                    axios.post('/dpapi/xfdz/updateByXfdzVO', params).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功修改队站信息', '提示', {
                                 type: 'success',

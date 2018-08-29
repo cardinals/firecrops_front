@@ -21,9 +21,9 @@ new Vue({
                 yjlx: [],
                 sccj: "",
                 pc: "",
-                zcbl: '0.00',
-                czl: '0.00',
-                kcl: '0.00',
+                zcbl: '',
+                czl: '',
+                kcl: '',
                 scsj: "",
                 hhb: "",
                 cjrid: "",
@@ -65,7 +65,7 @@ new Vue({
 
     },
     mounted: function () {
-        this.searchClick();
+        // this.searchClick();
     },
     methods: {
         //表格查询事件
@@ -77,84 +77,45 @@ new Vue({
                 axios.get('/dpapi/firedrug/' + this.status).then(function (res) {
                     this.addForm = res.data.result;
                     //药剂类型格式化
-                    if (this.addForm.yjlx != '' && this.addForm.yjlx != null) {
-                        if (this.addForm.yjlx.endsWith("000000")) {
-                            var yjlx = this.addForm.yjlx;
-                            this.addForm.yjlx = [];
-                            this.addForm.yjlx.push(yjlx);
-                        } else if (this.addForm.yjlx.endsWith("0000")) {
-                            var yjlx1 = this.addForm.yjlx.substring(0, 2) + '000000';
-                            var yjlx2 = this.addForm.yjlx;
-                            this.addForm.yjlx = [];
-                            this.addForm.yjlx.push(yjlx1, yjlx2);
-                        } else if (this.addForm.yjlx.endsWith("00")) {
-                            var yjlx1 = this.addForm.yjlx.substring(0, 2) + '000000';
-                            var yjlx2 = this.addForm.yjlx.substring(0, 4) + '0000';
-                            var yjlx3 = this.addForm.yjlx;
-                            this.addForm.yjlx = [];
-                            this.addForm.yjlx.push(yjlx1, yjlx2, yjlx3);
+                    var yjlxArray = [];
+                    if (this.addForm.yjlx != null && this.addForm.yjlx != "" && !this.addForm.yjlx.endsWith("000000")) {
+                        yjlxArray.push(this.addForm.yjlx.substr(0, 2) + '000000');
+                        if (!this.addForm.yjlx.endsWith("0000")) {
+                            yjlxArray.push(this.addForm.yjlx.substr(0, 4) + '0000');
                         }
-                    } else {
-                        this.addForm.yjlx = [];
                     }
+                    yjlxArray.push(this.addForm.yjlx);
+                    this.addForm.yjlx = yjlxArray;
+
                     //行政区划格式化
-                    if (this.addForm.xzqh != '' && this.addForm.xzqh != null) {
-                        if (this.addForm.xzqh.endsWith("0000")) {
-                            var xzqh = this.addForm.xzqh;
-                            this.addForm.xzqh = [];
-                            this.addForm.xzqh.push(xzqh);
-                        } else if (this.addForm.xzqh.endsWith("00")) {
-                            var xzqh1 = this.addForm.xzqh.substring(0, 2) + '0000';
-                            var xzqh2 = this.addForm.xzqh;
-                            this.addForm.xzqh = [];
-                            this.addForm.xzqh.push(xzqh1, xzqh2);
-                        } else {
-                            var xzqh1 = this.addForm.xzqh.substring(0, 2) + '0000';
-                            var xzqh2 = this.addForm.xzqh.substring(0, 4) + '00';
-                            var xzqh3 = this.addForm.xzqh;
-                            this.addForm.xzqh = [];
-                            this.addForm.xzqh.push(xzqh1, xzqh2, xzqh3);
+                    var xzqhArray = [];
+                    if (this.addForm.xzqh != null && this.addForm.xzqh != "" && this.addForm.xzqh.substr(2, 4) != "0000") {
+                        xzqhArray.push(this.addForm.xzqh.substr(0, 2) + "0000");
+                        if (this.addForm.xzqh.substr(4, 2) != "00") {
+                            xzqhArray.push(this.addForm.xzqh.substr(0, 4) + "00");
                         }
-                    } else {
-                        this.addForm.xzqh = [];
                     }
+                    xzqhArray.push(this.addForm.xzqh);
+                    this.addForm.xzqh = xzqhArray;
 
                     //所属队站格式化
-                    if (this.addForm.ssdz != '' && this.addForm.ssdz != null) {
-                        for (var i in this.allSsdzDataTree) {
-                            if (this.allSsdzDataTree[i].dzid == this.addForm.ssdz) {
-                                var ssdz = this.addForm.ssdz;
-                                this.addForm.ssdz = [];
-                                this.addForm.ssdz.push(ssdz);
-                                break;
-                            } else {
-                                for (var k in this.allSsdzDataTree[i].children) {
-                                    if (this.allSsdzDataTree[i].children[k].dzid == this.addForm.ssdz) {
-                                        var ssdz1 = this.allSsdzDataTree[i].dzid;
-                                        var ssdz2 = this.allSsdzDataTree[i].children[k].dzid;
-                                        this.addForm.ssdz = [];
-                                        this.addForm.ssdz.push(ssdz1, ssdz2);
-                                        break;
-                                    } else {
-                                        for (var j in this.allSsdzDataTree[i].children[k].children) {
-                                            if (this.allSsdzDataTree[i].children[k].children[j].dzid == this.addForm.ssdz) {
-                                                var ssdz1 = this.allSsdzDataTree[i].dzid;
-                                                var ssdz2 = this.allSsdzDataTree[i].children[k].dzid;
-                                                var ssdz3 = this.allSsdzDataTree[i].children[k].children[j].dzid;
-                                                this.addForm.ssdz = [];
-                                                this.addForm.ssdz.push(ssdz1, ssdz2, ssdz3);
-                                                break;
-                                            } else {
-                                                for (var s in this.allSsdzDataTree[i].children[k].children[j].children) {
-                                                    if (this.allSsdzDataTree[i].children[k].children[j].children[s].dzid == this.addForm.ssdz) {
-                                                        var ssdz1 = this.allSsdzDataTree[i].dzid;
-                                                        var ssdz2 = this.allSsdzDataTree[i].children[k].dzid;
-                                                        var ssdz3 = this.allSsdzDataTree[i].children[k].children[j].dzid;
-                                                        var ssdz4 = this.allSsdzDataTree[i].children[k].children[j].children[s].dzid;
-                                                        this.addForm.ssdz = [];
-                                                        this.addForm.ssdz.push(ssdz1, ssdz2, ssdz3, ssdz4);
-                                                        break;
-                                                    }
+                    var sjdzArray = [];
+                    var temp = this.addForm.ssdz;
+                    for (var i in this.allSsdzDataTree) {
+                        if (temp == this.allSsdzDataTree[i].dzid) {
+                            sjdzArray.push(this.allSsdzDataTree[i].dzid);
+                        } else {
+                            for (var j in this.allSsdzDataTree[i].children) {
+                                if (temp == this.allSsdzDataTree[i].children[j].dzid) {
+                                    sjdzArray.push(this.allSsdzDataTree[i].dzid, this.allSsdzDataTree[i].children[j].dzid);
+                                } else {
+                                    for (var k in this.allSsdzDataTree[i].children[j].children) {
+                                        if (temp == this.allSsdzDataTree[i].children[j].children[k].dzid) {
+                                            sjdzArray.push(this.allSsdzDataTree[i].dzid, this.allSsdzDataTree[i].children[j].dzid, this.allSsdzDataTree[i].children[j].children[k].dzid);
+                                        } else {
+                                            for (var n in this.allSsdzDataTree[i].children[j].children[k].children) {
+                                                if (temp == this.allSsdzDataTree[i].children[j].children[k].children[n].dzid) {
+                                                    sjdzArray.push(this.allSsdzDataTree[i].dzid, this.allSsdzDataTree[i].children[j].dzid, this.allSsdzDataTree[i].children[j].children[k].dzid, this.allSsdzDataTree[i].children[j].children[k].children[n].dzid);
                                                 }
                                             }
                                         }
@@ -162,9 +123,8 @@ new Vue({
                                 }
                             }
                         }
-                    } else {
-                        this.addForm.ssdz = [];
                     }
+                    this.addForm.ssdz = sjdzArray;
 
                     this.loading = false;
                 }.bind(this), function (error) {
@@ -198,6 +158,7 @@ new Vue({
             }
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.allSsdzDataTree = res.data.result;
+                this.searchClick();
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -208,11 +169,10 @@ new Vue({
         kclChange: function (value) {
             this.addForm.zcbl = parseFloat(value) + parseFloat(this.addForm.czl);
         },
-        pickerOptions0: {
-            disabledDate(time) {
-                return time.getTime() < Date.now() - 8.64e7;
-            }
+        dateChangebirthday(val) {
+            this.addForm.scsj = val;
         },
+
         //保存
         save: function (formName) {
             if (this.addForm.yjmc == "" || this.addForm == null) {
@@ -222,24 +182,24 @@ new Vue({
                 });
             } else {
                 if (this.status == 0) {//新增
-                    this.addForm.cjrid = this.shiroData.userid;
-                    this.addForm.cjrmc = this.shiroData.realName;
-                    this.addForm.jdh = this.shiroData.organizationVO.jgid;
-                    var params = this.addForm;
-                    if (this.addForm.yjlx.length > 0) {
-                        params.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];
-                    } else {
-                        params.yjlx = '';
-                    }
-                    if (this.addForm.xzqh.length > 0) {
-                        params.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
-                    } else {
-                        params.xzqh = '';
-                    }
-                    if (this.addForm.ssdz.length > 0) {
-                        params.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
-                    } else {
-                        params.ssdz = '';
+                    var params = {
+                        yjmc: this.addForm.yjmc,
+                        yjbm: this.addForm.yjbm,
+                        yjlx: this.addForm.yjlx[this.addForm.yjlx.length - 1],
+                        sccj: this.addForm.sccj,
+                        pc: this.addForm.pc,
+                        zcbl: this.addForm.zcbl,
+                        czl: this.addForm.czl,
+                        kcl: this.addForm.kcl,
+                        scsj: this.addForm.scsj,
+                        hhb: this.addForm.hhb,
+                        xzqh: this.addForm.xzqh[this.addForm.xzqh.length - 1],
+                        ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
+                        ssdzmc: this.addForm.ssdzmc,
+                        bz: this.addForm.bz,
+                        jdh: this.shiroData.organizationVO.jgid,
+                        cjrid: this.shiroData.userid,
+                        cjrmc: this.shiroData.realName
                     }
                     axios.post('/dpapi/firedrug/insertByVO', params).then(function (res) {
                         if (res.data.result >= 1) {
@@ -263,23 +223,25 @@ new Vue({
                         console.log(error);
                     })
                 } else {//修改
-                    this.addForm.xgrid = this.shiroData.userid;
-                    this.addForm.xgrmc = this.shiroData.realName;
-                    var params = this.addForm;
-                    if (this.addForm.yjlx.length > 0) {
-                        params.yjlx = this.addForm.yjlx[this.addForm.yjlx.length - 1];
-                    } else {
-                        params.yjlx = '';
-                    }
-                    if (this.addForm.xzqh.length > 0) {
-                        params.xzqh = this.addForm.xzqh[this.addForm.xzqh.length - 1];
-                    } else {
-                        params.xzqh = '';
-                    }
-                    if (this.addForm.ssdz.length > 0) {
-                        params.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
-                    } else {
-                        params.ssdz = '';
+                    var params = {
+                        uuid: this.addForm.uuid,
+                        yjmc: this.addForm.yjmc,
+                        yjbm: this.addForm.yjbm,
+                        yjlx: this.addForm.yjlx[this.addForm.yjlx.length - 1],
+                        sccj: this.addForm.sccj,
+                        pc: this.addForm.pc,
+                        zcbl: this.addForm.zcbl,
+                        czl: this.addForm.czl,
+                        kcl: this.addForm.kcl,
+                        scsj: this.addForm.scsj,
+                        hhb: this.addForm.hhb,
+                        xzqh: this.addForm.xzqh[this.addForm.xzqh.length - 1],
+                        ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
+                        ssdzmc: this.addForm.ssdzmc,
+                        bz: this.addForm.bz,
+                        jdh: this.shiroData.organizationVO.jgid,
+                        xgrid: this.shiroData.userid,
+                        xgrmc: this.shiroData.realName
                     }
                     axios.post('/dpapi/firedrug/doUpdateDrug', params).then(function (res) {
                         if (res.data.result >= 1) {
