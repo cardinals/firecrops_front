@@ -82,7 +82,7 @@
             </div>
 
             <!--footer-->
-            <div class="login_footer">
+            <div class="login_footer" id="lg_footer">
                 <span class="login_footer_text">
                     copyright © 沈阳消防研究所ICP备1300840号-2
                 </span>
@@ -103,6 +103,9 @@
             var zm =winWide/1920;
             document.body.style.zoom = zm*1.5;
             // body{zoom:1.25;}
+            var pdtop = zm*1.55;
+            show = document.getElementById("lg_footer");
+            show.style.paddingTop = pdtop+"em";
             
             //登陆失败
             var reg = new RegExp("(^|&)msg=([^&]*)(&|$)",'i');
