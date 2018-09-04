@@ -637,4 +637,6 @@ var vm = new Vue({
     }
 
 })
-$("#cbody").show();
+window.setTimeout(() => {
+    $("#cbody").show();
+}, 1000);
