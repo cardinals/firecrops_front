@@ -637,3 +637,4 @@ var vm = new Vue({
     }
 
 })
+$("#cbody").show();

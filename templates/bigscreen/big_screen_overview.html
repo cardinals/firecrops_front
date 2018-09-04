@@ -5,6 +5,19 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<title>全国数据总览</title>
+	<script type="text/javascript" src="../../static/js/zzzlib/jquery-3.2.1.min.js"></script>
+	<script>
+		$(function () {
+				//判断是否宽屏
+				var winWide = window.screen.availWidth;
+				// alert(winWide);
+				var wideScreen = false;
+				var zm = winWide / 1920;
+				var bmt = zm*420;
+				document.body.style.marginTop = bmt +'px';
+				document.body.style.transform = 'scale('+zm*1.5+')';
+			})	
+	</script>
 	<link rel="stylesheet" type="text/css" href="../../static/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="../../static/css/zxx.lib.css">
 	<link rel="stylesheet" type="text/css" href="../../static/css/app.css">
@@ -16,7 +29,7 @@
 </head>
 
 <style>
-
+	
 	* {
 		margin: 0;
 		padding: 0;
@@ -39,7 +52,7 @@
     }
 </style>
 
-<body class="fw bg_tm">
+<body  class="fw bg_tm">
 	<div id="app">
 		<div class="application-box tc abs">
 			<!-- 头部分 -->
@@ -178,20 +191,7 @@
 	</div>
 
 </body>
-<script type="text/javascript" src="../../static/js/zzzlib/jquery-3.2.1.min.js"></script>
-<script>
-    $(function () {
-		
-			//判断是否宽屏
-			var winWide = window.screen.availWidth;
-			// alert(winWide);
-			var wideScreen = false;
-			var zm = winWide / 1920;
-			var bmt = zm*420;
-			document.body.style.marginTop = bmt +'px';
-			document.body.style.transform = 'scale('+zm*1.5+')';
-		})
-</script> 
+
 <script type="text/javascript" src="../../static/js/echarts-2/echarts-all.js"></script>
 <script type="text/javascript" src="../../static/js/echarts-4/echarts.js"></script>
 <script type="text/javascript" src="../../static/js/zzzlib/vue.js"></script>
@@ -199,3 +199,4 @@
 <script type="text/javascript" src="../../static/js/bigscreen/scroll.js"></script>
 <script type="text/javascript" src="../../static/js/bigscreen/big_screen_overview.js"></script>
 </html>
+

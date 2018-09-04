@@ -15,67 +15,313 @@
     <script src="../../static/js/echarts-4/echarts.js"></script>
     <script src="../../static/js/zzzlib/vue.js"></script>
     <script src="../../static/js/zzzlib/vue.min.js"></script>
+    <script src="../../static/js/bigscreen/big_screen_sync.js"></script>
+    <script>
+        $(function () {
+            //判断是否宽屏
+            var winWide = window.screen.availWidth;
+            // alert(winWide);
+            var wideScreen = false;
+            var zm = winWide / 1920;
+            document.body.style.zoom = zm * 1.5;
+            // body{zoom:1.25;}
+        })
+       
+    </script>
 
     <style>
-     
-    .sync-image {width:60px; height:60px; position: absolute; top: 12px; left: 32px;}
-    .sync-text {font: 20px "微软雅黑";color: #9cc0eb;text-align: right;}
-    .sync-text-strong {line-height: 1.2;font-size: 1.5em;color: #f7cb29;text-align: right;}
-    .sync-map {background: url(../../static/images/sync-map.png)no-repeat center center; background-size: auto 100%;}
-    .sync-aperture {width: 40px; height: 40px;}
-    .sync-flash {width: 55px; height: 55px; background-image: url(../../static/images/sync-green.png); background-repeat: no-repeat; background-size: cover; position: absolute; animation:sync-Flash 2s infinite linear; animation-delay:-1.5s;}
-    .sync-blue {background-image: url(../../static/images/sync-blue.png);}
-    .sync-yellow {background-image: url(../../static/images/sync-yellow.png);}
-    .sync-orange {background-image: url(../../static/images/sync-orange.png);}
-    .sync-red {background-image: url(../../static/images/sync-red.png);}
-    .sync-ring-img {width: 80px; height: 80px; position: absolute; top: 89px; left: 166px; background: url(../../static/images/sync-ring.png) no-repeat center center;background-size: 80px 80px;}
-    .sync-ring {width: 100px; height: 80px; position: absolute; top: 169px; left: 156px; line-height: 25px; color: #fff; font-size: 16px;border: 0px;}
-    .sync-city{width: 40px; height: 40px; display: block; position: absolute; top: 116px; left: 638px; z-index: 10; cursor: default;}
-    .sync-cityBox{width: 232px; height: 197px; background: url(../../static/images/sync-cityBox.png) no-repeat center center;background-size: auto 100%; display: block; position: absolute; top: -18px; left: 0px; visibility: hidden; opacity: 0;}
-    /* .sync-cityBox{width: 232px; height: 197px; background: url(../../static/images/sync-cityBox.png) no-repeat center center;background-size: auto 100%; display: block; position: absolute; top: -18px; left: 0px; visibility: visible; opacity: 1;} */
-    .sync-cityText{display: block;font: "微软雅黑";color: #9cc0eb;}
-    .sync-city:hover .sync-cityBox{visibility: visible; opacity: 1;}
-    .sync-beijing {top: 107px; left: 628px;}
-    .sync-tianjin {top: 115px; left: 636px;}
-    .sync-heilongjiang {top: 34px; left: 698px;}
-    .sync-jilin {top: 70px; left: 698px;}
-    .sync-liaoning {top: 99px; left: 674px;}
-    .sync-shandong {top: 151px; left: 640px;}
-    .sync-hebei {top: 138px; left: 617px;}
-    .sync-henan {top: 163px; left: 617px;}
-    .sync-shanxi {top: 147px; left: 595px;}
-    .sync-shaanxi {top: 158px; left: 578px;}
-    .sync-jiangsu {top: 181px; left: 666px;}
-    .sync-anhui {top: 199px; left: 648px;}
-    .sync-guizhou {top: 235px; left: 562px;}
-    .sync-chongqing {top: 214px; left: 565px;}
-    .sync-sichuan {top: 190px; left: 523px;}
-    .sync-xinjiang {top: 107px; left: 393px;}
-    .sync-qinghai {top: 165px; left: 466px;}
-    .sync-xizang {top: 203px; left: 411px;}
-    .sync-neimenggu {top: 113px; left: 571px;}
-    .sync-ningxia {top: 141px; left: 550px;}
-    .sync-gansu {top: 148px; left: 531px;}
-    .sync-yunnan {top: 262px; left: 506px;}
-    .sync-guangxi {top: 262px; left: 580px;}
-    .sync-guangdong {top: 282px; left: 607px;}
-    .sync-hunan {top: 239px; left: 603px;}
-    .sync-jiangxi {top: 240px; left: 633px;}
-    .sync-fujian {top: 258px; left: 652px;}
-    .sync-zhejiang {top: 206px; left: 668px;}
-    .sync-shanghai {top: 190px; left: 679px;}
-    .sync-hainan {top: 315px; left: 587px;}
-    .sync-title {height: 25px; line-height: 25px; color: #fff; font-size: 16px; background: url(../../static/images/sync-title.png) no-repeat center center;}
-    .libta-table td.sync-num{color: #1bd3ff;}
-    @keyframes sync-Flash{
-        from{transform: scale(0.1);}
-        to{transform: scale(1);}
-    }
+        .sync-image {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            top: 12px;
+            left: 32px;
+        }
+
+        .sync-text {
+            font: 20px "微软雅黑";
+            color: #9cc0eb;
+            text-align: right;
+        }
+
+        .sync-text-strong {
+            line-height: 1.2;
+            font-size: 1.5em;
+            color: #f7cb29;
+            text-align: right;
+        }
+
+        .sync-map {
+            background: url(../../static/images/sync-map.png)no-repeat center center;
+            background-size: auto 100%;
+        }
+
+        .sync-aperture {
+            width: 40px;
+            height: 40px;
+        }
+
+        .sync-flash {
+            width: 55px;
+            height: 55px;
+            background-image: url(../../static/images/sync-green.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            animation: sync-Flash 2s infinite linear;
+            animation-delay: -1.5s;
+        }
+
+        .sync-blue {
+            background-image: url(../../static/images/sync-blue.png);
+        }
+
+        .sync-yellow {
+            background-image: url(../../static/images/sync-yellow.png);
+        }
+
+        .sync-orange {
+            background-image: url(../../static/images/sync-orange.png);
+        }
+
+        .sync-red {
+            background-image: url(../../static/images/sync-red.png);
+        }
+
+        .sync-ring-img {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            top: 89px;
+            left: 166px;
+            background: url(../../static/images/sync-ring.png) no-repeat center center;
+            background-size: 80px 80px;
+        }
+
+        .sync-ring {
+            width: 100px;
+            height: 80px;
+            position: absolute;
+            top: 169px;
+            left: 156px;
+            line-height: 25px;
+            color: #fff;
+            font-size: 16px;
+            border: 0px;
+        }
+
+        .sync-city {
+            width: 40px;
+            height: 40px;
+            display: block;
+            position: absolute;
+            top: 116px;
+            left: 638px;
+            z-index: 10;
+            cursor: default;
+        }
+
+        .sync-cityBox {
+            width: 232px;
+            height: 197px;
+            background: url(../../static/images/sync-cityBox.png) no-repeat center center;
+            background-size: auto 100%;
+            display: block;
+            position: absolute;
+            top: -18px;
+            left: 0px;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        /* .sync-cityBox{width: 232px; height: 197px; background: url(../../static/images/sync-cityBox.png) no-repeat center center;background-size: auto 100%; display: block; position: absolute; top: -18px; left: 0px; visibility: visible; opacity: 1;} */
+
+        .sync-cityText {
+            display: block;
+            font: "微软雅黑";
+            color: #9cc0eb;
+        }
+
+        .sync-city:hover .sync-cityBox {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .sync-beijing {
+            top: 107px;
+            left: 628px;
+        }
+
+        .sync-tianjin {
+            top: 115px;
+            left: 636px;
+        }
+
+        .sync-heilongjiang {
+            top: 34px;
+            left: 698px;
+        }
+
+        .sync-jilin {
+            top: 70px;
+            left: 698px;
+        }
+
+        .sync-liaoning {
+            top: 99px;
+            left: 674px;
+        }
+
+        .sync-shandong {
+            top: 151px;
+            left: 640px;
+        }
+
+        .sync-hebei {
+            top: 138px;
+            left: 617px;
+        }
+
+        .sync-henan {
+            top: 163px;
+            left: 617px;
+        }
+
+        .sync-shanxi {
+            top: 147px;
+            left: 595px;
+        }
+
+        .sync-shaanxi {
+            top: 158px;
+            left: 578px;
+        }
+
+        .sync-jiangsu {
+            top: 181px;
+            left: 666px;
+        }
+
+        .sync-anhui {
+            top: 199px;
+            left: 648px;
+        }
+
+        .sync-guizhou {
+            top: 235px;
+            left: 562px;
+        }
+
+        .sync-chongqing {
+            top: 214px;
+            left: 565px;
+        }
+
+        .sync-sichuan {
+            top: 190px;
+            left: 523px;
+        }
+
+        .sync-xinjiang {
+            top: 107px;
+            left: 393px;
+        }
+
+        .sync-qinghai {
+            top: 165px;
+            left: 466px;
+        }
+
+        .sync-xizang {
+            top: 203px;
+            left: 411px;
+        }
+
+        .sync-neimenggu {
+            top: 113px;
+            left: 571px;
+        }
+
+        .sync-ningxia {
+            top: 141px;
+            left: 550px;
+        }
+
+        .sync-gansu {
+            top: 148px;
+            left: 531px;
+        }
+
+        .sync-yunnan {
+            top: 262px;
+            left: 506px;
+        }
+
+        .sync-guangxi {
+            top: 262px;
+            left: 580px;
+        }
+
+        .sync-guangdong {
+            top: 282px;
+            left: 607px;
+        }
+
+        .sync-hunan {
+            top: 239px;
+            left: 603px;
+        }
+
+        .sync-jiangxi {
+            top: 240px;
+            left: 633px;
+        }
+
+        .sync-fujian {
+            top: 258px;
+            left: 652px;
+        }
+
+        .sync-zhejiang {
+            top: 206px;
+            left: 668px;
+        }
+
+        .sync-shanghai {
+            top: 190px;
+            left: 679px;
+        }
+
+        .sync-hainan {
+            top: 315px;
+            left: 587px;
+        }
+
+        .sync-title {
+            height: 25px;
+            line-height: 25px;
+            color: #fff;
+            font-size: 16px;
+            background: url(../../static/images/sync-title.png) no-repeat center center;
+        }
+
+        .libta-table td.sync-num {
+            color: #1bd3ff;
+        }
+
+        @keyframes sync-Flash {
+            from {
+                transform: scale(0.1);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 
-<body class="fw bg_tm">
-    <div id="app" >
+<body id='cbody' style='display: none' class="fw bg_tm" >
+    <div id="app">
         <div class="application-box tc abs">
             <div class="application-div h70">
                 <div class="h100 w75 l p5">
@@ -87,9 +333,11 @@
                                 <div class="sync-cityText f20 tl" style="margin-top:15px;margin-left:55px">北京</div>
                                 <div class="sync-cityText f12 tl" style="margin-top:2px;margin-left:55px">最近同步时间：2018.6.19</div>
                                 <div class="sync-cityText f15 tr" style="margin-top:16px;margin-right:17px">累计同步数据量</div>
-                                <div class="sync-cityText f13 tr" style="margin-right:17px"><strong class="f24" style="color:#F7E301">256238</strong>条</div>
+                                <div class="sync-cityText f13 tr" style="margin-right:17px">
+                                    <strong class="f24" style="color:#F7E301">256238</strong>条</div>
                                 <div class="sync-cityText f15 tr" style="margin-top:9px;margin-right:17px">上次同步数据量</div>
-                                <div class="sync-cityText f13 tr" style="margin-right:17px"><strong class="f24" style="color:#04F185">3426</strong>条</div>
+                                <div class="sync-cityText f13 tr" style="margin-right:17px">
+                                    <strong class="f24" style="color:#04F185">3426</strong>条</div>
                             </div>
                         </a>
                         <div id="beijing" class="sync-flash sync-aperture sync-beijing"></div>
@@ -129,28 +377,32 @@
                         <div id="r1" class="application-text map-bg2 p10 pr20">
                             <div class="sync-image" style="background-image: url(../../static/images/sync-1.png);background-size: 60px 60px;"></div>
                             <div class="sync-text">服务节点数量</div>
-                            <div class="sync-text"><span class="sync-text-strong" v-text = "this.syncState.fwjdsl"></span>个</div>
+                            <div class="sync-text">
+                                <span class="sync-text-strong" v-text="this.syncState.fwjdsl"></span>个</div>
                         </div>
                     </div>
                     <div class="application-div h25 p5">
                         <div id="r2" class="application-text map-bg2 p10 pr20">
                             <div class="sync-image" style="background-image: url(../../static/images/sync-2.png);background-size: 60px 60px;"></div>
                             <div class="sync-text">故障节点数量</div>
-                            <div class="sync-text"><span class="sync-text-strong" v-text = "this.syncState.gzjdsl"></span>个</div>
+                            <div class="sync-text">
+                                <span class="sync-text-strong" v-text="this.syncState.gzjdsl"></span>个</div>
                         </div>
                     </div>
                     <div class="application-div h25 p5">
                         <div id="r3" class="application-text map-bg2 p10 pr20">
                             <div class="sync-image" style="background-image: url(../../static/images/sync-3.png);background-size: 60px 60px;"></div>
                             <div class="sync-text">接入系统数量</div>
-                            <div class="sync-text"><span class="sync-text-strong" v-text = "this.syncState.jrxtsl"></span>个</div>
+                            <div class="sync-text">
+                                <span class="sync-text-strong" v-text="this.syncState.jrxtsl"></span>个</div>
                         </div>
                     </div>
                     <div class="application-div h25 p5">
                         <div id="r4" class="application-text map-bg2 p10 pr20">
                             <div class="sync-image" style="background-image: url(../../static/images/sync-4.png);background-size: 60px 60px;"></div>
                             <div class="sync-text">数据接口数量</div>
-                            <div class="sync-text"><span class="sync-text-strong" v-text = "this.syncState.sjjksl"></span>个</div>
+                            <div class="sync-text">
+                                <span class="sync-text-strong" v-text="this.syncState.sjjksl"></span>个</div>
                         </div>
                     </div>
                 </div>
@@ -161,50 +413,119 @@
                 </div>
                 <div id="t1" class="h85 w25 l">
                     <table class="libta-table h99 w99">
-                        <tr><td width="30%">合计</td><td width="20%" class="sync-num" v-text = "this.provincesData.beijing"></td><td width="30%">重庆</td><td width="20%" class="sync-num" v-text = "this.provincesData.chongqing"></td></tr>
-                        <tr><td>北京</td><td class="sync-num" v-text = "this.provincesData.beijing"></td><td>河北</td><td class="sync-num" v-text = "this.provincesData.hebei"></td></tr>
-                        <tr><td>天津</td><td class="sync-num" v-text = "this.provincesData.tianjin"></td><td>山西</td><td class="sync-num" v-text = "this.provincesData.shanxi"></td></tr>
-                        <tr><td>上海</td><td class="sync-num" v-text = "this.provincesData.shanghai"></td><td>内蒙古</td><td class="sync-num" v-text = "this.provincesData.neimenggu"></td></tr>
+                        <tr>
+                            <td width="30%">合计</td>
+                            <td width="20%" class="sync-num" v-text="this.provincesData.beijing"></td>
+                            <td width="30%">重庆</td>
+                            <td width="20%" class="sync-num" v-text="this.provincesData.chongqing"></td>
+                        </tr>
+                        <tr>
+                            <td>北京</td>
+                            <td class="sync-num" v-text="this.provincesData.beijing"></td>
+                            <td>河北</td>
+                            <td class="sync-num" v-text="this.provincesData.hebei"></td>
+                        </tr>
+                        <tr>
+                            <td>天津</td>
+                            <td class="sync-num" v-text="this.provincesData.tianjin"></td>
+                            <td>山西</td>
+                            <td class="sync-num" v-text="this.provincesData.shanxi"></td>
+                        </tr>
+                        <tr>
+                            <td>上海</td>
+                            <td class="sync-num" v-text="this.provincesData.shanghai"></td>
+                            <td>内蒙古</td>
+                            <td class="sync-num" v-text="this.provincesData.neimenggu"></td>
+                        </tr>
                     </table>
                 </div>
                 <div id="t2" class="h85 w25 l">
                     <table class="libta-table h99 w99">
-                        <tr><td width="30%">辽宁</td><td width="20%" class="sync-num"v-text = "this.provincesData.liaoning"></td><td width="30%">浙江</td><td width="20%" class="sync-num" v-text = "this.provincesData.zhejiang"></td></tr>
-                        <tr><td>吉林</td><td class="sync-num" v-text = "this.provincesData.jilin"></td><td>安徽</td><td class="sync-num" v-text = "this.provincesData.anhui"></td></tr>
-                        <tr><td>黑龙江</td><td class="sync-num" v-text = "this.provincesData.heilongjiang"></td><td>福建</td><td class="sync-num" v-text = "this.provincesData.fujian"></td></tr>
-                        <tr><td>江苏</td><td class="sync-num" v-text = "this.provincesData.jiangsu"></td><td>江西</td><td class="sync-num" v-text = "this.provincesData.jiangxi"></td></tr>
+                        <tr>
+                            <td width="30%">辽宁</td>
+                            <td width="20%" class="sync-num" v-text="this.provincesData.liaoning"></td>
+                            <td width="30%">浙江</td>
+                            <td width="20%" class="sync-num" v-text="this.provincesData.zhejiang"></td>
+                        </tr>
+                        <tr>
+                            <td>吉林</td>
+                            <td class="sync-num" v-text="this.provincesData.jilin"></td>
+                            <td>安徽</td>
+                            <td class="sync-num" v-text="this.provincesData.anhui"></td>
+                        </tr>
+                        <tr>
+                            <td>黑龙江</td>
+                            <td class="sync-num" v-text="this.provincesData.heilongjiang"></td>
+                            <td>福建</td>
+                            <td class="sync-num" v-text="this.provincesData.fujian"></td>
+                        </tr>
+                        <tr>
+                            <td>江苏</td>
+                            <td class="sync-num" v-text="this.provincesData.jiangsu"></td>
+                            <td>江西</td>
+                            <td class="sync-num" v-text="this.provincesData.jiangxi"></td>
+                        </tr>
                     </table>
                 </div>
                 <div id="t3" class="h85 w25 l">
                     <table class="libta-table h99 w99">
-                        <tr><td width="30%">山东</td><td width="20%" class="sync-num" v-text = "this.provincesData.shandong"></td><td width="30%">广东</td><td width="20%" class="sync-num" v-text = "this.provincesData.guangdong"></td></tr>
-                        <tr><td>河南</td><td class="sync-num" v-text = "this.provincesData.henan"></td><td>广西</td><td class="sync-num" v-text = "this.provincesData.guangxi"></td></tr>
-                        <tr><td>湖北</td><td class="sync-num" v-text = "this.provincesData.hubei"></td><td>海南</td><td class="sync-num" v-text = "this.provincesData.hainan"></td></tr>
-                        <tr><td>湖南</td><td class="sync-num" v-text = "this.provincesData.hunan"></td><td>四川</td><td class="sync-num" v-text = "this.provincesData.sichuan"></td></tr>
+                        <tr>
+                            <td width="30%">山东</td>
+                            <td width="20%" class="sync-num" v-text="this.provincesData.shandong"></td>
+                            <td width="30%">广东</td>
+                            <td width="20%" class="sync-num" v-text="this.provincesData.guangdong"></td>
+                        </tr>
+                        <tr>
+                            <td>河南</td>
+                            <td class="sync-num" v-text="this.provincesData.henan"></td>
+                            <td>广西</td>
+                            <td class="sync-num" v-text="this.provincesData.guangxi"></td>
+                        </tr>
+                        <tr>
+                            <td>湖北</td>
+                            <td class="sync-num" v-text="this.provincesData.hubei"></td>
+                            <td>海南</td>
+                            <td class="sync-num" v-text="this.provincesData.hainan"></td>
+                        </tr>
+                        <tr>
+                            <td>湖南</td>
+                            <td class="sync-num" v-text="this.provincesData.hunan"></td>
+                            <td>四川</td>
+                            <td class="sync-num" v-text="this.provincesData.sichuan"></td>
+                        </tr>
                     </table>
                 </div>
-                <div  id="t4" class="h85 w25 l">
+                <div id="t4" class="h85 w25 l">
                     <table class="libta-table h99 w99">
-                        <tr><td width="30%">贵州</td><td width="20%" class="sync-num" v-text = "this.provincesData.guizhou"></td><td width="30%">甘肃</td><td width="20%" class="sync-num" v-text = "this.provincesData.gansu"></td></tr>
-                        <tr><td>云南</td><td class="sync-num" v-text = "this.provincesData.yunnan"></td><td>青海</td><td class="sync-num" v-text = "this.provincesData.qinghai"></td></tr>
-                        <tr><td>西藏</td><td class="sync-num" v-text = "this.provincesData.xizang"></td><td>宁夏</td><td class="sync-num" v-text = "this.provincesData.ningxia"></td></tr>
-                        <tr><td>陕西</td><td class="sync-num" v-text = "this.provincesData.shaanxi"></td><td>新疆</td><td class="sync-num" v-text = "this.provincesData.xinjiang"></td></tr>
+                        <tr>
+                            <td width="30%">贵州</td>
+                            <td width="20%" class="sync-num" v-text="this.provincesData.guizhou"></td>
+                            <td width="30%">甘肃</td>
+                            <td width="20%" class="sync-num" v-text="this.provincesData.gansu"></td>
+                        </tr>
+                        <tr>
+                            <td>云南</td>
+                            <td class="sync-num" v-text="this.provincesData.yunnan"></td>
+                            <td>青海</td>
+                            <td class="sync-num" v-text="this.provincesData.qinghai"></td>
+                        </tr>
+                        <tr>
+                            <td>西藏</td>
+                            <td class="sync-num" v-text="this.provincesData.xizang"></td>
+                            <td>宁夏</td>
+                            <td class="sync-num" v-text="this.provincesData.ningxia"></td>
+                        </tr>
+                        <tr>
+                            <td>陕西</td>
+                            <td class="sync-num" v-text="this.provincesData.shaanxi"></td>
+                            <td>新疆</td>
+                            <td class="sync-num" v-text="this.provincesData.xinjiang"></td>
+                        </tr>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </body>
-<script src="../../static/js/bigscreen/big_screen_sync.js"></script>
-<script>
-    $(function () {
-                //判断是否宽屏
-                var winWide = window.screen.availWidth;
-                // alert(winWide);
-                var wideScreen = false;
-                var zm =winWide/1920;
-                document.body.style.zoom = zm*1.5;
-                // body{zoom:1.25;}
-            })
-</script> 
+
 </html>
