@@ -149,7 +149,7 @@ var vue = new Vue({
                         codeid: this.codeid,
                         codeValue: val.codeValue.trim(),
                         codeName: val.codeName.trim(),
-                        remark: val.remark.trim()
+                        remark: val.remark
                     }
                     axios.post('/api/codelist/detail/insertByVO', params).then(function (res) {
                         var addData = res.data.result;
