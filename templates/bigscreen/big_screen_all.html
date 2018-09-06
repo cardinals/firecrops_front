@@ -7,21 +7,6 @@
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes" />
     <title>统计分析</title>
-    <!-- 引入js -->
-    <script type="text/javascript" src="../../static/js/zzzlib/jquery-3.2.1.min.js"></script>
-    <script>
-        $(function () {
-            //判断是否宽屏
-            var winWide = window.screen.availWidth;
-            // alert(winWide);
-            var wideScreen = false;
-            var zm = winWide / 1920;
-            document.body.style.zoom = zm * 1.25;
-            // body{zoom:1.25;}
-
-        })
-
-    </script>
     <!-- 引入样式 -->
     <!-- <style>
         body {
@@ -36,7 +21,7 @@
 </head>
 
 
-<body id='allbody' style='display: none' onload="init()" class="fw map-bg m0" >
+<body id='allbody' style='display: none'  class="fw map-bg m0" >
     <div id="app" style="height: 100%;margin-top: 25px;">
         <el-carousel :height="height" style="padding-bottom: 26px;" v-loading="loading">
             <el-carousel-item :key="1">
@@ -63,6 +48,19 @@
     </div>
 </body>
 
+<script type="text/javascript" src="../../static/js/zzzlib/jquery-3.2.1.min.js"></script>
+<script>
+    $(function () {
+        //判断是否宽屏
+        var winWide = window.screen.availWidth;
+        // alert(winWide);
+        var wideScreen = false;
+        var zm = winWide / 1920;
+        document.body.style.zoom = zm * 1.25;
+        // body{zoom:1.25;}
+
+    })
+</script>
 <script type="text/javascript" src="../../static/js/zzzlib/vue.js"></script>
 <script type="text/javascript" src="../../static/js/zzzlib/element.js"></script>
 <script>
@@ -73,9 +71,15 @@
         },
        
     })  
-    function init(){
+    // window.setTimeout(() => {
         $("#allbody").show();
-    }
+    // }, 1000);
+ 
 </script>
-
+<script>
+    // function init(){
+    //         $("#allbody").show();
+    //         // document.getElementById("allbody").style.display = 'block';
+    //     }
+</script>
 </html>
