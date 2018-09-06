@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/digitalplan/digitalplan.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/digitalplan/digitalplanlist.css">
+    <title>九小场所管理</title>
+</head>
+
+<body class="fw f14 main-index-body">
+    <div id="app">
+        <div class="main-box">
+            <div class="main-container" v-loading="loading" element-loading-text="加载中">
+                <div id="lib :: main_container_header('九小场所管理','九小场所管理')"></div>
+                <!-- 面包屑 -->
+                <div id="breadcrumb_box"></div>
+                <div id="tableView">
+                    <el-row>
+                        <el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
+                            <el-row>
+                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+                                <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+                                    <label class="el-form-item__label searchLabel">单位名称</label>
+                                    <el-input size="small" v-model="searchForm.dwmc" placeholder="单位名称"></el-input>
+                                </el-col>
+                                <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+                                <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+                                    <label class="el-form-item__label searchLabel">单位类型</label>
+                                    <el-select size="small" v-model="searchForm.jxdwlx" placeholder="全部" class="searchSelect" clearable>
+                                        <el-option v-for="item in JXDWLX_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+                                    </el-select>
+                                </el-col>
+                                <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+                                <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+                                    <label class="el-form-item__label searchLabel">单位地址</label>
+                                    <el-input size="small" v-model="searchForm.dwdz" placeholder="单位地址"></el-input>
+                                </el-col>
+                                <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+                                <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+                                    <label class="el-form-item__label searchLabel">消防管辖</label>
+                                    <el-cascader v-model="searchForm.xfgx" :options="XFGX_dataTree" :props="ssdzProps" size="small" placeholder="全部" class="searchSelect"
+                                        clearable change-on-select :show-all-levels="false"></el-cascader>
+                                </el-col>
+                                <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+                            </el-row>
+                            <div>
+                                <el-form>
+                                    <el-col :span="12" class="btnEditDelete">
+                                        <el-form-item align="left">
+                                            <el-button v-if="hasPermission('jxcsplan/jxcsplan:add')" type="success" icon="plus" size="small" @click="addClick">新增</el-button>
+                                            <el-button v-if="hasPermission('jxcsplan/jxcsplan:delete')" type="danger" icon="delete2" size="small" @click="deleteClick">删除</el-button>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :span="12"></el-col>
+                                    <el-col :span="12" class="btnSearchPlus">
+                                        <el-form-item>
+                                            <el-button type="primary" icon="search" size="small" @click="searchClick">查询</el-button>
+                                            <el-button type="clear" icon="delete" size="small" @click="clearClick">重置</el-button>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-form>
+                            </div>
+                        </el-form>
+                    </el-row>
+                    <div class="table_container">
+                        <el-table id="table" border class="tableStyle" :height="tableheight" ref="multipleTable" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+                            @selection-change="selectionChange">
+                            <el-table-column type="selection" width="45"></el-table-column>
+                            <el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
+                            <el-table-column prop="dwmc" label="单位名称" show-overflow-tooltip min-width="19%" align="center">
+                                <template slot-scope="scope">
+                                    <a @click="planDetails(scope.row)">{{scope.row.dwmc}}</a>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="jxdwlxmc" label="单位类型" show-overflow-tooltip min-width="15%" align="center"></el-table-column>
+                            <el-table-column prop="dwdz" label="单位地址" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
+                            <el-table-column prop="xfgxmc" label="消防管辖" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
+                            <el-table-column prop="xzqhmc" label="行政区划" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
+                            <el-table-column label="操作" width="65" align="center" v-if="hasPermission('jxcsplan/jxcsplan:edit')">
+                                <template slot-scope="scope">
+                                    <el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+
+                        <!--列表底部工具条和分页符-->
+                        <el-row type="flex" justify="end">
+                            <el-col :span="18">
+                                <el-pagination @current-change="currentPageChange" :current-page="currentPage" :page-size="pageSize"
+                                    layout="total, prev, pager, next, jumper" :total=parseInt(total)>
+                                </el-pagination>
+                            </el-col>
+                        </el-row>
+                    </div>
+                </div>
+            </div>
+            <!-- main-container -->
+        </div>
+    </div>
+</body>
+<script src="../../static/js/jxcsplan/jxcsplan_list.js"></script>
+
+</html>
