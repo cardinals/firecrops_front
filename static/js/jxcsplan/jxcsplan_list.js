@@ -119,7 +119,7 @@ var vue = new Vue({
         selectionChange: function (val) {
             this.multipleSelection = val;
         },
-        //预案详情跳转
+        //详情跳转
         planDetails: function (val) {
             var params = {
                 ID: val.uuid
@@ -151,18 +151,19 @@ var vue = new Vue({
         },
         //删除
         deleteClick: function () {
-            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            this.$confirm('此操作将永久删除选中信息, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                var params = {
-                    xgrid: this.shiroData.userid,
-                    xgrmc: this.shiroData.realName
+                for (var i in this.multipleSelection) {
+                    this.multipleSelection[i].xgrid = this.shiroData.userid;
+                    this.multipleSelection[i].xgrmc = this.shiroData.realName;
+                    this.multipleSelection[i].deleteFlag = "Y";
                 }
-                axios.post('/dpapi/jxcsjbxx/doDeleteDigitalplan', this.multipleSelection).then(function (res) {
+                axios.post('/dpapi/jxcsjbxx/doDeleteByVOList', this.multipleSelection).then(function (res) {
                     this.$message({
-                        message: "成功删除" + res.data.result + "条预案",
+                        message: "成功删除" + res.data.result + "条信息",
                         showClose: true,
                         onClose: this.searchClick('delete')
                     });
