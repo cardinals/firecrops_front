@@ -21,3 +21,6 @@
 .picDialog .el-dialog__header{
     padding: 0px;
 }
+.el-select{
+    width: 100%;
+}

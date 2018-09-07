@@ -344,10 +344,10 @@ var vue = new Vue({
                                 }
                             }
                             if(picNameList != 0 && sameNameOccured){
-                            _self.$message({
-                                message: "图片名已存在!",
-                                type: "error"
-                            });
+                                _self.$message({
+                                    message: "图片名已存在!",
+                                    type: "error"
+                                });
                             }else{
                                 var picTypename = "";
                                 var picValue = "";
@@ -373,6 +373,7 @@ var vue = new Vue({
                                     _self.total = _self.tableData.length;
                                     this.submitUpload();
                                     this.searchClick('insert');
+                                    this.editFormVisible = false;
                                 }.bind(this),function(error){
                                     console.log(error)
                                 })
@@ -384,15 +385,13 @@ var vue = new Vue({
                     }.bind(this),function(error){
                         console.log(error)
                     })
-                }
-                else{
+                }else{
                     _self.$message({
                         message: "图片类型和图片名称都不能为空!",
                         type: "error"
                     });
                 }
-            }
-            else{
+            }else{
                 if(val.inputPicName!=null && val.inputPicName!="" && val.inputPicType!="" && val.inputPicType!=null
                 && val.inputPicTypeName!="" && val.inputPicTypeName!=null && val.inputPicValue!="" && val.inputPicValue!=null)
                 {
@@ -483,8 +482,7 @@ var vue = new Vue({
                     }.bind(this),function(error){
                         console.log(error)
                     })
-                }
-                else{
+                }else{
                     _self.$message({
                         message: "图片类型、代码和图片名称、代码都不能为空!",
                         type: "error"
