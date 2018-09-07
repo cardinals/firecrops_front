@@ -87,7 +87,7 @@
                                         <div slot="header" class="clearfix">
                                             <strong class="card_title_font">位置信息</strong>
                                         </div>
-                                        <el-row class="mb10">
+                                        <el-row class="mb5">
                                             <el-col :span="12">
                                                 <strong>经度：</strong>
                                                 <v-text v-text="jbxxData.lon||'无'"></v-text>
@@ -97,7 +97,7 @@
                                                 <v-text v-text="jbxxData.lat||'无'"></v-textdiv>
                                             </el-col>
                                         </el-row>
-                                        <el-row class="mb10">
+                                        <el-row class="mb5">
                                             <el-col :span="12">
                                                 <strong>毗邻情况(东)：</strong>
                                                 <v-text v-text="jbxxData.plqkd||'无'"></v-text>
@@ -107,7 +107,7 @@
                                                 <v-text v-text="jbxxData.plqkn||'无'"></v-text>
                                             </el-col>
                                         </el-row>
-                                        <el-row class="mb10">
+                                        <el-row class="mb5">
                                             <el-col :span="12">
                                                 <strong>毗邻情况(西)：</strong>
                                                 <v-text v-text="jbxxData.plqkx||'无'"></v-text>
@@ -122,16 +122,14 @@
                                         <div slot="header" class="clearfix">
                                             <strong class="card_title_font">消防设施</strong>
                                         </div>
-                                        <el-row class="mb10">
-                                            <el-table id="table" :data="xfssData" border class="detailTable">
-                                                <el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
-                                                <el-table-column prop="xfssmc" label="消防设施名称" min-width="20%" align="center" show-overflow-tooltip></el-table-column>
-                                                <el-table-column prop="xfsslxmc" label="消防设施类型" min-width="20%" align="center" show-overflow-tooltip></el-table-column>
-                                                <el-table-column prop="wz" label="位置" min-width="20%" align="center" show-overflow-tooltip></el-table-column>
-                                                <el-table-column prop="sl" label="数量" min-width="15%" align="center" show-overflow-tooltip></el-table-column>
-                                                <el-table-column prop="bz" label="备注" min-width="15%" align="center" show-overflow-tooltip></el-table-column>
-                                            </el-table>
-                                        </el-row>
+                                        <el-table id="table" :data="xfssData" border class="detailTable">
+                                            <el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
+                                            <el-table-column prop="xfssmc" label="消防设施名称" min-width="20%" align="center" show-overflow-tooltip></el-table-column>
+                                            <el-table-column prop="xfsslxmc" label="消防设施类型" min-width="20%" align="center" show-overflow-tooltip></el-table-column>
+                                            <el-table-column prop="wz" label="位置" min-width="20%" align="center" show-overflow-tooltip></el-table-column>
+                                            <el-table-column prop="sl" label="数量" min-width="15%" align="center" show-overflow-tooltip></el-table-column>
+                                            <el-table-column prop="bz" label="备注" min-width="15%" align="center" show-overflow-tooltip></el-table-column>
+                                        </el-table>
                                     </el-card>
                                     <el-card class="mb10 card_style">
                                         <div slot="header" class="clearfix">
@@ -190,7 +188,7 @@
                                                 <v-text v-text="data.jzmc||'无'"></v-text>
                                             </strong>
                                         </div>
-                                        <el-row>
+                                        <el-row class="mb5">
                                             <el-col :span="24">
                                                 <div>
                                                     <strong class="dtdlStyle">建筑位置：</strong>
@@ -198,7 +196,7 @@
                                                 </div>
                                             </el-col>
                                         </el-row>
-                                        <el-row>
+                                        <el-row class="mb5">
                                             <el-col :span="12">
                                                 <div>
                                                     <strong class="dtdlStyle">使用性质：</strong>
@@ -212,7 +210,7 @@
                                                 </div>
                                             </el-col>
                                         </el-row>
-                                        <el-row>
+                                        <el-row class="mb5">
                                             <el-col :span="12">
                                                 <div>
                                                     <strong class="dtdlStyle">占地面积(㎡)：</strong>
@@ -226,7 +224,7 @@
                                                 </div>
                                             </el-col>
                                         </el-row>
-                                        <el-row>
+                                        <el-row class="mb5">
                                             <el-col :span="12">
                                                 <div>
                                                     <strong class="dtdlStyle">地上高度(m)：</strong>
@@ -240,7 +238,7 @@
                                                 </div>
                                             </el-col>
                                         </el-row>
-                                        <el-row>
+                                        <el-row class="mb5">
                                             <el-col :span="12">
                                                 <div>
                                                     <strong class="dtdlStyle">地上层数：</strong>
@@ -254,7 +252,7 @@
                                                 </div>
                                             </el-col>
                                         </el-row>
-                                        <el-row>
+                                        <el-row class="mb5">
                                             <el-col :span="24">
                                                 <div>
                                                     <strong class="dtdlStyle">避难层：</strong>
@@ -262,10 +260,10 @@
                                                 </div>
                                             </el-col>
                                         </el-row>
-                                        <el-row>
+                                        <el-row class="mb5">
                                             <el-col :span="12">
                                                 <div>
-                                                    <strong class="dtdlStyle">辖区行车路线</strong>
+                                                    <strong class="dtdlStyle">辖区行车路线：</strong>
                                                     <v-text v-text="data.xqxclx||'无'"></v-text>
                                                 </div>
                                             </el-col>
@@ -276,7 +274,7 @@
                                                 </div>
                                             </el-col>
                                         </el-row>
-                                        <el-row>
+                                        <el-row class="mb5">
                                             <el-col :span="12">
                                                 <div>
                                                     <strong class="dtdlStyle">备注：</strong>
