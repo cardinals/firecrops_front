@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/planobject/importantunits_detail.css">
+    <title>九小场所详情</title>
+</head>
+
+<body class="fw f14 main-index-body">
+    <div id="app">
+        <div class="main-box">
+            <div class="main-container" v-loading="loading" element-loading-text="加载中">
+                <div id="lib :: main_container_header('九小场所详情','九小场所详情')"></div>
+                <!-- 面包屑 -->
+                <div id="breadcrumb_box"></div>
+                <div id="tableView">
+                    <div class="nameBox">
+                        <div id="basic-Inform-Picture">
+                            <img id="photo" class="detail_picture_size">
+                        </div>
+                        <div class="dib" id="basic-Inform-Title" style="max-width: 760px;">
+                            <div>
+                                <h3 class="dib inform-h3">
+                                    <v-text v-text="jbxxData.dwmc||'无'"></v-text>
+                                    <span class="companyStatus dib" title="单位类型">
+                                        <v-text v-text="jbxxData.jxdwlxmc||'无'"></v-text>
+                                    </span>
+                                </h3>
+                            </div>
+                            <dl>
+                                <img src="../../static/images/detail_zddw.png">
+                                <dt class="dib inform-small-title detail_margin">值班电话：</dt>
+                                <dd class="dtdlStyle" v-text="jbxxData.zbdh||'无'"></dd>
+                                <br>
+                                <img src="../../static/images/detail_yabm.png">
+                                <dt class="dib inform-small-title detail_margin">单位地址：</dt>
+                                <dd class="dtdlStyle" v-text="jbxxData.dwdz||'无'"></dd>
+                                <br>
+                                <img src="../../static/images/detail_yalx.png">
+                                <dt class="dib inform-small-title detail_margin">单位概况：</dt>
+                                <dd class="dtdlStyle" v-text="jbxxData.dwgk||'无'"></dd>
+                                <br>
+                            </dl>
+                        </div>
+                        <!-- <div class="btngroup r">
+                            <img src="../../static/images/detail_share.png" @click="openShareVisible">
+                            <el-button type="primary" icon="share" style="width:120px" @click="openShareVisible">信息分享</el-button>
+                            <br>
+                            <img src="../../static/images/detail_onlineShow.png" @click="openPlan">
+                            <el-button type="primary" icon="picture" style="margin-top:5%;width:120px" @click="openPlan">在线预览</el-button>
+                            <br>
+                            <img src="../../static/images/detail_download.png" @click="downloadPlan">
+                            <el-button type="primary" icon="document" style="margin-top:5%;width:120px" @click="downloadPlan">预案下载</el-button>
+                        </div> -->
+                    </div>
+                    <div class="inform-content">
+                        <template>
+                            <el-tabs v-model="activeName" type="border-card">
+                                <el-tab-pane label="基本信息" name="first">
+                                    <el-card class="mb10 card_style">
+                                        <div slot="header" class="clearfix">
+                                            <strong class="card_title_font">消防管辖</strong>
+                                        </div>
+                                        <el-row class="mb5">
+                                            <el-col :span="12">
+                                                <strong>消防管辖：</strong>
+                                                <v-text v-text="jbxxData.xfgxmc||'无'"></v-text>
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <strong>行政区划：</strong>
+                                                <v-text v-text="jbxxData.xzqhmc||'无'"></v-text>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row class="mb5">
+                                            <el-col :span="12">
+                                                <strong>辖区负责人：</strong>
+                                                <v-text v-text="jbxxData.xqfzr||'无'"></v-text>
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <strong>辖区负责人电话：</strong>
+                                                <v-text v-text="jbxxData.xqfzrdh||'无'"></v-text>
+                                            </el-col>
+                                        </el-row>
+                                    </el-card>
+                                    <el-card class="mb10 card_style ">
+                                        <div slot="header" class="clearfix">
+                                            <strong class="card_title_font">位置信息</strong>
+                                        </div>
+                                        <el-row class="mb10">
+                                            <el-col :span="12">
+                                                <strong>经度：</strong>
+                                                <v-text v-text="jbxxData.lon||'无'"></v-text>
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <strong>纬度：</strong>
+                                                <v-text v-text="jbxxData.lat||'无'"></v-textdiv>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row class="mb10">
+                                            <el-col :span="12">
+                                                <strong>毗邻情况(东)：</strong>
+                                                <v-text v-text="jbxxData.plqkd||'无'"></v-text>
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <strong>毗邻情况(南)：</strong>
+                                                <v-text v-text="jbxxData.plqkn||'无'"></v-text>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row class="mb10">
+                                            <el-col :span="12">
+                                                <strong>毗邻情况(西)：</strong>
+                                                <v-text v-text="jbxxData.plqkx||'无'"></v-text>
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <strong>毗邻情况(北)：</strong>
+                                                <v-text v-text="jbxxData.plqkb||'无'"></v-text>
+                                            </el-col>
+                                        </el-row>
+                                    </el-card>
+                                    <el-card class="mb10 card_style ">
+                                        <div slot="header" class="clearfix">
+                                            <strong class="card_title_font">消防设施</strong>
+                                        </div>
+                                        <el-row class="mb10">
+                                            <el-table id="table" :data="xfssData" border class="detailTable">
+                                                <el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
+                                                <el-table-column prop="xfssmc" label="消防设施名称" min-width="20%" align="center" show-overflow-tooltip></el-table-column>
+                                                <el-table-column prop="xfsslxmc" label="消防设施类型" min-width="20%" align="center" show-overflow-tooltip></el-table-column>
+                                                <el-table-column prop="wz" label="位置" min-width="20%" align="center" show-overflow-tooltip></el-table-column>
+                                                <el-table-column prop="sl" label="数量" min-width="15%" align="center" show-overflow-tooltip></el-table-column>
+                                                <el-table-column prop="bz" label="备注" min-width="15%" align="center" show-overflow-tooltip></el-table-column>
+                                            </el-table>
+                                        </el-row>
+                                    </el-card>
+                                    <el-card class="mb10 card_style">
+                                        <div slot="header" class="clearfix">
+                                            <strong class="card_title_font">备注</strong>
+                                        </div>
+                                        <el-row class="mb5">
+                                            <v-text v-text="jbxxData.bz||'无'"></v-text>
+                                        </el-row>
+                                    </el-card>
+                                </el-tab-pane>
+                                <el-tab-pane label="建筑信息" name="second">
+                                    <el-row class="mb5">
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">建筑分类：</strong>
+                                                <v-text v-text="jbxxData.jzflmc||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">建筑数量：</strong>
+                                                <v-text v-text="jbxxData.jzsl||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row class="mb5">
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">占地面积(㎡)：</strong>
+                                                <v-text v-text="jbxxData.zdmj||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">建筑面积(㎡)：</strong>
+                                                <v-text v-text="jbxxData.jzmj||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row class="mb5">
+                                        <strong class="dtdlStyle">功能分区描述：</strong>
+                                        <v-text v-text="jbxxData.gnfqms||'无'"></v-text>
+                                    </el-row>
+                                    <el-row class="mb5">
+                                        <strong class="dtdlStyle">重点部位描述：</strong>
+                                        <v-text v-text="jbxxData.zdbwms||'无'"></v-text>
+                                    </el-row>
+                                    <el-row class="mb10">
+                                        <strong class="dtdlStyle">周边消防通道：</strong>
+                                        <v-text v-text="jbxxData.zbxftd||'无'"></v-text>
+                                    </el-row>
+                                    <!-- 建筑详情 -->
+                                    <el-card v-for="data in jzxxData" class="card_style">
+                                        <div slot="header" class="clearfix">
+                                            <strong class="card_title_font">
+                                                <v-text v-text="data.jzmc||'无'"></v-text>
+                                            </strong>
+                                        </div>
+                                        <el-row>
+                                            <el-col :span="24">
+                                                <div>
+                                                    <strong class="dtdlStyle">建筑位置：</strong>
+                                                    <v-text v-text="data.jzwz||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row>
+                                            <el-col :span="12">
+                                                <div>
+                                                    <strong class="dtdlStyle">使用性质：</strong>
+                                                    <v-text v-text="data.jzsyxzmc||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <div>
+                                                    <strong class="dtdlStyle">建筑结构：</strong>
+                                                    <v-text v-text="data.jzjgmc||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row>
+                                            <el-col :span="12">
+                                                <div>
+                                                    <strong class="dtdlStyle">占地面积(㎡)：</strong>
+                                                    <v-text v-text="data.zdmj||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <div>
+                                                    <strong class="dtdlStyle">建筑面积(㎡)：</strong>
+                                                    <v-text v-text="data.jzmj||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row>
+                                            <el-col :span="12">
+                                                <div>
+                                                    <strong class="dtdlStyle">地上高度(m)：</strong>
+                                                    <v-text v-text="data.dsgd||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <div>
+                                                    <strong class="dtdlStyle">地下高度(m)：</strong>
+                                                    <v-text v-text="data.dxgd||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row>
+                                            <el-col :span="12">
+                                                <div>
+                                                    <strong class="dtdlStyle">地上层数：</strong>
+                                                    <v-text v-text="data.dscs||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <div>
+                                                    <strong class="dtdlStyle">地下层数：</strong>
+                                                    <v-text v-text="data.dxcs||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row>
+                                            <el-col :span="24">
+                                                <div>
+                                                    <strong class="dtdlStyle">避难层：</strong>
+                                                    <v-text v-text="data.bnc||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row>
+                                            <el-col :span="12">
+                                                <div>
+                                                    <strong class="dtdlStyle">辖区行车路线</strong>
+                                                    <v-text v-text="data.xqxclx||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                            <el-col :span="12">
+                                                <div>
+                                                    <strong class="dtdlStyle">预计到达时长(min)：</strong>
+                                                    <v-text v-text="data.yjddsc||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row>
+                                            <el-col :span="12">
+                                                <div>
+                                                    <strong class="dtdlStyle">备注：</strong>
+                                                    <v-text v-text="data.bz||'无'"></v-text>
+                                                </div>
+                                            </el-col>
+                                        </el-row>
+                                    </el-card>
+                                </el-tab-pane>
+                                <!-- <el-tab-pane label="图片信息" name="third">
+                                    <div v-if="jbxxData.dxid=='dlwd'">
+                                        <el-row v-for="(item,index) in picList" class="mb5 picList">
+                                            <v-text v-text="index+1"></v-text>.
+                                            <i class="el-icon-picture mr5 ml5"></i>
+                                            <v-text v-text="item.name" @click="showPic(index)"></v-text>
+                                        </el-row>
+                                    </div>
+                                    <div v-else>
+                                        该重点单位暂无图片信息
+                                    </div>
+
+                                </el-tab-pane> -->
+                            </el-tabs>
+                        </template>
+
+                    </div>
+                </div>
+                <!--图片轮播界面-->
+                <!-- <el-dialog :title="picTitle" :visible.sync="showPicVisible" :close-on-click-modal="false" size="large" @close="successClose">
+                    <template>
+                        <el-carousel type="card" height="350px" :initial-index="initialIndex" :autoplay="false" arrow="always" indicator-position="none"
+                            @change="picTitleChange">
+                            <el-carousel-item v-for="item in picList">
+                                <img :src="item.url" height="100%"></img>
+                            </el-carousel-item>
+                        </el-carousel>
+                    </template>
+                </el-dialog> -->
+                <!--选择选择分享模板界面-->
+                <!-- <el-dialog title="选择分享模板" :visible.sync="shareVisible" @close="closeShareDialog()" :close-on-click-modal="false">
+                    <div id="tableView" style="padding: 0 35px;">
+                        <el-button type="primary" icon="share" style="width:140px" @click="openShare('detail')">预案详情分享</el-button>
+                        <br>
+                        <el-button type="primary" icon="share" style="margin-top:10px;width:140px" @click="openShare('summary')">预案简版分享</el-button>
+                    </div>
+                </el-dialog> -->
+                <!--选择选择分享模板界面-->
+                <!-- <el-dialog title="选择下载模板" :visible.sync="SelectDownVisible" @close="closeSelectDownDialog()" :close-on-click-modal="false">
+                    <div id="tableView" style="padding: 0 35px;">
+                        <el-button type="primary" icon="document" style="width:140px" @click="openDown('detail')">预案详情下载</el-button>
+                        <br>
+                        <el-button type="primary" icon="document" style="margin-top:10px;width:140px" @click="openDown('summary')">预案简版下载</el-button>
+                    </div>
+                </el-dialog> -->
+                <!--选择选择导出word界面-->
+                <!-- <el-dialog width="10%" title="选择下载项" :visible.sync="downVisible" @close="closeDownDialog()" :close-on-click-modal="false">
+                    <div style="margin-top: 20px">
+                        <el-checkbox v-model="fmChecked" disabled label="封面" border size="medium"></el-checkbox>
+                    </div>
+                    <div style="margin-top: 20px">
+                        <el-checkbox v-model="dwjbqkChecked" label="单位基本情况" border size="medium"></el-checkbox>
+                    </div>
+                    <div style="margin-top: 20px">
+                        <el-checkbox v-model="dwjzxxChecked" label="单位建筑信息和消防设施" border size="medium"></el-checkbox>
+                    </div>
+                    <div style="margin-top: 20px">
+                        <el-checkbox v-model="zdbwChecked" label="重点部位" border size="medium"></el-checkbox>
+                    </div>
+                    <div style="margin-top: 20px">
+                        <el-checkbox v-model="zqsdChecked" label="灾情设定与作战部署" border size="medium"></el-checkbox>
+                    </div>
+                    <div style="margin-top: 20px">
+                        <el-checkbox v-model="tpChecked" label="预案附件" border size="medium"></el-checkbox>
+                    </div>
+
+                    <div id="tableView" style="padding: 0 35px;text-align:center">
+                        <el-button type="primary" style="width:140px" @click="downShare()">确定</el- button>
+                    </div>
+                </el-dialog> -->
+            </div>
+            <!-- main-container -->
+        </div>
+    </div>
+</body>
+<script src="../../static/js/common/config.js"></script>
+<script src="../../static/js/jxcsplan/jxcsplan_detail.js"></script>
+
+</html>

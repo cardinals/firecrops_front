@@ -46,7 +46,7 @@ var vue = new Vue({
         }
     },
     created: function () {
-        loadBreadcrumb("重点单位预案", "-1");
+        loadBreadcrumb("九小场所管理", "-1");
         this.shiroData = shiroGlobal;
         this.XFGX();//消防管辖级联选择
         this.JXDWLX();//九小单位类型下拉框
