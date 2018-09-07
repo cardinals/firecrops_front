@@ -153,14 +153,14 @@
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm"><span style="color:red;">* </span>防火队站</el-label>
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>防火管辖大队</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-cascader :options="xfdzData" :props="xfdzProps" size="small" v-model="editForm.fhdzid" placeholder="请选择" class="searchSelect"
 									clearable change-on-select :show-all-levels="false"></el-cascader>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-								<el-label class="mr5 vbm"><span style="color:red;">* </span>灭火队站</el-label>
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>灭火责任队站</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-cascader :options="xfdzData" :props="xfdzProps" size="small" v-model="editForm.mhdzid" placeholder="请选择" class="searchSelect"
