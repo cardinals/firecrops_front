@@ -39,7 +39,7 @@
     }
 </style>
 
-<body  class="fw bg_tm">
+<body  id='allbody' style="visibility:hidden;" onload="init()"   class="fw bg_tm">
 	<div id="app">
 		<div class="application-box tc abs">
 			<!-- 头部分 -->
@@ -188,6 +188,7 @@
 <script type="text/javascript" src="../../static/js/zzzlib/jquery-3.2.1.min.js"></script>
 	<script>
 		$(function () {
+				
 				//判断是否宽屏
 				var winWide = window.screen.availWidth;
 				// alert(winWide);
@@ -196,7 +197,12 @@
 				var bmt = zm*420;
 				document.body.style.marginTop = bmt +'px';
 				document.body.style.transform = 'scale('+zm*1.5+')';
+				
 			})	
+
+			function init(){
+				document.getElementById("allbody").style.visibility = 'visible';
+			}
 	</script>
 </html>
 
