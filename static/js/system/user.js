@@ -65,6 +65,10 @@ var vue = new Vue({
                     { required: true, message: '请输入密码', trigger: 'blur' },
                     { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
                 ],
+                checkPass: [
+                    { required: true, message: '请输入密码', trigger: 'blur' },
+                    { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+                ],
                 organizationId: [
                     { required: true, message: '请选择组织机构', trigger: 'blur' }
                 ]
