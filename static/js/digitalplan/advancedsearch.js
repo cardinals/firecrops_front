@@ -282,12 +282,22 @@ new Vue({
         //预案级别初始化
         YAJB:function(){
             axios.get('/api/codelist/getCodetype/YAJB').then(function (res) {
-                if(this.shiroData.organizationVO.uuid=='eb09df352cda4902b24c54dd2b2ce656'){
-                    this.yajb_data.push(res.data.result[0]);
-                }
-                for (var i = 1; i < res.data.result.length; i++) {  
-                    this.yajb_data.push(res.data.result[i]);
-                }
+                axios.get('/dpapi/xfdz/doFindDzlxByOrgId/' + this.shiroData.organizationVO.uuid).then(function (res1) {
+                    var dzlx = res1.data.result;
+                    switch(dzlx){
+                        case '0100':
+                            this.yajb_data.push(res.data.result[0]); 
+                        case '0200':
+                            this.yajb_data.push(res.data.result[1]); 
+                        case '0300':
+                            this.yajb_data.push(res.data.result[2]); 
+                        default:
+                            this.yajb_data.push(res.data.result[3]); 
+                    }
+                    
+                }.bind(this), function (error) {
+                    console.log(error);
+                })
             }.bind(this), function (error) {
                 console.log(error);
             })
