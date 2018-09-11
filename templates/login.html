@@ -113,7 +113,8 @@
                                     <a>记住我</a>
                                 </p>
                                 <div class="LoginBtn">
-                                    <a @click="login()">登录</a>
+                                    <a @click="login()" id="lg" style="display:block;">登录</a>
+                                    <a @click="nlogin()" id="nlg" style="display:none;">登录</a>
                                 </div>
                             </form>
                         </div>
@@ -135,21 +136,24 @@
 <script src="../static/js/zzzlib/jquery-3.2.1.min.js"></script>
 <script src="../static/js/zzzlib/axios.min.js"></script>
 <script>
-    $(document).ready(function(){
-		$('.logina').click(function(){
-            document.getElementById("fromb").style.display = 'none';
-            document.getElementById("froma").style.display = 'block';
-            $('.logina').addClass("current").siblings().removeClass("current");
-            $('.loginb').addClass("currentb").siblings().removeClass("currentb");
-        })
-        
-		$('.loginb').click(function(){
-            document.getElementById("froma").style.display = 'none';
-            document.getElementById("fromb").style.display = 'block';
-            $('.loginb').addClass("current").siblings().removeClass("current");
-            $('.logina').addClass("currentb").siblings().removeClass("currentb");
-		})  
-	})
+        $(document).ready(function () {
+                $('.logina').click(function () {
+                    document.getElementById("fromb").style.display = 'none';
+                    document.getElementById("froma").style.display = 'block';
+                    document.getElementById("nlg").style.display = 'none';
+                    document.getElementById("lg").style.display = 'block';
+                    $('.logina').addClass("current").siblings().removeClass("current");
+                    $('.loginb').addClass("currentb").siblings().removeClass("currentb");
+                })
+                $('.loginb').click(function () {
+                    document.getElementById("froma").style.display = 'none';
+                    document.getElementById("fromb").style.display = 'block';
+                    document.getElementById("lg").style.display = 'none';
+                    document.getElementById("nlg").style.display = 'block';
+                    $('.loginb').addClass("current").siblings().removeClass("current");
+                    $('.logina').addClass("currentb").siblings().removeClass("currentb");
+                })
+            })
 </script>
 <script>
         $(function () {
@@ -218,6 +222,16 @@
                 } else {
                     $('#login-form').submit(); 
                 }
+            },
+            //九小场所信用代码
+            nlogin: function () {
+                this.tyshxycode = $('#tyshxycode').val();
+                if (this.tyshxycode == null || this.tyshxycode == '') {
+                    alert("统一社会信用代码不能为空")
+                } else {
+                    $('#login-form').submit();
+                }
+
             },
             reset: function () {
                 this.username = "";
