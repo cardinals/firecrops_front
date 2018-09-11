@@ -94,14 +94,14 @@
                                 <ul id="fromb" style="display:none;">
                                     <li class="I1" >
                                         <i class="icon-jxcs"></i>
-                                        <input type="text" class="inputstyle" v-model="username" name="username" id="username" placeholder="统一社会信用代码">
+                                        <input type="text" class="inputstyle"  placeholder="统一社会信用代码">
                                     </li>
                                     <li class="I2" style="visibility: hidden;">
                                         <i id="icon-password"></i>
-                                        <input type="password" class="inputstyle" name="password" id="password" placeholder="密码">
+                                        <input type="password" class="inputstyle" >
                                     </li>
                                     <li class="I3" style="visibility: hidden;">
-                                        <input type="text" class="inputstyle"  name="validateCode" id="validateCode" placeholder="验证码" @keyup.enter="login()">
+                                        <input type="text" class="inputstyle"  >
                                         <a href="javascript:;" >
                                             <img v-bind:src="src" id="checkCode" class="verficode" onerror="javascript:this.src='../static/images/img-error.png';" style="vertical-align: bottom"
                                                 width="50" height="20">
