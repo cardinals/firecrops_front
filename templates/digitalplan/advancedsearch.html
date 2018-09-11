@@ -103,12 +103,11 @@
                                             <el-radio-button v-for="item in yadx_data" :label="item.codeValue"><v-text v-text="item.codeName"></v-text></el-radio-button>
                                         </el-radio-group>
                                     </el-form-item>
-                                    <el-form-item label="消防管辖" id="xfgxDiv" style="height:34px;overflow:hidden;">
+                                    <el-form-item v-if="xfgxShow" label="消防管辖" id="xfgxDiv" style="height:34px;overflow:hidden;">
                                         <el-radio-group size="medium" v-model="YADXSearchForm.XFGX" style="float: left;width: 96%;">
                                             <el-radio-button v-for="item in xfgx_data" :label="item.codeValue"><v-text v-text="item.codeName"></v-text></el-radio-button>
                                         </el-radio-group>
                                         <el-button id="xfgxSpread" size="mini" type="primary" plain style="float: right;margin-top: 7px;" @click="spread">展开</el-button>
-                                        
                                     </el-form-item>
                                     <el-form-item label="单位性质" id="dwxzDiv" v-show = "isZddw" style="margin-top:2px;margin-bottom:2px;height:34px;overflow:hidden;">
                                         <el-radio-group size="medium" v-model="YADXSearchForm.DWXZ" style="float: left;width: 96%;">

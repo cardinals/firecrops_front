@@ -119,6 +119,8 @@ new Vue({
             tabIndex: 0,
             //登录用户
             shiroData: [],
+            //预案对象消防管辖显示
+            xfgxShow: true,
         }
     },
     created: function () {
@@ -176,14 +178,21 @@ new Vue({
             }
             this.loading = true;
             var _self = this;
+            //制作机构
+            var jgid = "";
+            if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                jgid = this.shiroData.organizationVO.uuid;
+            }
             var params = {
                 yamc : this.yuAnSearchForm.YAMC,
                 yadxType : this.yuAnSearchForm.YADX,
                 yalx : this.yuAnSearchForm.YALX.substr(0,1),
                 yajb : this.yuAnSearchForm.YAJB,
                 shzt : this.yuAnSearchForm.SHZT,
+                jgid : jgid,
                 begintime: this.yuAnSearchForm.begintime_create,
                 endtime: this.yuAnSearchForm.endtime_create,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSizeYaxx,
                 pageNum: this.currentPageYaxx,
                 orgUuid: this.shiroData.organizationVO.uuid,
@@ -200,37 +209,36 @@ new Vue({
         },
         //预案对象查询事件
         searchYADXClick: function(type){
-            console.log(type);
             //按钮事件的选择
             if(type == 'page'){
                 this.YADXtableData = []; 
             }else{
                 this.currentPageYadx = 1;
             }
-            console.log(this.currentPageYadx);
             this.loading = true;
+            //消防管辖
+            var xfgx = '';
+            if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                xfgx = this.shiroData.organizationVO.uuid;
+            }
             var params = {
                 dxmc : this.YADXSearchForm.DXMC,
                 yadxType : this.YADXSearchForm.YADX,
-                xfgx : this.YADXSearchForm.XFGX.substr(0,2),
+                xfgx : xfgx,
                 dwxz : this.YADXSearchForm.DWXZ,
                 xzqh : this.YADXSearchForm.XZQH,
                 fhdj : this.YADXSearchForm.FHDJ,
                 jzfl : this.YADXSearchForm.DWJZQK,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSizeYadx,
                 pageNum: this.currentPageYadx,
                 orgUuid: this.shiroData.organizationVO.uuid,
                 orgJgid: this.shiroData.organizationVO.jgid
             };
-            console.log(params);
             axios.post('/dpapi/advancedsearch/gjssYadxList', params).then(function (res) {
                 var tableTemp = new Array((this.currentPageYadx-1)*this.pageSizeYadx);
                 this.YADXtableData = tableTemp.concat(res.data.result.list);
                 this.totalYadx = res.data.result.total;
-                console.log(this.YADXtableData);
-                console.log(this.total);
-                // this.YADXtableData = res.data.result;
-                // this.total = res.data.result.length;
                 this.loading = false;
             }.bind(this), function (error) {
                 console.log(error)
@@ -251,6 +259,7 @@ new Vue({
                 jzl_jzsyxz:this.DWJZSearchForm.JZSYXZ.substr(0,1),
                 jzl_jzjg:this.DWJZSearchForm.JZJG,
                 jzl_dsgd:this.DWJZSearchForm.JZGD,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSizeJzxx,
                 pageNum: this.currentPageJzxx,
                 orgUuid: this.shiroData.organizationVO.uuid,
@@ -260,8 +269,6 @@ new Vue({
                 var tableTemp = new Array((this.currentPageJzxx-1)*this.pageSizeJzxx);
                 this.DWJZtableData = tableTemp.concat(res.data.result.list);
                 this.totalJzxx = res.data.result.total;
-                // this.DWJZtableData = res.data.result;
-                // this.total = res.data.result.length;
                 this.loading = false;
             }.bind(this), function (error) {
                 console.log(error)
@@ -325,6 +332,9 @@ new Vue({
             }else{
                 axios.get('/dpapi/util/doFindXfdzByZongdId/' + this.shiroData.organizationVO.uuid).then(function (res) {
                     this.xfgx_data = res.data.result;
+                    if(this.xfgx_data.length == 0){
+                        this.xfgxShow = false;
+                    }
                 }.bind(this), function (error) {
                     console.log(error);
                 })

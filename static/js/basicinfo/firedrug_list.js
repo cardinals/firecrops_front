@@ -74,6 +74,7 @@ var vue = new Vue({
             }
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.allSsdzData = res.data.result;
+                this.searchForm.ssdz.push(this.allSsdzData[0].dzid);
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -94,12 +95,21 @@ var vue = new Vue({
                 cbl_min = '';
                 cbl_max = '';
             }
+            var ssdz = "";
+            if(this.searchForm.ssdz.length>0){
+                ssdz = this.searchForm.ssdz[this.searchForm.ssdz.length-1];
+            }else{
+                if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                    ssdz = this.shiroData.organizationVO.uuid;
+                }
+            }
             var params = {
                 yjmc: this.searchForm.yjmc,
-                ssdz: this.searchForm.ssdz[this.searchForm.ssdz.length - 1],
-                yjlx: this.searchForm.yjlx[this.searchForm.yjlx.length - 1],
+                ssdz: ssdz,
+                yjlx: this.searchForm.yjlx[this.searchForm.yjlx.length-1],
                 zcbl_min: cbl_min,
                 zcbl_max: cbl_max,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,
