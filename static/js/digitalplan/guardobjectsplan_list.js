@@ -10,7 +10,7 @@ var vue = new Vue({
                 dxmc: "",
                 yalx: "",
                 sfkqy: "",
-                jgid: "",
+                jgid: [],
                 cjsj: new Array()
             },
             tableData: [],
@@ -35,8 +35,8 @@ var vue = new Vue({
             },
             jgidprops: {
                 children: 'children',
-                label: 'jgjc',
-                value: 'uuid',
+                label: 'dzjc',
+                value: 'dzid',
             },
             defaultKeys: [],
             //树结构配置
@@ -133,11 +133,18 @@ var vue = new Vue({
 
         //获取所有机构
         getJgidData: function(){
-            axios.post('/api/organization/getOrganizationtree').then(function(res){
+            var organization = this.shiroData.organizationVO;
+            var param = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            }
+            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.jgidData = res.data.result;
-            }.bind(this),function(error){
+                this.searchForm.jgid.push(this.jgidData[0].dzid);
+            }.bind(this), function (error) {
                 console.log(error);
-            }) 
+            })
         },
 
         //预案类型table转码
@@ -170,12 +177,22 @@ var vue = new Vue({
                 this.currentPage = 1;
             }
             var _self = this;
+            //制作机构
+            var jgid = "";
+            if(this.searchForm.jgid.length>0){
+                jgid = this.searchForm.jgid[this.searchForm.jgid.length-1];
+            }else{
+                if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                    jgid = this.shiroData.organizationVO.uuid;
+                }
+            }
             var params = {
                 yamc: this.searchForm.yamc,
                 yalx: this.searchForm.yalx[this.searchForm.yalx.length-1],
                 dxmc: this.searchForm.dxmc,
                 sfkqy: this.searchForm.sfkqy,
-                jgid: this.searchForm.jgid[this.searchForm.jgid.length-1],
+                jgid: jgid,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,

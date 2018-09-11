@@ -14,7 +14,7 @@ var vue = new Vue({
                 dxmc: "",
                 yalxdm: "",
                 sfkqy: "",
-                jgid: "",
+                jgid: [],
                 cjsj: new Array()
             },
             tableData: [],
@@ -35,8 +35,8 @@ var vue = new Vue({
                 children: 'children'
             },
             jgidprops: {
-                value: 'uuid',
-                label: 'jgjc',
+                value: 'dzid',
+                label: 'dzjc',
                 children: 'children'
             },
             //资源列表是否显示
@@ -130,11 +130,18 @@ var vue = new Vue({
         },
         //制作机构
         getJgidData: function(){
-            axios.post('/api/organization/getOrganizationtree').then(function(res){
+            var organization = this.shiroData.organizationVO;
+            var param = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            }
+            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.jgidData = res.data.result;
-            }.bind(this),function(error){
+                this.searchForm.jgid.push(this.jgidData[0].dzid);
+            }.bind(this), function (error) {
                 console.log(error);
-            }) 
+            })
         },
         //表格查询事件
         searchClick: function (type) {
@@ -144,13 +151,22 @@ var vue = new Vue({
                 this.currentPage = 1;
             }
             this.loading=true;
-            var _self = this;
+            //制作机构
+            var jgid = "";
+            if(this.searchForm.jgid.length>0){
+                jgid = this.searchForm.jgid[this.searchForm.jgid.length-1];
+            }else{
+                if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                    jgid = this.shiroData.organizationVO.uuid;
+                }
+            }
             var params={
-                yamc :this.searchForm.yamc,
-                dxmc :this.searchForm.dxmc,
-                yalx :this.searchForm.yalxdm[this.searchForm.yalxdm.length-1],
-                sfkqy :this.searchForm.sfkqy,
-                jgid :this.searchForm.jgid[this.searchForm.jgid.length-1],
+                yamc: this.searchForm.yamc,
+                dxmc: this.searchForm.dxmc,
+                yalx: this.searchForm.yalxdm[this.searchForm.yalxdm.length-1],
+                sfkqy: this.searchForm.sfkqy,
+                jgid: jgid,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,
@@ -188,8 +204,6 @@ var vue = new Vue({
                 var row = val[i];
             }
             this.multipleSelection = val;
-            //this.sels = sels
-            console.info(val);
         },
         //表格重新加载数据
         loadingData: function () {
