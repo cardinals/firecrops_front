@@ -11,11 +11,8 @@ var vue = new Vue({
             searchForm: {
                 hdzt: "",
                 zcbdw: "",
-                xfgx: "",
-                cxsj:"",
-                // bhxj: "",
-                // lrsj:new Array()
-                
+                xfgx: [],
+                cxsj: "",
                 //高级搜索-预案对象-保卫警卫 点击后跳转到查询页面，通过UUID直接查询其对象
                 uuid:""
             },
@@ -103,13 +100,6 @@ var vue = new Vue({
         }
     },
     created: function () {
-        /**菜单选中 by li.xue 20180628*/
-        /**
-        var index = getQueryString("index");
-        $("#activeIndex").val(index);
-        this.activeIndex = index;
-         */
-        
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("消防保卫警卫对象", "-1");
         this.shiroData = shiroGlobal;
@@ -136,15 +126,10 @@ var vue = new Vue({
             }
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.allSsdzData = res.data.result;
+                this.searchForm.xfgx.push(this.allSsdzData[0].dzid);
             }.bind(this), function (error) {
                 console.log(error);
             })
-            // axios.get('/dpapi/util/doSearchContingents').then(function (res) {
-            //     this.allSsdzData = res.data.result;
-
-            // }.bind(this), function (error) {
-            //     console.log(error);
-            // })
         },
         //表格查询事件
         searchClick: function(type) {
@@ -165,6 +150,16 @@ var vue = new Vue({
             this.loading = true;
             //高级搜索-预案对象-保卫警卫 点击后跳转到查询页面，通过UUID直接查询其对象
             this.searchForm.uuid = getQueryString("id");
+            
+            //消防管辖
+            var xfgx = "";
+            if(this.searchForm.xfgx.length>0){
+                xfgx = this.searchForm.xfgx[this.searchForm.xfgx.length-1];
+            }else{
+                if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                    xfgx = this.shiroData.organizationVO.uuid;
+                }
+            }
             var params = {
                 //add by yushch
                 uuid : this.searchForm.uuid,
@@ -172,7 +167,8 @@ var vue = new Vue({
                 hdzt: this.searchForm.hdzt,
                 cxsj: this.searchForm.cxsj,
                 zcbdw: this.searchForm.zcbdw,
-                xfgx: this.searchForm.xfgx[this.searchForm.xfgx.length - 1],
+                xfgx: xfgx,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,

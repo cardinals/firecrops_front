@@ -12,7 +12,7 @@ var vue = new Vue({
             searchForm: {
                 dxmc: '',
                 dxdz: '',
-                xfgx: '',
+                xfgx: [ ],
                 //高级搜索-预案对象-保卫警卫 点击后跳转到查询页面，通过UUID直接查询其对象
                 uuid: ''
             },
@@ -104,14 +104,10 @@ var vue = new Vue({
             }
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.xfgxData = res.data.result;
+                this.searchForm.xfgx.push(this.xfgxData[0].dzid);
             }.bind(this), function (error) {
                 console.log(error);
             })
-            // axios.get('/dpapi/util/doSearchContingents').then(function (res) {
-            //     this.xfgxData = res.data.result;
-            // }.bind(this), function (error) {
-            //     console.log(error);
-            // })
         },
         //表格查询事件
         searchClick: function (type) {
@@ -125,13 +121,24 @@ var vue = new Vue({
             var _self = this;
             //高级搜索-预案对象-保卫警卫 点击后跳转到查询页面，通过UUID直接查询其对象
             this.searchForm.uuid = getQueryString("id");
+            
+            //消防管辖
+            var xfgx = "";
+            if(this.searchForm.xfgx.length>0){
+                xfgx = this.searchForm.xfgx[this.searchForm.xfgx.length-1];
+            }else{
+                if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                    xfgx = this.shiroData.organizationVO.uuid;
+                }
+            }
             var params = {
                 //add by yushch
                 uuid: this.searchForm.uuid,
                 //end add
                 dxmc: this.searchForm.dxmc,
                 dxdz: this.searchForm.dxdz,
-                xfgx: this.searchForm.xfgx[this.searchForm.xfgx.length - 1],
+                xfgx: xfgx,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,

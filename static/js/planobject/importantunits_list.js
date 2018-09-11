@@ -13,7 +13,7 @@ var vue = new Vue({
                 dwxz: "",
                 jzfl: "",
                 fhdj: "",
-                mhdzid: "",
+                mhdzid: [],
                 xfdwlxmc: ""
             },
             tableData: [],
@@ -111,14 +111,7 @@ var vue = new Vue({
             shiroData: [],
         }
     },
-    created: function () {
-        /**菜单选中 by li.xue 20180628*/
-        /**
-        var index = getQueryString("index");
-        $("#activeIndex").val(index);
-        this.activeIndex = index;
-         */
-        
+    created: function () {      
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("重点单位", "-1");
         /**当前登陆用户 by li.xue 20180808 */
@@ -150,14 +143,24 @@ var vue = new Vue({
             this.searchForm.uuid = getQueryString("uuid");
             var isZddwdj = getQueryString("zddwdj");
 
+            //灭火队站ID
+            var mhdzid = "";
+            if(this.searchForm.mhdzid.length>0){
+                mhdzid = this.searchForm.mhdzid[this.searchForm.mhdzid.length-1];
+            }else{
+                if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                    mhdzid = this.shiroData.organizationVO.uuid;
+                }
+            }
             var params = {
                 uuid:this.searchForm.uuid,
                 dwmc: this.searchForm.dwmc,
                 dwxz: this.searchForm.dwxz,
                 jzfl: this.searchForm.jzfl,
                 fhdj: this.searchForm.fhdj,
-                mhdzid: this.searchForm.mhdzid[this.searchForm.mhdzid.length-1],
+                mhdzid: mhdzid,
                 xfdwlxmc: this.searchForm.xfdwlxmc,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,
@@ -235,8 +238,6 @@ var vue = new Vue({
         getdwxzData: function () {
             axios.get('/api/codelist/getCodeTypeOrderByNum/DWXZ').then(function (res) {
                 this.dwxzData = res.data.result;
-                // this.dwxzData.sort(this.compare('value'));
-                // console.log(this.dwxzData);
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -256,11 +257,6 @@ var vue = new Vue({
             })
         },
         getmhdziddata:function () {
-            // axios.get('/dpapi/util/doSearchContingents').then(function (res) {
-            //     this.mhdzidData = res.data.result;
-            // }.bind(this), function (error) {
-            //     console.log(error);
-            // })
             var organization = this.shiroData.organizationVO;
             var param = {
                 dzid: organization.uuid,
@@ -269,6 +265,7 @@ var vue = new Vue({
             }
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.mhdzidData = res.data.result;
+                this.searchForm.mhdzid.push(this.mhdzidData[0].dzid);
             }.bind(this), function (error) {
                 console.log(error);
             })
