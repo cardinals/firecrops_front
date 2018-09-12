@@ -81,8 +81,6 @@ var vue = new Vue({
         }
     },
     created: function () {
-        //设置菜单选中
-        //$("#activeIndex").val(getQueryString("index"));
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("消防水源管理", "-1");
         /**当前登陆用户信息 by li.xue 20180808 */
@@ -119,12 +117,21 @@ var vue = new Vue({
             this.searchForm.uuid = this.GetQueryString("uuid");
             var isSydj = this.GetQueryString("sydj");
             //end add
+            //管辖队站
+            var gxdz = "";
+            if(this.searchForm.gxdz.length>0){
+                gxdz = this.searchForm.gxdz[this.searchForm.gxdz.length-1];
+            }else{
+                if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                    gxdz = this.shiroData.organizationVO.uuid;
+                }
+            }
             var params = {
                 uuid: this.searchForm.uuid,
                 symc: this.searchForm.symc,
                 sydz: this.searchForm.sydz,
                 sylx: this.searchForm.sylx,
-                gxdz: this.searchForm.gxdz[this.searchForm.gxdz.length - 1],
+                gxdz: gxdz,
                 sygs: this.searchForm.sygs,
                 kyzt: this.searchForm.kyzt,
                 xhs_szxs: this.searchForm.xhs_szxs,
@@ -136,14 +143,13 @@ var vue = new Vue({
                 trsyqsd_tcwz: this.searchForm.trsyqsd_tcwz,
                 trsy_ywksq: this.searchForm.trsy_ywksq,
                 trsy_sz: this.searchForm.trsy_sz,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2) + '000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,
                 orgJgid: this.shiroData.organizationVO.jgid
             }
             axios.post('/dpapi/xfsy/findlistPage', params).then(function (res) {
-                // this.tableData = res.data.result;
-                // this.total = this.tableData.length;
                 var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
@@ -191,12 +197,6 @@ var vue = new Vue({
         },
         //队站
         searchGXDZ_data: function () {
-            // axios.get('/dpapi/util/doSearchContingents').then(function (res) {
-            //     this.GXZD_data = res.data.result;
-
-            // }.bind(this), function (error) {
-            //     console.log(error);
-            //});
             var organization = this.shiroData.organizationVO;
             var param = {
                 dzid: organization.uuid,
@@ -205,6 +205,7 @@ var vue = new Vue({
             };
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.GXZD_data = res.data.result;
+                this.searchForm.gxdz.push(this.GXZD_data[0].dzid);
             }.bind(this), function (error) {
                 console.log(error);
             });
