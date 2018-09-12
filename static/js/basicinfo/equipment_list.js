@@ -64,6 +64,7 @@ var vue = new Vue({
     methods: {
         //表格查询事件
         searchClick: function (type) {
+            debugger;
             //按钮事件的选择
             if (type == 'page') {
                 this.tableData = [];
@@ -71,7 +72,6 @@ var vue = new Vue({
                 this.currentPage = 1;
             }
             this.loading = true;
-            var _self = this;
             var zblx = '';
             if (this.searchForm.zblx.length > 0) {
                 zblx = this.searchForm.zblx[this.searchForm.zblx.length - 1];
