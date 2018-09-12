@@ -16,7 +16,7 @@ var vue = new Vue({
                 clmc: ""
             },
             tableData: [],
-            role_data: [],//当前用户信息
+            shiroData: [],//当前用户信息
             allTeamsData: [],
             allTypesData: [],
             allStatesData: [],
@@ -76,7 +76,7 @@ var vue = new Vue({
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("消防车辆管理", "-1");
         /**当前用户信息 by li.xue 20180808 */
-        this.role_data = shiroGlobal;
+        this.shiroData = shiroGlobal;
         this.searchClick('click');
         this.getAllTypesData();
         this.getAllStatesData();
@@ -96,8 +96,8 @@ var vue = new Vue({
                 type: 'warning'
             }).then(() => {
                 for (var i = 0; i < this.multipleSelection.length; i++) {
-                    this.multipleSelection[i].xgrid = this.role_data.userid;
-                    this.multipleSelection[i].xgrmc = this.role_data.realName;
+                    this.multipleSelection[i].xgrid = this.shiroData.userid;
+                    this.multipleSelection[i].xgrmc = this.shiroData.realName;
                 }
                 axios.post('/dpapi/fireengine/doDeleteFireengine', this.multipleSelection).then(function (res) {
                     this.$message({
@@ -147,19 +147,29 @@ var vue = new Vue({
             this.searchForm.uuid = this.GetQueryString("uuid");
             var isCldj = this.GetQueryString("cldj");
             //end add
+            //所属队站
+            var ssdz = "";
+            if(this.searchForm.ssdz.length>0){
+                ssdz = this.searchForm.ssdz[this.searchForm.ssdz.length-1];
+            }else{
+                if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                    ssdz = this.shiroData.organizationVO.uuid;
+                }
+            }
             var params = {
                 uuid: this.searchForm.uuid,
-                ssdz: this.searchForm.ssdz[this.searchForm.ssdz.length - 1],
-                cllx: this.searchForm.cllx[this.searchForm.cllx.length - 1],
+                ssdz: ssdz,
+                cllx: this.searchForm.cllx[this.searchForm.cllx.length-1],
                 cphm: this.searchForm.cphm,
                 clzt: this.searchForm.clzt,
                 clbm: this.searchForm.clbm,
                 gpsbh: this.searchForm.gpsbh,
                 clmc: this.searchForm.clmc,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2) + '000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
-                orgUuid: this.role_data.organizationVO.uuid,
-                orgJgid: this.role_data.organizationVO.jgid
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/fireengine/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
@@ -210,7 +220,7 @@ var vue = new Vue({
         },
         //获取所有队站信息
         getAllTeamsData: function () {
-            var organization = this.role_data.organizationVO;
+            var organization = this.shiroData.organizationVO;
             var param = {
                 dzid: organization.uuid,
                 dzjc: organization.jgjc,
@@ -218,6 +228,7 @@ var vue = new Vue({
             }
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.allTeamsData = res.data.result;
+                this.searchForm.ssdz.push(this.allTeamsData[0].dzid);
             }.bind(this), function (error) {
                 console.log(error);
             })
