@@ -42,12 +42,6 @@ var vue = new Vue({
         }
     },
     created:function(){
-        /**菜单选中 by li.xue 20180628*/
-        /**
-        var index = getQueryString("index");
-        $("#activeIndex").val(index);
-        this.activeIndex = index;
-         */
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("单位建筑信息", "-1");
         this.shiroData = shiroGlobal;
@@ -72,6 +66,7 @@ var vue = new Vue({
                 jzmc:this.searchForm.jzmc,
                 jzlx:this.searchForm.option_JZLX,
                 jzwz:this.searchForm.jzwz,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,
