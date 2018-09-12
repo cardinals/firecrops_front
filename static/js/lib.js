@@ -148,6 +148,11 @@ window.dataFormat = function (row, column) {
 //LOAD DIV
 window.loadDiv = function(loadUrl){
     var url = '../../templates/';
+    //判断是否为外挂链接(lxy20180912)
+    if(loadUrl.indexOf('http')!= -1){
+        return ;
+    }
+
     if(loadUrl == undefined || loadUrl == "" || loadUrl == null){
         url = url + "home" + ".html";
     }else{
