@@ -95,6 +95,7 @@ var vue = new Vue({
                 cbl_min = '';
                 cbl_max = '';
             }
+            //所属队站
             var ssdz = "";
             if(this.searchForm.ssdz.length>0){
                 ssdz = this.searchForm.ssdz[this.searchForm.ssdz.length-1];
@@ -109,7 +110,7 @@ var vue = new Vue({
                 yjlx: this.searchForm.yjlx[this.searchForm.yjlx.length-1],
                 zcbl_min: cbl_min,
                 zcbl_max: cbl_max,
-                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2) + '000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,

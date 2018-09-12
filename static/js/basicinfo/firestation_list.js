@@ -83,10 +83,15 @@ var vue = new Vue({
             this.searchForm.dzid = this.GetQueryString("dzid");//获取队站ID
             var isDzdj = this.GetQueryString("dzdj");//获取队站点击
             var _self = this;
+            //队站
+            var dzid = "";
+            if(this.shiroData.organizationVO.jgid!='01000000'){
+                dzid = this.shiroData.organizationVO.uuid;
+            }
             var params={
-                dzid:this.searchForm.dzid,
-                dzmc:this.searchForm.dzmc,
-                dzdz:this.searchForm.dzdz,
+                dzid: dzid,
+                dzmc: this.searchForm.dzmc,
+                dzdz: this.searchForm.dzdz,
                 dzlx :this.searchForm.dzlx[this.searchForm.dzlx.length-1],
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
