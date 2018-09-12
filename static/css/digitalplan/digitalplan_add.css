@@ -28,7 +28,7 @@ input[type=file] {
     /* color: #20a0ff; */
 }
 .el-card__body{
-    padding: 15px;    
+    padding: 10px 0px 10px 0px;    
 }
 .el-message{
     z-index: 10005 !important;

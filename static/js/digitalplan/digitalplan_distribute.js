@@ -138,9 +138,16 @@ var vue = new Vue({
         },
         //制作机构
         ZZJG_tree: function () {
-            axios.post('/api/organization/getOrganizationtree').then(function(res){
+            var organization = this.shiroData.organizationVO;
+            var param = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            }
+            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.ZZJG_dataTree = res.data.result;
-            }.bind(this),function(error){
+                this.searchForm.ZZJG.push(this.ZZJG_dataTree[0].dzid);
+            }.bind(this), function (error) {
                 console.log(error);
             })
         },
@@ -159,12 +166,21 @@ var vue = new Vue({
             }else{
                 yaztbm = this.searchForm.YAZT;
             }
+            //制作机构
+            var jgid = "";
+            if(this.searchForm.ZZJG.length>0){
+                jgid = this.searchForm.ZZJG[this.searchForm.ZZJG.length-1];
+            }else{
+                if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                    jgid = this.shiroData.organizationVO.uuid;
+                }
+            }
             var params = {
                 yamc: this.searchForm.YAMC,
-                yalx: this.searchForm.YALX[this.searchForm.YALX.length - 1], 
+                yalx: this.searchForm.YALX[this.searchForm.YALX.length-1], 
                 yajb: this.searchForm.YAJB,
                 dxmc: this.searchForm.DXMC,
-                jgbm:this.searchForm.ZZJG[this.searchForm.ZZJG.length - 1],
+                jgid: jgid,
                 yazt: yaztbm,
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,

@@ -11,7 +11,7 @@ var vue = new Vue({
                 YAMC: "",
                 YALX: "",
                 YAJB: "",
-                ZZJG: "",
+                ZZJG: [],
                 SHZT: "未审核",
                 shsj: ""
             },
@@ -35,8 +35,8 @@ var vue = new Vue({
             YAJB_data: [],//预案级别下拉框
             SHZT_data: [],//审核状态下拉框
             jgidprops: {
-                value: 'uuid',
-                label: 'jgjc',
+                value: 'dzid',
+                label: 'dzjc',
                 children: 'children'
             },
             //资源列表是否显示
@@ -90,13 +90,6 @@ var vue = new Vue({
         this.SHZT();//审核状态下拉框
     },
     mounted: function () {
-        /**菜单选中 by li.xue 20180628*/
-        /**
-        var index = getQueryString("index");
-        $("#activeIndex").val(index);
-        this.activeIndex = index;
-         */
-
         /**面包屑 by li.xue 20180628*/
         var type = getQueryString("type");
         if (type == "DPYL") {
@@ -140,8 +133,15 @@ var vue = new Vue({
         },
         //制作机构
         ZZJG_tree: function () {
-            axios.post('/api/organization/getOrganizationtree').then(function (res) {
+            var organization = this.shiroData.organizationVO;
+            var param = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            }
+            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.ZZJG_dataTree = res.data.result;
+                this.searchForm.ZZJG.push(this.ZZJG_dataTree[0].dzid);
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -161,14 +161,24 @@ var vue = new Vue({
             } else {
                 shztbm = this.searchForm.SHZT;
             }
+            //制作机构
+            var jgid = "";
+            if(this.searchForm.ZZJG.length>0){
+                jgid = this.searchForm.ZZJG[this.searchForm.ZZJG.length-1];
+            }else{
+                if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                    jgid = this.shiroData.organizationVO.uuid;
+                }
+            }
             var params = {
                 yamc: this.searchForm.YAMC,
-                yalx: this.searchForm.YALX[this.searchForm.YALX.length - 1],
+                yalx: this.searchForm.YALX[this.searchForm.YALX.length-1],
                 yajb: this.searchForm.YAJB,
-                jgbm: this.searchForm.ZZJG[this.searchForm.ZZJG.length - 1],
+                jgid: jgid,
                 shzt: shztbm,
                 begintime: this.searchForm.shsj[0],
                 endtime: this.searchForm.shsj[1],
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,

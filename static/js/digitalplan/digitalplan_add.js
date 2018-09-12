@@ -398,6 +398,8 @@ new Vue({
             this.loading_units = true;
             var params = {
                 dwmc: this.searchForm_units.dwmc,
+                mhdzid: this.shiroData.organizationVO.uuid,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSize_units,
                 pageNum: this.currentPage_units,
                 orgUuid: this.shiroData.organizationVO.uuid,
