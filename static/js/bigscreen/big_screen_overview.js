@@ -452,7 +452,6 @@ var vm = new Vue({
             var category = [];
             var barData = [];
             this.top10.sort(this.up);
-            console.log(this.top10);
             for (var i = 0; i < this.top10.length; i++) {
                 category.push(this.top10[i].name);    //挨个取出类别并填入类别数组
                 barData.push(this.top10[i].value);

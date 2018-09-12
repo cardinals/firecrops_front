@@ -116,7 +116,6 @@ new Vue({
         },
         //跳转到地图页面并带上UUID和点击参数水源
         tz:function(){
-            // console.log(this.tableData);
             var dzid = this.detailData.dzid;
             var dzlx = this.detailData.dzlx;
             var cityCode = this.detailData.xzqh;

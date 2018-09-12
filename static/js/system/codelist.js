@@ -203,8 +203,6 @@ var vue = new Vue({
                     language: val.language
                 };
                 axios.post('/api/codelist/updateByVO', params).then(function (res) {
-                    console.log(this.tableData);
-                    console.log(val);
                     this.tableData[this.selectIndex].codetype = val.codetype;
                     this.tableData[this.selectIndex].codetypeName = val.codetypeName;
                     this.tableData[this.selectIndex].remark = val.remark;

@@ -217,7 +217,6 @@ var vue = new Vue({
             this.searchForm.lrsj.splice(0,this.searchForm.lrsj.length);
             this.searchForm.lrsj.push(val.substring(0,val.indexOf("至")));
             this.searchForm.lrsj.push(val.substring(val.indexOf("至")+1));
-            console.log(this.searchForm.lrsj);
         },
         
         //表格勾选事件

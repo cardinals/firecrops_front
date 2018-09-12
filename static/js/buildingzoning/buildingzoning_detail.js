@@ -184,7 +184,6 @@ new Vue({
     methods: {
         //标签页
         handleClick: function (tab, event) {
-           // console.log(tab.label)
         },
         //根据参数部分和参数名来获取参数值 
         GetQueryString(name) {

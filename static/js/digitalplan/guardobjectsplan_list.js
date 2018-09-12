@@ -221,7 +221,6 @@ var vue = new Vue({
             this.searchForm.cjsj.splice(0,this.searchForm.cjsj.length);
             this.searchForm.cjsj.push(val.substring(0,val.indexOf("至")));
             this.searchForm.cjsj.push(val.substring(val.indexOf("至")+1));
-            // console.log(this.searchForm.cjsj);
         },
         
         //时间格式

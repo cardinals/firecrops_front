@@ -121,19 +121,16 @@ new Vue({
             this.searchForm.cjsj.splice(0,this.searchForm.cjsj.length);
             this.searchForm.cjsj.push(val.substring(0,val.indexOf("至")));
             this.searchForm.cjsj.push(val.substring(val.indexOf("至")+1));
-            // console.log(this.searchForm.cjsj);
         },
         zzsjChange(val) {
             this.searchForm.zzsj.splice(0,this.searchForm.zzsj.length);
             this.searchForm.zzsj.push(val.substring(0,val.indexOf("至")));
             this.searchForm.zzsj.push(val.substring(val.indexOf("至")+1));
-            // console.log(this.searchForm.cjsj);
         },
         xgsjChange(val) {
             this.searchForm.xgsj.splice(0,this.searchForm.xgsj.length);
             this.searchForm.xgsj.push(val.substring(0,val.indexOf("至")));
             this.searchForm.xgsj.push(val.substring(val.indexOf("至")+1));
-            // console.log(this.searchForm.cjsj);
         },
         /**
         * lxy

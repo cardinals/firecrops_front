@@ -268,7 +268,6 @@ var vue = new Vue({
             })
         },
         selectsylx: function () {
-            //console.log(this.searchForm.sylx);
             switch (this.searchForm.sylx) {
                 case '01':
                     this.clearOthers();

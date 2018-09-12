@@ -75,7 +75,6 @@ new Vue({
         },
         //跳转到地图页面并带上UUID和点击参数水源
         tz:function(){
-            // console.log(this.tableData);
             var uuid = this.detailData.uuid;
             var sylx = this.detailData.sylx;
             var cityCode = this.detailData.xzqh;

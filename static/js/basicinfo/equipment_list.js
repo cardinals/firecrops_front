@@ -64,7 +64,6 @@ var vue = new Vue({
     methods: {
         //表格查询事件
         searchClick: function (type) {
-            debugger;
             //按钮事件的选择
             if (type == 'page') {
                 this.tableData = [];
@@ -184,7 +183,6 @@ var vue = new Vue({
         //当前页修改事件(装备车辆)
         currentPageChange_engine: function (val) {
             this.currentPage_engine = val;
-            console.log("当前页: " + val);
             var _self = this;
             _self.loadingData_engine(); //重新加载数据
         },

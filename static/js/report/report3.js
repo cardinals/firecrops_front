@@ -327,7 +327,6 @@ var vue = new Vue({
 		//当前页修改事件
 		currentPageChange: function (val) {
 			this.currentPage = val;
-			// console.log("当前页: " + val);
 			var _self = this;
 			_self.loadingData(); //重新加载数据
 		},

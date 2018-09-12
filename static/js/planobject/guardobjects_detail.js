@@ -164,11 +164,9 @@ new Vue({
             $("#fp").click();//在执行a标签里面span的click
         },
         begindateChange(val) {
-            console.log(val);
             this.searchForm.begintime = val;
         },
         enddateChange(val) {
-            console.log(val);
             this.searchForm.endtime = val;
         },
         //发送至邮箱
