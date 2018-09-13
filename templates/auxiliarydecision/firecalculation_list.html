@@ -105,7 +105,7 @@
                     </div>
 
                     <!--新建界面-->
-                    <el-dialog title="新增公式" :visible.sync="addFormVisible" @close="closeDialog(addFormulaForm,addParamForm)" :close-on-click-modal="false">
+                    <el-dialog title="火场计算新增" :visible.sync="addFormVisible" @close="closeDialog(addFormulaForm,addParamForm)" :close-on-click-modal="false">
                         <el-tabs v-model="activeName">
                             <el-tab-pane name="first" label="公式信息">
                                 <el-form :model="addFormulaForm" label-width="107px" :rules="addFormRules" ref="addFormulaForm">
@@ -162,22 +162,22 @@
                                 <el-button style="margin-bottom: 5px;float: right;" size="small" type="success" @click="addDomain">新增参数</el-button>
                                 <el-table class="dialog-table" border id="table" :data="addParamForm.domains" @selection-change="selectionChange">
                                         <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
-                                        <el-table-column prop="csmc" show-overflow-tooltip label="参数名称" width="134px" align="center">
+                                        <el-table-column prop="csmc" show-overflow-tooltip label="参数名称" min-width="40%" align="center">
                                             <template slot-scope="scope">  
                                                 <el-input size="small" v-model="scope.row.csmc" ></el-input>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="jldwdm" show-overflow-tooltip label="计量单位" width="134px" align="center">
+                                        <el-table-column prop="jldwdm" show-overflow-tooltip label="计量单位" min-width="26%" align="center">
                                             <template slot-scope="scope">  
                                                 <el-input size="small" v-model="scope.row.jldwdm" ></el-input>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="mrz" show-overflow-tooltip label="默认值" width="133px" align="center">
+                                        <el-table-column prop="mrz" show-overflow-tooltip label="默认值" min-width="26%" align="center">
                                             <template slot-scope="scope">  
                                                 <el-input size="small" v-model="scope.row.mrz" ></el-input>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column show-overflow-tooltip label="操作" width="133px" align="center">
+                                        <el-table-column show-overflow-tooltip label="操作" width="100" align="center">
                                             <template slot-scope="scope">
                                                 <el-button type="danger" size="mini" icon="delete" @click.prevent="removeAddDomain(scope.row)" class="is-circle"></el-button>
                                             </template>
@@ -186,13 +186,13 @@
                             </el-tab-pane>
                         </el-tabs>
                         <div slot="footer" class="dialog-footer">
-                            <el-button size="small" @click.native="closeDialog(addFormulaForm,addParamForm)">取消</el-button>
-                            <el-button size="small" type="primary" @click.native="addSubmit(addFormulaForm,addParamForm)">提交</el-button>
+                            <el-button type="clear" icon="close" size="small" @click.native="closeDialog(addFormulaForm,addParamForm)">取消</el-button>
+                            <el-button type="success" icon="check" size="small" @click.native="addSubmit(addFormulaForm,addParamForm)">保存</el-button>
                         </div>
                     </el-dialog>
 
                     <!--修改界面-->
-                    <el-dialog title="修改公式" :visible.sync="editFormVisible" @close="closeEditDialog(editFormulaForm,editParamForm)" :close-on-click-modal="false">
+                    <el-dialog title="火场计算编辑" :visible.sync="editFormVisible" @close="closeEditDialog(editFormulaForm,editParamForm)" :close-on-click-modal="false">
                         <el-tabs v-model="activeName">
                             <el-tab-pane name="first" label="公式信息">
                                 <el-form :model="editFormulaForm" label-width="107px" :rules="editFormRules" ref="editFormulaForm">
@@ -249,22 +249,22 @@
                                 <el-button style="margin-bottom: 5px;float: right;" size="small" type="success" @click="editDomain">新增参数</el-button>
                                 <el-table class="dialog-table" border id="table" :data="editParamForm.domains" @selection-change="selectionChange">
                                     <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
-                                    <el-table-column prop="csmc" show-overflow-tooltip label="参数名称" width="134px" align="center">
+                                    <el-table-column prop="csmc" show-overflow-tooltip label="参数名称" min-width="40%" align="center">
                                         <template slot-scope="scope">  
                                             <el-input size="small" v-model="scope.row.csmc" ></el-input>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="jldwdm" show-overflow-tooltip label="计量单位" width="134px" align="center">
+                                    <el-table-column prop="jldwdm" show-overflow-tooltip label="计量单位" min-width="26%" align="center">
                                         <template slot-scope="scope">  
                                             <el-input size="small" v-model="scope.row.jldwdm" ></el-input>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column prop="mrz" show-overflow-tooltip label="默认值" width="133px" align="center">
+                                    <el-table-column prop="mrz" show-overflow-tooltip label="默认值" min-width="26%" align="center">
                                         <template slot-scope="scope">  
                                             <el-input size="small" v-model="scope.row.mrz" ></el-input>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column show-overflow-tooltip label="操作" width="133px" align="center">
+                                    <el-table-column show-overflow-tooltip label="操作" width="100" align="center">
                                         <template slot-scope="scope">
                                             <el-button type="danger" size="mini" icon="delete" @click.prevent="removeEditDomain(scope.row)" class="is-circle"></el-button>
                                         </template>
@@ -273,8 +273,8 @@
                             </el-tab-pane>
                         </el-tabs>
                         <div slot="footer" class="dialog-footer">
-                            <el-button size="small"  @click.native="closeEditDialog(editFormulaForm,editParamForm)">取消</el-button>
-                            <el-button size="small" type="primary" @click.native="editSubmit(editFormulaForm,editParamForm)">提交</el-button>
+                            <el-button type="clear" icon="close" size="small"  @click.native="closeEditDialog(editFormulaForm,editParamForm)">取消</el-button>
+                            <el-button  type="primary" icon="check" size="small" @click.native="editSubmit(editFormulaForm,editParamForm)">提交</el-button>
                         </div>
                     </el-dialog>
                     <!--计算界面-->
@@ -328,11 +328,12 @@
                                     </div>
                                 </el-form-item>
                             </el-row>
+
                         </el-form>
                         <div slot="footer" class="dialog-footer">
-                            <el-button size="small" type="primary" @click.native="calculate(calculateForm)">计算</el-button>
-                            <el-button size="small" type="clear" @click.native="resetDialog(calculateForm)">重置</el-button>
-                            <el-button size="small" @click.native="closeCalculate(calculateForm)">关闭</el-button>
+                            <el-button size="small" type="primary" icon="edit" @click.native="calculate(calculateForm)">计算</el-button>
+                            <el-button size="small" type="clear" icon="delete" @click.native="resetDialog(calculateForm)">重置</el-button>
+                            <el-button size="small" type="clear" icon="close" @click.native="closeCalculate(calculateForm)">关闭</el-button>
                         </div>
                     </el-dialog>
                 </div>
