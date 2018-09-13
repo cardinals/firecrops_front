@@ -141,18 +141,35 @@ treeMenuTemplate.push('</li>');
                 //菜单选中
                 this.selected = true;
                 //更新地址栏
+                if(url.indexOf('http')!= -1){
+                    
+                }
                 var shortURL = window.location.href.substr(0, top.location.href.indexOf("?")) + "?url=" + url;
-                // var shortURL = window.location.href.substr(0, top.location.href.indexOf("templates")+9) + url + '.html';
+                //二维标绘
+                if(url.indexOf('http')!= -1){
+                    shortURL = window.location.href.substr(0, top.location.href.indexOf("?")) + "?url=/home";
+                }
+                // var shortURL = window.location.href.substr(0, top.location.href.indexOf("templates")+9) + url + '.html';style="padding-left:18%"
                 history.replaceState(null, null, shortURL);
-                //加载页面
-                $.ajax({
-                    url: '../../../templates' + urlRewrite(url) + '.html',
-                    cache: true,
-                    async: true,
-                    success: function (html) {
-                        $("#app").html(html);
-                    }
-                });
+                 //判断是否为外挂链接(lxy20180912)
+                if(url.indexOf('http')!= -1){
+                    var html='<div class="main-box"><iframe src="'+url+'"   width="100%" height="100%"></iframe></div>';
+                    $("#app").html(html);
+                    return;
+                }else{
+                    //加载页面
+                    $.ajax({
+                        url: '../../../templates' + urlRewrite(url) + '.html',
+                        cache: true,
+                        async: true,
+                        success: function (html) {
+                            $("#app").html(html);
+                        }
+                    });
+                }
+
+
+               
             }
          },
         // urlRewrite: function(url){
