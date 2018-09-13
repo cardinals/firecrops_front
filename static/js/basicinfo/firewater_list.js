@@ -170,6 +170,7 @@ var vue = new Vue({
             this.searchForm.sydz = "";
             this.searchForm.sylx = "";
             this.searchForm.gxdz = [];
+            this.searchForm.gxdz.push(this.GXZD_data[0].dzid);
             this.searchForm.sygs = "";
             this.searchForm.kyzt = "";
             this.clearOthers();
@@ -203,7 +204,7 @@ var vue = new Vue({
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
             };
-            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.GXZD_data = res.data.result;
                 this.searchForm.gxdz.push(this.GXZD_data[0].dzid);
             }.bind(this), function (error) {

@@ -629,7 +629,8 @@
 									<el-label class="mr5 vbm">每日执勤人数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" :min="0" :max="9999999999" size="small" v-model="editForm.qtxfdwVO.mrzqrs" placeholder="每日执勤人数"></el-input-number
+									<el-input-number onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" :min="0" :max="9999999999" size="small" v-model="editForm.qtxfdwVO.mrzqrs" placeholder="每日执勤人数"></el-input-number>
+								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
 							<el-row class="tr mb5">
@@ -683,12 +684,10 @@
 				</div>
 				<el-row class="mt20 mb20">
 					<el-row>
-						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
-						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
 							<el-button type="primary" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
 							<el-button type="success" icon="check" size="small" class="btn_save" @click="save('editForm')">保存</el-button>
 						</el-col>
-						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
 					</el-row>
 				</el-row>
 			</div>

@@ -77,7 +77,7 @@ var vue = new Vue({
             }
             //所属队站
             var ssdz = "";
-            if(this.searchForm.ssdz.length>0){
+            if(this.searchForm.ssdz.length>1){
                 ssdz = this.searchForm.ssdz[this.searchForm.ssdz.length-1];
             }else{
                 if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
@@ -109,6 +109,7 @@ var vue = new Vue({
             this.searchForm.zbmc = "";
             this.searchForm.zbbm = "";
             this.searchForm.ssdz = [];
+            this.searchForm.ssdz.push(this.allSsdzData[0].dzid);
             this.searchForm.zblx = [];
             this.searchClick('reset');
         },
@@ -132,7 +133,7 @@ var vue = new Vue({
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
             }
-            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.allSsdzData = res.data.result;
                 this.searchForm.ssdz.push(this.allSsdzData[0].dzid);
             }.bind(this), function (error) {

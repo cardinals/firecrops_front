@@ -31,7 +31,7 @@
 								<el-label class="mr5 vbm"><span style="color:red;">* </span>车辆类型</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-cascader :options="allTypesData" :props="props" size="small" v-model="addForm.cllx" placeholder="全部" class="searchSelect"
+								<el-cascader :options="allTypesData" :props="props" size="small" v-model="addForm.cllx" placeholder="请选择" class="searchSelect"
 									clearable change-on-select :show-all-levels="false"></el-cascader>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
@@ -47,8 +47,8 @@
 								<el-label class="mr5 vbm"><span style="color:red;">* </span>所属队站</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-cascader :options="allTeamsData" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="所属队站" class="searchSelect"
-									clearable change-on-select :show-all-levels="false"></el-cascader>
+								<el-cascader :options="allTeamsData" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="请选择" class="searchSelect"
+									clearable change-on-select :show-all-levels="true"></el-cascader>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -57,7 +57,7 @@
 								<el-label class="mr5 vbm">车辆状态</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-select size="small" v-model="addForm.clzt" placeholder="全部" class="searchSelect" clearable>
+								<el-select size="small" v-model="addForm.clzt" placeholder="请选择" class="searchSelect" clearable>
 									<el-option v-for="type in allStatesData" :label="type.codeName" :value="type.codeValue" :key="type.codeName"></el-option>
 								</el-select>
 							</el-col>
@@ -87,7 +87,7 @@
 								<el-label class="mr5 vbm">行政区划</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="行政区划" class="searchSelect"
+								<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="请选择" class="searchSelect"
 									clearable change-on-select :show-all-levels="false"></el-cascader>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
@@ -176,7 +176,7 @@
 								<el-label class="mr5 vbm">车载灭火剂类别</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="addForm.czmhjlb" placeholder="车载灭火剂类别" clearable></el-input>
+								<el-input size="small" v-model="addForm.czmhjlb" placeholder="请选择" clearable></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -214,12 +214,10 @@
 				<el-row class="mt20 mb20">
 					<el-form :inline="true" class="el-form demo-form-inline">
 						<el-row>
-							<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
-							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
 								<el-button type="primary" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
 								<el-button type="success" icon="document" size="small" class="btn_save" @click="save">保存</el-button>
 							</el-col>
-							<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
 						</el-row>
 					</el-form>
 				</el-row>

@@ -118,10 +118,16 @@ new Vue({
             }
             this.engineListVisible = true;
             this.loading_engine = true;
-
+            //所属队站
+            var ssdz = "";
+            if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                ssdz = this.shiroData.organizationVO.uuid;
+            }
             var params = {
                 clmc: this.searchForm.clmc,
                 cphm: this.searchForm.cphm,
+                ssdz: ssdz,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2) + '000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,

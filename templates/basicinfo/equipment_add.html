@@ -41,7 +41,7 @@
 							<el-label class="mr5 vbm">装备类型</el-label>
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-							<el-cascader :options="allTypesDataTree" :props="defaultProps" size="small" v-model="addForm.zblx" placeholder="装备类型" class="searchSelect"
+							<el-cascader :options="allTypesDataTree" :props="defaultProps" size="small" v-model="addForm.zblx" placeholder="请选择" class="searchSelect"
 							 clearable change-on-select :show-all-levels="false"></el-cascader>
 						</el-col>
 						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
@@ -57,15 +57,15 @@
 							<el-label class="mr5 vbm">行政区划</el-label>
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-							<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="行政区划" class="searchSelect"
+							<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="请选择" class="searchSelect"
 							 clearable change-on-select :show-all-levels="false"></el-cascader>
 						</el-col>
 						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 							<el-label class="mr5 vbm">所属队站</el-label>
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-							<el-cascader :options="allSsdzDataTree" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="所属队站" class="searchSelect"
-							 clearable change-on-select :show-all-levels="false"></el-cascader>
+							<el-cascader :options="allSsdzDataTree" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="请选择" class="searchSelect"
+							 clearable change-on-select :show-all-levels="true"></el-cascader>
 						</el-col>
 						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 					</el-row>
@@ -152,12 +152,10 @@
 				</div>
 				<el-row class="mt35 mb20">
 					<el-row>
-						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
-						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
 							<el-button type="primary" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
 							<el-button type="success" icon="check" size="small" class="btn_save" @click="save">保存</el-button>
 						</el-col>
-						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
 					</el-row>
 				</el-row>
 				<!--选择消防车辆界面-->

@@ -82,7 +82,6 @@ var vue = new Vue({
             //跳转到队站
             this.searchForm.dzid = this.GetQueryString("dzid");//获取队站ID
             var isDzdj = this.GetQueryString("dzdj");//获取队站点击
-            var _self = this;
             //队站
             var dzid = "";
             if(this.shiroData.organizationVO.jgid!='01000000'){

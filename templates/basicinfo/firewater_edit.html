@@ -43,7 +43,7 @@
 									<span style="color:red;">* </span>水源类型</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-select size="small" v-model="editForm.sylx" placeholder="水源类型" class="searchSelect" clearable @change="sylxChange">
+								<el-select size="small" v-model="editForm.sylx" placeholder="请选择" class="searchSelect" clearable @change="sylxChange">
 									<el-option v-for="item in sylxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 								</el-select>
 							</el-col>
@@ -61,7 +61,7 @@
 								<el-label class="mr5 vbm">可用状态</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-select size="small" v-model="editForm.kyzt" placeholder="可用状态" class="searchSelect" clearable>
+								<el-select size="small" v-model="editForm.kyzt" placeholder="请选择" class="searchSelect" clearable>
 									<el-option v-for="item in kyztData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 								</el-select>
 							</el-col>
@@ -94,7 +94,7 @@
 								<el-label class="mr5 vbm">水源归属</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-select size="small" v-model="editForm.sygs" @change="sygsChange" placeholder="水源归属" class="searchSelect" clearable>
+								<el-select size="small" v-model="editForm.sygs" @change="sygsChange" placeholder="请选择" class="searchSelect" clearable>
 									<el-option v-for="item in sygsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 								</el-select>
 							</el-col>
@@ -182,7 +182,7 @@
 									<el-label class="mr5 vbm">设置形式</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-select size="small" v-model="editForm.xhs_szxs" placeholder="设置形式" class="searchSelect" clearable>
+									<el-select size="small" v-model="editForm.xhs_szxs" placeholder="请选择" class="searchSelect" clearable>
 										<el-option v-for="item in szxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 									</el-select>
 								</el-col>
@@ -200,7 +200,7 @@
 									<el-label class="mr5 vbm">管网形式</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-select size="small" v-model="editForm.xhs_gwxs" placeholder="管网形式" class="searchSelect" clearable>
+									<el-select size="small" v-model="editForm.xhs_gwxs" placeholder="请选择" class="searchSelect" clearable>
 										<el-option v-for="item in gwxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 									</el-select>
 								</el-col>
@@ -218,7 +218,7 @@
 									<el-label class="mr5 vbm">管网压力类型</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-select size="small" v-model="editForm.xhs_gwyllx" placeholder="管网压力类型" class="searchSelect" clearable>
+									<el-select size="small" v-model="editForm.xhs_gwyllx" placeholder="请选择" class="searchSelect" clearable>
 										<el-option v-for="item in gwyllxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 									</el-select>
 								</el-col>
@@ -236,7 +236,7 @@
 									<el-label class="mr5 vbm">接口形式</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-select size="small" v-model="editForm.xhs_jkxs" placeholder="接口形式" class="searchSelect" clearable>
+									<el-select size="small" v-model="editForm.xhs_jkxs" placeholder="请选择" class="searchSelect" clearable>
 										<el-option v-for="item in jkxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 									</el-select>
 								</el-col>
@@ -303,7 +303,7 @@
 									<el-label class="mr5 vbm">管网形式</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-select size="small" v-model="editForm.xfsc_gwxs" placeholder="管网形式" class="searchSelect" clearable>
+									<el-select size="small" v-model="editForm.xfsc_gwxs" placeholder="请选择" class="searchSelect" clearable>
 										<el-option v-for="item in gwxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 									</el-select>
 								</el-col>
@@ -388,7 +388,7 @@
 									<el-label class="mr5 vbm">取水形式</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-select size="small" v-model="editForm.trsyqsd_qsxs" placeholder="取水形式" class="searchSelect" clearable>
+									<el-select size="small" v-model="editForm.trsyqsd_qsxs" placeholder="请选择" class="searchSelect" clearable>
 										<el-option v-for="item in qsxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 									</el-select>
 								</el-col>
@@ -512,7 +512,7 @@
 								<el-label class="mr5 vbm">天然水源类型</el-label>
 							</el-col>
 							<el-col :span="17">
-								<el-select size="small" v-model="trsyAddForm.trsy_trsylx" placeholder="天然水源类型" class="searchSelect" clearable>
+								<el-select size="small" v-model="trsyAddForm.trsy_trsylx" placeholder="请选择" class="searchSelect" clearable>
 									<el-option v-for="item in trsylxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 								</el-select>
 							</el-col>
@@ -522,7 +522,7 @@
 								<el-label class="mr5 vbm">水质</el-label>
 							</el-col>
 							<el-col :span="17">
-								<el-select size="small" v-model="trsyAddForm.trsy_sz" placeholder="天然水源水质" class="searchSelect" clearable>
+								<el-select size="small" v-model="trsyAddForm.trsy_sz" placeholder="请选择" class="searchSelect" clearable>
 									<el-option v-for="item in szData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 								</el-select>
 							</el-col>
@@ -540,7 +540,7 @@
 								<el-label class="mr5 vbm">有无取水点</el-label>
 							</el-col>
 							<el-col :span="17">
-								<el-select size="small" v-model="trsyAddForm.trsy_ywqsd" placeholder="有无取水点" class="searchSelect" clearable>
+								<el-select size="small" v-model="trsyAddForm.trsy_ywqsd" placeholder="请选择" class="searchSelect" clearable>
 									<el-option v-for="item in ywqsdData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 								</el-select>
 							</el-col>
@@ -550,7 +550,7 @@
 								<el-label class="mr5 vbm">有无枯水期</el-label>
 							</el-col>
 							<el-col :span="17">
-								<el-select size="small" v-model="trsyAddForm.trsy_ywksq" placeholder="有无枯水期" class="searchSelect" clearable>
+								<el-select size="small" v-model="trsyAddForm.trsy_ywksq" placeholder="请选择" class="searchSelect" clearable>
 									<el-option v-for="item in ywqsdData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 								</el-select>
 							</el-col>
@@ -567,12 +567,10 @@
 							</el-col>
 						</el-row>
 						<el-row class="mt20 mb20">
-							<el-col :span="9">&nbsp;</el-col>
-							<el-col :span="6">
+							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
 								<el-button type="primary" icon="close" size="small" class="btn_submit" @click="cancelTrsy"> 返回</el-button>
 								<el-button type="success" icon="check" size="small" class="btn_save" @click="saveTrsy">保存</el-button>
 							</el-col>
-							<el-col :span="9">&nbsp;</el-col>
 						</el-row>
 					</div>
 				</el-dialog>
