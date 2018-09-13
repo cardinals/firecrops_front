@@ -1,8 +1,3 @@
-.searchLabel {
-    width: 155px;
-    vertical-align: middle;
-    line-height: 8px;
-}
 .el-select-dropdown__item.selected {
     color:#000;
     background-color: #fff;

@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>消防设施信息</title>
 </head>
 
@@ -18,34 +18,27 @@
 						<el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
 							<el-row>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<label class="el-form-item__label w100">消防设施名称</label>
-								</el-col>
-								<el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7" class="searchInline">
+								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+									<label class="el-form-item__label searchLabel">消防设施名称</label>
 									<el-input size="small" v-model="searchForm.jbxx_xfssmc" placeholder="消防设施名称"></el-input>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<label class="el-form-item__label w100">消防设施类型</label>
-								</el-col>
-								<el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7" class="searchInline">
+								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+                                <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+									<label class="el-form-item__label searchLabel">消防设施类型</label>
 									<el-cascader :options="XFSSLX_data" :props="defaultProps" size="small" v-model="searchForm.jbxx_xfsslx" placeholder="全部"
 									 class="searchSelect" clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
 							</el-row>
 							<el-row>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<label class="el-form-item__label w100">所属建筑名称</label>
-								</el-col>
-								<el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7" class="searchInline">
+								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+									<label class="el-form-item__label searchLabel">所属建筑名称</label>
 									<el-input size="small" v-model="searchForm.jbxx_jzmc" placeholder="所属建筑名称"></el-input>
 								</el-col>
-								<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-									<label class="el-form-item__label w100">是否属于重点单位</label>
-								</el-col>
-								<el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7" class="searchInline">
+								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+                                <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+									<label class="el-form-item__label searchLabel">是否属于重点单位</label>
 									<el-select size="small" v-model="searchForm.jbxx_iszddw" placeholder="全部" class="searchSelect" clearable>
 										<el-option label="是" value="1"></el-option>
 										<el-option label="否" value="0"></el-option>

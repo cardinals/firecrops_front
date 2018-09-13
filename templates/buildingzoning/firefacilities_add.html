@@ -2,8 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="../../static/css/basicinfo/equipment_add.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>新增消防设施</title>
 </head>
 
@@ -73,7 +72,7 @@
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 							<el-cascader :options="allTypesDataTree" v-model="addForm.jbxx_xfsslx" @change="XfssChange" :props="defaultProps" size="small"
-							 placeholder="全部" class="searchSelect" clearable :show-all-levels="false"></el-cascader>
+							 placeholder="请选择" class="searchSelect" clearable :show-all-levels="false"></el-cascader>
 						</el-col>
 						<el-col :xs="13" :sm="13" :md="13" :lg="13" :xl="13">&nbsp;</el-col>
 					</el-row>
@@ -670,14 +669,12 @@
 						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp; </el-col>
 					</el-row>
 				</div>
-				<el-row class="mt35 mb20">
+				<el-row class="mt20 mb20">
 					<el-row>
-						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
-						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-							<el-button type="primary" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
+							<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
 							<el-button type="success" icon="check" size="small" class="btn_save" @click="save">保存</el-button>
 						</el-col>
-						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
 					</el-row>
 				</el-row>
 				<!--选择所属建筑界面-->

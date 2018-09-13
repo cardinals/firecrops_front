@@ -136,14 +136,14 @@
 							</el-row>
 							<el-row class="tr mb5">
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5">地上高度(m)</el-label>
+									<el-label class="mr5 vbm">地上高度(m)</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input-number class="mt_4" :precision="2" :min="0" size="small" v-model="editForm.jzl_dsgd" placeholder="地上高度(m)"></el-input-number>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5">地下高度(m)</el-label>
+									<el-label class="mr5 vbm">地下高度(m)</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input-number class="mt_4" :precision="2" :min="0" size="small" v-model="editForm.jzl_dxgd" placeholder="地下高度(m)"></el-input-number>
@@ -152,7 +152,7 @@
 							</el-row>
 							<el-row class="tr mb5">
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5">地上层数</el-label>
+									<el-label class="mr5 vbm">地上层数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input-number class="mt_4" :min="0" size="small" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" v-model="editForm.jzl_dscs"
@@ -160,7 +160,7 @@
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5">地下层数</el-label>
+									<el-label class="mr5 vbm">地下层数</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input-number class="mt_4" :min="0" size="small" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" v-model="editForm.jzl_dxcs"
@@ -170,7 +170,7 @@
 							</el-row>
 							<el-row class="tr mb5">
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5">功能描述</el-label>
+									<el-label class="mr5 vbm">功能描述</el-label>
 								</el-col>
 								<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
 									<el-input class="mt_4" size="small" v-model="editForm.jzl_gnms" placeholder="功能描述"></el-input>
@@ -216,14 +216,14 @@
 							</el-row>
 							<el-row class="tr mb5">
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5">技术负责人</el-label>
+									<el-label class="mr5 vbm">技术负责人</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input class="mt_4" size="small" v-model="editForm.zzl_jsfzr" placeholder="技术负责人"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5">技术负责人电话</el-label>
+									<el-label class="mr5 vbm">技术负责人电话</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input class="mt_4" size="small" v-model="editForm.zzl_jsfzrdh" placeholder="技术负责人电话"></el-input>
@@ -235,7 +235,7 @@
 									<el-label class="mr5 vbm">装置组成</el-label>
 								</el-col>
 								<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-									<el-input size="small" v-model="editForm.zzl_zzzc" placeholder="装置组成" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+									<el-input size="small" v-model="editForm.zzl_zzzc" placeholder="装置组成" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-col>
 							</el-row>
 							<el-row class="tr mb5">
@@ -243,7 +243,7 @@
 									<el-label class="mr5 vbm">原料信息</el-label>
 								</el-col>
 								<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-									<el-input size="small" v-model="editForm.zzl_ylxx" placeholder="原料信息" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+									<el-input size="small" v-model="editForm.zzl_ylxx" placeholder="原料信息" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-col>
 							</el-row>
 							<el-row class="tr mb5">
@@ -251,7 +251,7 @@
 									<el-label class="mr5 vbm">产物信息</el-label>
 								</el-col>
 								<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-									<el-input size="small" v-model="editForm.zzl_cwxx" placeholder="产物信息" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+									<el-input size="small" v-model="editForm.zzl_cwxx" placeholder="产物信息" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-col>
 							</el-row>
 							<el-row class="tr mb5">
@@ -259,7 +259,7 @@
 									<el-label class="mr5 vbm">工艺流程</el-label>
 								</el-col>
 								<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="21">
-									<el-input size="small" v-model="editForm.zzl_gylc" placeholder="工艺流程" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+									<el-input size="small" v-model="editForm.zzl_gylc" placeholder="工艺流程" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-col>
 							</el-row>
 						</div>
@@ -273,8 +273,7 @@
 							</el-row>
 							<el-row class="tr mb5">
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">
-										总容积(m³)</el-label>
+									<el-label class="mr5 vbm">总容积(m³)</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input-number :precision="2" :min="0" size="small" v-model="editForm.cgl_zrj" placeholder="总容积(m3)"></el-input-number>
@@ -289,13 +288,13 @@
 							</el-row>
 							<el-row class="tr mb5">
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5">储罐间隔(m)</el-label>
+									<el-label class="mr5 vbm">储罐间隔(m)</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input-number class="mt_4" :min="0" size="small" v-model="editForm.cgl_cgjg" placeholder="储罐间隔"></el-input-number>
 								</el-col>
 								<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-									<el-label class="mr5">存储介质描述</el-label>
+									<el-label class="mr5 vbm">存储介质描述</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input class="mt_4" size="small" v-model="editForm.cgl_ccjzms" placeholder="存储介质描述" ></el-input>
@@ -303,13 +302,13 @@
 							</el-row>
 							<el-row class="tr mb5">
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5">技术负责人</el-label>
+									<el-label class="mr5 vbm">技术负责人</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input class="mt_4" size="small" v-model="editForm.cgl_jsfzr" placeholder="技术负责人"></el-input>
 								</el-col>
 								<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-									<el-label class="mr5  vbm">技术负责人电话</el-label>
+									<el-label class="mr5 vbm">技术负责人电话</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input class="mt_4" size="small" v-model="editForm.cgl_jsfzrdh" placeholder="技术负责人电话"></el-input>
@@ -323,7 +322,7 @@
 									<el-input size="small" v-model="editForm.cgl_plqkd" placeholder="罐组毗邻情况(东)"></el-input>
 								</el-col>
 								<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-									<el-label class="mr5  vbm">罐组毗邻情况(西)</el-label>
+									<el-label class="mr5 vbm">罐组毗邻情况(西)</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 									<el-input size="small" v-model="editForm.cgl_plqkx" placeholder="罐组毗邻情况(西)"></el-input>
@@ -361,65 +360,64 @@
 											<strong class="card_title_font">罐体信息{{index+1}}</strong>
 											<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomain(domain)" class="r" style="margin:5px 0 0"></el-button>
 										</div>
-										<el-row class="tr">
+										<el-row class="tr mt5">
 											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-												<el-label class="mr5">储罐名称</el-label>
+												<el-label class="mr5 vbm">储罐名称</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 												<el-input size="small" v-model="domain.cgmc" placeholder="储罐名称"></el-input>
 											</el-col>
 											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-												<el-label class="mr5">储罐类型</el-label>
+												<el-label class="mr5 vbm">储罐类型</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<!-- <el-input size="small" v-model="domain.cglx" placeholder="储罐类型"></el-input> -->
 												<el-cascader :options="cgData" :props="props" size="small" v-model="domain.cglx" placeholder="请选择" class="searchSelect" clearable
 												 change-on-select :show-all-levels="false"></el-cascader>
 											</el-col>
 											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-												<el-label class="mr5">储罐容量(m³)</el-label>
+												<el-label class="mr5 vbm">储罐容量(m³)</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 												<el-input-number :precision="2" :min="0" size="small" v-model="domain.cgrl" placeholder="储罐容量(m³)"></el-input-number>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
-										<el-row class="tr">
+										<el-row class="tr mt5">
 											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-												<el-label class="mr5">工作压力</el-label>
+												<el-label class="mr5 vbm">工作压力</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 												<el-input-number :precision="2" :min="0" size="small" v-model="domain.gzyl" placeholder="工作压力"></el-input-number>
 											</el-col>
 											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-												<el-label class="mr5">储罐高度(m)</el-label>
+												<el-label class="mr5 vbm">储罐高度(m)</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 												<el-input-number :precision="2" :min="0" size="small" v-model="domain.cggd" placeholder="储罐高度(m)"></el-input-number>
 											</el-col>
 											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-												<el-label class="mr5">储罐周长(m)</el-label>
+												<el-label class="mr5 vbm">储罐周长(m)</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 												<el-input-number :precision="2" :min="0" size="small" v-model="domain.cgzc" placeholder="储罐周长(m)"></el-input-number>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
-										<el-row class="tr">
+										<el-row class="tr mt5">
 											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-												<el-label class="mr5">存储温度</el-label>
+												<el-label class="mr5 vbm">存储温度</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 												<el-input-number :precision="2" :min="0" size="small" v-model="domain.ccwd" placeholder="存储温度"></el-input-number>
 											</el-col>
 											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-												<el-label class="mr5">储罐直径(m)</el-label>
+												<el-label class="mr5 vbm">储罐直径(m)</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 												<el-input-number :precision="2" :min="0" size="small" v-model="domain.cgzj" placeholder="储罐直径(m)"></el-input-number>
 											</el-col>
 											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-												<el-label class="mr5">灌顶面积(㎡)</el-label>
+												<el-label class="mr5 vbm">灌顶面积(㎡)</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 												<el-input-number :precision="2" :min="0" size="small" v-model="domain.gdmj" placeholder="灌顶面积(㎡)"></el-input-number>
@@ -434,20 +432,20 @@
 										</el-row>
 										<el-row class="tr mt5">
 											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-												<el-label class="mr5">介质名称</el-label>
+												<el-label class="mr5 vbm">介质名称</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 												<el-input size="small" v-model="domain.ccjzmc" placeholder="存储介质名称"></el-input>
 											</el-col>
 
 											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-												<el-label class="mr5">液位高度(m)</el-label>
+												<el-label class="mr5 vbm">液位高度(m)</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 												<el-input-number class="mt3" :precision="2" :min="0" size="small" v-model="domain.ccjzywgd" placeholder="存储机制液位高度(m)"></el-input-number>
 											</el-col>
 											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-												<el-label class="mr5">实际储量(m³)</el-label>
+												<el-label class="mr5 vbm">实际储量(m³)</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 												<el-input-number class="mt3" :precision="2" :min="0" size="small" v-model="domain.ccjzsjcl" placeholder="存储介质实际储量(m³)"></el-input-number>
@@ -456,7 +454,7 @@
 										</el-row>
 										<el-row class="tr mt5">
 											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-												<el-label class="mr5">理化性质</el-label>
+												<el-label class="mr5 vbm">理化性质</el-label>
 											</el-col>
 											<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
 												<el-input class="mt_4" size="small" v-model="domain.ccjzlhxz" placeholder="存储介质理化性质"></el-input>
@@ -464,7 +462,7 @@
 										</el-row>
 										<el-row class="tr mt5">
 											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-												<el-label class="mr5">备注</el-label>
+												<el-label class="mr5 vbm">备注</el-label>
 											</el-col>
 											<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
 												<el-input size="small" v-model="domain.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
@@ -493,12 +491,10 @@
 				</div>
 				<el-row class="mt20 mb20">
 					<el-row>
-						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
-						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-							<el-button type="primary" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
+							<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
 							<el-button type="success" icon="check" size="small" class="btn_save" @click="save('editForm')">保存</el-button>
 						</el-col>
-						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
 					</el-row>
 				</el-row>
 			</div>
