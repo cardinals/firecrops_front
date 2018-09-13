@@ -272,7 +272,7 @@ new Vue({
                 dzjc: this.shiroData.organizationVO.jgjc,
                 dzbm: this.shiroData.organizationVO.jgid
             }
-            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.allSsdzDataTree = res.data.result;
                 this.searchClick();
             }.bind(this), function (error) {

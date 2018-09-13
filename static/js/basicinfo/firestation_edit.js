@@ -204,7 +204,7 @@ new Vue({
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
             };
-            axios.post('/dpapi/xfdz/findSjdzByUser', params).then(function(res){
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', params).then(function(res){
                 this.sjdzData = res.data.result;
                 this.searchClick();
             }.bind(this),function(error){
