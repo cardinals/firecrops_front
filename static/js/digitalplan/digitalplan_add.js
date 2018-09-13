@@ -586,6 +586,8 @@ new Vue({
                         pageNum: this.currentPage_fireSta
                     };
                     axios.post('/dpapi/xfdz/doSearchProvinceList', params).then(function (res) {
+                        console.log(111111111);
+                        console.log(res.data.result);
                         var tableTemp = new Array((this.currentPage_fireSta - 1) * this.pageSize_fireSta);
                         this.tableData_fireSta = tableTemp.concat(res.data.result.list);
                         this.total_fireSta = res.data.result.total;
@@ -689,7 +691,8 @@ new Vue({
                         jgid: this.shiroData.organizationVO.uuid,
                         jgbm: this.shiroData.organizationVO.jgid,
                         jgmc: this.shiroData.organizationVO.jgmc,
-                        jdh: this.shiroData.organizationVO.jgid
+                        jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                        datasource: this.shiroData.organizationVO.jgid
                     };
                     axios.post('/dpapi/digitalplanlist/insertByVO', params).then(function (res) {
                         this.upLoadData.yaid = res.data.result.uuid;
@@ -719,7 +722,8 @@ new Vue({
                         disasterList: this.dynamicValidateForm,
                         zzrid: this.shiroData.userid,
                         zzrmc: this.shiroData.realName,
-                        jdh: this.shiroData.organizationVO.jgid
+                        jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                        datasource: this.shiroData.organizationVO.jgid
                     };
                     axios.post('/dpapi/digitalplanlist/doUpdateByVO', params).then(function (res) {
                         if (this.isFile) {
@@ -771,7 +775,8 @@ new Vue({
                         jgid: this.shiroData.organizationVO.uuid,
                         jgbm: this.shiroData.organizationVO.jgid,
                         jgmc: this.shiroData.organizationVO.jgmc,
-                        jdh: this.shiroData.organizationVO.jgid
+                        jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                        datasource: this.shiroData.organizationVO.jgid
                     };
                     axios.post('/dpapi/digitalplanlist/insertByVO', params).then(function (res) {
                         this.upLoadData.yaid = res.data.result.uuid;
@@ -801,7 +806,8 @@ new Vue({
                         disasterList: this.dynamicValidateForm,
                         zzrid: this.shiroData.userid,
                         zzrmc: this.shiroData.realName,
-                        jdh: this.shiroData.organizationVO.jgid
+                        jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                        datasource: this.shiroData.organizationVO.jgid
                     };
                     axios.post('/dpapi/digitalplanlist/doUpdateByVO', params).then(function (res) {
                         if (this.isFile) {
