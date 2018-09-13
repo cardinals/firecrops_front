@@ -12,7 +12,7 @@ var vue = new Vue({
                 YALX: "",
                 YAJB: "",
                 DXMC: "",
-                ZZJG: "",
+                ZZJG: [],
                 YAZT: "已审批"
             },
             //分发选中
@@ -39,8 +39,8 @@ var vue = new Vue({
             YAJB_data: [],//预案级别下拉框
             YAZT_data: [],//审核状态下拉框
             jgidprops: {
-                value: 'uuid',
-                label: 'jgjc',
+                value: 'dzid',
+                label: 'dzjc',
                 children: 'children'
             },
             //资源列表是否显示
@@ -67,7 +67,7 @@ var vue = new Vue({
             indexData: 0,
             //删除的弹出框
             deleteVisible: false,
-           
+            distributeForm: {},
             
             //选中的值显示
             sels: [],
@@ -85,24 +85,16 @@ var vue = new Vue({
         }
     },
     created: function () {
+        /**当前登陆用户 by li.xue 20180807*/
+        this.shiroData = shiroGlobal;
         this.YALX_tree();//预案类型级联选择
         this.ZZJG_tree();//制作机构级联选择
         this.YAJB();//预案级别下拉框
         this.YAZT();//审核状态下拉框
     },
     mounted:function(){
-        /**菜单选中 by li.xue 20180628*/
-        /**
-        var index = getQueryString("index");
-        $("#activeIndex").val(index);
-        this.activeIndex = index;
-         */
-
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("预案分发", "-1");
-        /**当前登陆用户 by li.xue 20180807*/
-        this.shiroData = shiroGlobal;
-
         this.searchClick('click');//条件查询
     },
 
@@ -144,7 +136,7 @@ var vue = new Vue({
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
             }
-            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.ZZJG_dataTree = res.data.result;
                 this.searchForm.ZZJG.push(this.ZZJG_dataTree[0].dzid);
             }.bind(this), function (error) {
@@ -168,7 +160,7 @@ var vue = new Vue({
             }
             //制作机构
             var jgid = "";
-            if(this.searchForm.ZZJG.length>0){
+            if(this.searchForm.ZZJG.length>1){
                 jgid = this.searchForm.ZZJG[this.searchForm.ZZJG.length-1];
             }else{
                 if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
@@ -202,6 +194,7 @@ var vue = new Vue({
             this.searchForm.YALX = [];
             this.searchForm.YAJB = "";
             this.searchForm.ZZJG = [];
+            this.searchForm.ZZJG.push(this.ZZJG_dataTree[0].dzid);
             this.searchForm.DXMC = "";
             // this.searchForm.shsj.splice(0,this.searchForm.shsj.length);
             this.searchClick('reset');

@@ -106,20 +106,30 @@
                     </el-dialog>
                     <!--分发界面-->
                     <el-dialog title="预案分发" :visible.sync="distributeFormVisible" @close="closeDialog(ffzd)" :close-on-click-modal="false">
-                        <!-- <el-checkbox-group v-model="jgSelect">
-                            <el-checkbox v-for="jg in jgList" :label="jg.jgjc" :key="jg.jgid">{{jg.jgjc}}</el-checkbox>
-                        </el-checkbox-group> 
-                        -->
-                        <el-checkbox-group v-model="ffzd">
-                            <template v-model="jgSelect" v-for="jg in jgList">
-                                <el-checkbox v-if="jgSelectString==jg.jgjc" :label="jg.jgjc" :key="jg.jgid" disabled>{{jg.jgjc}}</el-checkbox>
-                                <el-checkbox v-else :label="jg.jgjc" :key="jg.jgid">{{jg.jgjc}}</el-checkbox>
-                            </template>
-                        </el-checkbox-group>
-						<div slot="footer" class="dialog-footer">
-							<el-button size="small" @click.native="closeDialog(ffzd)">取消</el-button>
-							<el-button size="small" type="primary" @click.native="distributeSubmit(ffzd)">提交</el-button>
-						</div>
+                        <el-form :model="distributeForm" label-width="100px" ref="distributeForm">
+                            <el-row>
+                                <el-col :span="23">
+                                    <el-form-item label="预案分发" prop="shzt">
+                                        <el-checkbox-group v-model="ffzd">
+                                            <template v-model="jgSelect" v-for="jg in jgList">
+                                                <el-checkbox v-if="jgSelectString==jg.jgjc" :label="jg.jgjc" :key="jg.jgid" disabled>{{jg.jgjc}}</el-checkbox>
+                                                <el-checkbox v-else :label="jg.jgjc" :key="jg.jgid">{{jg.jgjc}}</el-checkbox>
+                                            </template>
+                                        </el-checkbox-group>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row class="mt10 mb20">
+                                <el-form :inline="true" class="el-form demo-form-inline">
+                                    <el-row>
+                                        <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="editform-button">
+                                            <el-button type="clear" icon="close" size="small" class="btn_submit" @click.native="closeDialog(ffzd)"> 取消</el-button>
+                                            <el-button type="success" icon="check" size="small" class="btn_submit" @click.native="distributeSubmit(ffzd)">分发</el-button>
+                                        </el-col>
+                                    </el-row>
+                                </el-form>
+                            </el-row>
+                        </el-form>
 					</el-dialog>
                 </div>
             </div>

@@ -139,7 +139,7 @@ var vue = new Vue({
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
             }
-            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.ZZJG_dataTree = res.data.result;
                 this.searchForm.ZZJG.push(this.ZZJG_dataTree[0].dzid);
             }.bind(this), function (error) {
@@ -163,7 +163,7 @@ var vue = new Vue({
             }
             //制作机构
             var jgid = "";
-            if(this.searchForm.ZZJG.length>0){
+            if(this.searchForm.ZZJG.length>1){
                 jgid = this.searchForm.ZZJG[this.searchForm.ZZJG.length-1];
             }else{
                 if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
@@ -199,6 +199,7 @@ var vue = new Vue({
             this.searchForm.YALX = [];
             this.searchForm.YAJB = "";
             this.searchForm.ZZJG = [];
+            this.searchForm.ZZJG.push(this.ZZJG_dataTree[0].dzid);
             this.searchForm.SHZT = "未审核";
             //    this.searchForm.shsj.splice(0,this.searchForm.shsj.length);
             this.searchForm.shsj = "";
