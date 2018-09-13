@@ -87,7 +87,7 @@ var vue = new Vue({
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
             }
-            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.ZZJG_dataTree = res.data.result;
                 this.searchForm.ZZJG.push(this.ZZJG_dataTree[0].dzid);
             }.bind(this), function (error) {
@@ -199,7 +199,6 @@ var vue = new Vue({
                     type: "BJ"
                 }
                 loadDivParam("digitalplan/digitalplan_add", params);
-                //window.location.href = "digitalplan_add.html?ID=" + row.uuid + "&index=" + this.activeIndex + "&type=BJ";
             } else {
                 this.$message({
                     message: "仅编辑中和已驳回状态预案可编辑",

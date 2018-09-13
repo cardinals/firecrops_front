@@ -893,7 +893,11 @@ new Vue({
         },
         templeteDown: function (val) {
             window.open(baseUrl + "/dpapi/yafjxz/downTemplet");
-        }
+        },
+        //取消
+        cancel: function () {
+            loadDiv("digitalplan/digitalplan_list");
+        },
     },
 
 })

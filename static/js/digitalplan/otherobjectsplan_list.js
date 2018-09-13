@@ -136,7 +136,7 @@ var vue = new Vue({
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
             }
-            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.jgidData = res.data.result;
                 this.searchForm.jgid.push(this.jgidData[0].dzid);
             }.bind(this), function (error) {
