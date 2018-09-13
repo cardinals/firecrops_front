@@ -601,8 +601,12 @@ new Vue({
         },
         //预案详情跳转
         planDetails(val) {
-            window.location.href = "../digitalplan/digitalplan_detail.html?ID=" + val.uuid + "&index=" + this.activeIndex + "&type=ZDDW";
-            //     window.location.href = this.$http.options.root + "/dpapi" + "/keyunit/detail/" + val.pkid;
+            var params = {
+                ID: val.uuid,
+                type: "ZDDW"
+            }
+            loadDivParam("digitalplan/digitalplan_detail", params);
+            // window.location.href = "../digitalplan/digitalplan_detail.html?ID=" + val.uuid + "&index=" + this.activeIndex + "&type=ZDDW";
         },
         //发送至邮箱
         openEmail: function () {
@@ -614,7 +618,6 @@ new Vue({
         },
         //信息分享
         openShare: function () {
-            // this.shareDialogVisible = true;
             var ID = getQueryString("ID");
             window.open(baseUrl+"/planShare/pageZddw/" + ID +  "/web");
         },
