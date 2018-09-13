@@ -1,10 +1,14 @@
 var vm = new Vue({
     el: "#app",
     data: {
-        szhya: '1451523',
-        zddw: '2727468',
-        jzxx: '2727468',
-        xfdz: '2727468',
+        //szhya: '1451523',
+        szhya: '1218169',
+        //zddw: '2727468',
+        zddw:'541972',
+        //jzxx: '2727468',
+        jzxx: '27274',
+        //xfdz: '2727468',
+        xfdz: '10522',
         city: '',
         color: {
             a : '#ff6364',//red
@@ -627,9 +631,11 @@ var vm = new Vue({
         this.echarts3()
         this.echarts4()
         this.echarts5()
+        /**yushch
         setInterval(
             this.autoAdd
         , 1200)
+         */
     }
 })
 
