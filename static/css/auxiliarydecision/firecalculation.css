@@ -25,7 +25,7 @@
     margin-bottom: 5px;
 }
 .el-dialog--small{
-    height: 65%;
+    /* height: 65%; */
     display: table;
 }
 .el-table.dialog-table{
