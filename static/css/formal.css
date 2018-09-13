@@ -233,4 +233,7 @@ body{height:100%;overflow:hidden;}
 }
 .el-input-number--small {
     width: 100%;
-    }
+}
+.el-editFrom-button {
+    text-align: center;
+}
