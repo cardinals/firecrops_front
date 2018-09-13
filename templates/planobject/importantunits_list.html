@@ -80,7 +80,7 @@
 						<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" class="tableStyle" :height="tableheight" @selection-change="selectionChange">
 							<el-table-column type="selection" width="45"></el-table-column>
 							<el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
-							<el-table-column prop="dwmc" label="单位名称" show-overflow-tooltip min-width="23%" align="center">
+							<el-table-column prop="dwmc" label="单位名称" show-overflow-tooltip min-width="20%" align="center">
 								<template slot-scope="scope">
 									<a @click="informClick(scope.row)" type="text" v-text="scope.row.dwmc||'无'"></a>
 								</template>
