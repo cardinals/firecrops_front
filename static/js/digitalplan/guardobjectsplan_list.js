@@ -179,7 +179,7 @@ var vue = new Vue({
             var _self = this;
             //制作机构
             var jgid = "";
-            if(this.searchForm.jgid.length>0){
+            if(this.searchForm.jgid.length>1){
                 jgid = this.searchForm.jgid[this.searchForm.jgid.length-1];
             }else{
                 if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
@@ -212,7 +212,8 @@ var vue = new Vue({
             this.searchForm.dxmc="";
             this.searchForm.yalx=[];
             this.searchForm.sfkqy="";
-            this.searchForm.jgid=[];
+            this.searchForm.jgid = [];
+            this.searchForm.jgid.push(this.jgidData[0].dzid);
             this.searchForm.cjsj.splice(0,this.searchForm.cjsj.length);
             this.searchClick('reset');
         },

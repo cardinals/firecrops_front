@@ -112,13 +112,12 @@ body{height:100%;overflow:hidden;}
     width:180px;
 }
 #basic-Inform-Title{
-    /* margin-left: 5%; */
-    margin-left: 25px;
-    /* float: right; */
+    margin-left: 40px;
     max-width: 650px;
 }
 #basic-Inform-Picture{
     float: left;
+    margin-left: 20px;
 }
 .inform-small-title{
     margin-left: 5px;
@@ -234,6 +233,6 @@ body{height:100%;overflow:hidden;}
 .el-input-number--small {
     width: 100%;
 }
-.el-editFrom-button {
+.editform-button {
     text-align: center;
 }

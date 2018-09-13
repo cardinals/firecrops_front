@@ -200,7 +200,7 @@
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5">单位消防设施数量</el-label>
+								<el-label class="mr5 vbm">单位消防设施数量</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input-number v-model="editForm.xfsssl" size="small" :min="0" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" class="searchSelect"></el-input-number>
@@ -282,7 +282,7 @@
 								<el-label class="mr5 vbm"></span>建筑分类</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-select size="small" v-model="editForm.jzfl" placeholder="建筑分类" class="searchSelect" clearable>
+								<el-select size="small" v-model="editForm.jzfl" placeholder="请选择" class="searchSelect" clearable>
 									<el-option v-for="item in jzflData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 								</el-select>
 							</el-col>
@@ -446,9 +446,8 @@
 										</el-row>
 
 										<!-- 危险介质 -->
-										<el-row class="mb5 mt5" style="border-bottom: 1px solid #d1dbe5; line-height: 29px; padding-left: 20px;">
+										<el-row class="mb5 mt5" style="border-bottom: 1px solid #d1dbe5; line-height: 29px; margin-left: 15px;">
 											<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-												<!-- <i class="el-icon-arrow-right"></i> -->
 												<strong>&nbsp;&nbsp;危险介质</strong>
 											</el-col>
 											<el-col :xs="11" :sm="11" :md="11" :lg="11" :xl="11">&nbsp;</el-col>
@@ -800,12 +799,10 @@
 
 				<el-row class="mt20 mb20">
 					<el-row>
-						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
-						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-							<el-button type="primary" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
+							<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
 							<el-button type="success" icon="check" size="small" class="btn_save" @click="save('editForm')">保存</el-button>
 						</el-col>
-						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
 					</el-row>
 				</el-row>
 

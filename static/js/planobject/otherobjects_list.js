@@ -78,13 +78,6 @@ var vue = new Vue({
         }
     },
     created: function () {
-        /**菜单选中 by li.xue 20180628*/
-        /**
-        var index = getQueryString("index");
-        $("#activeIndex").val(index);
-        this.activeIndex = index;
-         */
-
         /**面包屑 by li.xue 20180628*/
         loadBreadcrumb("其他对象", "-1");
         this.shiroData = shiroGlobal;
@@ -102,7 +95,7 @@ var vue = new Vue({
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
             }
-            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.xfgxData = res.data.result;
                 this.searchForm.xfgx.push(this.xfgxData[0].dzid);
             }.bind(this), function (error) {
@@ -124,7 +117,7 @@ var vue = new Vue({
             
             //消防管辖
             var xfgx = "";
-            if(this.searchForm.xfgx.length>0){
+            if(this.searchForm.xfgx.length>1){
                 xfgx = this.searchForm.xfgx[this.searchForm.xfgx.length-1];
             }else{
                 if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
@@ -159,6 +152,7 @@ var vue = new Vue({
             this.searchForm.dxmc = "";
             this.searchForm.dxdz = "";
             this.searchForm.xfgx = [];
+            this.searchForm.xfgx.push(this.xfgxData[0].dzid);
             this.searchClick('reset');
         },
 

@@ -124,7 +124,7 @@ var vue = new Vue({
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
             }
-            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.allSsdzData = res.data.result;
                 this.searchForm.xfgx.push(this.allSsdzData[0].dzid);
             }.bind(this), function (error) {
@@ -153,7 +153,7 @@ var vue = new Vue({
             
             //消防管辖
             var xfgx = "";
-            if(this.searchForm.xfgx.length>0){
+            if(this.searchForm.xfgx.length>1){
                 xfgx = this.searchForm.xfgx[this.searchForm.xfgx.length-1];
             }else{
                 if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
@@ -189,6 +189,7 @@ var vue = new Vue({
             this.searchForm.zcbdw="";
             this.searchForm.cxsj="";
             this.searchForm.xfgx= [];
+            this.searchForm.xfgx.push(this.allSsdzData[0].dzid);
             this.searchClick('reset');
         },
         searchXFGX_data: function () {

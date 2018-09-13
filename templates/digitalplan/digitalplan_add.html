@@ -38,18 +38,14 @@
 									<span style="color:red;">* </span>预案名称</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<!-- <el-form-item label="预案名称" prop="yamc"> -->
 								<el-input size="small" v-model="addForm.yamc" placeholder="预案名称" clearable></el-input>
-								<!-- </el-form-item> -->
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
 								<el-label class="mr5 vbm">预案编号</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<!-- <el-form-item label="预案编号"> -->
 								<el-input size="small" v-model="addForm.yabm" placeholder="保存/提交后系统自动生成" disabled></el-input>
-								<!-- </el-form-item> -->
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -59,11 +55,9 @@
 									<span style="color:red;">* </span>预案级别</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<!-- <el-form-item label="预案级别" prop="yajb"> -->
-								<el-select @change="ifShowDown" size="small" v-model="addForm.yajb" placeholder="预案级别" class="searchSelect" clearable>
+								<el-select @change="ifShowDown" size="small" v-model="addForm.yajb" placeholder="请选择" class="searchSelect" clearable>
 									<el-option v-for="item in YAJB_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 								</el-select>
-								<!-- </el-form-item> -->
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
 								<el-button class="templete" icon="document" size="small" style="border:none; display:none;" @click="templeteDown"></el-button>
@@ -75,7 +69,7 @@
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 								<!-- <el-form-item label="预案类型" prop="yalx"> -->
-								<el-cascader :options="YALX_dataTree" :props="defaultProps" size="small" v-model="addForm.yalx" placeholder="预案类型" class="searchSelect"
+								<el-cascader :options="YALX_dataTree" :props="defaultProps" size="small" v-model="addForm.yalx" placeholder="请选择" class="searchSelect"
 								 clearable change-on-select :show-all-levels="false"></el-cascader>
 								<!-- </el-form-item> -->
 							</el-col>
@@ -125,7 +119,7 @@
 										<el-label class="mr5">燃烧物质</el-label>
 									</el-col>
 									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-cascader :options="RSWZ_dataTree" :props="defaultProps" size="small" v-model="domain.rswz" placeholder="燃烧物质" clearable
+										<el-cascader :options="RSWZ_dataTree" :props="defaultProps" size="small" v-model="domain.rswz" placeholder="请选择" clearable
 										 change-on-select :show-all-levels="false"></el-cascader>
 									</el-col>
 									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
@@ -135,7 +129,7 @@
 										<el-label class="mr5">灾情等级</el-label>
 									</el-col>
 									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-cascader :options="ZQDJ_dataTree" :props="defaultProps" size="small" v-model="domain.zqdj" placeholder="灾情等级" clearable
+										<el-cascader :options="ZQDJ_dataTree" :props="defaultProps" size="small" v-model="domain.zqdj" placeholder="请选择" clearable
 										 :show-all-levels="false"></el-cascader>
 									</el-col>
 									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
@@ -143,7 +137,7 @@
 										<el-label class="mr5">起火原因</el-label>
 									</el-col>
 									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-select size="small" v-model="domain.qhyy" placeholder="起火原因" clearable>
+										<el-select size="small" v-model="domain.qhyy" placeholder="请选择" clearable>
 											<el-option v-for="item in QHYY_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 										</el-select>
 									</el-col>
@@ -160,7 +154,7 @@
 										<el-label class="mr5">灾害场所</el-label>
 									</el-col>
 									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-select size="small" v-model="domain.zhcs" placeholder="灾害场所" clearable>
+										<el-select size="small" v-model="domain.zhcs" placeholder="请选择" clearable>
 											<el-option v-for="item in ZHCS_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 										</el-select>
 									</el-col>
@@ -169,7 +163,7 @@
 										<el-label class="mr5">火灾危险性</el-label>
 									</el-col>
 									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-select size="small" v-model="domain.gyjzhzwxx" placeholder="火灾危险性" clearable>
+										<el-select size="small" v-model="domain.gyjzhzwxx" placeholder="请选择" clearable>
 											<el-option v-for="item in HZWXX_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 										</el-select>
 									</el-col>
@@ -226,8 +220,9 @@
 									<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
 										<strong>&nbsp;&nbsp;力量部署</strong>
 									</el-col>
-									<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-										<el-button type="primary" icon="plus" size="small" style="float:right;" @click="addDomainllbs(index)"></el-button>
+									<el-col :xs="11" :sm="11" :md="11" :lg="11" :xl="11">&nbsp;</el-col>
+									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
+										<el-button type="primary" icon="plus" size="small" style="float:left;" @click="addDomainllbs(index)"></el-button>
 									</el-col>
 								</el-row>
 								<el-form :model="domain.forcedevList" ref="domain.forcedevList" label-width="100px" style="margin:0;">
@@ -247,13 +242,13 @@
 												<el-label class="mr5">方案类型</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-select size="small" v-model="llbs.djfalx" placeholder="调集方案类型" clearable>
+												<el-select size="small" v-model="llbs.djfalx" placeholder="请选择" clearable>
 													<el-option v-for="item in DJFALX_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 												</el-select>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">&nbsp;</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
-												<el-button type="danger" icon="minus" size="small" @click.prevent="removellbs(llbs,index)" class="r" style="margin:5px 0 0"></el-button>
+												<el-button type="danger" icon="minus" size="small" @click.prevent="removellbs(llbs,index)" class="r" style="margin:5px 0 0; float: left;"></el-button>
 											</el-col>
 										</el-row>
 										<el-row class="tr">
@@ -320,10 +315,10 @@
 				<el-row class="mt10 mb20">
 					<el-form :inline="true" class="el-form demo-form-inline">
 						<el-row>
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="el-editFrom-button">
+							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
 								<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
-								<el-button type="success" icon="document" size="small" class="btn_save" @click="save('addForm')">暂存</el-button>
-								<el-button type="primary" icon="check" size="small" class="btn_submit" @click="submit('addForm')">提交</el-button>
+								<el-button type="primary" icon="document" size="small" class="btn_save" @click="save('addForm')">暂存</el-button>
+								<el-button type="success" icon="check" size="small" class="btn_submit" @click="submit('addForm')">提交</el-button>
 							</el-col>
 						</el-row>
 					</el-form>

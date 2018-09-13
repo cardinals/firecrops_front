@@ -145,7 +145,7 @@ var vue = new Vue({
 
             //灭火队站ID
             var mhdzid = "";
-            if(this.searchForm.mhdzid.length>0){
+            if(this.searchForm.mhdzid.length>1){
                 mhdzid = this.searchForm.mhdzid[this.searchForm.mhdzid.length-1];
             }else{
                 if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
@@ -185,6 +185,7 @@ var vue = new Vue({
             this.searchForm.jzfl="";
             this.searchForm.fhdj="";
             this.searchForm.mhdzid=[];
+            this.searchForm.mhdzid.push(this.mhdzidData[0].dzid);
             this.searchForm.xfdwlxmc="";
             this.searchClick('reset');
         },
@@ -263,7 +264,7 @@ var vue = new Vue({
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
             }
-            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.mhdzidData = res.data.result;
                 this.searchForm.mhdzid.push(this.mhdzidData[0].dzid);
             }.bind(this), function (error) {
