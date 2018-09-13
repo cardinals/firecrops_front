@@ -586,8 +586,6 @@ new Vue({
                         pageNum: this.currentPage_fireSta
                     };
                     axios.post('/dpapi/xfdz/doSearchProvinceList', params).then(function (res) {
-                        console.log(111111111);
-                        console.log(res.data.result);
                         var tableTemp = new Array((this.currentPage_fireSta - 1) * this.pageSize_fireSta);
                         this.tableData_fireSta = tableTemp.concat(res.data.result.list);
                         this.total_fireSta = res.data.result.total;
