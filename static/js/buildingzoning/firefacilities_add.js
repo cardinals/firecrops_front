@@ -510,7 +510,8 @@ new Vue({
                         jbxx_zddwmc: this.addForm.jbxx_zddwmc,
                         jbxx_xfsslx: this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1],
                         jbxx_bz: this.addForm.jbxx_bz,
-                        jbxx_jdh: this.shiroData.organizationVO.jgid,
+                        jbxx_jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                        jbxx_datasource: this.shiroData.organizationVO.jgid,
                         cjrid: this.shiroData.userid,
                         cjrmc: this.shiroData.realName,
                         detailMap: this.addForm.detailMap
@@ -557,7 +558,8 @@ new Vue({
                         jbxx_zddwmc: this.addForm.jbxx_zddwmc,
                         jbxx_xfsslx: this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1],
                         jbxx_bz: this.addForm.jbxx_bz,
-                        jbxx_jdh: this.shiroData.organizationVO.jgid,
+                        jbxx_jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                        jbxx_datasource: this.shiroData.organizationVO.jgid,
                         xgrid: this.shiroData.userid,
                         xgrmc: this.shiroData.realName,
                         detailMap: this.addForm.detailMap
