@@ -121,7 +121,8 @@ new Vue({
                                 if (this.status == 0) {//新增
                                     this.addForm.cjrid = this.shiroData.userid;
                                     this.addForm.cjrmc = this.shiroData.realName;
-                                    this.addForm.jdh = this.shiroData.organizationVO.jgid;
+                                    this.addForm.jdh = this.shiroData.organizationVO.jgid.substr(0,2)+'000000';
+                                    this.addForm.datasource = this.shiroData.organizationVO.jgid;
                                     axios.post('/dpapi/danger/insertByVO', this.addForm).then(function (res) {
                                         if (res.data.result >= 1) {
                                             this.$alert('成功保存' + res.data.result + '条化危品信息', '提示', {

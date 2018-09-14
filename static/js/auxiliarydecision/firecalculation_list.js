@@ -369,7 +369,8 @@ var vue = new Vue({
                         firecalculationparams: this.addParamForm.domains,
                         cjrid: this.shiroData.userid,
                         cjrmc: this.shiroData.realName,
-                        jdh: this.shiroData.organizationVO.jgid,
+                        jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                        datasource: this.shiroData.organizationVO.jgid
                     }
                     axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
                         if(res.data.msg=="算式内参数与输入参数个数不符!请重新输入。"){
