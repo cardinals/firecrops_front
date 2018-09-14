@@ -284,7 +284,13 @@ new Vue({
         checkForm: function () {
             if (this.addForm.zbmc == '' || this.addForm == null) {
                 this.$message.warning({
-                    message: '请输入装备名称',
+                    message: '请输入装备名称!',
+                    showClose: true
+                });
+                return false;
+            } else if(this.addForm.ssdz.length == 0){
+                this.$message.warning({
+                    message: '请选择所属队站!',
                     showClose: true
                 });
                 return false;
@@ -295,7 +301,7 @@ new Vue({
                     return true;
                 } else if (this.engineForm[i].clid == '' && this.engineForm[i].clzzs > 0) {
                     this.$message.warning({
-                        message: '请选择消防车辆',
+                        message: '请选择消防车辆!',
                         showClose: true
                     });
                     return false;
@@ -327,7 +333,8 @@ new Vue({
                         cjrid: this.shiroData.userid,
                         cjrmc: this.shiroData.realName,
                         bz: this.addForm.bz,
-                        jdh: this.shiroData.organizationVO.jgid,
+                        jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                        datasource: this.shiroData.organizationVO.jgid,
                         equipengineVOList: this.engineForm
                     }
                     axios.post('/dpapi/equipmentsource/insertByVO', params).then(function (res) {
@@ -374,7 +381,8 @@ new Vue({
                         xgrid: this.shiroData.userid,
                         xgrmc: this.shiroData.realName,
                         bz: this.addForm.bz,
-                        jdh: this.shiroData.organizationVO.jgid,
+                        jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                        datasource: this.shiroData.organizationVO.jgid,
                         equipengineVOList: this.engineForm
                     }
                     axios.post('/dpapi/equipmentsource/doUpdateEquipment', params).then(function (res) {

@@ -61,7 +61,7 @@
 							 clearable change-on-select :show-all-levels="false"></el-cascader>
 						</el-col>
 						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-							<el-label class="mr5 vbm">所属队站</el-label>
+							<el-label class="mr5 vbm"><span style="color:red;">* </span>所属队站</el-label>
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 							<el-cascader :options="allSsdzDataTree" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="请选择" class="searchSelect"
