@@ -379,6 +379,8 @@ new Vue({
                 if (this.status == 0) {//新增
                     this.addForm.cjrid = this.role_data.userid;
                     this.addForm.cjrmc = this.role_data.realName;
+                    this.addForm.jdh = this.role_data.organizationVO.jgid.substr(0,2) + '000000';
+                    this.addForm.datasource = this.role_data.organizationVO.jgid;
                     if (this.addForm.cllx.length > 0) {
                         this.addForm.cllx = this.addForm.cllx[this.addForm.cllx.length - 1];
                     } else {
@@ -419,6 +421,8 @@ new Vue({
 
                     this.addForm.xgrid = this.role_data.userid;
                     this.addForm.xgrmc = this.role_data.realName;
+                    this.addForm.jdh = this.role_data.organizationVO.jgid.substr(0,2) + '000000';
+                    this.addForm.datasource = this.role_data.organizationVO.jgid;
                     if (this.addForm.cllx.length > 0) {
                         this.addForm.cllx = this.addForm.cllx[this.addForm.cllx.length - 1];
                     } else {

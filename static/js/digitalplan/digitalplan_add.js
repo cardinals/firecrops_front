@@ -252,7 +252,22 @@ new Vue({
         //预案级别下拉框
         YAJB: function () {
             axios.get('/api/codelist/getCodetype/YAJB').then(function (res) {
-                this.YAJB_data = res.data.result;
+                axios.get('/dpapi/xfdz/doFindDzlxByOrgId/' + this.shiroData.organizationVO.uuid).then(function (res1) {
+                    var dzlx = res1.data.result;
+                    switch(dzlx){
+                        case '0100':
+                            this.YAJB_data.push(res.data.result[0]); 
+                        case '0200':
+                            this.YAJB_data.push(res.data.result[1]); 
+                        case '0300':
+                            this.YAJB_data.push(res.data.result[2]); 
+                        default:
+                            this.YAJB_data.push(res.data.result[3]); 
+                    }
+                    
+                }.bind(this), function (error) {
+                    console.log(error);
+                })
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -578,24 +593,32 @@ new Vue({
                 }
                 this.fireStaListVisible = true;
                 this.loading_fireSta = true;
+                //行政区划
+                var xzqh = "";
                 if (this.addForm.xzqh != null && this.addForm.xzqh != '') {
-                    var params = {
-                        xzqh: this.addForm.xzqh.substring(0, 2),
-                        dzmc: this.searchForm_fireSta.dzmc,
-                        pageSize: this.pageSize_fireSta,
-                        pageNum: this.currentPage_fireSta
-                    };
-                    axios.post('/dpapi/xfdz/doSearchProvinceList', params).then(function (res) {
-                        var tableTemp = new Array((this.currentPage_fireSta - 1) * this.pageSize_fireSta);
-                        this.tableData_fireSta = tableTemp.concat(res.data.result.list);
-                        this.total_fireSta = res.data.result.total;
-                        this.loading_fireSta = false;
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
-                } else {
-                    this.loading_fireSta = false;
+                    xzqh = this.addForm.xzqh.substring(0, 2);
                 }
+                //队站ID
+                var dzid = "";
+                if(this.shiroData.organizationVO.jgid != '01000000'){
+                    dzid = this.shiroData.organizationVO.uuid;
+                }
+                var params = {
+                    xzqh: xzqh,
+                    dzid: dzid,
+                    dzmc: this.searchForm_fireSta.dzmc,
+                    pageSize: this.pageSize_fireSta,
+                    pageNum: this.currentPage_fireSta
+                };
+                axios.post('/dpapi/xfdz/doSearchProvinceList', params).then(function (res) {
+                    var tableTemp = new Array((this.currentPage_fireSta - 1) * this.pageSize_fireSta);
+                    this.tableData_fireSta = tableTemp.concat(res.data.result.list);
+                    this.total_fireSta = res.data.result.total;
+                    this.loading_fireSta = false;
+                }.bind(this), function (error) {
+                    console.log(error);
+                })
+               
             }
         },
         //当前页修改事件

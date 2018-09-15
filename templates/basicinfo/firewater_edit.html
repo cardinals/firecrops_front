@@ -22,8 +22,7 @@
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">
-									<span style="color:red;">* </span>水源名称</el-label>
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>水源名称</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input size="small" v-model="editForm.symc" placeholder="水源名称"></el-input>
@@ -73,7 +72,7 @@
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">管辖队站</el-label>
+								<el-label class="mr5 vbm"><span style="color:red;">* </span>管辖队站</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-cascader :options="sjdzData" :props="sjdzprops" size="small" v-model="editForm.gxdz" placeholder="请选择" class="searchSelect"

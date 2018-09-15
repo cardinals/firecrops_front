@@ -377,13 +377,19 @@ new Vue({
         validateSave: function () {
             if (this.editForm.symc == "" || this.editForm.symc == null) {
                 this.$message.warning({
-                    message: '请输入水源名称',
+                    message: '请输入水源名称!',
                     showClose: true
                 });
                 return false;
             } else if (this.editForm.sylx == "" || this.editForm.sylx == null) {
                 this.$message.warning({
-                    message: '请选择水源类型',
+                    message: '请选择水源类型!',
+                    showClose: true
+                });
+                return false;
+            } else if (this.editForm.gxdz.length == 0) {
+                this.$message.warning({
+                    message: '请选择管辖队站！',
                     showClose: true
                 });
                 return false;
@@ -394,6 +400,8 @@ new Vue({
         //保存
         save: function (formName) {
             if (this.validateSave()) {
+                var jdh = this.shiroData.organizationVO.jgid.substr(0,2) + "000000";
+                var datasource = this.shiroData.organizationVO.jgid;
                 if (this.status == 0) {//新增
                     var params = {
                         symc: this.editForm.symc,
@@ -413,7 +421,8 @@ new Vue({
                         gsdw: this.editForm.gsdw,
                         gsdwlxfs: this.editForm.gsdwlxfs,
                         bz: this.editForm.bz,
-                        jdh: this.shiroData.organizationVO.jgid,
+                        jdh: jdh,
+                        datasource: datasource,
                         //创建人
                         cjrid: this.shiroData.userid,
                         cjrmc: this.shiroData.realName,
@@ -426,13 +435,15 @@ new Vue({
                         xhs_jkxs: this.editForm.xhs_jkxs,
                         xhs_jkkj: this.editForm.xhs_jkkj,
                         xhs_zdll: this.editForm.xhs_zdll,
-                        xhs_jdh: this.shiroData.organizationVO.jgid,
+                        xhs_jdh: jdh,
+                        xhs_datasource: datasource,
                         //消防水鹤VO
                         xfsh_gwzj: this.editForm.xfsh_gwzj,
                         xfsh_gwyl: this.editForm.xfsh_gwyl,
                         xfsh_cskgd: this.editForm.xfsh_cskgd,
                         xfsh_zdll: this.editForm.xfsh_zdll,
-                        xfsh_jdh: this.shiroData.organizationVO.jgid,
+                        xfsh_jdh: jdh,
+                        xfsh_datasource: datasource,
                         //消防水池VO
                         xfsc_sybgc: this.editForm.xfsc_sybgc,
                         xfsc_csl: this.editForm.xfsc_csl,
@@ -443,7 +454,8 @@ new Vue({
                         xfsc_tsqscls: this.editForm.xfsc_tsqscls,
                         xfsc_tsqscls: this.editForm.xfsc_tsqscls,
                         xfsc_bssj: this.editForm.xfsc_bssj,
-                        xfsc_jdh: this.shiroData.organizationVO.jgid,
+                        xfsc_jdh: jdh,
+                        xfsc_datasource: datasource,
                         //天然水源取水点VO
                         trsyqsd_trsylx: this.editForm.trsyqsd_trsylx,
                         trsyqsd_trsyid: this.editForm.trsyqsd_trsyid,
@@ -452,7 +464,8 @@ new Vue({
                         trsyqsd_tcwz: this.editForm.trsyqsd_tcwz,
                         trsyqsd_tsqscls: this.editForm.trsyqsd_tsqscls,
                         trsyqsd_qsxs: this.editForm.trsyqsd_qsxs,
-                        trsyqsd_jdh: this.shiroData.organizationVO.jgid,
+                        trsyqsd_jdh: jdh,
+                        trsyqsd_datasource: datasource,
                     }
                     axios.post('/dpapi/xfsy/insertByXfsyVO', params).then(function (res) {
                         if (res.data.result != null) {
@@ -496,7 +509,8 @@ new Vue({
                         gsdw: this.editForm.gsdw,
                         gsdwlxfs: this.editForm.gsdwlxfs,
                         bz: this.editForm.bz,
-                        jdh: this.shiroData.organizationVO.jgid,
+                        jdh: jdh,
+                        datasource: datasource,
                         //修改人
                         xgrid: this.shiroData.userid,
                         xgrmc: this.shiroData.realName,
@@ -509,13 +523,15 @@ new Vue({
                         xhs_jkxs: this.editForm.xhs_jkxs,
                         xhs_jkkj: this.editForm.xhs_jkkj,
                         xhs_zdll: this.editForm.xhs_zdll,
-                        xhs_jdh: this.shiroData.organizationVO.jgid,
+                        xhs_jdh: jdh,
+                        xhs_datasource: datasource,
                         //消防水鹤VO
                         xfsh_gwzj: this.editForm.xfsh_gwzj,
                         xfsh_gwyl: this.editForm.xfsh_gwyl,
                         xfsh_cskgd: this.editForm.xfsh_cskgd,
                         xfsh_zdll: this.editForm.xfsh_zdll,
-                        xfsh_jdh: this.shiroData.organizationVO.jgid,
+                        xfsh_jdh: jdh,
+                        xfsh_datasource: datasource,
                         //消防水池VO
                         xfsc_sybgc: this.editForm.xfsc_sybgc,
                         xfsc_csl: this.editForm.xfsc_csl,
@@ -526,7 +542,8 @@ new Vue({
                         xfsc_tsqscls: this.editForm.xfsc_tsqscls,
                         xfsc_tsqscls: this.editForm.xfsc_tsqscls,
                         xfsc_bssj: this.editForm.xfsc_bssj,
-                        xfsc_jdh: this.shiroData.organizationVO.jgid,
+                        xfsc_jdh: jdh,
+                        xfsc_datasource: datasource,
                         //天然水源取水点VO
                         trsyqsd_trsylx: this.editForm.trsyqsd_trsylx,
                         trsyqsd_trsyid: this.editForm.trsyqsd_trsyid,
@@ -535,7 +552,8 @@ new Vue({
                         trsyqsd_tcwz: this.editForm.trsyqsd_tcwz,
                         trsyqsd_tsqscls: this.editForm.trsyqsd_tsqscls,
                         trsyqsd_qsxs: this.editForm.trsyqsd_qsxs,
-                        trsyqsd_jdh: this.shiroData.organizationVO.jgid,
+                        trsyqsd_jdh: jdh,
+                        trsyqsd_datasource: datasource,
                     }
                     axios.post('/dpapi/xfsy/updateByXfsyVO', params).then(function (res) {
                         if (res.data.result != null) {
@@ -637,7 +655,7 @@ new Vue({
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 // orgUuid: this.shiroData.organizationVO.uuid,
-                // orgJgid: this.shiroData.organizationVO.jgid
+                // orgJgid: datasource
             };
             axios.post('/dpapi/xfsy/doFindTrsyListByVO', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
@@ -750,7 +768,7 @@ new Vue({
                 if (this.statusTrsy == 0) {//新增
                     this.trsyAddForm.trsy_cjrid = this.shiroData.userid;
                     this.trsyAddForm.trsy_cjrmc = this.shiroData.realName;
-                    this.trsyAddForm.trsy_jdh = this.shiroData.organizationVO.jgid;
+                    this.trsyAddForm.trsy_jdh = datasource;
                     axios.post('/dpapi/xfsy/insertTrsyByXfsyVO', this.trsyAddForm).then(function (res) {
                         if (res.data.result != null) {
                             this.$alert('成功保存天然水源信息', '提示', {

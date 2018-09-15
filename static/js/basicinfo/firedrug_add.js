@@ -177,10 +177,16 @@ new Vue({
         save: function (formName) {
             if (this.addForm.yjmc == "" || this.addForm == null) {
                 this.$message.warning({
-                    message: '请输入药剂名称',
+                    message: '请输入药剂名称！',
                     showClose: true
                 });
-            } else {
+            } else if(this.addForm.ssdz.length == 0){
+                this.$message.warning({
+                    message: '请选择所属队站!',
+                    showClose: true
+                });
+                return false;
+            }else {
                 if (this.status == 0) {//新增
                     var params = {
                         yjmc: this.addForm.yjmc,
@@ -197,7 +203,8 @@ new Vue({
                         ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
                         ssdzmc: this.addForm.ssdzmc,
                         bz: this.addForm.bz,
-                        jdh: this.shiroData.organizationVO.jgid,
+                        jdh: this.shiroData.organizationVO.jgid.substr(0,2) + "000000",
+                        datasource: this.shiroData.organizationVO.jgid,
                         cjrid: this.shiroData.userid,
                         cjrmc: this.shiroData.realName
                     }
@@ -239,7 +246,8 @@ new Vue({
                         ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
                         ssdzmc: this.addForm.ssdzmc,
                         bz: this.addForm.bz,
-                        jdh: this.shiroData.organizationVO.jgid,
+                        jdh: this.shiroData.organizationVO.jgid.substr(0,2) + "000000",
+                        datasource: this.shiroData.organizationVO.jgid,
                         xgrid: this.shiroData.userid,
                         xgrmc: this.shiroData.realName
                     }

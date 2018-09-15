@@ -278,15 +278,7 @@ var vue = new Vue({
             //获取预案uuid
             var row = this.tableData[this.data_index];
             this.uuid = row.uuid;
-            //获取当前登录用户realname和userid
-            /*
-            axios.get('/api/shiro').then(function (res) {
-                this.cjrmc = res.data.realName;
-                this.cjrid = res.data.userid;
-            }.bind(this), function (error) {
-                console.log(error)
-            });
-            */
+            
             //组织机构选中状态置空
             this.ffzd = [];
             //获取组织机构列表
@@ -328,9 +320,9 @@ var vue = new Vue({
             }
             var params = {
                 ffzd: ffzd,
-                // cjrid: this.cjrid,
-                // cjrmc: this.cjrmc,
-                yaid: this.uuid
+                yaid: this.uuid,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                datasource: this.shiroData.organizationVO.jgid
             };
             axios.post('/dpapi/distribute/distribute', params).then(function (res) {
                 this.distributeFormVisible = false;

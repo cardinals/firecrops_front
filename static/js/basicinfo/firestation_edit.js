@@ -186,7 +186,28 @@ new Vue({
         //队站类型下拉框
         getDzlxData: function(){
             axios.get('/api/codelist/getDzlxTree/DZLX').then(function(res){
-                this.dzlxData = res.data.result;
+                axios.get('/dpapi/xfdz/doFindDzlxByOrgId/' + this.shiroData.organizationVO.uuid).then(function (res1) {
+                    var dzlx = res1.data.result;
+                    if(dzlx == '0100'){
+                        this.dzlxData = res.data.result;
+                    }else{
+                        switch(dzlx){
+                            case '0100':
+                                this.dzlxData.push(res.data.result[0]); 
+                            case '0200':
+                                this.dzlxData.push(res.data.result[1]); 
+                            case '0300':
+                                this.dzlxData.push(res.data.result[2]);
+                            case '0500':
+                                this.dzlxData.push(res.data.result[3]);
+                            default:
+                                this.dzlxData.push(res.data.result[4]);
+                        }
+                    }
+                }.bind(this), function (error) {
+                    console.log(error);
+                })
+                // this.dzlxData = res.data.result;
             }.bind(this),function(error){
                 console.log(error);
             })
@@ -341,13 +362,19 @@ new Vue({
         validateSave: function(){   
             if (this.editForm.dzmc=="" || this.editForm.dzmc==null) {
                 this.$message.warning({
-                    message: '请输入队站名称',
+                    message: '请输入队站名称!',
                     showClose: true
                 });
                 return false;
             }else if(this.editForm.dzlx=="" || this.editForm.dzlx==null){
                 this.$message.warning({
-                    message: '请选择队站类型',
+                    message: '请选择队站类型!',
+                    showClose: true
+                });
+                return false;
+            }else if(this.editForm.sjdzid=="" || this.editForm.sjdzid==null){
+                this.$message.warning({
+                    message: '请选择上级队站!',
                     showClose: true
                 });
                 return false;
@@ -358,7 +385,8 @@ new Vue({
         //保存
         save: function (formName) {
             if(this.validateSave()){
-                var jdh = this.shiroData.organizationVO.jgid;
+                var datasource = this.shiroData.organizationVO.jgid;
+                var jdh = this.shiroData.organizationVO.jgid.substr(0,2) + "000000";
                 var params = {
                     dzmc: this.editForm.dzmc,
                     dzjc: this.editForm.dzjc,
@@ -391,25 +419,31 @@ new Vue({
                     dadVO: this.editForm.dadVO,
                     zhongdVO: this.editForm.zhongdVO,
                     qtxfdwVO: this.editForm.qtxfdwVO,
-                    jdh: jdh
+                    jdh: jdh,
+                    datasource: datasource
                 };
                 //从表JDH
                 if(params.dzlx!=null && params.dzlx!=""){
                     switch(params.dzlx.substr(0,2)){
                         case "02":
                             params.zongdVO.jdh = jdh;
+                            params.zongdVO.datasource = datasource;
                             break;
                         case "03":
                             params.zhidVO.jdh = jdh;
+                            params.zhidVO.datasource = datasource;
                             break;
                         case "05":
                             params.DadVO.jdh = jdh;
+                            params.DadVO.datasource = datasource;
                             break;
                         case "09":
                             params.zhongdVO.jdh = jdh;
+                            params.zhongdVO.datasource = datasource;
                             break;
                         case "0A":
                             params.qtxfdwVO.jdh = jdh;
+                            params.qtxfdwVO.datasource = datasource;
                             break;
                     }
                 }

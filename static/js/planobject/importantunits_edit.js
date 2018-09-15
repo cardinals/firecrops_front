@@ -295,7 +295,7 @@ new Vue({
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
             }
-            axios.post('/dpapi/xfdz/findSjdzByUser', params).then(function (res) {
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', params).then(function (res) {
                 this.xfdzData = res.data.result;
                 if(this.status != 0){
                     //根据重点单位id获取重点单位详情
@@ -630,7 +630,7 @@ new Vue({
         //保存
         save: function () {
             if(this.validateForm() == true) {
-                var jdh = this.shiroData.organizationVO.jgid;
+                var jgid = this.shiroData.organizationVO.jgid;
                 //行政区划
                 var xzqhString = "";
                 if(this.editForm.xzqh!="" && this.editForm.xzqh.length>0){
@@ -671,7 +671,8 @@ new Vue({
                     jzxxList: this.editForm.jzxxList,
                     zdbwList: this.editForm.zdbwList,
                     bz: this.editForm.bz,
-                    jdh: jdh,
+                    jdh: jgid.substr(0,2)+'000000',
+                    datasource: jgid,
                     cjrid: "",
                     cjrmc: "",
                     xgrid: "",

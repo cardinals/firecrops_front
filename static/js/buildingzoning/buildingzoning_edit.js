@@ -297,7 +297,8 @@ new Vue({
                  
                     this.editForm.cjrid = this.shiroData.userid;
                     this.editForm.cjrmc = this.shiroData.realName;
-                    this.editForm.jdh = this.shiroData.organizationVO.jgid;
+                    this.editForm.jdh = this.shiroData.organizationVO.jgid.substr(0,2)+'000000';
+                    this.editForm.datasource = this.shiroData.organizationVO.jgid;
                     if (this.editForm.jzl_jzsyxz != null && this.editForm.jzl_jzsyxz.length > 0) {
                         this.editForm.jzl_jzsyxz = this.editForm.jzl_jzsyxz[this.editForm.jzl_jzsyxz.length - 1];
                     } else {
