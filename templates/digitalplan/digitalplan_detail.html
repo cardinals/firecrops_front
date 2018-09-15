@@ -973,7 +973,9 @@
                                     <div v-else>
                                         该重点单位暂无图片信息
                                     </div>
-
+                                    <!-- <div>
+                                        <el-button type="primary" icon="search" size="small" @click="download()">附件下载</el-button>
+                                    </div> -->
                                 </el-tab-pane>
                             </el-tabs>
                         </template>
@@ -991,7 +993,7 @@
                         </el-carousel>
                     </template>
                 </el-dialog>
-                <!--选择选择分享模板界面-->
+                <!--选择分享模板界面-->
                 <el-dialog title="选择分享模板" :visible.sync="shareVisible" @close="closeShareDialog()" :close-on-click-modal="false">
                     <div id="tableView" style="text-align:center;">
                         <el-button type="primary" icon="share" style="width:140px" @click="openShare('detail')">预案详情分享</el-button>
@@ -999,15 +1001,17 @@
                         <el-button type="primary" icon="share" style="margin-top:10px;width:140px" @click="openShare('summary')">预案简版分享</el-button>
                     </div>
                 </el-dialog>
-                <!--选择选择分享模板界面-->
+                <!--选择下载模板界面-->
                 <el-dialog title="选择下载模板" :visible.sync="SelectDownVisible" @close="closeSelectDownDialog()" :close-on-click-modal="false">
                     <div id="tableView" style="padding: 0 50px;">
                         <el-button type="primary" icon="document" style="width:140px" @click="openDown('detail')">预案详情下载</el-button>
                         <br>
                         <el-button type="primary" icon="document" style="margin-top:10px;width:140px" @click="openDown('summary')">预案简版下载</el-button>
+                        <br>
+                        <el-button type="primary" icon="document" style="margin-top:10px;width:140px" @click="openDown('history')">历史预案下载</el-button>
                     </div>
                 </el-dialog>
-                <!--选择选择导出word界面-->
+                <!--选择导出word界面-->
                 <el-dialog width="10%" title="选择下载项" :visible.sync="downVisible" @close="closeDownDialog()" :close-on-click-modal="false">
                     <div style="margin-top: 20px">
                         <el-checkbox v-model="fmChecked" disabled label="封面" border size="medium"></el-checkbox>

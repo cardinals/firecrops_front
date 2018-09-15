@@ -8,20 +8,21 @@ new Vue({
             shareVisible: false,
             showPicVisible: false,
             initialIndex: 0,
-            picTitle:'',
+            picTitle: '',
             basicDetailData: {},//基础信息Data
             disasterSetData: {},//灾情设定Data
             unitDetailData: {},//重点单位Data
             jzl_zdbwData: [],//建筑类重点部位数据
             zzl_zdbwData: [],//装置类重点部位数据
             cgl_zdbwData: [],//储罐类重点部位数据
-            jzfqData:[],//建筑分区原始数据
+            jzfqData: [],//建筑分区原始数据
             jzl_jzfqData: [],//建筑群-建筑类数据
             zzl_jzfqData: [],//建筑群-装置类数据
             cgl_jzfqData: [],//建筑类建筑分区数据
             loading: false,
             picList: [],
             fjDetailData: '',
+            hisDetailData: '',
             //word模板选择
             downVisible: false,
             fmChecked: true,
@@ -37,7 +38,7 @@ new Vue({
     created: function () {
         //设置菜单选中
         // $("#activeIndex").val(getQueryString("index"));
-        
+
         /**面包屑 by li.xue 20180628*/
         var type = getQueryString("type");
         if (type == "GJSS") {
@@ -57,6 +58,7 @@ new Vue({
         this.planDetails(this.pkid);
         this.disasterSet(this.pkid);
         this.fjDetail(this.pkid);
+        this.hisDetail(this.pkid);
         this.picDetail();
     },
 
@@ -66,7 +68,7 @@ new Vue({
             console.log(e);
         },
         //面包屑
-        getBreadcrumb(){
+        getBreadcrumb() {
 
         },
 
@@ -145,23 +147,23 @@ new Vue({
             this.picList = [
                 {
                     name: "实景照片-万达中心",
-                    url: baseUrl+"/upload/pic/sjtp.png"
+                    url: baseUrl + "/upload/pic/sjtp.png"
                 },
                 {
                     name: "总平面图-万达中心",
-                    url: baseUrl+"/upload/pic/zpmt.png"
+                    url: baseUrl + "/upload/pic/zpmt.png"
                 },
                 {
                     name: "内部平面图-B1层平面图",
-                    url: baseUrl+"/upload/pic/nbpmtB1.png"
+                    url: baseUrl + "/upload/pic/nbpmtB1.png"
                 },
                 {
                     name: "作战部署图-灾情4-车辆部署图",
-                    url: baseUrl+"/upload/pic/4clbst.png"
+                    url: baseUrl + "/upload/pic/4clbst.png"
                 },
                 {
                     name: "作战部署图-灾情4-33层力量部署图",
-                    url: baseUrl+"/upload/pic/1clbst.png"
+                    url: baseUrl + "/upload/pic/1clbst.png"
                 }
             ]
         },
@@ -174,8 +176,8 @@ new Vue({
             this.showPicVisible = true;
             // this.initialIndex = val;
         },
-        picTitleChange: function(index,index1){
-            this.picTitle=this.picList[index].name;
+        picTitleChange: function (index, index1) {
+            this.picTitle = this.picList[index].name;
         },
         //根据重点单位id获取建筑类重点部位详情
         getJzlListByZddwId: function () {
@@ -212,7 +214,7 @@ new Vue({
         },
         //根据重点单位id获取建筑分区信息
         getJzfqDetailByVo: function () {
-            axios.get('/dpapi/importantunits/doFindJzxxDetailByZddwId/'+ this.basicDetailData.dxid).then(function (res) {
+            axios.get('/dpapi/importantunits/doFindJzxxDetailByZddwId/' + this.basicDetailData.dxid).then(function (res) {
                 this.jzfqData = res.data.result;
                 if (this.jzfqData.length > 0) {
                     for (var i = 0; i < this.jzfqData.length; i++) {  //循环LIST
@@ -234,7 +236,7 @@ new Vue({
                 console.log(error)
             })
         },
-        
+
         //选择信息分享模板界面
         openShareVisible: function () {
             this.shareVisible = true;
@@ -258,11 +260,14 @@ new Vue({
             }
             if (val == 'summary') {
                 if (this.pkid == 'dlwddzd') {
-                    window.open(baseUrl+"/dpapi/yafjxz/downTempYa?yawjmc=大连万达_简版.docx");
+                    window.open(baseUrl + "/dpapi/yafjxz/downTempYa?yawjmc=大连万达_简版.docx");
                 }
                 if (this.pkid == 'dljy') {
-                    window.open(baseUrl+"/dpapi/yafjxz/downTempYa?yawjmc=大连锦源_简版.docx");
+                    window.open(baseUrl + "/dpapi/yafjxz/downTempYa?yawjmc=大连锦源_简版.docx");
                 }
+            }
+            if (val == 'history') {
+                this.hisdownload();
             }
         },
         closeSelectDownDialog: function () {
@@ -270,7 +275,7 @@ new Vue({
         },
         //信息分享
         openShare: function (val) {
-            window.open(baseUrl+"/planShare/page/" + this.pkid + "/" + val + "/web");
+            window.open(baseUrl + "/planShare/page/" + this.pkid + "/" + val + "/web");
         },
         downShare: function () {
 
@@ -291,7 +296,7 @@ new Vue({
             if (this.tpChecked) {
                 title += 'tp'
             }
-            window.open(baseUrl+"/planShare/downWord/" + this.pkid + "/" + title);
+            window.open(baseUrl + "/planShare/downWord/" + this.pkid + "/" + title);
         },
         //预案预览
         openPlan: function () {
@@ -304,7 +309,7 @@ new Vue({
                             showClose: true
                         });
                     } else {
-                        window.open(baseUrl+"/upload/" + yllj);
+                        window.open(baseUrl + "/upload/" + yllj);
                     }
                 }.bind(this), function (error) {
                     console.log(error)
@@ -321,7 +326,7 @@ new Vue({
             if (this.fjDetailData > 0) {
                 axios.get('/dpapi/yafjxz/doFindByPlanId/' + this.pkid).then(function (res) {
                     var xzlj = res.data.result[0].xzlj;
-                    window.open(baseUrl+"/upload/" + xzlj);
+                    window.open(baseUrl + "/upload/" + xzlj);
                 }.bind(this), function (error) {
                     console.log(error)
                 })
@@ -332,7 +337,45 @@ new Vue({
                     this.openDownVisible();
                 }
             }
-        }
+        },
+        //历史预案查询
+        hisDetail: function (val) {
+            var params = {
+                // yaid:val,
+                yaid: '04a7afcd2f03446ebe1f42283bf90488',
+            };
+            axios.post('/dpapi/yaxxzl/list/', params).then(function (res) {
+                this.hisDetailData = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error)
+            })
+        },
+        //历史预案下载
+        hisdownload: function () {
 
+            if (this.basicDetailData.jdh == null) {
+                this.$message({
+                    message: "该预案无历史附件",
+                    showClose: true
+                });
+            } else {
+                if (this.hisDetailData.length > 0) {
+                    if (this.hisDetailData[0].ywxtbsid == 'mh.ywgl@ln.xf') {
+                        var head = 'http://10.119.119.232:11010';
+                    } else if (this.hisDetailData[0].ywxtbsid == 'mh.ywgl@js.xf') {
+                        var head = 'http://10.119.119.205:11010';
+                    }
+                    var body = '/attachment/filemanage/configFile!showFile.action';
+                    var url = head + body + this.hisDetailData[0].xgxx;
+                    // window.open(url);
+                    window.open("http://10.119.119.232:11010/attachment/filemanage/configFile!showFile.action?path=%2Fln.xf%2Fsy.ln.xf%2F21001326%2FMHJY%2F90d0773a6ad84cdca40c4e67e0e14741&name=%E6%B2%88%E9%98%B3%E8%88%AA%E5%A4%A9%E4%B8%89%E8%8F%B1%E6%B1%BD%E8%BD%A6%E5%8F%91%E5%8A%A8%E6%9C%BA%E5%88%B6%E9%80%A0%E6%9C%89%E9%99%90%E5%85%AC%E7%81%AD%E7%81%AB%E6%95%91%E6%8F%B4%E9%A2%84%E6%A1%88.doc");
+                } else {
+                    this.$message({
+                        message: "该预案无历史附件",
+                        showClose: true
+                    });
+                }
+            }
+        }
     }
 })
