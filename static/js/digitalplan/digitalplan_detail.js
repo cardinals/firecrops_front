@@ -259,12 +259,19 @@ new Vue({
                 this.openDownVisible();
             }
             if (val == 'summary') {
-                if (this.pkid == 'dlwddzd') {
-                    window.open(baseUrl + "/dpapi/yafjxz/downTempYa?yawjmc=大连万达_简版.docx");
-                }
-                if (this.pkid == 'dljy') {
-                    window.open(baseUrl + "/dpapi/yafjxz/downTempYa?yawjmc=大连锦源_简版.docx");
-                }
+
+                //edit by huang-rui in 9.15
+
+                // if (this.pkid == 'dlwddzd') {
+                //     window.open(baseUrl + "/dpapi/yafjxz/downTempYa?yawjmc=大连万达_简版.docx");
+                // }
+                // if (this.pkid == 'dljy') {
+                //     window.open(baseUrl + "/dpapi/yafjxz/downTempYa?yawjmc=大连锦源_简版.docx");
+                // }
+                var title = 'fm-dwjbqk-dwjzxx-zdbw';
+                window.open(baseUrl + "/planShare/downWord/" + this.pkid + "/" + title);
+                //edit end
+
             }
             if (val == 'history') {
                 this.hisdownload();
@@ -331,11 +338,16 @@ new Vue({
                     console.log(error)
                 })
             } else {
-                if (this.pkid == 'dlwddzd' || this.pkid == 'dljy') {
-                    this.openSelectDownVisible();
-                } else {
-                    this.openDownVisible();
-                }
+
+                //edit by huang-rui in 9.15
+
+                // if (this.pkid == 'dlwddzd' || this.pkid == 'dljy') {
+                //     this.openSelectDownVisible();
+                // } else {
+                //     this.openDownVisible();
+                // }
+                this.openSelectDownVisible();
+                //edit end
             }
         },
         //历史预案查询
@@ -350,6 +362,7 @@ new Vue({
                 console.log(error)
             })
         },
+        //add by huang-rui in 9.15
         //历史预案下载
         hisdownload: function () {
 
@@ -377,5 +390,6 @@ new Vue({
                 }
             }
         }
+        //add end 
     }
 })
