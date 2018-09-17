@@ -35,8 +35,8 @@ var vue = new Vue({
             //组织机构
             zzjgData: [],
             jgidprops: {
-                value: 'uuid',
-                label: 'jgjc',
+                value: 'dzid',
+                label: 'dzjc',
                 children: 'children'
             },
             //选中的序号
@@ -131,10 +131,24 @@ var vue = new Vue({
         },
         //制作机构级联选择
         getZzjgData: function(val) {
-            axios.post('/api/organization/getOrganizationtree').then(function (res) {
+            // axios.post('/api/organization/getOrganizationtree').then(function (res) {
+            //     this.zzjgData = res.data.result;
+            //     if(this.dialogTitle == "用户编辑"){
+            //         this.editSearch(val);
+            //     }
+            // }.bind(this), function (error) {
+            //     console.log(error);
+            // })
+            var organization = this.shiroData.organizationVO;
+            var param = {
+                dzid: organization.uuid,
+                dzjc: organization.jgjc,
+                dzbm: organization.jgid
+            }
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.zzjgData = res.data.result;
                 if(this.dialogTitle == "用户编辑"){
-                    this.editSearch(val);
+                        this.editSearch(val);
                 }
             }.bind(this), function (error) {
                 console.log(error);
@@ -273,7 +287,6 @@ var vue = new Vue({
 
         //保存前校验
         validateSave: function(){
-            debugger;
             if(this.editForm.username=="" || this.editForm.username==null) {
                 this.$message.warning({
                     message: '请输入用户名！',
