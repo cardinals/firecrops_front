@@ -2,13 +2,13 @@ var vm = new Vue({
     el: "#app",
     data: {
         //szhya: '1451523',
-        szhya: '1218169',
+        szhya: '68169',
         //zddw: '2727468',
         zddw:'541972',
         //jzxx: '2727468',
-        jzxx: '27274',
+        jzxx: '1274',
         //xfdz: '2727468',
-        xfdz: '10522',
+        xfdz: '10520',
         city: '',
         color: {
             a : '#ff6364',//red
@@ -223,7 +223,7 @@ var vm = new Vue({
             MapOption = {
                 tooltip: {
                     trigger: 'item',
-                    formatter: '{b}<br/>预案总量:{c}'
+                    formatter: '{b}<br/>重点单位数量:{c}'
                 },
                 dataRange: {
                     show: false,
@@ -604,7 +604,7 @@ var vm = new Vue({
         //左下列表跳转预案审核
         jump: function () {
             //跳出父框架（iframe）
-            window.parent.frames.location.href="../../templates/all.html?url=/digitalplan/digitalplan_approve &type=DPYL";
+            window.parent.frames.location.href="../../templates/all.html?url=/digitalplan/digitalplan_approve&type=DPYL";
             //window.parent.frames.location.href="../../templates/digitalplan/digitalplan_approve.html?type=DPYL"+"&index=34";
         },
         changeTab: function(index){
