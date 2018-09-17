@@ -138,7 +138,9 @@ var vue = new Vue({
             }
             axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.jgidData = res.data.result;
-                this.searchForm.jgid.push(this.jgidData[0].dzid);
+                if(this.jgidData[0].children == null || this.jgidData[0].children.length == 0){
+                    this.searchForm.jgid.push(this.jgidData[0].dzid);
+                }
             }.bind(this), function (error) {
                 console.log(error);
             })
