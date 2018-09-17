@@ -366,6 +366,12 @@ new Vue({
                     showClose: true
                 });
                 return false;
+            }else if(this.editForm.dzjc=="" || this.editForm.dzjc==null){
+                this.$message.warning({
+                    message: '请选择队站简称!',
+                    showClose: true
+                });
+                return false;
             }else if(this.editForm.dzlx=="" || this.editForm.dzlx==null){
                 this.$message.warning({
                     message: '请选择队站类型!',
