@@ -138,7 +138,9 @@ var vue = new Vue({
             }
             axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.ZZJG_dataTree = res.data.result;
-                this.searchForm.ZZJG.push(this.ZZJG_dataTree[0].dzid);
+                if(this.ZZJG_dataTree[0].children == null || this.ZZJG_dataTree[0].children.length == 0){
+                    this.searchForm.ZZJG.push(this.ZZJG_dataTree[0].dzid);
+                }
             }.bind(this), function (error) {
                 console.log(error);
             })
