@@ -148,7 +148,7 @@ var vue = new Vue({
             axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.zzjgData = res.data.result;
                 if(this.dialogTitle == "用户编辑"){
-                        this.editSearch(val);
+                    this.editSearch(val);
                 }
             }.bind(this), function (error) {
                 console.log(error);
@@ -252,24 +252,31 @@ var vue = new Vue({
                 }
                 this.editForm.roles = roles;
                 //组织机构联动下拉框赋值
+                
                 var zzjgArray = [];
                 var temp = this.editForm.organizationId;
                 if(temp!=null && temp!=""){
                     for(var i in this.zzjgData){
-                        if(temp == this.zzjgData[i].uuid){
-                            zzjgArray.push(this.zzjgData[i].uuid);
+                        if(temp == this.zzjgData[i].dzid){
+                            zzjgArray.push(this.zzjgData[i].dzid);
                         }else{
                             for(var j in this.zzjgData[i].children){
-                                if(temp == this.zzjgData[i].children[j].uuid){
-                                    zzjgArray.push(this.zzjgData[i].uuid, this.zzjgData[i].children[j].uuid);
+                                if(temp == this.zzjgData[i].children[j].dzid){
+                                    zzjgArray.push(this.zzjgData[i].dzid, this.zzjgData[i].children[j].dzid);
                                 }else{
                                     for(var k in this.zzjgData[i].children[j].children){
-                                        if(temp == this.zzjgData[i].children[j].children[k].uuid){
-                                            zzjgArray.push(this.zzjgData[i].uuid, this.zzjgData[i].children[j].uuid, this.zzjgData[i].children[j].children[k].uuid);
+                                        if(temp == this.zzjgData[i].children[j].children[k].dzid){
+                                            zzjgArray.push(this.zzjgData[i].dzid, this.zzjgData[i].children[j].dzid, this.zzjgData[i].children[j].children[k].dzid);
                                         }else{
                                             for(var n in this.zzjgData[i].children[j].children[k].children){
-                                                if(temp == this.zzjgData[i].children[j].children[k].children[n].uuid){
-                                                    zzjgArray.push(this.zzjgData[i].uuid, this.zzjgData[i].children[j].uuid, this.zzjgData[i].children[j].children[k].uuid, this.zzjgData[i].children[j].children[k].children[n].uuid);
+                                                if(temp == this.zzjgData[i].children[j].children[k].children[n].dzid){
+                                                    zzjgArray.push(this.zzjgData[i].dzid, this.zzjgData[i].children[j].dzid, this.zzjgData[i].children[j].children[k].dzid, this.zzjgData[i].children[j].children[k].children[n].dzid);
+                                                }else{
+                                                    for(var m in this.zzjgData[i].children[j].children[k].children[n].children){
+                                                        if(temp == this.zzjgData[i].children[j].children[k].children[n].children[m].dzid){
+                                                            zzjgArray.push(this.zzjgData[i].dzid, this.zzjgData[i].children[j].dzid, this.zzjgData[i].children[j].children[k].dzid, this.zzjgData[i].children[j].children[k].children[n].dzid, this.zzjgData[i].children[j].children[k].children[n].children[m].dzid);
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
