@@ -16,7 +16,7 @@ var vue = new Vue({
                 YAZT: "已审批"
             },
             //分发选中
-            ffzd: [],
+            ffdz: [],
             //创建人姓名
             cjrmc:"",
             //创建人id
@@ -25,11 +25,9 @@ var vue = new Vue({
             uuid:"",
 
             //机构复选框
-            jgList: [],
+            xfdzData: [],
             //机构选中
             jgSelect: [],
-            //机构选中字符串
-            jgSelectString: '',
 
             tableData: [],
             YALX_dataTree: [],//预案类型级联选择
@@ -78,10 +76,19 @@ var vue = new Vue({
                 label: 'codeName',
                 children: 'children'
             },
+            //分发树
+            treeProps: {
+                label: 'dzjc',
+                children: 'children'
+            },
             radio:"",
             data_index:"",
             //登录用户
             shiroData: [],
+            //树状结构默认展开
+            defaultKeys: [],
+            //树状结构默认选中
+            defaultCheckKeys: [],
         }
     },
     created: function () {
@@ -137,6 +144,7 @@ var vue = new Vue({
                 dzbm: organization.jgid
             }
             axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
+                //查询条件
                 this.ZZJG_dataTree = res.data.result;
                 if(this.ZZJG_dataTree[0].children == null || this.ZZJG_dataTree[0].children.length == 0){
                     this.searchForm.ZZJG.push(this.ZZJG_dataTree[0].dzid);
@@ -253,10 +261,10 @@ var vue = new Vue({
             this.currentPage = val;
             this.searchClick('page');
         },
-        closeDialog: function (ffzd) {
+        closeDialog: function (ffdz) {
             this.planDetailVisible = false;
-            ffzd = [];
-            this.jgSelectString = "";
+            this.defaultKeys = [];
+            this.defaultCheckKeys = [];
             this.distributeFormVisible = false;
         },
         //获取选中的行号（从0开始）
@@ -265,6 +273,9 @@ var vue = new Vue({
             //赋值给radio
             this.radio = this.data_index - (this.currentPage - 1)*this.pageSize;
             //console.info(this.radio);
+        },
+        //分发树点击事件
+        handleNodeClick(data) {
         },
         //分发所选
         distribute: function () {
@@ -282,50 +293,55 @@ var vue = new Vue({
             this.uuid = row.uuid;
             
             //组织机构选中状态置空
-            this.ffzd = [];
-            //获取组织机构列表
-            axios.get('/api/organization/getZongdui').then(function (res) {
-                this.jgList = res.data.result;
-                //获取当前预案所在总队名称
-                if(row.jgbm!=null && row.jgbm!=""){
-                    var jgidZD = row.jgbm.substring(0,2) + '000000';
-                    var params = {
-                        jgid: jgidZD
-                    }
-                    axios.post('/api/organization/list', params).then(function(res){
-                        this.jgSelectString = res.data.result[0].jgjc;
-                        this.ffzd.push(this.jgSelectString);
-                    }.bind(this),function(error){
-                        console.log(error)
-                    })
-                }
+            this.defaultCheckKeys = [];
+            
+            //本预案相应的队站
+            var params = {
+                dzid: row.jgid,
+                reserve1: this.shiroData.organizationVO.uuid,
+            };
+            axios.post('/dpapi/xfdz/doFindCorresJgid', params).then(function (res) {
                 //获取已经分发的总队名称
-                axios.get('/dpapi/distribute/doFindFfzd/' + this.uuid).then(function(res){
-                    var ffzdList = res.data.result;
-                    for(var i=0;i<ffzdList.length;i++){
-                        this.ffzd.push(ffzdList[i]);
+                this.defaultCheckKeys.push(res.data.result);
+                axios.get('/dpapi/distribute/doFindFfdz/' + this.uuid).then(function(res){
+                    //获取当前预案所在队站
+                    // this.defaultCheckKeys.push(row.jgid);
+                    var ffdzList = res.data.result;
+                    for(var i=0;i<ffdzList.length;i++){
+                        this.defaultCheckKeys.push(ffdzList[i].jgid);
                     }
+                    //获取组织机构列表
+                    axios.get('/dpapi/xfdz/doFindDzYjByOrgId/' + this.shiroData.organizationVO.uuid).then(function (res) {
+                        //预案分发树状
+                        this.xfdzData = res.data.result;
+                        this.defaultKeys.push(this.xfdzData[0].dzid);
+                    }.bind(this), function (error) {
+                        console.log(error)
+                    }); 
                 }.bind(this),function(error){
                     console.log(error)
                 })
             }.bind(this), function (error) {
                 console.log(error)
-            });
+            }); 
+            
             this.distributeFormVisible = true;
         },
         //保存点击事件
-        distributeSubmit: function(ffzd) {
+        distributeSubmit: function(ffdz) {
             //审核状态改变才调用后台approveByVO方法
-            var index = ffzd.indexOf(this.jgSelectString);
-            if(index>-1){
-                ffzd.splice(index,1);
+            var ffdz = this.$refs.tree.getCheckedNodes();
+            var params = [];
+            for(var i in ffdz){
+                if(ffdz[i].dzid != this.defaultCheckKeys[0]){
+                    params.push({
+                        jgid: ffdz[i].dzid,
+                        yaid: this.uuid,
+                        jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                        datasource: this.shiroData.organizationVO.jgid
+                    });
+                }
             }
-            var params = {
-                ffzd: ffzd,
-                yaid: this.uuid,
-                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
-                datasource: this.shiroData.organizationVO.jgid
-            };
             axios.post('/dpapi/distribute/distribute', params).then(function (res) {
                 this.distributeFormVisible = false;
                 this.$message({

@@ -105,17 +105,20 @@
                         <div id="detailDialog"></div>
                     </el-dialog>
                     <!--分发界面-->
-                    <el-dialog title="预案分发" :visible.sync="distributeFormVisible" @close="closeDialog(ffzd)" :close-on-click-modal="false">
+                    <el-dialog title="预案分发" :visible.sync="distributeFormVisible" @close="closeDialog(ffdz)" :close-on-click-modal="false">
                         <el-form :model="distributeForm" label-width="100px" ref="distributeForm">
                             <el-row>
                                 <el-col :span="23">
-                                    <el-form-item label="预案分发" prop="shzt">
-                                        <el-checkbox-group v-model="ffzd">
-                                            <template v-model="jgSelect" v-for="jg in jgList">
+                                    <el-form-item label="分发队站" prop="ffdz">
+                                        <el-tree :props="treeProps" :data="xfdzData" node-key="dzid" ref="tree" highlight-current :default-expanded-keys="defaultKeys"
+                                            :default-checked-keys="defaultCheckKeys" @node-click="handleNodeClick" show-checkbox size="small">
+                                        </el-tree>
+                                        <!-- <el-checkbox-group v-model="ffdz">
+                                            <template v-model="jgSelect" v-for="jg in xfdzData">
                                                 <el-checkbox v-if="jgSelectString==jg.jgjc" :label="jg.jgjc" :key="jg.jgid" disabled>{{jg.jgjc}}</el-checkbox>
                                                 <el-checkbox v-else :label="jg.jgjc" :key="jg.jgid">{{jg.jgjc}}</el-checkbox>
                                             </template>
-                                        </el-checkbox-group>
+                                        </el-checkbox-group> -->
                                     </el-form-item>
                                 </el-col>
                             </el-row>
@@ -123,8 +126,8 @@
                                 <el-form :inline="true" class="el-form demo-form-inline">
                                     <el-row>
                                         <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="editform-button">
-                                            <el-button type="clear" icon="close" size="small" class="btn_submit" @click.native="closeDialog(ffzd)"> 取消</el-button>
-                                            <el-button type="success" icon="check" size="small" class="btn_submit" @click.native="distributeSubmit(ffzd)">分发</el-button>
+                                            <el-button type="clear" icon="close" size="small" class="btn_submit" @click.native="closeDialog(ffdz)"> 取消</el-button>
+                                            <el-button type="success" icon="check" size="small" class="btn_submit" @click.native="distributeSubmit(ffdz)">分发</el-button>
                                         </el-col>
                                     </el-row>
                                 </el-form>
