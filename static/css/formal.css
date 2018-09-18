@@ -119,6 +119,10 @@ body{height:100%;overflow:hidden;}
     float: left;
     margin-left: 20px;
 }
+#basic-Inform-Messagee{
+    margin-left: 40px;
+    /* width: calc(100% - 180px); */
+}
 .inform-small-title{
     margin-left: 5px;
 }
