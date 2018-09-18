@@ -353,8 +353,7 @@ new Vue({
         //历史预案查询
         hisDetail: function (val) {
             var params = {
-                // yaid:val,
-                yaid: '04a7afcd2f03446ebe1f42283bf90488',
+                yaid: val
             };
             axios.post('/dpapi/yaxxzl/list/', params).then(function (res) {
                 this.hisDetailData = res.data.result;
@@ -365,29 +364,29 @@ new Vue({
         //add by huang-rui in 9.15
         //历史预案下载
         hisdownload: function () {
-
-            if (this.basicDetailData.jdh == null) {
-                this.$message({
-                    message: "该预案无历史附件",
-                    showClose: true
-                });
-            } else {
+            if (this.basicDetailData.jdh.substr(0, 2) == '21' || this.basicDetailData.jdh.substr(0, 2) == '32') {
                 if (this.hisDetailData.length > 0) {
-                    if (this.hisDetailData[0].ywxtbsid == 'mh.ywgl@ln.xf') {
+                    //辽宁
+                    if (this.basicDetailData.jdh.substr(0, 2) == '21') {
                         var head = 'http://10.119.119.232:11010';
-                    } else if (this.hisDetailData[0].ywxtbsid == 'mh.ywgl@js.xf') {
+                        //江苏
+                    } else if (this.basicDetailData.jdh.substr(0, 2) == '32') {
                         var head = 'http://10.119.119.205:11010';
                     }
                     var body = '/attachment/filemanage/configFile!showFile.action';
                     var url = head + body + this.hisDetailData[0].xgxx;
-                    // window.open(url);
-                    window.open("http://10.119.119.232:11010/attachment/filemanage/configFile!showFile.action?path=%2Fln.xf%2Fsy.ln.xf%2F21001326%2FMHJY%2F90d0773a6ad84cdca40c4e67e0e14741&name=%E6%B2%88%E9%98%B3%E8%88%AA%E5%A4%A9%E4%B8%89%E8%8F%B1%E6%B1%BD%E8%BD%A6%E5%8F%91%E5%8A%A8%E6%9C%BA%E5%88%B6%E9%80%A0%E6%9C%89%E9%99%90%E5%85%AC%E7%81%AD%E7%81%AB%E6%95%91%E6%8F%B4%E9%A2%84%E6%A1%88.doc");
+                    window.open(url);
                 } else {
                     this.$message({
                         message: "该预案无历史附件",
                         showClose: true
                     });
                 }
+            } else {
+                this.$message({
+                    message: "该总队历史预案未接入本平台",
+                    showClose: true
+                });
             }
         }
         //add end 
