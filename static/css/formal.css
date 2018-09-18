@@ -113,8 +113,7 @@ body{height:100%;overflow:hidden;}
 }
 #basic-Inform-Title{
     margin-left: 40px;
-    /* max-width: 650px; */
-    max-width: 600px !important;
+    width: calc(100% - 324px);
 }
 #basic-Inform-Picture{
     float: left;
