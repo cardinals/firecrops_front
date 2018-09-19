@@ -1,7 +1,10 @@
 //异步加载详情页
 $(function () {
-    var shiroGlobal = "";
-    // loadDiv("home");
+    var unscid = getQueryString("unscid");
+    var params = {
+        unscid : unscid,
+    }
+    loadDiv("jxcsplan/jxcsplan_xxcj");
 });
 
 //退出登录

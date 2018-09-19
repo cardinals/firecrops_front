@@ -3,15 +3,16 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="../../static/css/digitalplan/digitalplan.css">
-    <link rel="stylesheet" type="text/css" href="../../static/css/digitalplan/digitalplanlist.css">
-    <title>九小场所管理</title>
+    <title>九小场所信息采集</title>
 </head>
 
 <body class="fw f14 main-index-body">
     <div id="app">
         <div class="main-box">
             <div class="main-container" v-loading="loading" element-loading-text="加载中">
+                <div id="lib :: main_container_header('九小场所管理','九小场所管理')"></div>
+                <!-- 面包屑 -->
+                <div id="breadcrumb_box"></div>
                 <div id="tableView">
                     <el-row>
                         <el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
@@ -99,6 +100,6 @@
         </div>
     </div>
 </body>
-<script src="../../static/js/jxcsplan/jxcsplan_list.js"></script>
+<!-- <script src="../../static/js/jxcsplan/jxcsplan_list.js"></script> -->
 
 </html>
