@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>数字化预案管理平台</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/lib.css">
+</head>
+
+<body class="fw f14 main-index-body">
+    <div class="header-box navbar" style="z-index: 10001;" id="header_box">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" id="oscar-nav-btn" type="button" data-toggle="collapse" data-target="#bs-navbar"
+                    aria-controls="bs-navbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand"><div class="logo2"></div></a>
+            </div>
+            <nav class="navbar-collapse collapse" id="bs-nav">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="fix" id="zhanshi" href="/templates/bigscreen/big_screen_all.html">
+                            <img src="../../static/images/shishizhanshi.png">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="f12" href="javascript:;">
+                            <span id="realname">欢迎您！</span>
+                            <span class="glyphicon glyphicon-triangle-top oscar-arrow frame-duration"></span>
+                            <div class="dada abs ovh">
+                                <!--
+                                <div class="dada-item">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    <span class="ml5">个人中心</span>
+                                </div>
+                                -->
+                                <form id="login-out-form" action="/api/logout" method="get" onsubmit="return false;" style="display:none"></form>
+                                <div class="dada-item" id="logout" onclick="logout()">
+                                    <span class="glyphicon glyphicon-off"></span>
+                                    <span class="ml5">退出</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="dada2 abs ovh f12">
+                <div class="dada-item">
+                    <span class="glyphicon glyphicon-user"></span>
+                    <span class="ml5">个人中心</span>
+                </div>
+                <div class="dada-item">
+                    <span class="glyphicon glyphicon-off"></span>
+                    <span class="ml5">退出</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="app" style="overflow:auto;"></div>
+</body>
+<script src="../../static/js/common/config.js"></script>
+<script src="../../static/js/lib.js"></script>
+<script src="../../static/js/jxcsplan/infocollect.js"></script>
+</html>
