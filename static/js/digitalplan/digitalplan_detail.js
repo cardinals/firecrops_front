@@ -345,7 +345,6 @@ new Vue({
             } else {
 
                 //edit by huang-rui in 9.15
-
                 // if (this.pkid == 'dlwddzd' || this.pkid == 'dljy') {
                 //     this.openSelectDownVisible();
                 // } else {
