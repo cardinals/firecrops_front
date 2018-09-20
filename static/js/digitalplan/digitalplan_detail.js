@@ -212,6 +212,11 @@ new Vue({
                 console.log(error)
             })
         },
+
+        //模板导出
+        downloadModule: function () {
+            location.href=baseUrl +"/planShare/exportData/"+this.pkid;
+        },
         //根据重点单位id获取建筑分区信息
         getJzfqDetailByVo: function () {
             axios.get('/dpapi/importantunits/doFindJzxxDetailByZddwId/' + this.basicDetailData.dxid).then(function (res) {
