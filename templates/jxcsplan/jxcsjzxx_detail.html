@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/planobject/importantunits_detail.css">
+    <title>建筑信息详情</title>
+</head>
+
+<body class="fw f14 main-index-body">
+    <div id="app">
+        <div class="main-box">
+            <div class="main-container" v-loading="loading" element-loading-text="加载中">
+                <div id="lib :: main_container_header('九小场所详情','九小场所详情')"></div>
+                <!-- 面包屑 -->
+                <div id="breadcrumb_box"></div>
+                <div id="tableView">
+                    <div class="nameBox">
+                        <div id="basic-Inform-Picture">
+                            <img id="photo" class="detail_picture_size">
+                        </div>
+                        <div class="dib" id="basic-Inform-Title" style="max-width: 760px;">
+                            <div>
+                                <h3 class="dib inform-h3">
+                                    <v-text v-text="detailData.jzmc||'无'"></v-text>
+                                    <!-- <span class="companyStatus dib" title="建筑使用性质">
+                                        <v-text v-text="detailData.jzsyxzmc||'无'"></v-text>
+                                    </span> -->
+                                </h3>
+                            </div>
+                            <dl>
+                                <img src="../../static/images/detail_zddw.png">
+                                <dt class="dib inform-small-title detail_margin">建筑位置：</dt>
+                                <dd class="dtdlStyle" v-text="detailData.jzwz||'无'"></dd>
+                                <br>
+                                <img src="../../static/images/detail_yalx.png">
+                                <dt class="dib inform-small-title detail_margin">辖区行车路线：</dt>
+                                <dd class="dtdlStyle" v-text="detailData.xqxclx||'无'"></dd>
+                                <br>
+                                <img src="../../static/images/detail_yalx.png">
+                                <dt class="dib inform-small-title detail_margin">预计到达时长(min)：</dt>
+                                <dd class="dtdlStyle" v-text="detailData.yjddsc||'无'"></dd>
+                                <br>
+                            </dl>
+                        </div>
+                        <!-- <div class="btngroup r">
+                            <img src="../../static/images/detail_share.png" @click="openShareVisible">
+                            <el-button type="primary" icon="share" style="width:120px" @click="openShareVisible">信息分享</el-button>
+                            <br>
+                            <img src="../../static/images/detail_onlineShow.png" @click="openPlan">
+                            <el-button type="primary" icon="picture" style="margin-top:5%;width:120px" @click="openPlan">在线预览</el-button>
+                            <br>
+                            <img src="../../static/images/detail_download.png" @click="downloadPlan">
+                            <el-button type="primary" icon="document" style="margin-top:5%;width:120px" @click="downloadPlan">预案下载</el-button>
+                        </div> -->
+                    </div>
+                    <div class="inform-content">
+                        <template>
+                            <el-tabs v-model="activeName" type="border-card">
+                                <el-tab-pane label="基本信息" name="first">
+                                    <el-row>
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">建筑使用性质：</strong>
+                                                <v-text v-text="detailData.jzsyxzmc||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">建筑结构：</strong>
+                                                <v-text v-text="detailData.jzjgmc||'无'"></v-text>
+                                            </div>
+                                        </el-col>   
+                                    </el-row>
+                                    <el-row class="inform-margin">
+                                        <el-col :span="24">
+                                            <div>
+                                                <strong class="dtdlStyle">功能描述：</strong>
+                                                <v-text v-text="detailData.gnms||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row class="inform-margin">
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">占地面积(㎡)：</strong>
+                                                <v-text v-text="detailData.zdmj||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">建筑面积(㎡)：</strong>
+                                                <v-text v-text="detailData.jzmj||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row class="inform-margin">
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">地上高度(m)：</strong>
+                                                <v-text v-text="detailData.dsgd||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">地下高度(m)：</strong>
+                                                <v-text v-text="detailData.dxgd||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row class="inform-margin">
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">地上层数：</strong>
+                                                <v-text v-text="detailData.dscs||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">地下层数：</strong>
+                                                <v-text v-text="detailData.dxcs||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row class="inform-margin">
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">避难层：</strong>
+                                                <v-text v-text="detailData.bnc||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                        <el-col :span="12">
+                                            <div>
+                                                <strong class="dtdlStyle">备注：</strong>
+                                                <v-text v-text="detailData.bz||'无'"></v-text>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                </el-tab-pane>
+                            </el-tabs>
+                        </template>
+
+                    </div>
+                </div>
+                <!--图片轮播界面-->
+                <!-- <el-dialog :title="picTitle" :visible.sync="showPicVisible" :close-on-click-modal="false" size="large" @close="successClose">
+                    <template>
+                        <el-carousel type="card" height="350px" :initial-index="initialIndex" :autoplay="false" arrow="always" indicator-position="none"
+                            @change="picTitleChange">
+                            <el-carousel-item v-for="item in picList">
+                                <img :src="item.url" height="100%"></img>
+                            </el-carousel-item>
+                        </el-carousel>
+                    </template>
+                </el-dialog> -->
+                <!--选择选择分享模板界面-->
+                <!-- <el-dialog title="选择分享模板" :visible.sync="shareVisible" @close="closeShareDialog()" :close-on-click-modal="false">
+                    <div id="tableView" style="padding: 0 35px;">
+                        <el-button type="primary" icon="share" style="width:140px" @click="openShare('detail')">预案详情分享</el-button>
+                        <br>
+                        <el-button type="primary" icon="share" style="margin-top:10px;width:140px" @click="openShare('summary')">预案简版分享</el-button>
+                    </div>
+                </el-dialog> -->
+                <!--选择选择分享模板界面-->
+                <!-- <el-dialog title="选择下载模板" :visible.sync="SelectDownVisible" @close="closeSelectDownDialog()" :close-on-click-modal="false">
+                    <div id="tableView" style="padding: 0 35px;">
+                        <el-button type="primary" icon="document" style="width:140px" @click="openDown('detail')">预案详情下载</el-button>
+                        <br>
+                        <el-button type="primary" icon="document" style="margin-top:10px;width:140px" @click="openDown('summary')">预案简版下载</el-button>
+                    </div>
+                </el-dialog> -->
+                <!--选择选择导出word界面-->
+                <!-- <el-dialog width="10%" title="选择下载项" :visible.sync="downVisible" @close="closeDownDialog()" :close-on-click-modal="false">
+                    <div style="margin-top: 20px">
+                        <el-checkbox v-model="fmChecked" disabled label="封面" border size="medium"></el-checkbox>
+                    </div>
+                    <div style="margin-top: 20px">
+                        <el-checkbox v-model="dwjbqkChecked" label="单位基本情况" border size="medium"></el-checkbox>
+                    </div>
+                    <div style="margin-top: 20px">
+                        <el-checkbox v-model="dwjzxxChecked" label="单位建筑信息和消防设施" border size="medium"></el-checkbox>
+                    </div>
+                    <div style="margin-top: 20px">
+                        <el-checkbox v-model="zdbwChecked" label="重点部位" border size="medium"></el-checkbox>
+                    </div>
+                    <div style="margin-top: 20px">
+                        <el-checkbox v-model="zqsdChecked" label="灾情设定与作战部署" border size="medium"></el-checkbox>
+                    </div>
+                    <div style="margin-top: 20px">
+                        <el-checkbox v-model="tpChecked" label="预案附件" border size="medium"></el-checkbox>
+                    </div>
+
+                    <div id="tableView" style="padding: 0 35px;text-align:center">
+                        <el-button type="primary" style="width:140px" @click="downShare()">确定</el- button>
+                    </div>
+                </el-dialog> -->
+            </div>
+            <!-- main-container -->
+        </div>
+    </div>
+</body>
+<script src="../../static/js/common/config.js"></script>
+<script src="../../static/js/jxcsplan/jxcsjzxx_detail.js"></script>
+
+</html>
