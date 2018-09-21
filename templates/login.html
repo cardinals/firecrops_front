@@ -94,7 +94,7 @@
                                 <ul id="fromb" style="display:none;">
                                     <li class="I1" >
                                         <i class="icon-jxcs"></i>
-                                        <input type="text" class="inputstyle" v-model="tyshxycode" name="tyshxycode" id="tyshxycode" placeholder="统一社会信用代码">
+                                        <input type="text" class="inputstyle" v-model="unscid" name="unscid" id="unscid" placeholder="统一社会信用代码">
                                     </li>
                                     <li class="I2" style="visibility: hidden;">
                                         <i id="icon-password"></i>
@@ -116,7 +116,7 @@
                                     <a @click="login()" id="lg" style="display:block;">登录</a>
                                     <a @click="nlogin()" id="nlg" style="display:none;">登录</a>
                                 </div>
-                                <input type="hidden" id="loginType"/>
+                                <input type="hidden" id="loginType" name="loginType"/>
                             </form>
                         </div>
                     </div>
@@ -138,7 +138,7 @@
 <script src="../static/js/zzzlib/axios.min.js"></script>
 <script>
         $(document).ready(function () {
-            $("#loginType").val("logina");
+            $("#loginType").val("MyShiro");
             $('.logina').click(function () {
                 document.getElementById("fromb").style.display = 'none';
                 document.getElementById("froma").style.display = 'block';
@@ -146,7 +146,7 @@
                 document.getElementById("lg").style.display = 'block';
                 $('.logina').addClass("current").siblings().removeClass("current");
                 $('.loginb').addClass("currentb").siblings().removeClass("currentb");
-                $("#loginType").val("logina");
+                $("#loginType").val("MyShiro");
             })
             $('.loginb').click(function () {
                 document.getElementById("froma").style.display = 'none';
@@ -155,7 +155,7 @@
                 document.getElementById("nlg").style.display = 'block';
                 $('.loginb').addClass("current").siblings().removeClass("current");
                 $('.logina').addClass("currentb").siblings().removeClass("currentb");
-                $("#loginType").val("loginb");
+                $("#loginType").val("InfoCollect");
             })
         })
 </script>
@@ -201,7 +201,7 @@
             password: "",
             validateCode: "",
             messages: "",
-            tyshxycode: "",
+            unscid: "",
             src: "/api/imageCode"
         },
         created: function () {
@@ -230,15 +230,17 @@
             },
             //九小场所信用代码
             nlogin: function () {
-                this.tyshxycode = $('#tyshxycode').val();
+                this.unscid = $('#unscid').val();
                 var reg = /^[0-9a-zA-Z]{18}$/;
-                if (this.tyshxycode == null || this.tyshxycode == '') {
+                if (this.unscid == null || this.unscid == '') {
                     alert("统一社会信用代码不能为空!")
-                } else if(!reg.test(this.tyshxycode)){
-                    alert("统一社会信用代码为18位字母或数字！")
-                }else {
-                    // $('#login-form').submit();
-                    window.location.href = "jxcsplan/jxcsplan_all.html?unscid=" + this.tyshxycode;
+                } 
+                // else if(!reg.test(this.unscid)){
+                //     alert("统一社会信用代码为18位字母或数字！")
+                // }
+                else {
+                    $('#login-form').submit();
+                    // window.location.href = "jxcsplan/jxcsplan_all.html?unscid=" + this.unscid;
                 }
 
             },
