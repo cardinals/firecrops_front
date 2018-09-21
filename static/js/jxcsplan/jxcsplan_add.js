@@ -13,8 +13,17 @@ new Vue({
             visible: false,
             //新建建筑信息
             addBuildingVisible: false,
+            //建筑选择页面
+            buildingListVisible: false,
+            loading_building: false,
             //0新增
             status: '',
+            //当前页
+            currentPage_building: 1,
+            //分页大小
+            pageSize_building: 5,
+            //总记录数
+            total_building: 0,
             //新建数据
             addForm: {
                 dxid: "",
@@ -24,7 +33,7 @@ new Vue({
                 dwgk: "",//单位概况
                 xzqh: "",//行政区划
                 zbdh: "",//值班电话
-                xfgx: "",//消防管辖
+                xfgx: [],//消防管辖
                 xqfzr: "",//辖区负责人
                 xqfzrdh: "",//辖区负责人电话
                 lon: "",
@@ -33,16 +42,25 @@ new Vue({
                 plqkn: "",
                 plqkx: "",
                 plqkb: "",
-
+                gnfqms: "",//功能分区描述
+                zdbwms: "",//重点部位描述
+                zbxftd: "",//周边消防通道
                 bz: "",//备注
                 jzxxList: [],
-                fireInfoList: [],
+                xfssList:[],
+                jzfl:""
+            },
+            //搜索表单
+            searchForm_building: {
+                jzmc: ''
             },
             //建筑form
             buildingForm: [],
-            //消防信息form
-            fireForm: [],
-
+            //选择建筑弹出框Table数据
+            tableData_building: [],
+            //选择建筑弹出框Table高度
+            tableheight_buliding: 243,
+            
             shiroData: [],
             //基本信息
             allXzqhDataTree: [],//行政区划
@@ -51,6 +69,7 @@ new Vue({
             //建筑信息
             JzsyxzDataTree: [],//建筑使用性质
             JZJG_data: [],//建筑结构
+            jzflData: [],//建筑分类
             //消防设施
             XfsslxDataTree: [],//消防设施类型
 
@@ -104,6 +123,7 @@ new Vue({
         this.JZSYXZ();//建筑使用性质
         this.JZJG();//建筑结构
         this.XFSSLX();//消防设施类型
+        this.JZFL();//建筑分类
     },
     mounted: function () {
         this.status = getQueryString("ID");
@@ -156,6 +176,14 @@ new Vue({
                 console.log(error);
             })
         },
+        //建筑分类
+        JZFL: function () {
+            axios.get('/api/codelist/getCodetype/JZFL').then(function (res) {
+                this.jzflData = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
         //消防设施类型
         XFSSLX: function(){
             axios.get('/api/codelist/getDzlxTree/XFSSLX').then(function (res) {
@@ -164,6 +192,57 @@ new Vue({
                 console.log(error);
             })
         }, 
+
+        //获取建筑信息列表
+        getJzxxList: function(type, index){
+            if (type == 'page') {
+                this.tableData_building = [];
+            } else {
+                if (type == 'init') {
+                    this.jzIndex = index;
+                    this.searchForm_building.jzmc = '';
+                }
+                this.currentPage_building = 1;
+            }
+            this.buildingListVisible = true;
+            this.loading_building = true;
+            var params = {
+                jzmc: this.searchForm_building.jzmc,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2) + '000000',
+                pageSize: this.pageSize_building,
+                pageNum: this.currentPage_building,
+                orgUuid: this.shiroData.organizationVO.uuid,
+                orgJgid: this.shiroData.organizationVO.jgid
+            };
+            axios.post('/dpapi/building/page', params).then(function (res) {
+                var tableTemp = new Array((this.currentPage_building - 1) * this.pageSize_building);
+                this.tableData_building = tableTemp.concat(res.data.result.list);
+                this.total_building = res.data.result.total;
+                this.loading_building = false;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
+
+        //选择建筑，返回建筑名称和id
+        selectRow_building: function (val) {
+            this.addForm.jzxxList[this.jzIndex].jzid = val.jzid;
+            this.addForm.jzxxList[this.jzIndex].jzmc = val.jzmc;
+            this.buildingListVisible = false;
+        },
+        //建筑弹出页翻页
+        currentPageChange_building: function (val) {
+            if (this.currentPage_building != val) {
+                this.currentPage_building = val;
+                this.getJzxxList('page', this.jzIndex);
+            }
+        },
+
+        //建筑查询条件清空
+        clearJzxxList: function (val) {
+            this.searchForm_building.jzmc = '';
+            this.getJzxxList('reset', this.jzIndex);
+        },
 
         //建筑删除
         removeDomain: function (item) {
@@ -182,13 +261,14 @@ new Vue({
         },
         //消防信息删除
         removeFireDomain: function (item) {
-            var index = this.fireForm.indexOf(item)
+            var index = this.addForm.xfssList.indexOf(item)
             if (index !== -1) {
-                this.fireForm.splice(index, 1)
+                this.addForm.xfssList.splice(index, 1)
             }
         },
 
         //建筑信息增加
+        /** 
         addDomain: function () {
             this.buildingForm.push({
                 zqbw: '',
@@ -211,7 +291,7 @@ new Vue({
                 key: Date.now()
             });
         },
-
+        */
         //建筑信息新增
         addDomainJzxx: function(){
             this.addForm.jzxxList.push({
@@ -224,31 +304,26 @@ new Vue({
         addJzxx: function(){
             this.addBuildingVisible = true;
         },
+        //关闭新建建筑页面
         cancelAddBuilding: function(){
             this.buildingForm = [];
             this.addBuildingVisible = false;
         },
         //消防信息增加
         addFireDomain: function () {
-            this.fireForm.push({
-                zqbw: '',
-                zdbwid: '',
-                jzmc: '',
-                jzid: '',
-                rswz: [],
-                zqdj: [],
-                qhyy: '',
-                rsmj: '',
-                zhcs: '',
-                gyjzhzwxx: '',
-                qhbwgd: '',
-                zqms: '',
-                zqsdyj: '',
-                forcedevList: [],
-                keypointsMap: {
-                    zsyd: '',
-                    tbjs: '',
-                },
+            this.addForm.xfssList.push({
+                xfssmc: '',
+                xfsslx: [],
+                wz: '',
+                sl: '',
+                bz: '',
+                cjrid: '',
+                cjrmc: '',
+                cjsj: '',
+                xgrid: '',
+                xgrmc: '',
+                xgsj: '',
+                jdh: '',
                 key: Date.now()
             });
         },
@@ -343,42 +418,42 @@ new Vue({
         
         //保存/提交前校验
         checkedBefore: function () {
-            if (this.addForm.dxid == null || this.addForm.dxid == "") {
+            if (this.addForm.dwmc == null || this.addForm.dwmc == "") {
                 this.$message.warning({
-                    message: "请选择预案对象！",
+                    message: "请填写单位名称！",
                     showClose: true
                 });
                 return false;
-            } else if (this.addForm.yamc == null || this.addForm.yamc == "") {
+            } else if (this.addForm.jxdwlx == []) {
                 this.$message.warning({
-                    message: "请填写预案名称！",
+                    message: "选择九小单位类型！",
                     showClose: true
                 });
                 return false;
-            }  else if (this.addForm.yalx == []) {
+            }  else if (this.addForm.xfgx == []) {
                 this.$message.warning({
-                    message: "请选择预案类型！",
+                    message: "请选择消防管辖！",
                     showClose: true
                 });
                 return false;
             }
-            for (var i = 0; i < this.buildingForm.length; i++) {
-                if (this.buildingForm[i].zqbw == "") {
+            
+            for (var i = 0; i < this.addForm.jzxxList.length; i++) {
+                if (this.addForm.jzxxList[i].jzmc == "") {
                     this.$message.warning({
-                        message: "请选择/填写灾情" + (i + 1) + "的灾情部位! 或删除空白灾情！",
+                        message: "请选择/填写单位建筑情况" + (i + 1) + "的单位名称! 或删除空白单位建筑情况！",
                         showClose: true
                     });
                     return false;
-                } else {
-                    for (var k = 0; k < this.buildingForm[i].forcedevList.length; k++) {
-                        if (this.buildingForm[i].forcedevList[k].dzid == "") {
-                            this.$message.warning({
-                                message: "请为灾情" + (i + 1) + "中力量部署选择消防队站！或删除空白力量部署！",
-                                showClose: true
-                            });
-                            return false;
-                        }
-                    }
+                }
+            }
+            for (var i = 0; i < this.addForm.xfssList.length; i++) {
+                if (this.addForm.xfssList[i].xfssmc == "") {
+                    this.$message.warning({
+                        message: "请填写消防设施" + (i + 1) + "的消防设施名称! 或删除空白消防设施！",
+                        showClose: true
+                    });
+                    return false;
                 }
             }
             return true;
@@ -393,8 +468,6 @@ new Vue({
                         jxdwlx: this.addForm.jxdwlx,
                         dwdz: this.addForm.dwdz,
                         dwgk: this.addForm.dwgk,
-
-
                         bz: this.addForm.bz,
                         buildingList: this.buildingForm,
                         zzrid: this.shiroData.userid,
@@ -470,33 +543,37 @@ new Vue({
             if (this.checkedBefore() == true) {
                 if (this.status == 0) { //新增
                     var params = {
-                        dxid: this.addForm.dxid,
+                      //  dxid: this.addForm.dxid,
                         dwmc: this.addForm.dwmc,
                         jxdwlx: this.addForm.jxdwlx,
                         dwdz: this.addForm.dwdz,//单位地址
                         dwgk: this.addForm.dwgk,//单位概况
                         xzqh: this.addForm.xzqh,//行政区划
                         zbdh: this.addForm.zbdh,//值班电话
-                        xfgx: this.addForm.xfgx,//消防管辖
+                        xfgx: this.addForm.xfgx[this.addForm.xfgx.length -1],//消防管辖
                         xqfzr: this.addForm.xqfzr,//辖区负责人
                         xqfzrdh: this.addForm.xqfzrdh,//辖区负责人电话
+                        jzfl: this.addForm.jzfl,//建筑分类
+                        jzsl: this.addForm.jzxxList.length,//建筑数量
+                        zdmj: this.addForm.zdmj,//占地面积
+                        jzmj: this.addForm.jzmj,//建筑面积
                         lon: this.addForm.lon,
                         lat: this.addForm.lat,
                         plqkd: this.addForm.plqkd,
                         plqkn: this.addForm.plqkn,
                         plqkx: this.addForm.plqkx,
                         plqkb: this.addForm.plqkb,
+                        gnfqms: this.addForm.gnfqms,//功能分区描述
+                        zdbwms: this.addForm.zdbwms,//重点部位描述
+                        zbxftd: this.addForm.zbxftd,//周边消防通道
                         bz: this.addForm.bz,//备注
-                     
-                        buildingList: this.buildingForm,
-                        zzrid: this.shiroData.userid,
-                        zzrmc: this.shiroData.realName,
-                        jgid: this.shiroData.organizationVO.uuid,
-                        jgbm: this.shiroData.organizationVO.jgid,
-                        jgmc: this.shiroData.organizationVO.jgmc,
+                        cjrid: this.shiroData.userid,
+                        cjrmc: this.shiroData.realName,
+                        
                         jdh: this.shiroData.organizationVO.jgid
-                    };
-                    axios.post('/dpapi/digitalplanlist/insertByVO', params).then(function (res) {
+                        
+                    };debugger;
+                    axios.post('/dpapi/jxcsjbxx/doInsertByVo', params).then(function (res) {
                         this.upLoadData.yaid = res.data.result.uuid;
                         if (this.isFile) {
                             this.submitUpload();//附件上传

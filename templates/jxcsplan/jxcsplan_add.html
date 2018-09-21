@@ -76,7 +76,7 @@
 								<el-label class="mr5 vbm">备注</el-label>
 							</el-col>
 							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-input size="small" v-model="addForm.gnfqms" placeholder="备注"></el-input>
+								<el-input size="small" v-model="addForm.bz" placeholder="备注"></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -171,6 +171,61 @@
 							<div style="color: #20a0ff;">
 								<strong>建筑信息</strong>
 							</div>
+						</el-col>
+					</el-row>
+					<el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm"></span>建筑分类</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-select size="small" v-model="addForm.jzfl" placeholder="单位建筑分类" class="searchSelect" clearable>
+								<el-option v-for="item in jzflData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+							</el-select>
+						</el-col>
+						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">占地面积(㎡)</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input-number v-model="addForm.zdmj" size="small" :min="0" class="searchSelect"></el-input-number>
+						</el-col>
+						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+					</el-row>
+					<el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">周边消防通道</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input size="small" v-model="addForm.zbxftd" placeholder="周边消防通道"></el-input>
+						</el-col>
+						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">建筑面积(㎡)</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input-number v-model="addForm.jzmj" size="small" :min="0" class="searchSelect"></el-input-number>
+						</el-col>
+						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+					</el-row>
+					<el-row class="tr mb5">
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">重点部位描述</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input size="small" v-model="addForm.zdbwms" placeholder="重点部位描述"></el-input>
+						</el-col>
+						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+							<el-label class="mr5 vbm">功能分区描述</el-label>
+						</el-col>
+						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+							<el-input size="small" v-model="addForm.gnfqms" placeholder="功能分区描述"></el-input>
+						</el-col>
+						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+					</el-row>
+					<el-row class="mb5" style="border-bottom: 1px solid #d1dbe5; line-height: 29px;" class="mt5">
+						<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+							<strong>&nbsp;&nbsp;单位建筑情况</strong>
 						</el-col>
 						<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="pb1">
 							<el-button type="primary" icon="plus" size="small" class="r" @click="addDomainJzxx"></el-button>
@@ -353,9 +408,8 @@
 							<el-button type="primary" icon="plus" size="small" class="r" @click="addFireDomain"></el-button>
 						</el-col>
 					</el-row>
-					<el-form :model="fireForm" ref="fireForm" label-width="100px" style="margin:0;">
-						<el-form-item v-for="(domain, index) in fireForm" :key="domain.key" :prop="'fireForm.' + index + '.value'"
-						 label-position="right">
+					<el-form :model="addForm.xfssList" ref="addForm.xfssList" label-width="100px" style="margin:0;">
+						<el-form-item v-for="(domain, index) in addForm.xfssList" :key="domain.key" label-position="right">
 							<el-card class="card_style">
 								<div slot="header" class="clearfix">
 									<strong class="card_title_font">消防设施{{index+1}}</strong>
@@ -582,6 +636,42 @@
 							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">&nbsp;</el-col>
 						</el-row>
 					</el-form>
+				</el-dialog>
+				<!--选择所属建筑界面-->
+				<el-dialog title="选择所属建筑" :visible.sync="buildingListVisible" :close-on-click-modal="false">
+					<div id="tableView" v-loading="loading_building" element-loading-text="加载中">
+						<el-row>
+							<el-form :inline="true" class="el-form demo-form-inline">
+								<el-row class="mb5">
+									<el-col :span="12" class="searchInline">
+										<label class="el-form-item__label" style="width:95px;" class="tr vbm">建筑名称</label>
+										<el-input size="small" v-model="searchForm_building.jzmc" placeholder="建筑名称" clearable></el-input>
+									</el-col>
+									<el-col :span="12" class="btnSearchPlus">
+										<el-button type="primary" icon="search" size="small" @click="getJzxxList('click',jzIndex)">查询</el-button>
+										<el-button type="clear" icon="delete" size="small" @click="clearJzxxList">清空</el-button>
+									</el-col>
+								</el-row>
+							</el-form>
+						</el-row>
+						<div class="table_container">
+							<el-table border id="table" :data="tableData_building.slice((currentPage_building-1)*pageSize_building,currentPage_building*pageSize_building)"
+								class="tableStyle" :height="tableheight_buliding" @row-click="selectRow_building">
+								<el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
+								<el-table-column prop="jzmc" label="建筑名称" show-overflow-tooltip min-width="33%" align="center"></el-table-column>
+								<el-table-column prop="jzlxmc" label="建筑类型" show-overflow-tooltip min-width="27%" align="center"></el-table-column>
+								<el-table-column prop="jzwz" label="建筑位置" show-overflow-tooltip min-width="30%" align="center"></el-table-column>
+							</el-table>
+							<!--列表底部工具条和分页符-->
+							<el-row type="flex" justify="end">
+								<el-col :span="18">
+									<el-pagination @current-change="currentPageChange_building" :current-page="currentPage_building" :page-size="pageSize_building"
+										layout="total, prev, pager, next, jumper" :total=parseInt(total_building)>
+									</el-pagination>
+								</el-col>
+							</el-row>
+						</div>
+					</div>
 				</el-dialog>
 			</div>
 		</div>
