@@ -42,6 +42,12 @@ var vue = new Vue({
                 label: 'dzjc',
                 value: 'dzid'
             },
+            //树结构配置
+            defaultProps: {
+                children: 'children',
+                label: 'codeName',
+                value: 'codeValue'
+            },
 
         }
     },
@@ -58,7 +64,7 @@ var vue = new Vue({
     methods: {
         //建筑使用性质级联选择
         JZSYXZ: function () {
-            axios.get('/api/codelist/getCodetype/JZSYXZ').then(function (res) {
+            axios.get('/api/codelist/getDzlxTree/JZSYXZ').then(function (res) {
                 this.JZSYXZ_data = res.data.result;
             }.bind(this), function (error) {
                 console.log(error);
@@ -78,7 +84,7 @@ var vue = new Vue({
             if (type == 'page') {
                 this.tableData = [];
             } else if (type == 'delete') {
-
+                //nothing
             } else {
                 this.currentPage = 1;
             }
@@ -127,16 +133,16 @@ var vue = new Vue({
                 ID: 0,
                 type: "XZ"
             }
-            loadDivParam("jxcsplan/jxcsplan_add", params);
+            loadDivParam("jxcsplan/jxcsjzxx_edit", params);
         },
         //编辑跳转
         handleEdit: function (row) {
             // if (row.yazt == '01' || row.yazt == '04') {
-                var params = {
-                    ID: row.uuid,
-                    type: "BJ"
-                }
-                loadDivParam("jxcsplan/jxcsplan_add", params);
+            var params = {
+                ID: row.jzid,
+                type: "BJ"
+            }
+            loadDivParam("jxcsplan/jxcsjzxx_edit", params);
             // } else {
             //     this.$message({
             //         message: "仅编辑中和已驳回状态预案可编辑",
@@ -156,7 +162,7 @@ var vue = new Vue({
                     this.multipleSelection[i].xgrmc = this.shiroData.realName;
                     this.multipleSelection[i].deleteFlag = "Y";
                 }
-                axios.post('/dpapi/jxcsjbxx/doDeleteByVOList', this.multipleSelection).then(function (res) {
+                axios.post('/dpapi/jxcsjzxx/doDeleteByList', this.multipleSelection).then(function (res) {
                     this.$message({
                         message: "成功删除" + res.data.result + "条信息",
                         showClose: true,
@@ -181,7 +187,7 @@ var vue = new Vue({
         // downloadPlan: function () {
         //     window.open("http://10.119.119.232/upload/123456/2018-03-21/70932ac7-da58-4419-91b6-ebe0b3f53838/web%E7%89%88%E4%B8%89%E7%BB%B4%E9%A2%84%E6%A1%88.ZIP");
         // },
-        
+
     },
 
 })
