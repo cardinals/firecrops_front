@@ -52,7 +52,7 @@ var vue = new Vue({
         }
     },
     created: function () {
-        loadBreadcrumb("建筑信息管理", "-1");
+        loadBreadcrumb("九小建筑管理", "-1");
         this.shiroData = shiroGlobal;
         this.JZSYXZ();//建筑使用性质级联选择
         this.JZJG();//九小单位类型下拉框
