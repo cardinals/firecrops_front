@@ -23,14 +23,14 @@
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5">
+								<el-label class="mr5 vbm">
 									<span style="color:red;">* </span>建筑名称</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input v-model="editForm.jzmc" size="small" placeholder="建筑名称"></el-input>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-								<el-label class="mr5">建筑位置</el-label>
+								<el-label class="mr5 vbm">建筑位置</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input v-model="editForm.jzwz" size="small" placeholder="建筑位置"></el-input>
@@ -39,14 +39,14 @@
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5">建筑使用性质</el-label>
+								<el-label class="mr5 vbm">建筑使用性质</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-cascader :options="JzsyxzDataTree" :props="defaultProps" size="small" v-model="editForm.jzsyxz" placeholder="建筑使用性质" class="searchSelect"
 									 clearable change-on-select :show-all-levels="false"></el-cascader>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-								<el-label class="mr5">建筑结构</el-label>
+								<el-label class="mr5 vbm">建筑结构</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-select size="small" v-model="editForm.jzjg" placeholder="建筑结构" clearable>
@@ -58,13 +58,13 @@
 						
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5">占地面积</el-label>
+								<el-label class="mr5 vbm">占地面积</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input-number size="small" :precision="2" :min="0" v-model="editForm.zdmj" placeholder="占地面积"></el-input-number>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-								<el-label class="mr5">建筑面积</el-label>
+								<el-label class="mr5 vbm">建筑面积</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input-number size="small" :precision="2" :min="0" v-model="editForm.jzmj" placeholder="建筑面积"></el-input-number>
@@ -72,13 +72,13 @@
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5">地上高度(m)</el-label>
+								<el-label class="mr5 vbm">地上高度(m)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input-number size="small" :precision="2" :step="0.1" :min="0" v-model="editForm.dsgd" placeholder="地上高度"></el-input-number>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-								<el-label class="mr5">地下高度(m)</el-label>
+								<el-label class="mr5 vbm">地下高度(m)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input-number size="small" :precision="2" :step="0.1" :min="0" v-model="editForm.dxgd" placeholder="地下高度"></el-input-number>
@@ -87,13 +87,13 @@
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5">地上层数</el-label>
+								<el-label class="mr5 vbm">地上层数</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input-number size="small" :precision="2" :min="0" v-model="editForm.dscs" placeholder="地上层数"></el-input-number>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-								<el-label class="mr5">地下层数</el-label>
+								<el-label class="mr5 vbm">地下层数</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input-number size="small" :precision="2" :min="0" v-model="editForm.dxcs" placeholder="地下层数"></el-input-number>
@@ -102,13 +102,13 @@
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5">避难层</el-label>
+								<el-label class="mr5 vbm">避难层</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input v-model="editForm.bnc" size="small" placeholder="避难层"></el-input>
+								<el-input v-model="editForm.bnc" size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="避难层"></el-input>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-								<el-label class="mr5">预计到达时长</el-label>
+								<el-label class="mr5 vbm">预计到达时长(min)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
 								<el-input v-model="editForm.yjddsc" size="small" placeholder="预计到达时长(min)"></el-input>
@@ -117,19 +117,19 @@
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5">辖区行车路线</el-label>
+								<el-label class="mr5 vbm">辖区行车路线</el-label>
 							</el-col>
 							<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-								<el-input v-model="editForm.xqxclx" size="small" placeholder="辖区行车路线"></el-input>
+								<el-input v-model="editForm.xqxclx" size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="辖区行车路线"></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5">功能描述</el-label>
+								<el-label class="mr5 vbm">功能描述</el-label>
 							</el-col>
 							<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-								<el-input v-model="editForm.gnms" size="small" placeholder="功能描述"></el-input>
+								<el-input v-model="editForm.gnms" size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="功能描述"></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -140,20 +140,18 @@
 							</el-row>
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5">备注</el-label>
+								<el-label class="mr5 vbm">备注</el-label>
 							</el-col>
 							<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-								<el-input v-model="editForm.bz" size="small" type="textarea" :rows="2" placeholder="备注"></el-input>
+								<el-input v-model="editForm.bz" size="small" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="备注"></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">&nbsp;</el-col>
-							<el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
+						<el-row class="mt35 mb20">
+							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"  class="editform-button">
 								<el-button type="clear" icon="close" size="small" class="btn_cancle" @click="cancel"> 返回</el-button>
-								<el-button type="primary" icon="check" size="small" class="btn_submit" @click="submit('editForm')">提交</el-button>
+								<el-button type="success" icon="check" size="small" class="btn_submit" @click="submit('editForm')">提交</el-button>
 							</el-col>
-							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">&nbsp;</el-col>
 						</el-row>
 					</el-form>
 				</el-dialog>
