@@ -115,9 +115,9 @@ new Vue({
         this.jzid = getQueryString("ID");
         this.type = getQueryString("type");
         if (this.type == "XZ") {
-            loadBreadcrumb("建筑信息管理", "建筑信息新增");
+            loadBreadcrumb("九小建筑管理", "九小建筑新增");
         } else if (this.type == "BJ") {
-            loadBreadcrumb("建筑信息管理", "建筑信息编辑");
+            loadBreadcrumb("九小建筑管理", "九小建筑编辑");
         }
         this.shiroData = shiroGlobal;
         this.JZSYXZ();//建筑使用性质
