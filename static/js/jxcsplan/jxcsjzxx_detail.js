@@ -16,7 +16,7 @@ new Vue({
         }
     },
     created: function () {
-        loadBreadcrumb("建筑信息管理", "建筑信息详情");
+        loadBreadcrumb("九小建筑管理", "九小建筑详情");
         this.jzid = getQueryString("ID");
         this.getDetails(this.jzid);
         // this.picDetail();
