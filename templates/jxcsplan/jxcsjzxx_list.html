@@ -70,14 +70,14 @@
                             @selection-change="selectionChange">
                             <el-table-column type="selection" width="45"></el-table-column>
                             <el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
-                            <el-table-column prop="jzmc" label="建筑名称" show-overflow-tooltip min-width="19%" align="center">
+                            <el-table-column prop="jzmc" label="建筑名称" show-overflow-tooltip min-width="18%" align="center">
                                 <template slot-scope="scope">
                                     <a @click="planDetails(scope.row)">{{scope.row.jzmc}}</a>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="jzwz" label="建筑位置" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
-                            <el-table-column prop="jzsyxzmc" label="建筑使用性质" show-overflow-tooltip min-width="15%" align="center"></el-table-column>
-                            <el-table-column prop="jzjgmc" label="建筑结构" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
+                            <el-table-column prop="jzwz" label="建筑位置" show-overflow-tooltip min-width="12%" align="center"></el-table-column>
+                            <el-table-column prop="jzsyxzmc" label="建筑使用性质" show-overflow-tooltip min-width="13%" align="center"></el-table-column>
+                            <el-table-column prop="jzjgmc" label="建筑结构" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
                             <el-table-column prop="gnms" label="功能描述" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
                             <el-table-column label="操作" width="65" align="center" v-if="hasPermission('jxcsplan/jxcsplan:edit')">
                                 <template slot-scope="scope">
