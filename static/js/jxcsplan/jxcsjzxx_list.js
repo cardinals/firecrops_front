@@ -115,7 +115,7 @@ var vue = new Vue({
             this.searchForm.jzwz = "";
             this.searchForm.jzsyxz = [];
             this.searchForm.jzjg = [];
-            // this.searchClick('reset');
+            this.searchClick('reset');
         },
         //表格勾选事件
         selectionChange: function (val) {
