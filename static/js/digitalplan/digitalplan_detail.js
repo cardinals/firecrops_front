@@ -144,28 +144,47 @@ new Vue({
         },
         //图片查询
         picDetail: function () {
-            this.picList = [
-                {
-                    name: "实景照片-万达中心",
-                    url: baseUrl + "/upload/pic/sjtp.png"
-                },
-                {
-                    name: "总平面图-万达中心",
-                    url: baseUrl + "/upload/pic/zpmt.png"
-                },
-                {
-                    name: "内部平面图-B1层平面图",
-                    url: baseUrl + "/upload/pic/nbpmtB1.png"
-                },
-                {
-                    name: "作战部署图-灾情4-车辆部署图",
-                    url: baseUrl + "/upload/pic/4clbst.png"
-                },
-                {
-                    name: "作战部署图-灾情4-33层力量部署图",
-                    url: baseUrl + "/upload/pic/1clbst.png"
+            var params = {
+                yaid: this.pkid,
+                kzm: 'pic'
+            }
+            //图片查询
+            axios.post('/dpapi/yafjxz/doFindByPlanId', params).then(function (res) {
+                var picData = res.data.result;
+                if (picData.length > 0) {
+                    for (var i in picData) {
+                        this.picList.push({
+                            uuid: picData[i].uuid,
+                            name: picData[i].wjm,
+                            url: baseUrl + "/upload/" + picData[i].yllj
+                        });
+                    }
                 }
-            ]
+            }.bind(this), function (error) {
+                console.log(error)
+            })
+            // this.picList = [
+            //     {
+            //         name: "实景照片-万达中心",
+            //         url: baseUrl + "/upload/pic/sjtp.png"
+            //     },
+            //     {
+            //         name: "总平面图-万达中心",
+            //         url: baseUrl + "/upload/pic/zpmt.png"
+            //     },
+            //     {
+            //         name: "内部平面图-B1层平面图",
+            //         url: baseUrl + "/upload/pic/nbpmtB1.png"
+            //     },
+            //     {
+            //         name: "作战部署图-灾情4-车辆部署图",
+            //         url: baseUrl + "/upload/pic/4clbst.png"
+            //     },
+            //     {
+            //         name: "作战部署图-灾情4-33层力量部署图",
+            //         url: baseUrl + "/upload/pic/1clbst.png"
+            //     }
+            // ]
         },
         successClose: function () {
             this.initialIndex = 0;
