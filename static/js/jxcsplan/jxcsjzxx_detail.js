@@ -34,7 +34,7 @@ new Vue({
             this.loading = true;
             axios.get('/dpapi/jxcsjzxx/' + val).then(function (res) {
                 this.detailData = res.data.result;
-                // doFindPhoto("JXDWLX", this.detailData.jxdwlx);
+                doFindPhoto("JXCSJZXX", '0000');
                 this.loading = false;
             }.bind(this), function (error) {
                 console.log(error)
@@ -89,33 +89,6 @@ new Vue({
             this.initialIndex = val;
             this.showPicVisible = true;
             // this.initialIndex = val;
-        },
-        picTitleChange: function (index, index1) {
-            this.picTitle = this.picList[index].name;
-        },
-        //根据重点单位id获取建筑分区信息
-        getJzfqDetailByVo: function () {
-            axios.get('/dpapi/importantunits/doFindJzxxDetailByZddwId/' + this.detailData.dxid).then(function (res) {
-                this.jzfqData = res.data.result;
-                if (this.jzfqData.length > 0) {
-                    for (var i = 0; i < this.jzfqData.length; i++) {  //循环LIST
-                        var jzlx = this.jzfqData[i].jzlx;//获取LIST里面的对象
-                        switch (jzlx) {
-                            case "30":
-                                this.zzl_jzfqData.push(this.jzfqData[i]);
-                                break;
-                            case "40":
-                                this.cgl_jzfqData.push(this.jzfqData[i]);
-                                break;
-                            default:
-                                this.jzl_jzfqData.push(this.jzfqData[i]);
-                                break;
-                        };
-                    }
-                }
-            }.bind(this), function (error) {
-                console.log(error)
-            })
         },
 
         //选择信息分享模板界面

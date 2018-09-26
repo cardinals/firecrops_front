@@ -94,6 +94,7 @@ var vue = new Vue({
                 jzsyxz: this.searchForm.jzsyxz[this.searchForm.jzsyxz.length - 1],
                 jzwz: this.searchForm.jzwz,
                 jzjg: this.searchForm.jzjg[this.searchForm.jzjg.length - 1],
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,
