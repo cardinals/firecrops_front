@@ -74,8 +74,15 @@ new Vue({
                 ]
             },
             //上传文件Data
+            //上传文件Data
             fileList: [],
+            deleteFile: [],
             isFile: false,
+            //上传图片Data
+            picList: [],
+            deletePics: [],
+            isPic: false,
+
             upLoadData: {
                 yaid: ""
             },
@@ -380,16 +387,37 @@ new Vue({
                 }.bind(this), function (error) {
                     console.log(error)
                 })
+                var yafj = {
+                    yaid: this.status,
+                    kzm: '.zip'
+                }
                 //附件查询
-                axios.get('/dpapi/yafjxz/doFindByPlanId/' + this.status).then(function (res) {
-                    // var name = res.data.result[0].wjm;
-                    // var url = "http://localhost:80/upload/" + res.data.result[0].xzlj
+                axios.post('/dpapi/yafjxz/doFindByPlanId', yafj).then(function (res) {
                     if (res.data.result.length > 0) {
                         this.fileList = [{
                             uuid: res.data.result[0].uuid,
                             name: res.data.result[0].wjm,
                             url: baseUrl + "/upload/" + res.data.result[0].xzlj
                         }]
+                    }
+                }.bind(this), function (error) {
+                    console.log(error)
+                })
+                var yafj1 = {
+                    yaid: this.status,
+                    kzm: 'pic'
+                }
+                //图片查询
+                axios.post('/dpapi/yafjxz/doFindByPlanId', yafj1).then(function (res) {
+                    var picData = res.data.result;
+                    if (picData.length > 0) {
+                        for (var i in picData) {
+                            this.picList.push({
+                                uuid: picData[i].uuid,
+                                name: picData[i].wjm,
+                                url: baseUrl + "/upload/" + picData[i].xzlj
+                            });
+                        }
                     }
 
                 }.bind(this), function (error) {
@@ -718,14 +746,23 @@ new Vue({
                     axios.post('/dpapi/digitalplanlist/insertByVO', params).then(function (res) {
                         this.upLoadData.yaid = res.data.result.uuid;
                         if (this.isFile) {
-                            this.submitUpload();//附件上传
+                            this.$refs.upload.submit();//附件上传
+                        } else if (this.isPic) {
+                            this.$refs.uploadPics.submit();//图片上传
                         } else {
-                            this.$message({
-                                message: "成功保存预案信息",
-                                showClose: true
+                            // this.$message({
+                            //     message: "成功保存预案信息",
+                            //     showClose: true
+                            // });
+                            // loadDiv("digitalplan/digitalplan_list");
+
+                            this.$alert('成功保存预案信息', '提示', {
+                                type: 'success',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("digitalplan/digitalplan_list");
+                                }
                             });
-                            loadDiv("digitalplan/digitalplan_list");
-                            //window.location.href = "digitalplan_list.html?index=" + this.activeIndex;
                         }
                     }.bind(this), function (error) {
                         console.log(error);
@@ -747,25 +784,30 @@ new Vue({
                         datasource: this.shiroData.organizationVO.jgid
                     };
                     axios.post('/dpapi/digitalplanlist/doUpdateByVO', params).then(function (res) {
-                        if (this.isFile) {
-                            var params1 = {
-                                yaid: this.status,
-                                deleteFlag: 'Y',
-                                xgsj: '1',
-                                xgrid: this.shiroData.userid,
-                                xgrmc: this.shiroData.realName
-                            };
-                            axios.post('/dpapi/yafjxz/doUpdateByVO', params1).then(function (res) {
-                                this.submitUpload();//附件上传
+                        if (this.deleteFile.length > 0) {
+                            axios.post('/dpapi/yafjxz/doUpdateByVO', this.deleteFile).then(function (res) {
                             }.bind(this), function (error) {
                                 console.log(error);
                             })
+                        }
+                        if (this.deletePics.length > 0) {
+                            axios.post('/dpapi/yafjxz/doUpdateByVO', this.deletePics).then(function (res) {
+                            }.bind(this), function (error) {
+                                console.log(error);
+                            })
+                        }
+                        if (this.isFile) {
+                            this.$refs.upload.submit();//附件上传
+                        } else if (this.isPic) {
+                            this.$refs.uploadPics.submit();
                         } else {
-                            this.$message({
-                                message: "成功保存预案信息",
-                                showClose: true
+                            this.$alert('成功保存预案信息', '提示', {
+                                type: 'success',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("digitalplan/digitalplan_list");
+                                }
                             });
-                            loadDiv("digitalplan/digitalplan_list");
                         }
                     }.bind(this), function (error) {
                         console.log(error);
@@ -802,13 +844,17 @@ new Vue({
                     axios.post('/dpapi/digitalplanlist/insertByVO', params).then(function (res) {
                         this.upLoadData.yaid = res.data.result.uuid;
                         if (this.isFile) {
-                            this.submitUpload();//附件上传
+                            this.$refs.upload.submit();
+                        } else if (this.isPic) {
+                            this.$refs.uploadPics.submit();
                         } else {
-                            this.$message({
-                                message: "成功保存并提交预案信息",
-                                showClose: true
+                            this.$alert('成功保存预案信息', '提示', {
+                                type: 'success',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("digitalplan/digitalplan_list");
+                                }
                             });
-                            loadDiv("digitalplan/digitalplan_list");
                         }
                     }.bind(this), function (error) {
                         console.log(error);
@@ -831,25 +877,30 @@ new Vue({
                         datasource: this.shiroData.organizationVO.jgid
                     };
                     axios.post('/dpapi/digitalplanlist/doUpdateByVO', params).then(function (res) {
-                        if (this.isFile) {
-                            var params1 = {
-                                yaid: this.status,
-                                deleteFlag: 'Y',
-                                xgsj: '1',
-                                xgrid: this.shiroData.userid,
-                                xgrmc: this.shiroData.realName
-                            };
-                            axios.post('/dpapi/yafjxz/doUpdateByVO', params1).then(function (res) {
-                                this.submitUpload();//附件上传
+                        if (this.deleteFile.length > 0) {
+                            axios.post('/dpapi/yafjxz/doUpdateByVO', this.deleteFile).then(function (res) {
                             }.bind(this), function (error) {
                                 console.log(error);
                             })
+                        }
+                        if (this.deletePics.length > 0) {
+                            axios.post('/dpapi/yafjxz/doUpdateByVO', this.deletePics).then(function (res) {
+                            }.bind(this), function (error) {
+                                console.log(error);
+                            })
+                        }
+                        if (this.isFile) {
+                            this.$refs.upload.submit();
+                        } else if (this.isPic) {
+                            this.$refs.uploadPics.submit();
                         } else {
-                            this.$message({
-                                message: "成功保存预案信息",
-                                showClose: true
+                            this.$alert('成功保存预案信息', '提示', {
+                                type: 'success',
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    loadDiv("digitalplan/digitalplan_list");
+                                }
                             });
-                            loadDiv("digitalplan/digitalplan_list");
                         }
                     }.bind(this), function (error) {
                         console.log(error);
@@ -861,30 +912,65 @@ new Vue({
             }
             // });
         },
-        //附件上传
-        submitUpload: function () {
-            this.$refs.upload.submit();
-        },
         //附件上传成功回调方法
-        handleSuccess: function (response, file, fileList) {
+        fileSuccess: function (response, file, fileList) {
             if (response) {
-                this.$message({
-                    message: "成功保存预案信息",
-                    showClose: true,
-                    duration: 0
+                if (this.isPic) {
+                    this.$refs.uploadPics.submit();
+                } else {
+                    this.$alert('成功保存预案信息', '提示', {
+                        type: 'success',
+                        confirmButtonText: '确定',
+                        callback: action => {
+                            loadDiv("digitalplan/digitalplan_list");
+                        }
+                    });
+                }
+            }
+            loadDiv("digitalplan/digitalplan_list");
+        },
+        //图片上传成功回调方法
+        picSuccess: function (response, file, fileList) {
+            if (response) {
+                this.$alert('成功保存预案信息', '提示', {
+                    type: 'success',
+                    confirmButtonText: '确定',
+                    callback: action => {
+                        loadDiv("digitalplan/digitalplan_list");
+                    }
                 });
             }
             loadDiv("digitalplan/digitalplan_list");
-            //window.location.href = "digitalplan_list.html?index=" + this.activeIndex;
         },
         //附件移除
-        handleRemove: function (file, fileList) {
+        fileRemove: function (file, fileList) {
             var fs = document.getElementsByName('file');
             if (fs.length > 0) {
                 fs[0].value = null
             }
             console.log(file, fileList);
+            if (file.status == 'success') {
+                this.deleteFile.push({
+                    uuid: file.uuid,
+                    deleteFlag: 'Y',
+                    xgrid: this.shiroData.userid,
+                    xgrmc: this.shiroData.realName
+                });
+            }
             this.isFile = false;
+        },
+        //附件移除（图片）
+        picRemove: function (file, fileList) {
+            console.log(file, fileList);
+            if (file.status == 'success') {
+                this.deletePics.push({
+                    uuid: file.uuid,
+                    deleteFlag: 'Y',
+                    xgrid: this.shiroData.userid,
+                    xgrmc: this.shiroData.realName
+                });
+            }
+            this.isPic = false;
         },
         handlePreview: function (file) {
             console.log(file);
@@ -898,12 +984,21 @@ new Vue({
                 }
                 else {
                     this.$message.error('仅可上传zip格式压缩文件!');
-                    this.fileList.splice(0, this.fileList.length);
+                    fileList.splice(-1, 1);
                 }
-
             } else if (fileList.length > 1) {
                 this.$message.warning('当前限制上传 1 个压缩文件');
                 fileList.splice(1, fileList.length - 1);
+            }
+        },
+        PicChange: function (file, fileList) {
+            const isPng = file.name.endsWith("png");
+            const isJpg = file.name.endsWith("jpg");
+            if (isPng || isJpg) {
+                this.isPic = true;
+            } else {
+                this.$message.error('上传图片只能是 png/jpg 格式!');
+                fileList.splice(-1, 1);
             }
         },
         ifShowDown: function (val) {
