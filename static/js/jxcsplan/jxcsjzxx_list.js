@@ -94,7 +94,7 @@ var vue = new Vue({
                 jzsyxz: this.searchForm.jzsyxz[this.searchForm.jzsyxz.length - 1],
                 jzwz: this.searchForm.jzwz,
                 jzjg: this.searchForm.jzjg[this.searchForm.jzjg.length - 1],
-                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,
@@ -153,6 +153,13 @@ var vue = new Vue({
         },
         //删除
         deleteClick: function () {
+            if (this.multipleSelection.length < 1) {
+                this.$message({
+                    message: "请至少选中一条记录",
+                    type: "error"
+                });
+                return;
+            }
             this.$confirm('此操作将永久删除选中信息, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
