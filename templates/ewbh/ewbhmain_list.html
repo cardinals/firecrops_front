@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="../../static/css/planobject/importantunits.css">
+	<title>二维标绘-二维标绘</title>
+</head>
+
+<body class="fw f14 main-index-body">
+	<div id="app">
+		<div class="main-box">
+			<div class="main-container" v-loading="loading" element-loading-text="加载中">
+				<div id="lib :: main_container_header('二维标绘','二维标绘')"></div>
+				<!-- 面包屑 -->
+				<div id="breadcrumb_box"></div>
+				<div id="tableView">
+					<el-row>
+						<el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
+							<el-row>
+								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+									<label class="el-form-item__label searchLabel">二维标绘名称</label>
+									<el-input size="small" v-model="searchForm.wjm" placeholder="二维标绘名称"></el-input>
+								</el-col>
+								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+									<label class="el-form-item__label searchLabel">重点单位名称</label>
+									<el-input size="small" v-model="searchForm.zddwmc" placeholder="重点单位名称"></el-input>
+								</el-col>
+								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+							</el-row>
+							<div>
+								<el-form>
+									<el-col :span="12" class="btnEditDelete">
+										<el-form-item align="left">
+											<el-button v-if="hasPermission('ewbh/ewbhmain:add')" type="success" icon="plus" size="small" @click="addClick">新增</el-button>
+											<el-button v-if="hasPermission('ewbh/ewbhmain:delete')" type="danger" icon="delete2" size="small" @click="deleteClick">删除</el-button>
+										</el-form-item>
+									</el-col>
+									<el-col :span="12"></el-col>
+									<el-col :span="12" class="btnSearchPlus">
+										<el-form-item>
+											<el-button type="primary" icon="search" size="small" @click="searchClick">查询</el-button>
+											<el-button type="clear" icon="delete" size="small" @click="clearClick">重置</el-button>
+										</el-form-item>
+									</el-col>
+								</el-form>
+							</div>
+						</el-form>
+					</el-row>
+					<div class="table_container">
+						<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" class="tableStyle" :height="tableheight"
+						 @selection-change="selectionChange">
+							<el-table-column type="selection" width="45"></el-table-column>
+							<el-table-column type="index" label="序号" width="65" align="center"></el-table-column>
+							<el-table-column prop="wjm" label="标绘名称" show-overflow-tooltip min-width="20%" align="center"></el-table-column>
+							<el-table-column prop="zddwmc" label="重点单位" show-overflow-tooltip min-width="20%" align="center"></el-table-column>
+							<el-table-column prop="cjrmc" label="创建人" show-overflow-tooltip min-width="13%" align="center"></el-table-column>
+							<el-table-column prop="cjsj" label="创建时间" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
+							<el-table-column prop="xgrmc" label="修改人" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
+							<el-table-column prop="xgsj" label="修改时间" show-overflow-tooltip min-width="11%" align="center"></el-table-column>
+							<el-table-column v-if="hasPermission('ewbh/ewbhmain:edit')" label="操作" width="65" align="center">
+								<template slot-scope="scope">
+									<el-button type="text" @click="editClick(scope.row)">编辑</el-button>
+								</template>
+							</el-table-column>
+						</el-table>
+
+						<!--列表底部工具条和分页符-->
+						<el-row type="flex" justify="end">
+							<el-col :span="18">
+								<el-pagination @current-change="currentPageChange" :current-page="currentPage" layout="total, prev, pager, next, jumper"
+								 :total=parseInt(total)>
+								</el-pagination>
+							</el-col>
+						</el-row>
+					</div>
+				</div>
+			</div>
+			<!-- main-container -->
+		</div>
+	</div>
+</body>
+<script src="../../static/js/ewbh/ewbhmain_list.js"></script>
+
+</html>
