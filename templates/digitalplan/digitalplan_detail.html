@@ -55,7 +55,7 @@
                             <!-- <el-button type="primary" icon="picture" style="margin-top:5%;width:120px" @click="openPlan">在线预览</el-button> -->
                             <br>
                             <img src="../../static/images/detail_download.png" @click="downloadPlan">
-                              <!-- <el-button type="primary" icon="document" style="margin-top:5%;width:120px" @click="downloadPlan">预案下载</el-button> -->
+                            <!-- <el-button type="primary" icon="document" style="margin-top:5%;width:120px" @click="downloadPlan">预案下载</el-button> -->
                             <br>
                             <el-button type="primary" icon="document" style="width:120px" @click="downloadModule">导出模板</el-button>
                         </div>
@@ -965,16 +965,11 @@
                                     </div>
                                 </el-tab-pane>
                                 <el-tab-pane label="图片信息" name="fifth">
-                                    <div v-if="basicDetailData.dxid=='dlwd'">
-                                        <el-row v-for="(item,index) in picList" class="mb5 picList">
-                                            <v-text v-text="index+1"></v-text>.
-                                            <i class="el-icon-picture mr5 ml5"></i>
-                                            <v-text v-text="item.name" @click="showPic(index)"></v-text>
-                                        </el-row>
-                                    </div>
-                                    <div v-else>
-                                        该重点单位暂无图片信息
-                                    </div>
+                                    <el-row v-for="(item,index) in picList" class="mb5 picList">
+                                        <v-text v-text="index+1"></v-text>.
+                                        <i class="el-icon-picture mr5 ml5"></i>
+                                        <v-text v-text="item.name" @click="showPic(index)"></v-text>
+                                    </el-row>
                                     <!-- <div>
                                         <el-button type="primary" icon="search" size="small" @click="download()">附件下载</el-button>
                                     </div> -->
