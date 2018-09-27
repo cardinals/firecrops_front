@@ -76,20 +76,13 @@ var vue = new Vue({
         },
         //新增
         addClick: function () {
-            var params = {
-                ID: 0,
-                type: "XZ"
-            }
-            window.open("../../templates/all.html?url=/ewbh/ewbh&ID=0&type=XZ");
+            window.open("../../templates/all.html?url=/ewbh/ewbh&type=XZ");
             // loadDivParam("ewbh/ewbh_list", params);
         },
         //编辑
         editClick: function (val) {
-            var params = {
-                ID: val.uuid,
-                type: "BJ"
-            }
-            loadDivParam("ewbh/ewbh_list", params);
+            window.open("../../templates/all.html?url=/ewbh/ewbh&type=XZ&ID=" + val.uuid);
+            // loadDivParam("ewbh/ewbh_list", params);
         },
         //删除
         deleteClick: function () {
