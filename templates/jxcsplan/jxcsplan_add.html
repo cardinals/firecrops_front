@@ -242,159 +242,11 @@
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" style="padding: 4px 0;" class="tl">
 								<el-button icon="search" size="small" style="border: none;" @click="getJzxxList('init',index)"></el-button>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" style="padding: 4px 0;" class="tl">
-								<el-button icon="plus" size="small" style="border: none;" @click="addJzxx('init',index)"></el-button>
-							</el-col>
-							<el-col :xs="11" :sm="11" :md="11" :lg="11" :xl="11">
+							<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
 								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainJzxx(jzxx)" class="r"></el-button>
 							</el-col>
 						</el-row>
 					</el-form>
-					<!--
-					<el-form :model="buildingForm" ref="buildingForm" label-width="100px" style="margin:0;">
-						<el-form-item v-for="(domain, index) in buildingForm" :key="domain.key" :prop="'buildingForm.' + index + '.value'"
-						 label-position="right">
-							<el-card class="card_style">
-								<div slot="header" class="clearfix">
-									<strong class="card_title_font">建筑{{index+1}}</strong>
-									<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomain(domain)" class="r" style="margin:5px 0 0"></el-button>
-								</div>
-								<el-row class="tr">
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">
-											<span style="color:red;">* </span>建筑名称</el-label>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-										<el-input v-model="domain.jzmc" size="small" placeholder="建筑名称"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" style="padding: 4px 0;" class="tl">
-										<el-button icon="search" size="small" style="border: none;" @click="getJzxxList('init',index)"></el-button>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" style="padding: 4px 0;" class="tl">
-										<el-button icon="plus" size="small" style="border: none;" @click="showJzxx('init',index)"></el-button>
-									</el-col>
-								</el-row>
-								<el-row class="tr">
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">建筑位置</el-label>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-										<el-input v-model="domain.jzwz" size="small" placeholder="建筑位置"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">建筑使用性质</el-label>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-										<el-cascader :options="JzsyxzDataTree" :props="defaultProps" size="small" v-model="domain.jzsyxz" placeholder="建筑使用性质" class="searchSelect"
-									 clearable change-on-select :show-all-levels="false"></el-cascader>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row class="tr">
-								<el-row class="tr">
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">建筑结构</el-label>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-										<el-select size="small" v-model="domain.jzjg" placeholder="建筑结构" clearable>
-											<el-option v-for="item in JZJG_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">功能描述</el-label>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-											<el-input v-model="domain.gnms" size="small" placeholder="功能描述"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row>
-								<el-row class="tr">
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">占地面积</el-label>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-										<el-input v-model="domain.zdmj" size="small" placeholder="占地面积"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">建筑面积</el-label>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-										<el-input v-model="domain.jzmj" size="small" placeholder="建筑面积"></el-input>
-									</el-col>
-								</el-row>
-								<el-row class="tr">
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">地上高度(m)</el-label>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-										<el-input v-model="domain.dsgd" size="small" placeholder="地上高度"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">地下高度(m)</el-label>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-										<el-input v-model="domain.dxgd" size="small" placeholder="地下高度"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row>
-								<el-row class="tr">
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">地上层数</el-label>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-										<el-input v-model="domain.dscs" size="small" placeholder="地上层数"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">地下层数</el-label>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-										<el-input v-model="domain.dxcs" size="small" placeholder="地下层数"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row>
-								<el-row class="tr">
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">避难层</el-label>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-										<el-input v-model="domain.bnc" size="small" placeholder="避难层"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">预计到达时长</el-label>
-									</el-col>
-									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-										<el-input v-model="domain.yjddsc" size="small" placeholder="预计到达时长(min)"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row>
-								<el-row class="tr">
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">辖区行车路线</el-label>
-									</el-col>
-									<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-										<el-input v-model="domain.xqxclx" size="small" placeholder="辖区行车路线"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row>
-								<el-row class="tr">
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">备注</el-label>
-									</el-col>
-									<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-											<el-input v-model="domain.bz" size="small" placeholder="备注"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row>
-							</el-card>
-						</el-form-item>
-					</el-form>
-					-->
 				</div>
 				<!--消防信息-->
 				<div id="fireView" class="pt15">
@@ -498,8 +350,55 @@
 						</el-row>
 					</el-form>
 				</el-row>
-				<el-dialog title="新建建筑信息" :visible.sync="addBuildingVisible" :close-on-click-modal="false">
-					<el-form :model="buildingForm" ref="buildingForm" label-width="100px" style="margin:0;">
+				
+				<!--选择所属建筑界面-->
+				<el-dialog :title="dialogTitle" :visible.sync="buildingListVisible" :close-on-click-modal="false">
+					<div id="tableView" v-loading="loading_building" element-loading-text="加载中" v-show="buildingSearch">
+						<el-row>
+							<el-form :inline="true" class="el-form demo-form-inline">
+								<el-row class="mb5">
+									<el-col :span="12" class="searchInline">
+										<label class="el-form-item__label" style="width:95px;" class="tr vbm">建筑名称</label>
+										<el-input size="small" v-model="searchForm_building.jzmc" placeholder="建筑名称" clearable></el-input>
+									</el-col>
+									<el-col :span="12" class="btnSearchPlus">
+										<el-button type="primary" icon="search" size="small" @click="getJzxxList('click',jzIndex)">查询</el-button>
+										<el-button type="clear" icon="delete" size="small" @click="clearJzxx">清空</el-button>
+										<el-button type="success" icon="plus" size="small" @click="addJzxx">新增</el-button>
+										<el-button type="danger" icon="delete2" size="small" @click="">删除</el-button>
+									</el-col>
+								</el-row>
+							</el-form>
+						</el-row>
+						<div class="table_container">
+							<el-table border id="table" :data="tableData_building.slice((currentPage_building-1)*pageSize_building,currentPage_building*pageSize_building)"
+								class="tableStyle" :height="tableheight_buliding">
+								<el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
+								<el-table-column prop="jzmc" label="建筑名称" show-overflow-tooltip min-width="33%" align="center">
+									<template slot-scope="scope">
+										<a @click="selectRow_building(scope.row)" type="text" v-text="scope.row.jzmc"></a>
+									</template>
+								</el-table-column>
+								<el-table-column prop="jzsyxzmc" label="建筑使用性质" show-overflow-tooltip min-width="27%" align="center"></el-table-column>
+								<el-table-column prop="jzwz" label="建筑位置" show-overflow-tooltip min-width="30%" align="center"></el-table-column>
+								<el-table-column label="操作" width="65" align="center" v-if="hasPermission('jxcsplan/jxcsplan:edit')">
+									<template slot-scope="scope">
+										<el-button type="text" @click="buildingEdit(scope.row)">编辑</el-button>
+									</template>
+								</el-table-column>
+							</el-table>
+							<!--列表底部工具条和分页符-->
+							<el-row type="flex" justify="end">
+								<el-col :span="18">
+									<el-pagination @current-change="currentPageChange_building" :current-page="currentPage_building" :page-size="pageSize_building"
+										layout="total, prev, pager, next, jumper" :total=parseInt(total_building)>
+									</el-pagination>
+								</el-col>
+							</el-row>
+						</div>
+					</div>
+					<div v-show="addBuildingVisible">
+						<el-form :model="buildingForm" ref="buildingForm" label-width="100px" style="margin:0;">
 						<el-row class="tr mb5">
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5">
@@ -631,46 +530,11 @@
 							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">&nbsp;</el-col>
 							<el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
 								<el-button type="clear" icon="close" size="small" class="btn_cancle" @click="cancelAddBuilding"> 返回</el-button>
-								<el-button type="primary" icon="check" size="small" class="btn_submit" @click="submit('buildingForm')">提交</el-button>
+								<el-button type="primary" icon="check" size="small" class="btn_submit" @click="submitBuildingForm">提交</el-button>
 							</el-col>
 							<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9">&nbsp;</el-col>
 						</el-row>
 					</el-form>
-				</el-dialog>
-				<!--选择所属建筑界面-->
-				<el-dialog title="选择所属建筑" :visible.sync="buildingListVisible" :close-on-click-modal="false">
-					<div id="tableView" v-loading="loading_building" element-loading-text="加载中">
-						<el-row>
-							<el-form :inline="true" class="el-form demo-form-inline">
-								<el-row class="mb5">
-									<el-col :span="12" class="searchInline">
-										<label class="el-form-item__label" style="width:95px;" class="tr vbm">建筑名称</label>
-										<el-input size="small" v-model="searchForm_building.jzmc" placeholder="建筑名称" clearable></el-input>
-									</el-col>
-									<el-col :span="12" class="btnSearchPlus">
-										<el-button type="primary" icon="search" size="small" @click="getJzxxList('click',jzIndex)">查询</el-button>
-										<el-button type="clear" icon="delete" size="small" @click="clearJzxxList">清空</el-button>
-									</el-col>
-								</el-row>
-							</el-form>
-						</el-row>
-						<div class="table_container">
-							<el-table border id="table" :data="tableData_building.slice((currentPage_building-1)*pageSize_building,currentPage_building*pageSize_building)"
-								class="tableStyle" :height="tableheight_buliding" @row-click="selectRow_building">
-								<el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
-								<el-table-column prop="jzmc" label="建筑名称" show-overflow-tooltip min-width="33%" align="center"></el-table-column>
-								<el-table-column prop="jzlxmc" label="建筑类型" show-overflow-tooltip min-width="27%" align="center"></el-table-column>
-								<el-table-column prop="jzwz" label="建筑位置" show-overflow-tooltip min-width="30%" align="center"></el-table-column>
-							</el-table>
-							<!--列表底部工具条和分页符-->
-							<el-row type="flex" justify="end">
-								<el-col :span="18">
-									<el-pagination @current-change="currentPageChange_building" :current-page="currentPage_building" :page-size="pageSize_building"
-										layout="total, prev, pager, next, jumper" :total=parseInt(total_building)>
-									</el-pagination>
-								</el-col>
-							</el-row>
-						</div>
 					</div>
 				</el-dialog>
 			</div>
