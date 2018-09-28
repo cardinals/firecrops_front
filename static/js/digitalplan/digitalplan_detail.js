@@ -23,6 +23,7 @@ new Vue({
             picList: [],
             fjDetailData: '',
             hisDetailData: '',
+            hisPlanData: [],
             //word模板选择
             downVisible: false,
             fmChecked: true,
@@ -58,14 +59,12 @@ new Vue({
         this.planDetails(this.pkid);
         this.disasterSet(this.pkid);
         this.fjDetail(this.pkid);
-        this.hisDetail(this.pkid);
-        this.picDetail();
     },
 
     methods: {
         //标签页
         handleClick: function (e) {
-            console.log(e);
+            // console.log(e);
         },
         //面包屑
         getBreadcrumb() {
@@ -97,6 +96,7 @@ new Vue({
                 }
                 doFindPhoto("YAJB", this.basicDetailData.yajb);
                 this.unitDetail(this.basicDetailData.dxid);
+                this.picDetail();  
                 this.loading = false;
             }.bind(this), function (error) {
                 console.log(error)
@@ -160,6 +160,7 @@ new Vue({
                         });
                     }
                 }
+                this.hisDetail(this.pkid);
             }.bind(this), function (error) {
                 console.log(error)
             })
@@ -373,6 +374,7 @@ new Vue({
                 //edit end
             }
         },
+        //add by huang-rui in 9.15
         //历史预案查询
         hisDetail: function (val) {
             var params = {
@@ -380,24 +382,44 @@ new Vue({
             };
             axios.post('/dpapi/yaxxzl/list/', params).then(function (res) {
                 this.hisDetailData = res.data.result;
+                if (this.basicDetailData.jdh.substr(0, 2) == '21') {
+                    var head = 'http://10.119.119.232:11010';
+                //江苏
+                } else if (this.basicDetailData.jdh.substr(0, 2) == '32') {
+                    var head = 'http://10.119.119.205:11010';
+                }
+                var body = '/attachment/filemanage/configFile!showFile.action';
+                if (this.hisDetailData.length > 0) {
+                    for (var i in this.hisDetailData) {
+                        if (this.hisDetailData[i].fjlxdm == '02') {
+                            this.picList.push({
+                                uuid: this.hisDetailData[i].id,
+                                name: this.hisDetailData[i].zlmc,
+                                url: head + body + this.hisDetailData[i].xgxx,
+                                type:'history'
+                            });
+                        }else if (this.hisDetailData[i].fjlxdm == '01') {
+                            this.hisPlanData.push(this.hisDetailData[i]);
+                        }
+                    }
+                }
             }.bind(this), function (error) {
                 console.log(error)
             })
         },
-        //add by huang-rui in 9.15
         //历史预案下载
         hisdownload: function () {
             if (this.basicDetailData.jdh.substr(0, 2) == '21' || this.basicDetailData.jdh.substr(0, 2) == '32') {
-                if (this.hisDetailData.length > 0) {
+                if (this.hisPlanData.length > 0) {
                     //辽宁
                     if (this.basicDetailData.jdh.substr(0, 2) == '21') {
                         var head = 'http://10.119.119.232:11010';
-                        //江苏
+                    //江苏
                     } else if (this.basicDetailData.jdh.substr(0, 2) == '32') {
                         var head = 'http://10.119.119.205:11010';
                     }
                     var body = '/attachment/filemanage/configFile!showFile.action';
-                    var url = head + body + this.hisDetailData[0].xgxx;
+                    var url = head + body + this.hisPlanData[0].xgxx;
                     window.open(url);
                 } else {
                     this.$message({

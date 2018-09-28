@@ -965,10 +965,11 @@
                                     </div>
                                 </el-tab-pane>
                                 <el-tab-pane label="图片信息" name="fifth">
-                                    <el-row v-for="(item,index) in picList" class="mb5 picList">
+                                    <el-row v-for="(item,index) in picList" class="mb5 picList" style="line-height: 26px;">
                                         <v-text v-text="index+1"></v-text>.
                                         <i class="el-icon-picture mr5 ml5"></i>
                                         <v-text v-text="item.name" @click="showPic(index)"></v-text>
+                                        <el-tag v-if="item.type==='history'" size="mini" type="info">历史图片</el-tag>
                                     </el-row>
                                     <!-- <div>
                                         <el-button type="primary" icon="search" size="small" @click="download()">附件下载</el-button>
