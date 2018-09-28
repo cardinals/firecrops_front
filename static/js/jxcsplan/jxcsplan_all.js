@@ -9,7 +9,8 @@ $(function () {
 
 //退出登录
 function logout(){
-    window.location.href = "../login.html";
+    $('#login-out-form')[0].submit();
+    // window.location.href = "../login.html";
 }
 
 //axios默认设置cookie
