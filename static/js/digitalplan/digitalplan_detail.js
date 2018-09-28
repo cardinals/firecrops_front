@@ -232,7 +232,7 @@ new Vue({
             })
         },
 
-        //模板导出
+        //模板压缩包导出
         downloadModule: function () {
             location.href=baseUrl +"/planShare/exportData/"+this.pkid;
         },
