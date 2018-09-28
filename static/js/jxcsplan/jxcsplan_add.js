@@ -675,6 +675,9 @@ new Vue({
             }
             // });
         },
+        cancel: function () {
+            loadDiv("jxcsplan/jxcsplan_list");
+        },
         //新增建筑提交
         submitBuildingForm: function(){
             if (this.buildingForm.jzmc == null || this.buildingForm.jzmc == "") {

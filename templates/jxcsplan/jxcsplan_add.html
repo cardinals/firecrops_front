@@ -343,8 +343,11 @@
 						<el-row>
 							<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+									<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
+								<!--
 								<el-button type="success" icon="document" size="small" class="btn_save" @click="save('addForm')">暂存</el-button>
-								<el-button type="primary" icon="check" size="small" class="btn_submit" @click="submit('addForm')">提交</el-button>
+								-->
+								<el-button type="success" icon="check" size="small" class="btn_submit" @click="submit('addForm')">提交</el-button>
 							</el-col>
 							<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
 						</el-row>
