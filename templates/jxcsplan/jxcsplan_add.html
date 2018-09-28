@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="../../static/css/digitalplan/digitalplan_add.css">
-	<title>新增重点单位预案</title>
+	<title>新增九小场所</title>
 </head>
 
 <body class="fw f14 main-index-body">
@@ -71,16 +71,6 @@
 								<el-input size="small" v-model="addForm.zbdh" placeholder="值班电话"></el-input>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">备注</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-input size="small" v-model="addForm.bz" placeholder="备注"></el-input>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-						</el-row>
-						
 					</el-form>
 				</div>
 				<!--消防管辖-->
@@ -128,7 +118,7 @@
 							<el-label class="mr5 vbm">经度</el-label>
 						</el-col>
 						<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-							<el-input-number size="small" :precision="2" :min="0" v-model="addForm.lon" placeholder="经度"></el-input-number>
+							<el-input-number size="small" :precision="2" v-model="addForm.lon" placeholder="经度"></el-input-number>
 						</el-col>
 						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 							<el-label class="mr5 vbm">毗邻情况(东)</el-label>
@@ -148,7 +138,7 @@
 							<el-label class="mr5 vbm">纬度</el-label>
 						</el-col>
 						<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-							<el-input-number size="small" :precision="2" :min="0" v-model="addForm.lat" placeholder="纬度"></el-input-number>
+							<el-input-number size="small" :precision="2" v-model="addForm.lat" placeholder="纬度"></el-input-number>
 						</el-col>
 						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 							<el-label class="mr5 vbm">毗邻情况(西)</el-label>
@@ -196,7 +186,7 @@
 							<el-label class="mr5 vbm">周边消防通道</el-label>
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-							<el-input size="small" v-model="addForm.zbxftd" placeholder="周边消防通道"></el-input>
+							<el-input size="small" v-model="addForm.zbxftd" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="周边消防通道"></el-input>
 						</el-col>
 						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -212,14 +202,14 @@
 							<el-label class="mr5 vbm">重点部位描述</el-label>
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-							<el-input size="small" v-model="addForm.zdbwms" placeholder="重点部位描述"></el-input>
+							<el-input size="small" v-model="addForm.zdbwms" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="重点部位描述"></el-input>
 						</el-col>
 						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 							<el-label class="mr5 vbm">功能分区描述</el-label>
 						</el-col>
 						<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-							<el-input size="small" v-model="addForm.gnfqms" placeholder="功能分区描述"></el-input>
+							<el-input size="small" v-model="addForm.gnfqms" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="功能分区描述"></el-input>
 						</el-col>
 						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 					</el-row>
@@ -265,7 +255,7 @@
 							<el-card class="card_style">
 								<div slot="header" class="clearfix">
 									<strong class="card_title_font">消防设施{{index+1}}</strong>
-									<el-button type="danger" icon="minus" size="small" @click.prevent="removeFireDomain(domain)" class="r" style="margin:5px 0 0"></el-button>
+									<el-button type="danger" icon="minus" size="small" @click.prevent="removeFireDomain(domain)" class="r" style="margin: 3px -20px 0px;"></el-button>
 								</div>
 								<el-row class="tr">
 									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -320,7 +310,7 @@
 				<div id="uploadPlan" class="pt15">
 					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
 						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-							<strong style="color: #20a0ff;">预案上传</strong>
+							<strong style="color: #20a0ff;">附件上传</strong>
 						</el-col>
 					</el-row>
 					<el-row>
@@ -336,6 +326,22 @@
 							</el-form>
 						</el-col>
 						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
+					</el-row>
+				</div>
+				<div id="remark" class="pt15">
+					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<strong style="color: #20a0ff;">备注</strong>
+						</el-col>
+					</el-row>
+					<el-row class="tr">
+						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+							<el-label class="mr5 vbm">备注</el-label>
+						</el-col>
+						<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
+							<el-input size="small" v-model="addForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+						</el-col>
+						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 					</el-row>
 				</div>
 				<el-row class="mt10 mb20">
