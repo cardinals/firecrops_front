@@ -14,32 +14,39 @@
                 <!-- 面包屑 -->
                 <div id="breadcrumb_box"></div>
                 <div id="tableView">
-                    <div class="nameBoxPic">
-                        <div id="basic-Inform-Picture" class="detailPic">
+                    <div class="nameBox">
+                        <div id="basic-Inform-Picture">
                             <img id="photo" class="detail_picture_size">
                         </div>
-                        <div class="dibPic">
+                        <div class="dib" id="basic-Inform-Title" style="max-width: 760px;">
                             <div>
-                                <h3 class="dib inform-h3" v-text="detailData.jzmc"></h3>&nbsp&nbsp
-                                <el-tag color="#0f82ee" size="medium" style="font-size:13px;" v-if="detailData.jzlxmc !== null" v-text="detailData.jzlxmc"></el-tag>
+                                <div>
+                                    <h3 class="dib inform-h3" v-text="detailData.jzmc"></h3>&nbsp&nbsp
+                                    <el-tag color="#0f82ee" size="medium" style="font-size:13px;" v-if="detailData.jzlxmc !== null" v-text="detailData.jzlxmc"></el-tag>
+                                </div>
+                                <dl>
+                                    <img src="../../static/images/location.png">
+                                    <dt class="dib inform-small-title detail_margin">位置：</dt>
+                                    <dd class="dtdlStyle" v-text="detailData.jzwz||'无'"></dd>
+                                    <br>
+                                    <img src="../../static/images/detail_xclx.png">
+                                    <dt class="dib inform-small-title detail_margin">辖区行车路线：</dt>
+                                    <dd class="dtdlStyle" v-text="detailData.xqxclx||'无'"></dd>
+                                    <br>
+                                    <img src="../../static/images/detail_ddsc.png">
+                                    <dt class="dib inform-small-title detail_margin">预计到达时长(min)：</dt>
+                                    <dd class="dtdlStyle" v-text="detailData.yjddsc||'无'"></dd>
+                                    <br>
+                                    <img src="../../static/images/detail_zb.png">
+                                    <dt class="dib inform-small-title detail_margin">经度：</dt>
+                                    <dd class="dtdlStyle" v-text="detailData.lon||'无'"></dd>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <dt class="dib inform-small-title detail_margin">纬度：</dt>
+                                    <dd class="dtdlStyle" v-text="detailData.lat||'无'"></dd>
+                                </dl>
                             </div>
-                            <dl>
-                                <dt class="dib inform-small-title detail_margin">位置：</dt>
-                                <dd class="dtdlStyle" v-text="detailData.jzwz||'无'"></dd>
-                                <br>
-                                <dt class="dib inform-small-title detail_margin">经度：</dt>
-                                <dd class="dtdlStyle" v-text="detailData.lon||'无'"></dd>
-                                <br>
-                                <dt class="dib inform-small-title detail_margin">纬度：</dt>
-                                <dd class="dtdlStyle" v-text="detailData.lat||'无'"></dd>
-                                <br>
-                                <dt class="dib inform-small-title detail_margin">辖区行车路线：</dt>
-                                <dd class="dtdlStyle" v-text="detailData.xqxclx||'无'"></dd>
-                                <br>
-                                <dt class="dib inform-small-title detail_margin">预计到达时长(min)：</dt>
-                                <dd class="dtdlStyle" v-text="detailData.yjddsc||'无'"></dd>
-                            </dl>
                         </div>
+                        
                         <!--
                         <div class="dib" id="Title-zzl" v-show="isZzlShow">
                             <div>
