@@ -34,7 +34,7 @@ new Vue({
             this.loading = true;
             axios.get('/dpapi/jxcsjzxx/' + val).then(function (res) {
                 this.detailData = res.data.result;
-                doFindPhoto("JXCSJZXX", '0000');
+                doFindPhoto("JXCSJZXX", '0001');
                 this.loading = false;
             }.bind(this), function (error) {
                 console.log(error)
