@@ -4,7 +4,7 @@ $(function () {
     var params = {
         unscid : unscid,
     }
-    loadDiv("jxcsplan/jxcsplan_xxcj");
+    loadDiv("jxcsplan/jxcsplan_add");
 });
 
 //退出登录
