@@ -449,8 +449,6 @@ new Vue({
                         this.addForm.xfssList[i].xfsslx = xfsslx_tmp;
                     }
                     
-                    
-                    
                 }.bind(this), function (error) {
                     console.log(error)
                 })
@@ -640,6 +638,8 @@ new Vue({
                         xfssList: this.addForm.xfssList,//消防设施
                         datasource: this.shiroData.organizationVO.jgid,
                         jdh:this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                        sjzt: '03',     //数据状态（01编辑中，03待审批，04已驳回，05已审批）
+                        shzt: '01'      //审核状态（01未审核，02未通过。03已通过，99其他）
                     };
                     axios.post('/dpapi/jxcsjbxx/doInsertByVo', params).then(function (res) {
                         //this.upLoadData.yaid = res.data.result.uuid;
@@ -687,6 +687,8 @@ new Vue({
                         xfssList: this.addForm.xfssList,//消防设施
                         xgrid: this.shiroData.userid,
                         xgrmc: this.shiroData.realName,
+                        sjzt: '03',     //数据状态（01编辑中，03待审批，04已驳回，05已审批）
+                        shzt: '01'      //审核状态（01未审核，02未通过。03已通过，99其他）
                     };
                     axios.post('/dpapi/jxcsjbxx/doUpdateJxcsByVO', params).then(function (res) {
                         if (this.isFile) {
