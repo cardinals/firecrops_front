@@ -88,6 +88,12 @@ var vue = new Vue({
                 this.currentPage = 1;
             }
             this.loading = true;//表格重新加载
+            //add by yushch 中队显示总队所有数据bug解决
+            var xfgx = "";
+            if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                xfgx = this.shiroData.organizationVO.uuid;
+            }
+            //end 20180929
             var params = {
                 dwmc: this.searchForm.dwmc,
                 dwdz: this.searchForm.dwdz,
@@ -96,7 +102,9 @@ var vue = new Vue({
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,
-                orgJgid: this.shiroData.organizationVO.jgid
+                orgJgid: this.shiroData.organizationVO.jgid,
+                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                xfgx:xfgx
             }
             axios.post('/dpapi/jxcsjbxx/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage - 1) * this.pageSize);

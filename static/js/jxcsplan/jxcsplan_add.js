@@ -101,7 +101,6 @@ new Vue({
             jzflData: [],//建筑分类
             //消防设施
             XfsslxDataTree: [],//消防设施类型
-
             dialogTitle:"选择建筑信息",
 
             //级联下拉框
@@ -244,11 +243,11 @@ new Vue({
             this.loading_building = true;
             var params = {
                 jzmc: this.searchForm_building.jzmc,
-             //   jdh: this.shiroData.organizationVO.jgid.substr(0,2) + '000000',
                 pageSize: this.pageSize_building,
                 pageNum: this.currentPage_building,
                 orgUuid: this.shiroData.organizationVO.uuid,
-                orgJgid: this.shiroData.organizationVO.jgid
+                orgJgid: this.shiroData.organizationVO.jgid,
+                jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
             };
             axios.post('/dpapi/jxcsjzxx/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage_building - 1) * this.pageSize_building);
@@ -369,6 +368,7 @@ new Vue({
                 xgrmc: '',
                 xgsj: '',
                 jdh: '',
+                datasource:'',
                 key: Date.now()
             });
         },
@@ -636,9 +636,10 @@ new Vue({
                         bz: this.addForm.bz,//备注
                         cjrid: this.shiroData.userid,
                         cjrmc: this.shiroData.realName,
-                        jdh: this.shiroData.organizationVO.jgid,
                         jzxxList: this.addForm.jzxxList,//建筑信息
-                        xfssList: this.addForm.xfssList//消防设施
+                        xfssList: this.addForm.xfssList,//消防设施
+                        datasource: this.shiroData.organizationVO.jgid,
+                        jdh:this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                     };
                     axios.post('/dpapi/jxcsjbxx/doInsertByVo', params).then(function (res) {
                         //this.upLoadData.yaid = res.data.result.uuid;
@@ -680,12 +681,12 @@ new Vue({
                         zdbwms: this.addForm.zdbwms,//重点部位描述
                         zbxftd: this.addForm.zbxftd,//周边消防通道
                         bz: this.addForm.bz,//备注
-                        jdh: this.shiroData.organizationVO.jgid,
+                        datasource: this.shiroData.organizationVO.jgid,
+                        jdh:this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                         jzxxList: this.addForm.jzxxList,//建筑信息
                         xfssList: this.addForm.xfssList,//消防设施
                         xgrid: this.shiroData.userid,
                         xgrmc: this.shiroData.realName,
-                        
                     };
                     axios.post('/dpapi/jxcsjbxx/doUpdateJxcsByVO', params).then(function (res) {
                         if (this.isFile) {
