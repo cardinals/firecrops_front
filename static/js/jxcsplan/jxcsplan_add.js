@@ -33,7 +33,7 @@ new Vue({
                 jxdwlx: "",//单位类型
                 dwdz: "",//单位地址
                 dwgk: "",//单位概况
-                xzqh: "",//行政区划
+                xzqh: [],//行政区划
                 zbdh: "",//值班电话
                 xfgx: [],//消防管辖
                 xqfzr: "",//辖区负责人
@@ -62,7 +62,7 @@ new Vue({
                 jzid: "",
                 jzmc: "",
                 jzwz: "",
-                jzsyxz: "",
+                jzsyxz: [],
                 jzjg: "",
                 zdmj: "",
                 jzmj: "",
@@ -140,6 +140,7 @@ new Vue({
 
         }
     },
+    
     created: function () {
         var type = getQueryString("type");
         if (type == "XZ") {
@@ -148,17 +149,17 @@ new Vue({
             loadBreadcrumb("九小场所管理", "九小场所编辑");
         }
         this.shiroData = shiroGlobal;
+        //this.XFSSLX();//消防设施类型
         this.getAllXzqhDataTree();//行政区划
         this.XFGX();//消防管辖级联选择
         this.JXDWLX();//九小单位类型
         this.JZSYXZ();//建筑使用性质
         this.JZJG();//建筑结构
-        this.XFSSLX();//消防设施类型
         this.JZFL();//建筑分类
     },
     mounted: function () {
         this.status = getQueryString("ID");
-        this.searchClick();
+        //this.searchClick();
     },
     methods: {
         //行政区划级联选择数据
@@ -179,6 +180,7 @@ new Vue({
             };
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.XFGX_dataTree = res.data.result;
+                this.XFSSLX();//消防设施类型
             }.bind(this), function (error) {
                 console.log(error);
             });
@@ -219,6 +221,7 @@ new Vue({
         XFSSLX: function(){
             axios.get('/api/codelist/getDzlxTree/XFSSLX').then(function (res) {
                 this.XfsslxDataTree = res.data.result;
+                this.searchClick();
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -326,7 +329,7 @@ new Vue({
                 this.buildingForm = res.data.result;
                 //建筑使用性质格式化
                 if (this.buildingForm.jzsyxz == null) {
-                    this.buildingForm.jzsyxz = '';
+                    this.buildingForm.jzsyxz = [];
                 }
                 else if (this.buildingForm.jzsyxz.endsWith("000")) {
                     var jzsyxz = this.buildingForm.jzsyxz;
@@ -349,6 +352,7 @@ new Vue({
             this.buildingForm = [];
             this.addBuildingVisible = false;
             this.buildingSearch = true;
+            
         },
         //消防信息增加
         addFireDomain: function () {
@@ -378,36 +382,75 @@ new Vue({
             } else {  //修改
                 //基本信息查询
                 axios.get('/dpapi/jxcsjbxx/' + this.status).then(function (res) {
-                    //this.addForm = res.data.result;
-                    this.addForm.dxid = res.data.result.dxid;
-                    this.addForm.dwmc = res.data.result.dwmc;
-                    this.addForm.jxdwlx = res.data.result.jxdwlx;
-                    this.addForm.dwdz = res.data.result.dwdz;
-                    this.addForm.dwgk = res.data.result.dwgk;
-                    this.addForm.xzqh = res.data.result.xzqh;
-                    this.addForm.zbdh = res.data.result.zbdh;
-                    this.addForm.xfgx = res.data.result.xfgx;
-                    this.addForm.xqfzr = res.data.result.xqfzr;
-                    this.addForm.xqfzrdh = res.data.result.xqfzrdh;
-                    this.addForm.lon = res.data.result.lon;
-                    this.addForm.lat = res.data.result.lat;
-                    this.addForm.plqkd = res.data.result.plqkd;
-                    this.addForm.plqkn = res.data.result.plqkn;
-                    this.addForm.plqkx = res.data.result.plqkx;
-                    this.addForm.plqkb = res.data.result.plqkb;
-                    this.addForm.gnfqms = res.data.result.gnfqms;
-                    this.addForm.zdbwms = res.data.result.zdbwms;
-                    this.addForm.zbxftd = res.data.result.zbxftd;
-                    this.addForm.bz = res.data.result.bz;
-                    this.addForm.jzfl = res.data.result.jzfl;
-                    
+                    var result = res.data.result;
+                    this.addForm = res.data.result;
+                    //行政区划
+                    var xzqhArray = [];
+                    if (result.xzqh != null && result.xzqh != "" && result.xzqh.substr(2, 4) != "0000") {
+                        xzqhArray.push(result.xzqh.substr(0, 2) + "0000");
+                        if (result.xzqh.substr(4, 2) != "00") {
+                            xzqhArray.push(result.xzqh.substr(0, 4) + "00");
+                        }
+                    }
+                    xzqhArray.push(result.xzqh);
+                    this.addForm.xzqh = xzqhArray;
+                    //消防管辖
+                    var xfgxArray = [];
+                    var temp = this.addForm.xfgx;
+                    for (var i in this.XFGX_dataTree) {
+                        if (temp == this.XFGX_dataTree[i].dzid) {
+                            xfgxArray.push(this.XFGX_dataTree[i].dzid);
+                        } else {
+                            for (var j in this.XFGX_dataTree[i].children) {
+                                if (temp == this.XFGX_dataTree[i].children[j].dzid) {
+                                    xfgxArray.push(this.XFGX_dataTree[i].dzid, this.XFGX_dataTree[i].children[j].dzid);
+                                } else {
+                                    for (var k in this.XFGX_dataTree[i].children[j].children) {
+                                        if (temp == this.XFGX_dataTree[i].children[j].children[k].dzid) {
+                                            xfgxArray.push(this.XFGX_dataTree[i].dzid, this.XFGX_dataTree[i].children[j].dzid, this.XFGX_dataTree[i].children[j].children[k].dzid);
+                                        } else {
+                                            for (var n in this.XFGX_dataTree[i].children[j].children[k].children) {
+                                                if (temp == this.XFGX_dataTree[i].children[j].children[k].children[n].dzid) {
+                                                    xfgxArray.push(this.XFGX_dataTree[i].dzid, this.XFGX_dataTree[i].children[j].dzid, this.XFGX_dataTree[i].children[j].children[k].dzid, this.XFGX_dataTree[i].children[j].children[k].children[n].dzid);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    this.addForm.xfgx = xfgxArray;
                     //doFindPhoto("JXDWLX", this.jbxxData.jxdwlx);
+                    
                 }.bind(this), function (error) {
                     console.log(error)
                 })
                 //消防设施查询
                 axios.get('/dpapi/jxcsxfss/doFindXfssByDwid/' + this.status).then(function (res) {
                     this.addForm.xfssList = res.data.result;
+                     //消防设施类型格式化
+                    for(var i in this.addForm.xfssList){
+                        var xfsslx_tmp = this.addForm.xfssList[i].xfsslx;
+                        if (xfsslx_tmp != '' && xfsslx_tmp != null) {
+                            if (xfsslx_tmp.endsWith("000")) {
+                                var jbxx_xfsslx = xfsslx_tmp;
+                                xfsslx_tmp = [];
+                                xfsslx_tmp.push(jbxx_xfsslx);
+                            } else {
+                                var jbxx_xfsslx1 = xfsslx_tmp.substring(0, 1) + '000';
+                                var jbxx_xfsslx2 = xfsslx_tmp;
+                                xfsslx_tmp = [];
+                                xfsslx_tmp.push(jbxx_xfsslx1, jbxx_xfsslx2);
+                            }
+                        } else {
+                            xfsslx_tmp = [];
+                        }
+                        this.addForm.xfssList[i].xfsslx = xfsslx_tmp;
+                    }
+                    
+                    
+                    
                 }.bind(this), function (error) {
                     console.log(error)
                 })
@@ -451,7 +494,7 @@ new Vue({
                     showClose: true
                 });
                 return false;
-            }  else if (this.addForm.xfgx == []) {
+            }  else if (this.addForm.xfgx == [] ||this.addForm.xfgx.length == 0) {
                 this.$message.warning({
                     message: "请选择消防管辖！",
                     showClose: true
@@ -613,7 +656,7 @@ new Vue({
                     })
                 } else { //修改
                     var params = {
-                        dxid: this.addForm.dxid,
+                        uuid: this.addForm.uuid,
                         dwmc: this.addForm.dwmc,
                         jxdwlx: this.addForm.jxdwlx,
                         dwdz: this.addForm.dwdz,//单位地址
@@ -640,11 +683,11 @@ new Vue({
                         jdh: this.shiroData.organizationVO.jgid,
                         jzxxList: this.addForm.jzxxList,//建筑信息
                         xfssList: this.addForm.xfssList,//消防设施
-                        zzrid: this.shiroData.userid,
-                        zzrmc: this.shiroData.realName,
+                        xgrid: this.shiroData.userid,
+                        xgrmc: this.shiroData.realName,
                         
                     };
-                    axios.post('/dpapi/digitalplanlist/doUpdateByVO', params).then(function (res) {
+                    axios.post('/dpapi/jxcsjbxx/doUpdateJxcsByVO', params).then(function (res) {
                         if (this.isFile) {
                             var params1 = {
                                 yaid: this.status,
@@ -660,10 +703,10 @@ new Vue({
                             })
                         } else {
                             this.$message({
-                                message: "成功保存预案信息",
+                                message: "成功保存九小场所信息",
                                 showClose: true
                             });
-                            loadDiv("digitalplan/digitalplan_list");
+                            loadDiv("jxcsplan/jxcsplan_list");
                         }
                     }.bind(this), function (error) {
                         console.log(error);
