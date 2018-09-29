@@ -168,6 +168,10 @@ treeMenuTemplate.push('</li>');
             else if(this.model.url=="/basicinfo/organization"){
                 realUrl=baseUrl+"/templates/system/organization_list.html"
             }
+            //10
+            else if(this.model.url=="/jxcsplan/jxcsplan_approve"){
+                realUrl=baseUrl+"/templates/jxcsplan/jxcsplan_approve.html"
+            }
             return realUrl+"?index="+this.model.index;
         }
     },

@@ -48,28 +48,28 @@
 					<div class="application-text map-bg2">
 						<div class="application-imge2" style="background-image: url(../../static/images/icon_unit.png);"></div>
 						<div class="application-name2">重点单位总数（个)</div>
-						<div class="application-num2" v-text=zddw></div>
+						<div class="application-num2" v-text=totalDate.zddw></div>
 					</div>
 				</div>
 				<div class="h100 w25 l p5">
 					<div class="application-text map-bg2">
 						<div class="application-imge2" style="background-image: url(../../static/images/icon_building.png);"></div>
 						<div class="application-name2">建筑信息总数（个）</div>
-						<div class="application-num2" v-text=jzxx></div>
+						<div class="application-num2" v-text=totalDate.jzxx></div>
 					</div>
 				</div>
 				<div class="h100 w25 l p5">
 					<div class="application-text map-bg2">
 						<div class="application-imge2" style="background-image: url(../../static/images/icon_emergency.png);"></div>
 						<div class="application-name2">数字化预案总数（个）</div>
-						<div class="application-num2" v-text=szhya></div>
+						<div class="application-num2" v-text=totalDate.szhya></div>
 					</div>
 				</div>
 				<div class="h100 w25 l p5">
 					<div class="application-text map-bg2">
 						<div class="application-imge2" style="background-image: url(../../static/images/icon_ranks.png);"></div>
 						<div class="application-name2">消防队站总数（个）</div>
-						<div class="application-num2" v-text=xfdz></div>
+						<div class="application-num2" v-text=totalDate.xfdz></div>
 					</div>
 				</div>
 			</div>
@@ -128,8 +128,8 @@
 							<div id="scroll" class="application-text">
 								<ul>
 									<li v-for="data in scrollData_DSH">
-										<a href="#" @click="jump()" style="color:#29bb9d;" v-text="data.zddwmc"></a>
-										<div style="color:#ff6364;" v-if="data.type == '1'" v-text="'待审核'"></div>
+										<a href="#" @click="jump()" style="color:#29bb9d;" v-text="data.name"></a>
+										<div style="color:#ff6364;" v-text="'待审核'"></div>
 									</li>
 								</ul>
 							</div>
@@ -139,8 +139,8 @@
 								<div id="scroll" class="application-text">
 									<ul>
 										<li v-for="data in scrollData_DGX">
-											<a style="color:#29bb9d;text-decoration:none; " v-text="data.zddwmc"></a>
-											<div style="color:#fdc107;" v-if="data.type == '2'" v-text="'待更新'+ data.count"></div>
+											<a style="color:#29bb9d;text-decoration:none; " v-text="data.name"></a>
+											<div style="color:#fdc107;" v-text="'待更新'+ data.value"></div>
 										</li>
 									</ul>
 								</div>
@@ -179,13 +179,12 @@
 
 </body>
 
+<script type="text/javascript" src="../../static/js/lib.js"></script>
 <script type="text/javascript" src="../../static/js/echarts-2/echarts-all.js"></script>
 <script type="text/javascript" src="../../static/js/echarts-4/echarts.js"></script>
-<script type="text/javascript" src="../../static/js/zzzlib/vue.js"></script>
 <!-- <script type="text/javascript" src="../../static/js/bigscreen/tagscloud.js"></script> -->
 <script type="text/javascript" src="../../static/js/bigscreen/scroll.js"></script>
 <script type="text/javascript" src="../../static/js/bigscreen/big_screen_overview.js"></script>
-<script type="text/javascript" src="../../static/js/zzzlib/jquery-3.2.1.min.js"></script>
 	<script>
 		$(function () {
 				
