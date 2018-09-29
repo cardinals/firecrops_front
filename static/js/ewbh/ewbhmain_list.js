@@ -77,12 +77,11 @@ var vue = new Vue({
         //新增
         addClick: function () {
             window.open("../../templates/all.html?url=/ewbh/ewbh&type=XZ");
-            // loadDivParam("ewbh/ewbh_list", params);
         },
         //编辑
         editClick: function (val) {
-            window.open("../../templates/all.html?url=/ewbh/ewbh&type=XZ&ID=" + val.uuid);
-            // loadDivParam("ewbh/ewbh_list", params);
+            // debugger
+            window.open("../../templates/all.html?url=/ewbh/ewbh&type=BJ&ID=" + val.uuid + "&zddwid=" + val.zddwid + "&bhmc=" + val.wjm + "&bhnr=" + val.bhnr);
         },
         //删除
         deleteClick: function () {

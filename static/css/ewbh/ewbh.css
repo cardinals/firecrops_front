@@ -5,7 +5,7 @@
     padding-left: 0;
 }
 .el-tabs__item {
-    padding: 0 5px;
+    padding: 0 6px;
 }
 .el-tabs__active-bar{
     width: 66px;
@@ -19,11 +19,11 @@
 #menuView{
     background-color: #f5f7f9;
     padding: 5px;
-    width: 280px;
+    width: 290px;
     height: 100%;
 }
 iframe{
-    width:calc(100% - 280px);
+    width:calc(100% - 290px);
     height:100%;
 }
 #menuView .el-tabs{
@@ -58,4 +58,8 @@ iframe{
     min-width: 25px;
     height: 22px;
     line-height: 18px;
+}
+.el-tabs__item {
+    height: 35px;
+    line-height: 35px;
 }

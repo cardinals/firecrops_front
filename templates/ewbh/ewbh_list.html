@@ -5,17 +5,20 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="../../static/css/ewbh/ewbh.css">
 	<title>二维标绘</title>
-	<!-- <link rel="stylesheet" type="text/css" href="../../static/css/zxx.lib.css"> -->
+	
 </head>
 
 <body class="fw f14 main-index-body">
 	<div id="app">
 		<div class="main-box">
-			<!-- <div class="main-container"> -->
-			<!-- <div id="lib :: main_container_header('二维标绘','二维标绘')"></div> -->
-			<!-- 面包屑 -->
-			<!-- <div id="breadcrumb_box"></div> -->
 			<div id="menuView" class="l pl5">
+				<el-row style="height:24px;" class="mb5">
+					<span class="poi" @click="returnZddw">> 重点单位</span>
+					<span v-if="basicInfoShow">> </span>
+					<el-tag v-if="basicInfoShow" type="primary" :closable="true" @close="returnZddw">
+						<v-text v-text="zddwmc"></v-text>标绘
+					</el-tag>
+				</el-row>
 				<el-row class="mb5">
 					<el-col :span="20">
 						<el-input size="small" v-model="searchForm.dwmc" placeholder="单位名称"></el-input>
@@ -36,17 +39,12 @@
 							</el-row>
 						</div>
 					</el-card>
-					<el-row type="flex" justify="end" class="mt10">
+					<el-row type="flex" justify="end" class="mt5">
 						<el-pagination small @current-change="currentPageChange" :current-page="currentPage" layout="total, prev, jumper, next" :total=parseInt(total)>
 						</el-pagination>
 					</el-row>
 				</div>
-				<el-row v-show="basicInfoShow">
-					<el-button type="text" icon="arrow-left" @click="returnZddw">返回重点单位</el-button>
-					<!-- <a @click="returnZddw" class="poi">返回重点单位</a> -->
-					<!-- <span text="zddwDetails.dwmc"></span> -->
-				</el-row>
-				<el-tabs v-show="basicInfoShow" v-model="activeName">
+				<el-tabs v-show="basicInfoShow" v-model="activeName" type="card">
 					<el-tab-pane label="消防力量" name="first">
 						<el-card class="card_style" v-for="xfll in xfllData">
 							<el-row>
@@ -371,14 +369,10 @@
 					</el-tab-pane>
 				</el-tabs>
 			</div>
+			<iframe id="ewbhmain"></iframe>
 
-			<iframe src="http://localhost:8082/"></iframe>
-			<!-- </div> -->
-			<!-- </div> -->
-			<!-- main-container -->
 		</div>
 	</div>
 </body>
 <script src="../../static/js/ewbh/ewbh_list.js"></script>
-
 </html>
