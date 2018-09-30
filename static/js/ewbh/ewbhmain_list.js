@@ -94,9 +94,9 @@ var vue = new Vue({
                     this.multipleSelection[i].xgrid = this.shiroData.userid;
                     this.multipleSelection[i].xgrmc = this.shiroData.realName;
                 }
-                axios.post('/dpapi/importantunits/doDeleteBatch', this.multipleSelection).then(function (res) {
+                axios.post('/dpapi/ewbh/doDeleteEquipment', this.multipleSelection).then(function (res) {
                     this.$message({
-                        message: "成功删除" + this.multipleSelection.length + "条重点单位信息",
+                        message: "成功删除" + res.data.result + "条标绘信息",
                         showClose: true,
                         onClose: this.searchClick('delete')
                     });
