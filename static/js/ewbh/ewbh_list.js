@@ -44,7 +44,6 @@ var vue = new Vue({
                 this.bhmc = getQueryString("bhmc");
                 this.getZddwInfo();
             }
-            this.type = 'BJ';
         },
         //返回重点单位列表
         returnZddw: function () {
@@ -111,7 +110,6 @@ var vue = new Vue({
         },
         //向iframe发送参数
         sendInforToIframe: function () {
-            // debugger
             var params = {};
             if (getQueryString("type") === "XZ") {
                 params = {
@@ -132,6 +130,7 @@ var vue = new Vue({
                         xgrmc: this.shiroData.realName,
                         bhnr: getQueryString("bhnr")
                     }
+                    this.type = 'BJ';
                 } else {
                     params = {
                         type: 'BJ',

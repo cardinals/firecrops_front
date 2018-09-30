@@ -81,7 +81,7 @@ var vue = new Vue({
         //编辑
         editClick: function (val) {
             // debugger
-            window.open("../../templates/all.html?url=/ewbh/ewbh&type=BJ&ID=" + val.uuid + "&zddwid=" + val.zddwid + "&bhmc=" + val.wjm + "&bhnr=" + val.bhnr);
+            window.open("../../templates/all.html?url=/ewbh/ewbh&type=BJ&ID=" + val.uuid + "&zddwid=" + val.zddwid + "&bhmc=" + val.wjm);
         },
         //删除
         deleteClick: function () {
