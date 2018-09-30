@@ -16,7 +16,7 @@ var vue = new Vue({
             searchForm: { dwmc: '' },
             zddwListData: [],//重点单位列表
             currentPage: 1,//当前页
-            pageSize: 9,//分页大小
+            pageSize: 10,//分页大小
             total: 0,//总记录数
             zddwDetails: {},
             ewbhDetails: {},
