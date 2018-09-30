@@ -117,7 +117,8 @@ var vue = new Vue({
                     zddwid: this.zddwid,
                     cjrid: this.shiroData.userid,
                     cjrmc: this.shiroData.realName,
-                    jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000'
+                    jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
+                    datasource: this.shiroData.organizationVO.jgid
                 }
             } else if (getQueryString("type") === "BJ") {
                 if (this.type === "editInit") {
@@ -127,14 +128,17 @@ var vue = new Vue({
                         wjm: this.bhmc,
                         zddwid: this.zddwid,
                         xgrid: this.shiroData.userid,
-                        xgrmc: this.shiroData.realName,
-                        bhnr: getQueryString("bhnr")
+                        xgrmc: this.shiroData.realName
                     }
                     this.type = 'BJ';
                 } else {
                     params = {
                         type: 'BJ',
+                        uuid: this.uuid,
+                        wjm: this.bhmc,
                         zddwid: this.zddwid,
+                        xgrid: this.shiroData.userid,
+                        xgrmc: this.shiroData.realName
                     }
                 }
             }

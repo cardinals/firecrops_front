@@ -5,7 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="../../static/css/ewbh/ewbh.css">
 	<title>二维标绘</title>
-	
+
 </head>
 
 <body class="fw f14 main-index-body">
@@ -46,9 +46,10 @@
 				</div>
 				<el-tabs v-show="basicInfoShow" v-model="activeName" type="card">
 					<el-tab-pane label="消防力量" name="first">
-						<el-card class="card_style" v-for="xfll in xfllData">
+						<el-row v-if="xfllData=='' || xfllData==null" class="b">无消防力量信息</el-row>
+						<el-card v-else class="card_style" v-for="xfll in xfllData">
 							<el-row>
-								<v-text v-text="xfll.xfdwlxmc"></v-text>
+								<v-text v-text="xfll.xfdwlxmc" class="b"></v-text>
 							</el-row>
 							<el-row>
 								人数：
@@ -58,304 +59,311 @@
 						</el-card>
 					</el-tab-pane>
 					<el-tab-pane label="消防设施" name="second">
-						<el-row v-if="xfssData[1001]!=null && xfssData[1001]!=''">安全出口</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[1001]">
-							<el-row>
-								数量：
-								<v-text v-text="xfss.sl"></v-text>
-							</el-row>
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[1002]!=null && xfssData[1002]!=''">疏散楼梯</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[1002]">
-							<el-row>
-								数量：
-								<v-text v-text="xfss.sl"></v-text>
-							</el-row>
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[1003]!=null && xfssData[1003]!=''">消防电梯</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[1003]">
-							<el-row>
-								数量：
-								<v-text v-text="xfss.sl"></v-text>
-							</el-row>
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[1004]!=null && xfssData[1004]!=''">避难层（间）</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[1004]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[1005]!=null && xfssData[1005]!=''">应急广播</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[1005]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[2001]!=null && xfssData[2001]!=''">消防泵房</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[2001]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-							<el-row>
-								消火栓泵数量：
-								<v-text v-text="xfss.xhssl"></v-text>
-							</el-row>
-							<el-row>
-								喷淋泵数量：
-								<v-text v-text="xfss.plbsl"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[1002]!=null && xfssData[1002]!=''">消防水箱</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[1002]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[2003]!=null && xfssData[2003]!=''">消防水池</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[2003]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[2004]!=null && xfssData[2004]!=''">室内消火栓</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[2004]">
-							<el-row>
-								数量：
-								<v-text v-text="xfss.sl"></v-text>
-							</el-row>
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[2005]!=null && xfssData[2005]!=''">室外消火栓</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[2005]">
-							<el-row>
-								数量：
-								<v-text v-text="xfss.sl"></v-text>
-							</el-row>
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[2006]!=null && xfssData[2006]!=''">水泵接合器</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[2006]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[2007]!=null && xfssData[2007]!=''">喷淋系统</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[2007]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[2008]!=null && xfssData[2008]!=''">冷却水系统</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[2008]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[2009]!=null && xfssData[2009]!=''">固定水炮</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[2009]">
-							<el-row>
-								数量：
-								<v-text v-text="xfss.sl"></v-text>
-							</el-row>
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[2010]!=null && xfssData[2010]!=''">半固定设施</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[2010]">
-							<el-row>
-								数量：
-								<v-text v-text="xfss.sl"></v-text>
-							</el-row>
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[3001]!=null && xfssData[3001]!=''">泡沫泵房</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[3001]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[3002]!=null && xfssData[3002]!=''">泡沫消火栓</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[3002]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[3003]!=null && xfssData[3003]!=''">固定泡沫炮</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[3003]">
-							<el-row>
-								数量：
-								<v-text v-text="xfss.sl"></v-text>
-							</el-row>
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[3004]!=null && xfssData[3004]!=''">泡沫发生器</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[3004]">
-							<el-row>
-								数量：
-								<v-text v-text="xfss.sl"></v-text>
-							</el-row>
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[3005]!=null && xfssData[3005]!=''">半固定泡沫设施</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[3005]">
-							<el-row>
-								数量：
-								<v-text v-text="xfss.sl"></v-text>
-							</el-row>
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[4001]!=null && xfssData[4001]!=''">固定式蒸汽系统</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[4001]">
-							<el-row>
-								数量：
-								<v-text v-text="xfss.sl"></v-text>
-							</el-row>
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[4002]!=null && xfssData[4002]!=''">半固定式蒸汽系统</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[4002]">
-							<el-row>
-								数量：
-								<v-text v-text="xfss.sl"></v-text>
-							</el-row>
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[5000]!=null && xfssData[5000]!=''">消防控制室</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[5000]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[6001]!=null && xfssData[6001]!=''">排烟口/出烟口</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[6001]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[6002]!=null && xfssData[6002]!=''">防排烟系统</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[6002]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.qbwz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[7000]!=null && xfssData[7000]!=''">防火分区</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[7000]">
-							<el-row>
-								区域位置：
-								<v-text v-text="xfss.qywz"></v-text>
-							</el-row>
-							<el-row>
-								分隔位置：
-								<v-text v-text="xfss.fgwz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[8001]!=null && xfssData[8001]!=''">气体灭火系统</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[8001]">
-							<el-row>
-								启闭位置：
-								<v-text v-text="xfss.qbwz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[8002]!=null && xfssData[8002]!=''">干粉灭火系统</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[8002]">
-							<el-row>
-								启闭位置：
-								<v-text v-text="xfss.qbwz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfssData[9000]!=null && xfssData[9000]!=''">其他消防设施</el-row>
-						<el-card class="card_style" v-for="xfss in xfssData[9000]">
-							<el-row>
-								位置：
-								<v-text v-text="xfss.wz"></v-text>
-							</el-row>
-						</el-card>
+						<el-row v-if="xfssData=='' || xfssData==null" class="b">无消防设施信息</el-row>
+						<el-row v-else>
+							<el-row v-if="xfssData[1001]!=null && xfssData[1001]!=''" class="b">安全出口</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[1001]">
+								<el-row>
+									数量：
+									<v-text v-text="xfss.sl"></v-text>
+								</el-row>
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[1002]!=null && xfssData[1002]!=''" class="b">疏散楼梯</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[1002]">
+								<el-row>
+									数量：
+									<v-text v-text="xfss.sl"></v-text>
+								</el-row>
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[1003]!=null && xfssData[1003]!=''" class="b">消防电梯</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[1003]">
+								<el-row>
+									数量：
+									<v-text v-text="xfss.sl"></v-text>
+								</el-row>
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[1004]!=null && xfssData[1004]!=''" class="b">避难层（间）</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[1004]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[1005]!=null && xfssData[1005]!=''" class="b">应急广播</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[1005]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[2001]!=null && xfssData[2001]!=''" class="b">消防泵房</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[2001]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+								<el-row>
+									消火栓泵数量：
+									<v-text v-text="xfss.xhssl"></v-text>
+								</el-row>
+								<el-row>
+									喷淋泵数量：
+									<v-text v-text="xfss.plbsl"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[1002]!=null && xfssData[1002]!=''" class="b">消防水箱</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[1002]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[2003]!=null && xfssData[2003]!=''" class="b">消防水池</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[2003]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[2004]!=null && xfssData[2004]!=''" class="b">室内消火栓</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[2004]">
+								<el-row>
+									数量：
+									<v-text v-text="xfss.sl"></v-text>
+								</el-row>
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[2005]!=null && xfssData[2005]!=''" class="b">室外消火栓</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[2005]">
+								<el-row>
+									数量：
+									<v-text v-text="xfss.sl"></v-text>
+								</el-row>
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[2006]!=null && xfssData[2006]!=''" class="b">水泵接合器</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[2006]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[2007]!=null && xfssData[2007]!=''" class="b">喷淋系统</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[2007]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[2008]!=null && xfssData[2008]!=''" class="b">冷却水系统</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[2008]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[2009]!=null && xfssData[2009]!=''" class="b">固定水炮</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[2009]">
+								<el-row>
+									数量：
+									<v-text v-text="xfss.sl"></v-text>
+								</el-row>
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[2010]!=null && xfssData[2010]!=''" class="b">半固定设施</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[2010]">
+								<el-row>
+									数量：
+									<v-text v-text="xfss.sl"></v-text>
+								</el-row>
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[3001]!=null && xfssData[3001]!=''" class="b">泡沫泵房</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[3001]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[3002]!=null && xfssData[3002]!=''" class="b">泡沫消火栓</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[3002]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[3003]!=null && xfssData[3003]!=''" class="b">固定泡沫炮</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[3003]">
+								<el-row>
+									数量：
+									<v-text v-text="xfss.sl"></v-text>
+								</el-row>
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[3004]!=null && xfssData[3004]!=''" class="b">泡沫发生器</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[3004]">
+								<el-row>
+									数量：
+									<v-text v-text="xfss.sl"></v-text>
+								</el-row>
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[3005]!=null && xfssData[3005]!=''" class="b">半固定泡沫设施</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[3005]">
+								<el-row>
+									数量：
+									<v-text v-text="xfss.sl"></v-text>
+								</el-row>
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[4001]!=null && xfssData[4001]!=''" class="b">固定式蒸汽系统</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[4001]">
+								<el-row>
+									数量：
+									<v-text v-text="xfss.sl"></v-text>
+								</el-row>
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[4002]!=null && xfssData[4002]!=''" class="b">半固定式蒸汽系统</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[4002]">
+								<el-row>
+									数量：
+									<v-text v-text="xfss.sl"></v-text>
+								</el-row>
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[5000]!=null && xfssData[5000]!=''" class="b">消防控制室</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[5000]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[6001]!=null && xfssData[6001]!=''" class="b">排烟口/出烟口</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[6001]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[6002]!=null && xfssData[6002]!=''" class="b">防排烟系统</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[6002]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.qbwz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[7000]!=null && xfssData[7000]!=''" class="b">防火分区</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[7000]">
+								<el-row>
+									区域位置：
+									<v-text v-text="xfss.qywz"></v-text>
+								</el-row>
+								<el-row>
+									分隔位置：
+									<v-text v-text="xfss.fgwz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[8001]!=null && xfssData[8001]!=''" class="b">气体灭火系统</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[8001]">
+								<el-row>
+									启闭位置：
+									<v-text v-text="xfss.qbwz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[8002]!=null && xfssData[8002]!=''" class="b">干粉灭火系统</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[8002]">
+								<el-row>
+									启闭位置：
+									<v-text v-text="xfss.qbwz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfssData[9000]!=null && xfssData[9000]!=''" class="b">其他消防设施</el-row>
+							<el-card class="card_style" v-for="xfss in xfssData[9000]">
+								<el-row>
+									位置：
+									<v-text v-text="xfss.wz"></v-text>
+								</el-row>
+							</el-card>
+						</el-row>
 					</el-tab-pane>
 					<el-tab-pane label="消防水源" name="third">
-						<el-row v-if="xfsyData['01']!=null && xfsyData['01']!=''">消火栓</el-row>
-						<el-card class="card_style" v-for="xfsy in xfsyData['01']">
-							<el-row>
-								地址：
-								<v-text v-text="xfsy.sydz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfsyData['02']!=null && xfsyData['02']!=''">消防水鹤</el-row>
-						<el-card class="card_style" v-for="xfsy in xfsyData['02']">
-							<el-row>
-								地址：
-								<v-text v-text="xfsy.sydz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfsyData['03']!=null && xfsyData['03']!=''">消防水池</el-row>
-						<el-card class="card_style" v-for="xfsy in xfsyData['03']">
-							<el-row>
-								地址：
-								<v-text v-text="xfsy.sydz"></v-text>
-							</el-row>
-						</el-card>
-						<el-row v-if="xfsyData['04']!=null && xfsyData['04']!=''">天然水源取水点</el-row>
-						<el-card class="card_style" v-for="xfsy in xfsyData['04']">
-							<el-row>
-								地址：
-								<v-text v-text="xfsy.sydz"></v-text>
-							</el-row>
-						</el-card>
+						<el-row v-if="xfsyData=='' || xfsyData==null" class="b">无消防水源信息</el-row>
+						<el-row v-else>
+							<el-row v-if="xfsyData['01']!=null && xfsyData['01']!=''" class="b">消火栓</el-row>
+							<el-card class="card_style" v-for="xfsy in xfsyData['01']">
+								<el-row>
+									地址：
+									<v-text v-text="xfsy.sydz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfsyData['02']!=null && xfsyData['02']!=''" class="b">消防水鹤</el-row>
+							<el-card class="card_style" v-for="xfsy in xfsyData['02']">
+								<el-row>
+									地址：
+									<v-text v-text="xfsy.sydz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfsyData['03']!=null && xfsyData['03']!=''" class="b">消防水池</el-row>
+							<el-card class="card_style" v-for="xfsy in xfsyData['03']">
+								<el-row>
+									地址：
+									<v-text v-text="xfsy.sydz"></v-text>
+								</el-row>
+							</el-card>
+							<el-row v-if="xfsyData['04']!=null && xfsyData['04']!=''" class="b">天然水源取水点</el-row>
+							<el-card class="card_style" v-for="xfsy in xfsyData['04']">
+								<el-row>
+									地址：
+									<v-text v-text="xfsy.sydz"></v-text>
+								</el-row>
+							</el-card>
+						</el-row>
 					</el-tab-pane>
 					<el-tab-pane label="消防车辆" name="fourth">
-						<el-card class="card_style" v-for="xfcl in xfclData">
+						<el-row v-if="xfclData=='' || xfclData==null" class="b">无消防车辆信息</el-row>
+						<el-card v-else class="card_style" v-for="xfcl in xfclData">
 							<el-row>
-								<v-text v-text="xfcl.clmc"></v-text>
+								<v-text v-text="xfcl.clmc" class="b"></v-text>
 							</el-row>
 							<el-row>
 								车牌号码：
@@ -375,4 +383,5 @@
 	</div>
 </body>
 <script src="../../static/js/ewbh/ewbh_list.js"></script>
+
 </html>
