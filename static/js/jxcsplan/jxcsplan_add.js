@@ -492,7 +492,7 @@ new Vue({
                     dwid: this.status,
                     kzm: 'video'
                 }
-                axios.post('/dpapi/jxcsfjxz/doFindByDwid', video).then(function (res) {debugger;
+                axios.post('/dpapi/jxcsfjxz/doFindByDwid', video).then(function (res) {
                     var videoData = res.data.result;
                     if (videoData.length > 0) {
                         for (var i in videoData) {
@@ -647,7 +647,7 @@ new Vue({
                         xgrid: this.shiroData.userid,
                         xgrmc: this.shiroData.realName,
                         sjzt: '01'     //数据状态（01编辑中，03待审批，04已驳回，05已审批）
-                    };debugger;
+                    };
                     axios.post('/dpapi/jxcsjbxx/doUpdateJxcsByVO', params).then(function (res) {
                         if (this.deleteFile.length > 0) {
                             axios.post('/dpapi/jxcsfjxz/doUpdateByVO', this.deleteFile).then(function (res) {
