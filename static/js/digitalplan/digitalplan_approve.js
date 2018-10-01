@@ -18,7 +18,7 @@ var vue = new Vue({
             //审批表单
             approveForm: {
                 shzt: -1,
-                reserve1:""
+                reserve1: ""
             },
             //审批人姓名
             shrmc: "",
@@ -76,7 +76,7 @@ var vue = new Vue({
             radio: "",
             data_index: "",
             //未通过flag
-            isReject:false,
+            isReject: false,
             //登录用户
             shiroData: [],
         }
@@ -141,7 +141,7 @@ var vue = new Vue({
             }
             axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.ZZJG_dataTree = res.data.result;
-                if(this.ZZJG_dataTree[0].children == null || this.ZZJG_dataTree[0].children.length == 0){
+                if (this.ZZJG_dataTree[0].children == null || this.ZZJG_dataTree[0].children.length == 0) {
                     this.searchForm.ZZJG.push(this.ZZJG_dataTree[0].dzid);
                 }
             }.bind(this), function (error) {
@@ -151,9 +151,9 @@ var vue = new Vue({
         //表格查询事件
         searchClick: function (type) {
             //按钮事件的选择
-            if(type == 'page'){
+            if (type == 'page') {
                 this.tableData = [];
-            }else{
+            } else {
                 this.currentPage = 1;
             }
             this.loading = true;//表格重新加载
@@ -165,29 +165,29 @@ var vue = new Vue({
             }
             //制作机构
             var jgid = "";
-            if(this.searchForm.ZZJG.length>1){
-                jgid = this.searchForm.ZZJG[this.searchForm.ZZJG.length-1];
-            }else{
-                if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+            if (this.searchForm.ZZJG.length > 1) {
+                jgid = this.searchForm.ZZJG[this.searchForm.ZZJG.length - 1];
+            } else {
+                if (this.shiroData.organizationVO.jgid.substr(2, 6) != '000000') {
                     jgid = this.shiroData.organizationVO.uuid;
                 }
             }
             var params = {
                 yamc: this.searchForm.YAMC,
-                yalx: this.searchForm.YALX[this.searchForm.YALX.length-1],
+                yalx: this.searchForm.YALX[this.searchForm.YALX.length - 1],
                 yajb: this.searchForm.YAJB,
                 jgid: jgid,
                 shzt: shztbm,
                 begintime: this.searchForm.shsj[0],
                 endtime: this.searchForm.shsj[1],
-                jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,
                 orgJgid: this.shiroData.organizationVO.jgid
             }
             axios.post('/dpapi/digitalplanlist/listForApprove', params).then(function (res) {
-                var tableTemp = new Array((this.currentPage-1)*this.pageSize);
+                var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
                 this.loading = false;
@@ -211,7 +211,7 @@ var vue = new Vue({
         selectionChange: function (val) {
             this.multipleSelection = val;
         },
-        
+
         //预案详情
         planDetails(val) {
             var params = {
@@ -299,19 +299,31 @@ var vue = new Vue({
             });
             this.approveForm = Object.assign({}, row);
             //如果是未通过审核意见显示*代表必填
-            if(this.approveForm.shzt == '02')
+            if (this.approveForm.shzt == '02')
                 this.isReject = true;
             this.approveFormVisible = true;
         },
         //保存点击事件
         approveSubmit: function (val) {
-            if(this.isReject==true && val.reserve1 == null)
+            if (val.shzt == '01') {
+                this.$message({
+                    message: "请选择审核状态",
+                    type: "error",
+                    showClose: true
+                });
+            } else if (this.isReject == true && val.reserve1 == null) {
                 this.$message({
                     message: "请填写审核意见",
                     type: "error",
                     showClose: true
                 });
-            else{
+            } else if (validateBytes(val.reserve1, 36)) {
+                this.$message({
+                    message: "字段超长，请重新输入",
+                    type: "error",
+                    showClose: true
+                });
+            } else {
                 //审核状态改变才调用后台approveByVO方法
                 if (val.shzt == this.tableData[this.data_index].shzt && val.reserve1 == this.tableData[this.data_index].reserve1) {
                     this.$message({
@@ -340,11 +352,11 @@ var vue = new Vue({
                 }
 
             }
-  
+
         },
         //审核状态为未通过时审核意见显示*代表必填
-        radioChange:function(){
-            if(this.approveForm.shzt == '02')
+        radioChange: function () {
+            if (this.approveForm.shzt == '02')
                 this.isReject = true;
             else
                 this.isReject = false;

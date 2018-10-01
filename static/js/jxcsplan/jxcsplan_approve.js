@@ -267,7 +267,7 @@ var vue = new Vue({
         },
         //保存点击事件
         approveSubmit: function (val) {
-            if (this.isReject == false) {
+            if (val.shzt == '01') {
                 this.$message({
                     message: "请选择审核状态",
                     type: "error",
@@ -309,8 +309,8 @@ var vue = new Vue({
                             type: 'success',
                             confirmButtonText: '确定'
                         });
-                        this.data_index = 0;
-                        this.radio = 0;
+                        // this.data_index = 0;
+                        // this.radio = 0;
                     }.bind(this), function (error) {
                         console.log(error)
                     })
@@ -330,7 +330,7 @@ var vue = new Vue({
         loadingData: function () {
             var _self = this;
             _self.loading = true;
-            this.searchClick();
+            // this.searchClick();
             setTimeout(function () {
                 console.info("加载数据成功");
                 _self.loading = false;
