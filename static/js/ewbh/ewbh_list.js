@@ -29,20 +29,26 @@ var vue = new Vue({
     created: function () {
         var iframe = document.getElementById("ewbhmain");
         iframe.src = ewbhUrl;
-        this.type = getQueryString("type");
         this.shiroData = shiroGlobal;
+        this.type = getQueryString("type");
         this.init();
     },
     methods: {
         init: function () {
             if (this.type == 'XZ') {
                 this.getZddwList();
+                this.sendInforToIframe();
             } else if (this.type == 'BJ') {
                 this.type = 'editInit'
                 this.uuid = getQueryString("ID");
                 this.zddwid = getQueryString("zddwid");
                 this.bhmc = getQueryString("bhmc");
-                this.getZddwInfo();
+                if(this.zddwid!='null'){
+                    this.getZddwInfo();
+                }else{
+                    this.sendInforToIframe();
+                    this.getZddwList();
+                }
             }
         },
         //返回重点单位列表
@@ -121,26 +127,15 @@ var vue = new Vue({
                     datasource: this.shiroData.organizationVO.jgid
                 }
             } else if (getQueryString("type") === "BJ") {
-                if (this.type === "editInit") {
-                    params = {
-                        type: 'editInit',
-                        uuid: this.uuid,
-                        wjm: this.bhmc,
-                        zddwid: this.zddwid,
-                        xgrid: this.shiroData.userid,
-                        xgrmc: this.shiroData.realName
-                    }
-                    this.type = 'BJ';
-                } else {
-                    params = {
-                        type: 'BJ',
-                        uuid: this.uuid,
-                        wjm: this.bhmc,
-                        zddwid: this.zddwid,
-                        xgrid: this.shiroData.userid,
-                        xgrmc: this.shiroData.realName
-                    }
+                params = {
+                    type: this.type,
+                    uuid: this.uuid,
+                    wjm: this.bhmc,
+                    zddwid: this.zddwid,
+                    xgrid: this.shiroData.userid,
+                    xgrmc: this.shiroData.realName
                 }
+                this.type = 'BJ';
             }
             window.setTimeout(function () {
                 document.getElementById('ewbhmain').contentWindow.postMessage(params, "http://localhost:8082");
