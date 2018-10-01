@@ -34,15 +34,22 @@
                             </el-row>
                             <el-row>
                                 <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-                                <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+                                <!-- <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
                                     <label class="el-form-item__label searchLabel">单位地址</label>
                                     <el-input size="small" v-model="searchForm.dwdz" placeholder="单位地址"></el-input>
                                 </el-col>
-                                <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+                                <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col> -->
                                 <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
                                     <label class="el-form-item__label searchLabel">消防管辖</label>
                                     <el-cascader v-model="searchForm.xfgx" :options="XFGX_dataTree" :props="ssdzProps" size="small" placeholder="全部" class="searchSelect"
                                         clearable change-on-select :show-all-levels="false"></el-cascader>
+                                </el-col>
+                                <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+                                <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+                                    <label class="el-form-item__label searchLabel">审核状态</label>
+                                    <el-select size="small" v-model="searchForm.shzt" placeholder="全部" class="searchSelect" clearable>
+                                        <el-option v-for="item in SHZT_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+                                    </el-select>
                                 </el-col>
                                 <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
                             </el-row>
@@ -80,7 +87,7 @@
                             </el-table-column>
                             <el-table-column prop="jxdwlxmc" label="单位类型" show-overflow-tooltip min-width="15%" align="center"></el-table-column>
                             <el-table-column prop="dwdz" label="单位地址" show-overflow-tooltip min-width="25%" align="center"></el-table-column>
-                            <el-table-column prop="cjrmc" label="创建人名称" show-overflow-tooltip min-width="13%" align="center"></el-table-column>
+                            <el-table-column prop="xfgxmc" label="消防管辖" show-overflow-tooltip min-width="13%" align="center"></el-table-column>
                             <el-table-column label="审核状态" show-overflow-tooltip min-width="10%" align="center">
                                 <template slot-scope="scope">
                                     <!-- <el-button :type="scope.row.yashztButtonType" size="small" v-text="scope.row.shztmc"></el-button> -->
