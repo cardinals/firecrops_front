@@ -296,6 +296,9 @@
                                             <i class="el-icon-picture mr5 ml5"></i>
                                             <v-text v-text="item.name" @click="showPic(index)"></v-text>
                                         </el-row>
+                                        <el-row v-if="this.isPic === false" class="mb5">
+                                            无
+                                        </el-row>
                                     </div>
                                     <div id = "video" style="margin-top: 20px">
                                         <el-row class="mb5">
@@ -307,6 +310,9 @@
                                             <v-text v-text="index+1"></v-text>.
                                             <i class="el-icon-picture mr5 ml5"></i>
                                             <v-text v-text="item.name" @click="openVideo(item)"></v-text>
+                                        </el-row>
+                                        <el-row v-if="this.isVideo === false" class="mb5">
+                                            无
                                         </el-row>
                                     </div>
                                     

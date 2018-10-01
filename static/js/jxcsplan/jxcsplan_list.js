@@ -104,7 +104,7 @@ var vue = new Vue({
                 orgUuid: this.shiroData.organizationVO.uuid,
                 orgJgid: this.shiroData.organizationVO.jgid,
                 jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
-                xfgx:xfgx
+                //xfgx:xfgx
             }
             axios.post('/dpapi/jxcsjbxx/page', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage - 1) * this.pageSize);
@@ -144,18 +144,18 @@ var vue = new Vue({
         },
         //编辑跳转
         handleEdit: function (row) {
-            // if (row.yazt == '01' || row.yazt == '04') {
+            if (row.sjzt == '01' || row.sjzt == '04') {
                 var params = {
                     ID: row.uuid,
                     type: "BJ"
                 }
                 loadDivParam("jxcsplan/jxcsplan_add", params);
-            // } else {
-            //     this.$message({
-            //         message: "仅编辑中和已驳回状态预案可编辑",
-            //         showClose: true,
-            //     });
-            // }
+            } else {
+                this.$message({
+                    message: "仅编辑中和已驳回状态预案可编辑",
+                    showClose: true,
+                 });
+            }
         },
         //删除
         deleteClick: function () {
