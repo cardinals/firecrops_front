@@ -43,9 +43,9 @@ var vue = new Vue({
                 this.uuid = getQueryString("ID");
                 this.zddwid = getQueryString("zddwid");
                 this.bhmc = getQueryString("bhmc");
-                if(this.zddwid!='null'){
+                if (this.zddwid != 'null') {
                     this.getZddwInfo();
-                }else{
+                } else {
                     this.sendInforToIframe();
                     this.getZddwList();
                 }
@@ -156,6 +156,10 @@ var vue = new Vue({
             }
             axios.post('/dpapi/importantunits/doFindFireFacilitiesDetailsByVo', params).then(function (res) {
                 this.xfssData = res.data.result;
+                var arr = Object.keys(this.xfssData);
+                if(arr.length == 0){
+                    this.xfssData = [];
+                }
             }.bind(this), function (error) {
                 console.log(error)
             })
@@ -168,6 +172,10 @@ var vue = new Vue({
             }
             axios.post('/dpapi/importantunits/doFindXfsyListByZddwGis', params).then(function (res) {
                 this.xfsyData = res.data.result;
+                var arr = Object.keys(this.xfsyData);
+                if(arr.length == 0){
+                    this.xfsyData = [];
+                }
             }.bind(this), function (error) {
                 console.log(error)
             })

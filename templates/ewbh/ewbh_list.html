@@ -48,7 +48,7 @@
 				</div>
 				<el-tabs v-show="basicInfoShow" v-model="activeName" type="card">
 					<el-tab-pane label="消防力量" name="first">
-						<el-row v-if="xfllData=='' || xfllData==null" class="b">无消防力量信息</el-row>
+						<el-row v-if="xfllData=='' || xfllData==null">无消防力量信息</el-row>
 						<el-card v-else class="card_style" v-for="xfll in xfllData">
 							<el-row>
 								<v-text v-text="xfll.xfdwlxmc" class="b"></v-text>
@@ -61,7 +61,7 @@
 						</el-card>
 					</el-tab-pane>
 					<el-tab-pane label="消防设施" name="second">
-						<el-row v-if="xfssData=='' || xfssData==null" class="b">无消防设施信息</el-row>
+						<el-row v-if="xfssData.length==0">无消防设施信息</el-row>
 						<el-row v-else>
 							<el-row v-if="xfssData[1001]!=null && xfssData[1001]!=''" class="b">安全出口</el-row>
 							<el-card class="card_style" v-for="xfss in xfssData[1001]">
@@ -329,7 +329,7 @@
 						</el-row>
 					</el-tab-pane>
 					<el-tab-pane label="消防水源" name="third">
-						<el-row v-if="xfsyData=='' || xfsyData==null" class="b">无消防水源信息</el-row>
+						<el-row v-if="xfsyData.length==0">无消防水源信息</el-row>
 						<el-row v-else>
 							<el-row v-if="xfsyData['01']!=null && xfsyData['01']!=''" class="b">消火栓</el-row>
 							<el-card class="card_style" v-for="xfsy in xfsyData['01']">
@@ -362,7 +362,7 @@
 						</el-row>
 					</el-tab-pane>
 					<el-tab-pane label="消防车辆" name="fourth">
-						<el-row v-if="xfclData=='' || xfclData==null" class="b">无消防车辆信息</el-row>
+						<el-row v-if="xfclData=='' || xfclData==null">无消防车辆信息</el-row>
 						<el-card v-else class="card_style" v-for="xfcl in xfclData">
 							<el-row>
 								<v-text v-text="xfcl.clmc" class="b"></v-text>
