@@ -15,7 +15,9 @@ new Vue({
             loading: false,
             picList: [],
             fileList:[],
-            fjDetailData: ''
+            fjDetailData: '',
+            isPic:false,
+            isVideo:false
         }
     },
     created: function () {
@@ -79,12 +81,14 @@ new Vue({
                             url: baseUrl + "/upload/jxcsFjxx/" + picData[i].fjlj
                         });
                     }
+                    this.isPic = true;
                 }
 
             }.bind(this), function (error) {
                 console.log(error)
             })
         },
+        //视频查询
         videoDetail: function(){
             var video = {
                 dwid: this.pkid,
@@ -100,6 +104,7 @@ new Vue({
                             url: baseUrl + "/upload/jxcsFjxx/" + videoData[i].fjlj
                         });
                     }
+                    this.isVideo = true;
                 }
             }.bind(this), function (error) {
                 console.log(error)

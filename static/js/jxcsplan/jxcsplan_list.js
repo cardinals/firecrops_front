@@ -90,14 +90,19 @@ var vue = new Vue({
             this.loading = true;//表格重新加载
             //add by yushch 中队显示总队所有数据bug解决
             var xfgx = "";
-            if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
-                xfgx = this.shiroData.organizationVO.uuid;
+            if(this.searchForm.xfgx.length>1){
+                xfgx = this.searchForm.xfgx[this.searchForm.xfgx.length - 1]
+            }else{
+                if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+                    xfgx = this.shiroData.organizationVO.uuid;
+                }
             }
+            
             //end 20180929
             var params = {
                 dwmc: this.searchForm.dwmc,
                 dwdz: this.searchForm.dwdz,
-                xfgx: this.searchForm.xfgx[this.searchForm.xfgx.length - 1],
+              //  xfgx: this.searchForm.xfgx[this.searchForm.xfgx.length - 1],
                 jxdwlx: this.searchForm.jxdwlx,
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
@@ -144,18 +149,18 @@ var vue = new Vue({
         },
         //编辑跳转
         handleEdit: function (row) {
-            // if (row.yazt == '01' || row.yazt == '04') {
+            if (row.sjzt == '01' || row.sjzt == '04') {
                 var params = {
                     ID: row.uuid,
                     type: "BJ"
                 }
                 loadDivParam("jxcsplan/jxcsplan_add", params);
-            // } else {
-            //     this.$message({
-            //         message: "仅编辑中和已驳回状态预案可编辑",
-            //         showClose: true,
-            //     });
-            // }
+            } else {
+                this.$message({
+                    message: "仅编辑中和已驳回状态预案可编辑",
+                    showClose: true,
+                 });
+            }
         },
         //删除
         deleteClick: function () {

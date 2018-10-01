@@ -953,10 +953,11 @@ new Vue({
         //视频移除
         fileRemove: function (file, fileList) {
             var fs = document.getElementsByName('file');
+            debugger;
             if (fs.length > 0) {
                 fs[0].value = null
             }
-            console.log(file, fileList);
+           // console.log(file, fileList);
             if (file.status == 'success') {
                 this.deleteFile.push({
                     uuid: file.uuid,
@@ -965,7 +966,7 @@ new Vue({
                     xgrmc: this.shiroData.realName
                 });
             }
-            this.isVideo = false;
+            //this.isVideo = false;
         },
         //附件移除（图片）
         picRemove: function (file, fileList) {
@@ -978,7 +979,7 @@ new Vue({
                     xgrmc: this.shiroData.realName
                 });
             }
-            this.isPic = false;
+            //this.isPic = false;
         },
         handlePreview: function (file) {
             console.log(file);
