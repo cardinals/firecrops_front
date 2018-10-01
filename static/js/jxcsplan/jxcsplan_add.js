@@ -539,7 +539,7 @@ new Vue({
                 });
                 return false;
             }
-            if(this.addForm.jzfl == '1' && this.addForm.jzxxList.length >0){
+            if(this.addForm.jzfl == '1' && this.addForm.jzxxList.length >1){
                 this.$message.warning({
                     message: "单体建筑只能添加一条单位建筑信息！请更改建筑类型或删除多余建筑信息！",
                     showClose: true
@@ -953,7 +953,6 @@ new Vue({
         //视频移除
         fileRemove: function (file, fileList) {
             var fs = document.getElementsByName('file');
-            debugger;
             if (fs.length > 0) {
                 fs[0].value = null
             }

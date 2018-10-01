@@ -66,6 +66,9 @@ var vue = new Vue({
             };
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.XFGX_dataTree = res.data.result;
+                if(this.XFGX_dataTree[0].children == null || this.XFGX_dataTree[0].children.length == 0){
+                    this.searchForm.xfgx.push(this.XFGX_dataTree[0].dzid);
+                }
             }.bind(this), function (error) {
                 console.log(error);
             });
