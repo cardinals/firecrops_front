@@ -63,15 +63,15 @@ var vue = new Vue({
                 dzid: organization.uuid,
                 dzjc: organization.jgjc,
                 dzbm: organization.jgid
-            };
-            axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
+            }
+            axios.post('/dpapi/xfdz/findSjdzByUserAll', param).then(function (res) {
                 this.XFGX_dataTree = res.data.result;
                 if(this.XFGX_dataTree[0].children == null || this.XFGX_dataTree[0].children.length == 0){
                     this.searchForm.xfgx.push(this.XFGX_dataTree[0].dzid);
                 }
             }.bind(this), function (error) {
                 console.log(error);
-            });
+            })
         },
         //九小单位类型下拉框
         JXDWLX: function () {
@@ -94,7 +94,7 @@ var vue = new Vue({
             //add by yushch 中队显示总队所有数据bug解决
             var xfgx = "";
             if(this.searchForm.xfgx.length>1){
-                xfgx = this.searchForm.xfgx[this.searchForm.xfgx.length - 1]
+                xfgx = this.searchForm.xfgx[this.searchForm.xfgx.length - 1];
             }else{
                 if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
                     xfgx = this.shiroData.organizationVO.uuid;
