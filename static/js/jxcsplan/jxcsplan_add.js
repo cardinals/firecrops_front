@@ -130,10 +130,15 @@ new Vue({
                     { type: 'array', required: true, message: '请选择预案类型', trigger: 'change' }
                 ],
             },
-            //上传文件Data
+            //上传视频文件
             fileList: [],
             isVideo: false,
             deleteFile: [],
+            //上传图片Data
+            picList: [],
+            deletePics: [],
+            isPic: false,
+
             upLoadData: {
                 dwid: "",
                 cjrid:"",
@@ -141,11 +146,6 @@ new Vue({
                 xgrid:"",
                 xgrmc:""
             },
-            //上传图片Data
-            picList: [],
-            deletePics: [],
-            isPic: false,
-
         }
     },
     
@@ -439,7 +439,6 @@ new Vue({
                     }
                     this.addForm.xfgx = xfgxArray;
                     //doFindPhoto("JXDWLX", this.jbxxData.jxdwlx);
-                    
                 }.bind(this), function (error) {
                     console.log(error)
                 })
@@ -511,12 +510,9 @@ new Vue({
                             });
                         }
                     }
-
                 }.bind(this), function (error) {
                     console.log(error)
                 })
-
-
                 this.upLoadData.dwid = this.status;
                 this.loading1 = false;
             }
@@ -989,12 +985,10 @@ new Vue({
         },
         handleChange: function (file, fileList) {
             const isMp4 = file.name.endsWith("mp4");
-            const isRmvb = file.name.endsWith("rmvb");
-            const isAvi = file.name.endsWith("avi");
-            if (isMp4 || isRmvb || isAvi) {
+            if (isMp4 ) {
                 this.isVideo = true;
             } else {
-                this.$message.error('上传的视频只能是mp4、rmvb、avi格式的文件!');
+                this.$message.error('上传的视频只能是mp4格式的文件!');
                 fileList.splice(-1, 1);
             }
         },
