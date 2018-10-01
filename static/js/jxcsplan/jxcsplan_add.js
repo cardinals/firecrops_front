@@ -313,11 +313,19 @@ new Vue({
 
         //建筑信息新增
         addDomainJzxx: function(){
-            this.addForm.jzxxList.push({
-                jzid: '',
-                jzmc: '',
-                key: Date.now()
-            });
+            if(this.addForm.jzfl == '1' && this.addForm.jzxxList.length >0){
+                this.$message.warning({
+                    message: "单体建筑只能添加一条单位建筑信息！",
+                    showClose: true
+                });
+            }else{
+                this.addForm.jzxxList.push({
+                    jzid: '',
+                    jzmc: '',
+                    key: Date.now()
+                });
+            }
+            
         },
         //新建建筑信息
         addJzxx: function(){
@@ -535,7 +543,13 @@ new Vue({
                 });
                 return false;
             }
-            
+            if(this.addForm.jzfl == '1' && this.addForm.jzxxList.length >0){
+                this.$message.warning({
+                    message: "单体建筑只能添加一条单位建筑信息！请更改建筑类型或删除多余建筑信息！",
+                    showClose: true
+                });
+                return false;
+            }
             for (var i = 0; i < this.addForm.jzxxList.length; i++) {
                 if (this.addForm.jzxxList[i].jzmc == "") {
                     this.$message.warning({
