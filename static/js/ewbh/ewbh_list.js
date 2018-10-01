@@ -36,6 +36,7 @@ var vue = new Vue({
     methods: {
         init: function () {
             if (this.type == 'XZ') {
+                this.type = 'addInit'
                 this.getZddwList();
                 this.sendInforToIframe();
             } else if (this.type == 'BJ') {
@@ -119,13 +120,14 @@ var vue = new Vue({
             var params = {};
             if (getQueryString("type") === "XZ") {
                 params = {
-                    type: 'XZ',
+                    type: this.type,
                     zddwid: this.zddwid,
                     cjrid: this.shiroData.userid,
                     cjrmc: this.shiroData.realName,
                     jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
                     datasource: this.shiroData.organizationVO.jgid
                 }
+                this.type = 'XZ';
             } else if (getQueryString("type") === "BJ") {
                 params = {
                     type: this.type,
@@ -157,7 +159,7 @@ var vue = new Vue({
             axios.post('/dpapi/importantunits/doFindFireFacilitiesDetailsByVo', params).then(function (res) {
                 this.xfssData = res.data.result;
                 var arr = Object.keys(this.xfssData);
-                if(arr.length == 0){
+                if (arr.length == 0) {
                     this.xfssData = [];
                 }
             }.bind(this), function (error) {
@@ -173,7 +175,7 @@ var vue = new Vue({
             axios.post('/dpapi/importantunits/doFindXfsyListByZddwGis', params).then(function (res) {
                 this.xfsyData = res.data.result;
                 var arr = Object.keys(this.xfsyData);
-                if(arr.length == 0){
+                if (arr.length == 0) {
                     this.xfsyData = [];
                 }
             }.bind(this), function (error) {
