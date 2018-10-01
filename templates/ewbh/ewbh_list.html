@@ -12,8 +12,9 @@
 	<div id="app">
 		<div class="main-box">
 			<div id="menuView" class="l pl5">
-				<el-row style="height:24px;" class="mb5">
-					<span class="poi" @click="returnZddw">> 重点单位</span>
+				<el-row class="mb5 ewbhbread">
+					<i class="el-icon-document"></i>
+					<span class="poi" @click="returnZddw">重点单位</span>
 					<span v-if="basicInfoShow">> </span>
 					<el-tag v-if="basicInfoShow" type="primary" :closable="true" @close="returnZddw">
 						<v-text v-text="zddwmc"></v-text>标绘
@@ -32,7 +33,7 @@
 						<el-card class="card_style" v-for="zddw in zddwListData">
 							<div @click="getZddwDetail(zddw)" class="poi">
 								<el-row>
-									<v-text v-text="zddw.dwmc"></v-text>
+									<v-text v-text="zddw.dwmc" class="b"></v-text>
 								</el-row>
 								<el-row>
 									行政区划：
