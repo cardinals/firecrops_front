@@ -247,6 +247,7 @@ window.validateBytes = function (str, maxLen) {
     var tempCount = 0;
     if (str == "" || str == null) {
         console.log('字段为空--字节长度验证');
+        return;
     }
     //length 获取字数数，不区分汉字和英文
     for (var i = 0; i < str.length; i++) {
