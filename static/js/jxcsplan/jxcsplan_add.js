@@ -396,6 +396,10 @@ new Vue({
         },
         //消防信息增加
         addFireDomain: function () {
+            if(this.addForm.xfssList == null){
+                this.addForm.xfssList = [];
+                //console.log(666666666);
+            }
             this.addForm.xfssList.push({
                 xfssmc: '',
                 xfsslx: [],
