@@ -203,10 +203,10 @@ var vue = new Vue({
                     language: val.language
                 };
                 axios.post('/api/codelist/updateByVO', params).then(function (res) {
-                    this.tableData[this.selectIndex].codetype = val.codetype;
-                    this.tableData[this.selectIndex].codetypeName = val.codetypeName;
-                    this.tableData[this.selectIndex].remark = val.remark;
-                    this.tableData[this.selectIndex].language = val.language;
+                    this.tableData[this.selectIndex].codetype = res.data.result.codetype;
+                    this.tableData[this.selectIndex].codetypeName = res.data.result.codetypeName;
+                    this.tableData[this.selectIndex].remark = res.data.result.remark;
+                    this.tableData[this.selectIndex].language = res.data.result.language;
                     this.tableData[this.selectIndex].alterName = res.data.result.alterName;
                     this.tableData[this.selectIndex].alterTime = new Date();
                 }.bind(this), function (error) {
