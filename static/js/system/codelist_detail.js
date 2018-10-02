@@ -193,9 +193,9 @@ var vue = new Vue({
                 remark: val.remark
             };
             axios.post('/api/codelist/detail/updateByVO', params).then(function (res) {
-                this.tableData[this.selectIndex].codeValue = val.codeValue;
-                this.tableData[this.selectIndex].codeName = val.codeName;
-                this.tableData[this.selectIndex].remark = val.remark;
+                this.tableData[this.selectIndex].codeValue = res.data.result.codeValue;
+                this.tableData[this.selectIndex].codeName = res.data.result.codeName;
+                this.tableData[this.selectIndex].remark = res.data.result.remark;
                 this.tableData[this.selectIndex].alterName = res.data.result.alterName;
                 this.tableData[this.selectIndex].alterTime = new Date();
             }.bind(this), function (error) {
