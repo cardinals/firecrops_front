@@ -468,8 +468,11 @@ new Vue({
                 })
                 //消防设施查询
                 axios.get('/dpapi/jxcsxfss/doFindXfssByDwid/' + this.status).then(function (res) {
-                    this.addForm.xfssList = res.data.result;
-                    
+                    if(res.data.result.length == 0 || res.data.result == null || res.data.result == ''){
+                        this.addForm.xfssList = [];
+                    }else{
+                        this.addForm.xfssList = res.data.result;
+                    }
                     //消防设施类型格式化
                     for(var i in this.addForm.xfssList){
                         var xfsslx_tmp = this.addForm.xfssList[i].xfsslx;
@@ -489,9 +492,7 @@ new Vue({
                         }
                         this.addForm.xfssList[i].xfsslx = xfsslx_tmp;
                     }
-                    if(this.addForm.xfssList == null || this.addForm.xfssList == '' || this.addForm.xfssList.length == 0){
-                        this.addForm.xfssList = [];
-                    }
+                    
                 }.bind(this), function (error) {
                     console.log(error)
                 })
