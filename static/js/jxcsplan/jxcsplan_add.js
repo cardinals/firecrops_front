@@ -89,7 +89,6 @@ new Vue({
             tableData_building: [],
             //选择建筑弹出框Table高度
             tableheight_buliding: 243,
-            
             shiroData: [],
             //基本信息
             allXzqhDataTree: [],//行政区划
@@ -157,9 +156,9 @@ new Vue({
             loadBreadcrumb("九小场所管理", "九小场所编辑");
         }
         this.shiroData = shiroGlobal;
-        //this.XFSSLX();//消防设施类型
+        this.XFSSLX();//消防设施类型
         this.getAllXzqhDataTree();//行政区划
-        this.XFGX();//消防管辖级联选择
+        //this.XFGX();//消防管辖级联选择
         this.JXDWLX();//九小单位类型
         this.JZSYXZ();//建筑使用性质
         this.JZJG();//建筑结构
@@ -188,7 +187,7 @@ new Vue({
             };
             axios.post('/dpapi/xfdz/findSjdzByUser', param).then(function (res) {
                 this.XFGX_dataTree = res.data.result;
-                this.XFSSLX();//消防设施类型
+                this.searchClick();
             }.bind(this), function (error) {
                 console.log(error);
             });
@@ -229,7 +228,7 @@ new Vue({
         XFSSLX: function(){
             axios.get('/api/codelist/getDzlxTree/XFSSLX').then(function (res) {
                 this.XfsslxDataTree = res.data.result;
-                this.searchClick();
+                this.XFGX();//消防管辖级联选择
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -237,7 +236,6 @@ new Vue({
 
         //获取建筑信息列表
         getJzxxList: function(type, index){
-            debugger;
             if (type == 'page') {
                 this.tableData_building = [];
             } else {
@@ -471,7 +469,10 @@ new Vue({
                 //消防设施查询
                 axios.get('/dpapi/jxcsxfss/doFindXfssByDwid/' + this.status).then(function (res) {
                     this.addForm.xfssList = res.data.result;
-                     //消防设施类型格式化
+                    if(res.data.result == null || res.data.result == '' || res.data.result.length =='0'){
+                        this.addForm.xfssList = [];
+                    }
+                    //消防设施类型格式化
                     for(var i in this.addForm.xfssList){
                         var xfsslx_tmp = this.addForm.xfssList[i].xfsslx;
                         if (xfsslx_tmp != '' && xfsslx_tmp != null) {
@@ -490,7 +491,6 @@ new Vue({
                         }
                         this.addForm.xfssList[i].xfsslx = xfsslx_tmp;
                     }
-                    
                 }.bind(this), function (error) {
                     console.log(error)
                 })
@@ -703,15 +703,14 @@ new Vue({
                         if (this.isPic) {
                             this.$refs.uploadPics.submit();
                         }
-                            this.$alert('成功保存九小场所信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("jxcsplan/jxcsplan_list");
-                                }
-                            });
+                        this.$alert('成功保存九小场所信息', '提示', {
+                            type: 'success',
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                loadDiv("jxcsplan/jxcsplan_list");
+                            }
+                        });
                         
-
                     }.bind(this), function (error) {
                         console.log(error);
                     })
@@ -909,7 +908,6 @@ new Vue({
                             });
                             this.addBuildingVisible = false;
                             this.buildingSearch = true;
-                            debugger;
                             this.getJzxxList('init', this.jzIndex);
                         } else {
                             this.$alert('保存失败', '提示', {
