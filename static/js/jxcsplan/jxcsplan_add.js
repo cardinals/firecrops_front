@@ -237,6 +237,7 @@ new Vue({
 
         //获取建筑信息列表
         getJzxxList: function(type, index){
+            debugger;
             if (type == 'page') {
                 this.tableData_building = [];
             } else {
@@ -329,6 +330,31 @@ new Vue({
         },
         //新建建筑信息
         addJzxx: function(){
+            this.buildingForm = {
+                jzid: "",
+                jzmc: "",
+                jzwz: "",
+                jzsyxz: [],
+                jzjg: "",
+                zdmj: "",
+                jzmj: "",
+                dsgd: "",
+                dxgd: "",
+                dscs: "",
+                dxcs: "",
+                bnc: "",
+                yjddsc: "",
+                xqxclx: "",
+                gnms: "",
+                bz: "",
+                jdh: "",
+                datasource: "",
+                //创建人、修改人
+                cjrid: "",
+                cjrmc: "",
+                xgrid: "",
+                xgrmc: ""
+            }
             this.addBuildingVisible = true;
             this.buildingSearch = false;
             this.dialogTitle = "新建建筑信息";
@@ -871,6 +897,7 @@ new Vue({
                             this.$alert('保存成功', '提示', {
                                 type: 'success',
                                 confirmButtonText: '确定',
+                                /** 
                                 callback: action => {
                                     var val={
                                         jzid:res.data.result.jzid,
@@ -878,7 +905,12 @@ new Vue({
                                     }
                                     this.selectRow_building(val);
                                 }
+                                */
                             });
+                            this.addBuildingVisible = false;
+                            this.buildingSearch = true;
+                            debugger;
+                            this.getJzxxList('init', this.jzIndex);
                         } else {
                             this.$alert('保存失败', '提示', {
                                 type: 'error',
@@ -900,10 +932,15 @@ new Vue({
                             this.$alert('成功修改' + res.data.result + '条建筑信息', '提示', {
                                 type: 'success',
                                 confirmButtonText: '确定',
+                                /*
                                 callback: action => {
                                     loadDiv("jxcsplan/jxcsjzxx_list");
                                 }
+                                */
                             });
+                            this.addBuildingVisible = false;
+                            this.buildingSearch = true;
+                            this.getJzxxList('init', this.jzIndex);
                         } else {
                             this.$alert('修改失败', '提示', {
                                 type: 'error',

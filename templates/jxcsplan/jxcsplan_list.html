@@ -70,16 +70,30 @@
                             @selection-change="selectionChange">
                             <el-table-column type="selection" width="45"></el-table-column>
                             <el-table-column type="index" label="序号" show-overflow-tooltip width="65" align="center"></el-table-column>
-                            <el-table-column prop="dwmc" label="单位名称" show-overflow-tooltip min-width="19%" align="center">
+                            <el-table-column prop="dwmc" label="单位名称" show-overflow-tooltip min-width="18%" align="center">
                                 <template slot-scope="scope">
                                     <a @click="planDetails(scope.row)">{{scope.row.dwmc}}</a>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="jxdwlxmc" label="单位类型" show-overflow-tooltip min-width="15%" align="center"></el-table-column>
-                            <el-table-column prop="dwdz" label="单位地址" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
+                            <el-table-column prop="jxdwlxmc" label="单位类型" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
+                            <el-table-column prop="dwdz" label="单位地址" show-overflow-tooltip min-width="18%" align="center"></el-table-column>
                             <el-table-column prop="xfgxmc" label="消防管辖" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
-                            <el-table-column prop="xzqhmc" label="行政区划" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
-                            <el-table-column prop="sjztmc" label="数据状态" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
+                            <el-table-column prop="xzqhmc" label="行政区划" show-overflow-tooltip min-width="9%" align="center"></el-table-column>
+                            <el-table-column prop="sjztmc" label="数据状态" show-overflow-tooltip min-width="10%" align="center">
+                                <template slot-scope="scope">
+                                    <el-popover placement="bottom" width="100" trigger="click" v-if="scope.row.reserve1!=null && scope.row.reserve1!=''">
+                                        <el-row>上次审核状态:
+                                            <v-text v-text="scope.row.shztmc"></v-text>
+                                        </el-row>
+                                        <el-row>审核意见:
+                                            <v-text v-text="scope.row.reserve1"></v-text>
+                                        </el-row>
+                                        <a type="text" slot="reference" v-text="scope.row.sjztmc"></a>
+                                    </el-popover>
+                                    <v-text v-else v-text="scope.row.sjztmc"></v-text>
+                                </template>
+
+                            </el-table-column>
                             <el-table-column label="操作" width="65" align="center" v-if="hasPermission('jxcsplan/jxcsplan:edit')">
                                 <template slot-scope="scope">
                                     <el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>
