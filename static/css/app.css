@@ -615,7 +615,8 @@ margin-top: 10px;
 }
 .dada .dada-item:hover,
 .dada2 .dada-item:hover {
-  background-color: #494b50;
+  /* background-color: #494b50; */
+  background-color: #594a43;
 }
 .nav > li > a:focus,
 .nav > li > a:hover {
@@ -731,11 +732,18 @@ margin-top: 10px;
 .main-container {
   padding: 20px 20px 20px 20px;
 }
+/* .el-button{
+  background: #7a9eff;
+} */
+.el-radio-button{
+  background: #7a9eff;
+}
 /* .main-container-header {
 
 } */
 .a-back {
-  color: #337ab7;
+  /* color: #337ab7; */
+  color:#d43d3f;
   margin-top:10px;
   margin-bottom:10px;
 }
