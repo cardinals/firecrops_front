@@ -284,26 +284,46 @@
                                         </el-row>
                                     </el-card>
                                 </el-tab-pane>
-                                <!-- <el-tab-pane label="图片信息" name="third">
-                                    <div v-if="jbxxData.dxid=='dlwd'">
-                                        <el-row v-for="(item,index) in picList" class="mb5 picList">
+                                <el-tab-pane label="附件信息" name="third">
+                                    <div id = "pic">
+                                        <el-row class="mb5">
+                                            <el-col :span="12">
+                                                <strong class="dtdlStyle">图片信息：</strong>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row v-for="(item,index) in picList" class="mb5 picList" style="line-height: 26px;">
                                             <v-text v-text="index+1"></v-text>.
                                             <i class="el-icon-picture mr5 ml5"></i>
                                             <v-text v-text="item.name" @click="showPic(index)"></v-text>
                                         </el-row>
+                                        <el-row v-if="this.isPic === false" class="mb5">
+                                            无
+                                        </el-row>
                                     </div>
-                                    <div v-else>
-                                        该重点单位暂无图片信息
+                                    <div id = "video" style="margin-top: 20px">
+                                        <el-row class="mb5">
+                                            <el-col :span="12">
+                                                <strong class="dtdlStyle">视频信息：</strong>
+                                            </el-col>
+                                        </el-row>
+                                        <el-row v-for="(item,index) in fileList" class="mb5 picList" style="line-height: 26px;">
+                                            <v-text v-text="index+1"></v-text>.
+                                            <i class="el-icon-picture mr5 ml5"></i>
+                                            <v-text v-text="item.name" @click="openVideo(item)"></v-text>
+                                        </el-row>
+                                        <el-row v-if="this.isVideo === false" class="mb5">
+                                            无
+                                        </el-row>
                                     </div>
-
-                                </el-tab-pane> -->
+                                    
+                                </el-tab-pane>
                             </el-tabs>
                         </template>
 
                     </div>
                 </div>
                 <!--图片轮播界面-->
-                <!-- <el-dialog :title="picTitle" :visible.sync="showPicVisible" :close-on-click-modal="false" size="large" @close="successClose">
+                <el-dialog :title="picTitle" :visible.sync="showPicVisible" :close-on-click-modal="false" size="large" @close="successClose">
                     <template>
                         <el-carousel type="card" height="350px" :initial-index="initialIndex" :autoplay="false" arrow="always" indicator-position="none"
                             @change="picTitleChange">
@@ -312,48 +332,8 @@
                             </el-carousel-item>
                         </el-carousel>
                     </template>
-                </el-dialog> -->
-                <!--选择选择分享模板界面-->
-                <!-- <el-dialog title="选择分享模板" :visible.sync="shareVisible" @close="closeShareDialog()" :close-on-click-modal="false">
-                    <div id="tableView" style="padding: 0 35px;">
-                        <el-button type="primary" icon="share" style="width:140px" @click="openShare('detail')">预案详情分享</el-button>
-                        <br>
-                        <el-button type="primary" icon="share" style="margin-top:10px;width:140px" @click="openShare('summary')">预案简版分享</el-button>
-                    </div>
-                </el-dialog> -->
-                <!--选择选择分享模板界面-->
-                <!-- <el-dialog title="选择下载模板" :visible.sync="SelectDownVisible" @close="closeSelectDownDialog()" :close-on-click-modal="false">
-                    <div id="tableView" style="padding: 0 35px;">
-                        <el-button type="primary" icon="document" style="width:140px" @click="openDown('detail')">预案详情下载</el-button>
-                        <br>
-                        <el-button type="primary" icon="document" style="margin-top:10px;width:140px" @click="openDown('summary')">预案简版下载</el-button>
-                    </div>
-                </el-dialog> -->
-                <!--选择选择导出word界面-->
-                <!-- <el-dialog width="10%" title="选择下载项" :visible.sync="downVisible" @close="closeDownDialog()" :close-on-click-modal="false">
-                    <div style="margin-top: 20px">
-                        <el-checkbox v-model="fmChecked" disabled label="封面" border size="medium"></el-checkbox>
-                    </div>
-                    <div style="margin-top: 20px">
-                        <el-checkbox v-model="dwjbqkChecked" label="单位基本情况" border size="medium"></el-checkbox>
-                    </div>
-                    <div style="margin-top: 20px">
-                        <el-checkbox v-model="dwjzxxChecked" label="单位建筑信息和消防设施" border size="medium"></el-checkbox>
-                    </div>
-                    <div style="margin-top: 20px">
-                        <el-checkbox v-model="zdbwChecked" label="重点部位" border size="medium"></el-checkbox>
-                    </div>
-                    <div style="margin-top: 20px">
-                        <el-checkbox v-model="zqsdChecked" label="灾情设定与作战部署" border size="medium"></el-checkbox>
-                    </div>
-                    <div style="margin-top: 20px">
-                        <el-checkbox v-model="tpChecked" label="预案附件" border size="medium"></el-checkbox>
-                    </div>
-
-                    <div id="tableView" style="padding: 0 35px;text-align:center">
-                        <el-button type="primary" style="width:140px" @click="downShare()">确定</el- button>
-                    </div>
-                </el-dialog> -->
+                </el-dialog>
+                
             </div>
             <!-- main-container -->
         </div>

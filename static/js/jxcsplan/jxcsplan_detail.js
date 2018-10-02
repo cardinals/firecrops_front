@@ -4,17 +4,20 @@ new Vue({
         return {
             activeName: "first",
 
-            pkid: "",//页面获取的预案id
+            pkid: "",
             // shareVisible: false,
-            // showPicVisible: false,
+            showPicVisible: false,
             initialIndex: 0,
-            // picTitle:'',
+            picTitle:'',
             jbxxData: {},//基础信息Data
             xfssData: [],//消防设施Data
             jzxxData: [],//建筑信息Data
             loading: false,
             picList: [],
-            fjDetailData: ''
+            fileList:[],
+            fjDetailData: '',
+            isPic:false,
+            isVideo:false
         }
     },
     created: function () {
@@ -24,7 +27,8 @@ new Vue({
         this.jbxxDetails(this.pkid);
         this.xfssDetails(this.pkid);
         this.jzxxDetails(this.pkid);
-        // this.picDetail();
+        this.picDetail();
+        this.videoDetail();
     },
 
     methods: {
@@ -61,46 +65,50 @@ new Vue({
                 console.log(error)
             })
         },
-        //附件查询
-        fjDetail: function (val) {
-            axios.get('/dpapi/yafjxz/doFindByPlanId/' + val).then(function (res) {
-                this.fjDetailData = res.data.result.length;
-                // if (res.data.result.length > 0) {
-
-                // this.fileList = [{
-                //     name: res.data.result[0].wjm,
-                //     url: "http://localhost:80/upload/" + res.data.result[0].xzlj
-                // }]
-                // }
+        //图片查询
+        picDetail: function () {
+            var pic = {
+                dwid: this.pkid,
+                kzm: 'pic'
+            }
+            axios.post('/dpapi/jxcsfjxz/doFindByDwid', pic).then(function (res) {
+                var picData = res.data.result;
+                if (picData.length > 0) {
+                    for (var i in picData) {
+                        this.picList.push({
+                            uuid: picData[i].uuid,
+                            name: picData[i].wjm,
+                            url: baseUrl + "/upload/jxcsFjxx/" + picData[i].fjlj
+                        });
+                    }
+                    this.isPic = true;
+                }
 
             }.bind(this), function (error) {
                 console.log(error)
             })
         },
-        //图片查询
-        picDetail: function () {
-            this.picList = [
-                {
-                    name: "实景照片-万达中心",
-                    url: baseUrl + "/upload/pic/sjtp.png"
-                },
-                {
-                    name: "总平面图-万达中心",
-                    url: baseUrl + "/upload/pic/zpmt.png"
-                },
-                {
-                    name: "内部平面图-B1层平面图",
-                    url: baseUrl + "/upload/pic/nbpmtB1.png"
-                },
-                {
-                    name: "作战部署图-灾情4-车辆部署图",
-                    url: baseUrl + "/upload/pic/4clbst.png"
-                },
-                {
-                    name: "作战部署图-灾情4-33层力量部署图",
-                    url: baseUrl + "/upload/pic/1clbst.png"
+        //视频查询
+        videoDetail: function(){
+            var video = {
+                dwid: this.pkid,
+                kzm: 'video'
+            }
+            axios.post('/dpapi/jxcsfjxz/doFindByDwid', video).then(function (res) {
+                var videoData = res.data.result;
+                if (videoData.length > 0) {
+                    for (var i in videoData) {
+                        this.fileList.push({
+                            uuid: videoData[i].uuid,
+                            name: videoData[i].wjm,
+                            url: baseUrl + "/upload/jxcsFjxx/" + videoData[i].fjlj
+                        });
+                    }
+                    this.isVideo = true;
                 }
-            ]
+            }.bind(this), function (error) {
+                console.log(error)
+            })
         },
         successClose: function () {
             this.initialIndex = 0;
@@ -113,6 +121,19 @@ new Vue({
         },
         picTitleChange: function (index, index1) {
             this.picTitle = this.picList[index].name;
+        },
+        //视频播放
+        openVideo: function(val){
+            var url = val.url;
+            var page = 
+                window.open(url,"视频附件");
+                /** 
+                var html="<body style='background:black'>"+
+                "<div style='width:80%;margin:auto;'>"+
+                "<video controls width='100%' height='95%' autoplay src='"+url+
+                "'></video></div></body>"
+                page.document.write(html);
+                */
         },
         //根据重点单位id获取建筑分区信息
         getJzfqDetailByVo: function () {

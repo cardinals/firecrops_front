@@ -381,7 +381,7 @@ new Vue({
                         xgrid: this.shiroData.userid,
                         xgrmc: this.shiroData.realName,
                         bz: this.addForm.bz,
-                        jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                        // jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                         datasource: this.shiroData.organizationVO.jgid,
                         equipengineVOList: this.engineForm
                     }

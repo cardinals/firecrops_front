@@ -77,12 +77,11 @@ var vue = new Vue({
         //新增
         addClick: function () {
             window.open("../../templates/all.html?url=/ewbh/ewbh&type=XZ");
-            // loadDivParam("ewbh/ewbh_list", params);
         },
         //编辑
         editClick: function (val) {
-            window.open("../../templates/all.html?url=/ewbh/ewbh&type=XZ&ID=" + val.uuid);
-            // loadDivParam("ewbh/ewbh_list", params);
+            // debugger
+            window.open("../../templates/all.html?url=/ewbh/ewbh&type=BJ&ID=" + val.uuid + "&zddwid=" + val.zddwid + "&bhmc=" + val.wjm);
         },
         //删除
         deleteClick: function () {
@@ -95,9 +94,9 @@ var vue = new Vue({
                     this.multipleSelection[i].xgrid = this.shiroData.userid;
                     this.multipleSelection[i].xgrmc = this.shiroData.realName;
                 }
-                axios.post('/dpapi/importantunits/doDeleteBatch', this.multipleSelection).then(function (res) {
+                axios.post('/dpapi/ewbh/doDeleteEquipment', this.multipleSelection).then(function (res) {
                     this.$message({
-                        message: "成功删除" + this.multipleSelection.length + "条重点单位信息",
+                        message: "成功删除" + res.data.result + "条标绘信息",
                         showClose: true,
                         onClose: this.searchClick('delete')
                     });
