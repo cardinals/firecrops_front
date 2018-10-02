@@ -469,9 +469,7 @@ new Vue({
                 //消防设施查询
                 axios.get('/dpapi/jxcsxfss/doFindXfssByDwid/' + this.status).then(function (res) {
                     this.addForm.xfssList = res.data.result;
-                    if(res.data.result == null || res.data.result == '' || res.data.result.length =='0'){
-                        this.addForm.xfssList = [];
-                    }
+                    
                     //消防设施类型格式化
                     for(var i in this.addForm.xfssList){
                         var xfsslx_tmp = this.addForm.xfssList[i].xfsslx;
@@ -491,11 +489,17 @@ new Vue({
                         }
                         this.addForm.xfssList[i].xfsslx = xfsslx_tmp;
                     }
+                    if(this.addForm.xfssList == null || this.addForm.xfssList == '' || this.addForm.xfssList.length == 0){
+                        this.addForm.xfssList = [];
+                    }
                 }.bind(this), function (error) {
                     console.log(error)
                 })
                 //建筑信息查询
                 axios.get('/dpapi/jxcsjzxx/doFindJzxxByDwid/' + this.status).then(function (res) {
+                    if(this.addForm.jzxxList == null || this.addForm.jzxxList == '' || this.addForm.jzxxList.length == 0){
+                        this.addForm.jzxxList = [];
+                    }
                     this.addForm.jzxxList = res.data.result;
                 }.bind(this), function (error) {
                     console.log(error)

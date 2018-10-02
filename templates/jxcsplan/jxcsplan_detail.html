@@ -308,7 +308,7 @@
                                         </el-row>
                                         <el-row v-for="(item,index) in fileList" class="mb5 picList" style="line-height: 26px;">
                                             <v-text v-text="index+1"></v-text>.
-                                            <i class="el-icon-picture mr5 ml5"></i>
+                                                <img src="../../static/images/icon-download/video.png" style="width: 20px;height: 20px;margin-left: 3px;">
                                             <v-text v-text="item.name" @click="openVideo(item)"></v-text>
                                         </el-row>
                                         <el-row v-if="this.isVideo === false" class="mb5">
