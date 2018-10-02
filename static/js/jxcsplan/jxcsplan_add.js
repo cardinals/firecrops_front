@@ -398,7 +398,7 @@ new Vue({
         addFireDomain: function () {
             if(this.addForm.xfssList == null){
                 this.addForm.xfssList = [];
-                //console.log(666666666);
+                console.log(666666666);
             }
             this.addForm.xfssList.push({
                 xfssmc: '',
@@ -604,6 +604,7 @@ new Vue({
         //点击保存事件
         save: function (formName) {
             if (this.checkedBefore() == true) {
+                this.getXfsslx();
                 if (this.status == 0) {//新增
                     var params = {
                       //  dxid: this.addForm.dxid,
