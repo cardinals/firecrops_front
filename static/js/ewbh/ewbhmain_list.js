@@ -76,12 +76,13 @@ var vue = new Vue({
         },
         //新增
         addClick: function () {
-            window.open("../../templates/all.html?url=/ewbh/ewbh&type=XZ");
+            window.open("../../templates/ewbh/ewbh_list.html?type=XZ");
         },
         //编辑
         editClick: function (val) {
             // debugger
-            window.open("../../templates/all.html?url=/ewbh/ewbh&type=BJ&ID=" + val.uuid + "&zddwid=" + val.zddwid + "&bhmc=" + val.wjm);
+            window.open("../../templates/ewbh/ewbh_list.html?type=BJ&ID=" + val.uuid + "&zddwid=" + val.zddwid + "&bhmc=" + val.wjm);
+            // window.open("../../templates/all.html?url=/ewbh/ewbh&type=BJ&ID=" + val.uuid + "&zddwid=" + val.zddwid + "&bhmc=" + val.wjm);
         },
         //删除
         deleteClick: function () {
