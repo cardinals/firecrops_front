@@ -184,7 +184,7 @@ new Vue({
                 jgid = this.shiroData.organizationVO.uuid;
             }
             var params = {
-                yamc : this.yuAnSearchForm.YAMC,
+                yamc : this.yuAnSearchForm.YAMC.replace(/%/g,"\\%"),
                 yadxType : this.yuAnSearchForm.YADX,
                 yalx : this.yuAnSearchForm.YALX.substr(0,1),
                 yajb : this.yuAnSearchForm.YAJB,
@@ -222,7 +222,7 @@ new Vue({
                 xfgx = this.shiroData.organizationVO.uuid;
             }
             var params = {
-                dxmc : this.YADXSearchForm.DXMC,
+                dxmc : this.YADXSearchForm.DXMC.replace(/%/g,"\\%"),
                 yadxType : this.YADXSearchForm.YADX,
                 xfgx : xfgx,
                 dwxz : this.YADXSearchForm.DWXZ,
@@ -254,7 +254,7 @@ new Vue({
             }
             this.loading = true;
             var params = {
-                jzmc:this.DWJZSearchForm.JZMC,
+                jzmc:this.DWJZSearchForm.JZMC.replace(/%/g,"\\%"),
                 jzlx:this.DWJZSearchForm.JZLX,
                 jzl_jzsyxz:this.DWJZSearchForm.JZSYXZ.substr(0,1),
                 jzl_jzjg:this.DWJZSearchForm.JZJG,
