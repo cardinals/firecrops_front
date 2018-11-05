@@ -25,7 +25,7 @@
 								<el-label class="mr5 vbm"><span style="color:red;">* </span>单位名称</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.dwmc" placeholder="单位名称" clearable></el-input>
+								<el-input size="small" v-model="editForm.dwmc" maxlength="100" placeholder="单位名称" clearable></el-input>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm"><span style="color:red;">* </span>单位性质</el-label>
@@ -42,7 +42,7 @@
 								<el-label class="mr5 vbm">单位地址</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.dwdz" placeholder="单位地址" clearable></el-input>
+								<el-input size="small" v-model="editForm.dwdz" maxlength="100" placeholder="单位地址" clearable></el-input>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">行政区划</el-label>
@@ -66,7 +66,7 @@
 									<el-label class="mr5 vbm">值班电话</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.zbdh" placeholder="值班电话" clearable></el-input>
+									<el-input size="small" v-model="editForm.zbdh" maxlength="100" placeholder="值班电话" clearable></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							</el-row>
@@ -75,7 +75,7 @@
 								<el-label class="mr5 vbm">单位概况</el-label>
 							</el-col>
 							<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-								<el-input size="small" v-model="editForm.dwgk" placeholder="单位概况" clearable></el-input>
+								<el-input size="small" v-model="editForm.dwgk" maxlength="1000" placeholder="单位概况" clearable></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -89,13 +89,13 @@
 								<el-label class="mr5 vbm">GIS_X</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number type="number" size="small" v-model="editForm.gisX" placeholder="GIS_X"></el-input-number>
+								<el-input-number type="number" size="small" v-model="editForm.gisX" :min="-99999.9999999999" :max="99999.9999999999" placeholder="GIS_X"></el-input-number>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">GIS_Y</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number type="number" size="small" v-model="editForm.gisY" placeholder="GIS_Y"></el-input-number>
+								<el-input-number type="number" size="small" v-model="editForm.gisY" :min="-99999.9999999999" :max="99999.9999999999" placeholder="GIS_Y"></el-input-number>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -105,13 +105,13 @@
 								<el-label class="mr5 vbm">经度</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number type="number" size="small" v-model="editForm.lon" placeholder="经度"></el-input-number>
+								<el-input-number type="number" size="small" v-model="editForm.lon" :min="-180" :max="180" placeholder="经度"></el-input-number>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">纬度</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number type="number" size="small" v-model="editForm.lat" placeholder="纬度"></el-input-number>
+								<el-input-number type="number" size="small" v-model="editForm.lat" :min="-90" :max="90" placeholder="纬度"></el-input-number>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -120,13 +120,13 @@
 								<el-label class="mr5 vbm">毗邻情况(东)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.plqkd" placeholder="毗邻情况(东)" clearable></el-input>
+								<el-input size="small" v-model="editForm.plqkd" maxlength="100" placeholder="毗邻情况(东)" clearable></el-input>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">毗邻情况(西)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.plqkx" placeholder="毗邻情况(西)" clearable></el-input>
+								<el-input size="small" v-model="editForm.plqkx" maxlength="100" placeholder="毗邻情况(西)" clearable></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -136,13 +136,13 @@
 								<el-label class="mr5 vbm">毗邻情况(南)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.plqkn" placeholder="毗邻情况(南)" clearable></el-input>
+								<el-input size="small" v-model="editForm.plqkn" maxlength="100" placeholder="毗邻情况(南)" clearable></el-input>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">毗邻情况(北)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.plqkb" placeholder="毗邻情况(北)" clearable></el-input>
+								<el-input size="small" v-model="editForm.plqkb" maxlength="100" placeholder="毗邻情况(北)" clearable></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -173,13 +173,13 @@
 								<el-label class="mr5 vbm">消防责任人</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.xfzrr" placeholder="消防责任人" clearable></el-input>
+								<el-input size="small" v-model="editForm.xfzrr" maxlength="25" placeholder="消防责任人" clearable></el-input>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">消防责任人电话</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.xfzrrdh" placeholder="消防责任人电话" clearable></el-input>
+								<el-input size="small" v-model="editForm.xfzrrdh" maxlength="30" placeholder="消防责任人电话" clearable></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -188,13 +188,13 @@
 								<el-label class="mr5 vbm">消防管理人</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.xfglr" placeholder="消防管理人" clearable></el-input>
+								<el-input size="small" v-model="editForm.xfglr" maxlength="25" placeholder="消防管理人" clearable></el-input>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">消防管理人电话</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.xfglrdh" placeholder="消防管理人电话" clearable></el-input>
+								<el-input size="small" v-model="editForm.xfglrdh" maxlength="30" placeholder="消防管理人电话" clearable></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -203,7 +203,7 @@
 								<el-label class="mr5 vbm">单位消防设施数量</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="editForm.xfsssl" size="small" :min="0" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" class="searchSelect"></el-input-number>
+								<el-input-number v-model="editForm.xfsssl" size="small" :min="0" :max="99999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" class="searchSelect"></el-input-number>
 							</el-col>
 							<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">&nbsp;</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
@@ -242,13 +242,13 @@
 											<el-label class="mr5">消防队伍人数</el-label>
 										</el-col>
 										<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-											<el-input-number v-model="xfll.xfdwrs" size="small" :min="0" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" class="searchSelect"></el-input-number>
+											<el-input-number v-model="xfll.xfdwrs" size="small" :min="0" :max="9999999999"  onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" class="searchSelect"></el-input-number>
 										</el-col>
 										<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 											<el-label class="mr5">消防队伍车辆数</el-label>
 										</el-col>
 										<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-											<el-input-number v-model="xfll.xfdwcls" size="small" :min="0" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" class="searchSelect"></el-input-number>
+											<el-input-number v-model="xfll.xfdwcls" size="small" :min="0" :max="99999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" class="searchSelect"></el-input-number>
 										</el-col>
 										<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 									</el-row>
@@ -257,13 +257,13 @@
 											<el-label class="mr5">消防队伍联系人</el-label>
 										</el-col>
 										<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-											<el-input v-model="xfll.xfdwlxr" size="small" placeholder="消防队伍联系人" class="searchSelect" clearable></el-input>
+											<el-input v-model="xfll.xfdwlxr" size="small" maxlength="25" placeholder="消防队伍联系人" class="searchSelect" clearable></el-input>
 										</el-col>
 										<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 											<el-label class="mr5">消防队伍联系电话</el-label>
 										</el-col>
 										<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-											<el-input v-model="xfll.xfdwdh" size="small" placeholder="消防队伍联系电话" class="searchSelect" clearable></el-input>
+											<el-input v-model="xfll.xfdwdh" size="small" maxlength="30" placeholder="消防队伍联系电话" class="searchSelect" clearable></el-input>
 										</el-col>
 										<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 									</el-row>
@@ -290,7 +290,7 @@
 								<el-label class="mr5 vbm">建筑数量</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="editForm.jzsl" size="small" :min="0" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"></el-input-number>
+								<el-input-number v-model="editForm.jzsl" size="small" :min="0" :max="9999999999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"></el-input-number>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -299,13 +299,13 @@
 								<el-label class="mr5 vbm">占地面积(㎡)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="editForm.zdmj" size="small" :min="0" class="searchSelect"></el-input-number>
+								<el-input-number v-model="editForm.zdmj" size="small" :min="0" :max="999999999999.99" class="searchSelect"></el-input-number>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">建筑面积(㎡)</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="editForm.jzmj" size="small" :min="0" class="searchSelect"></el-input-number>
+								<el-input-number v-model="editForm.jzmj" size="small" :min="0" :max="999999999999.99" class="searchSelect"></el-input-number>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -356,7 +356,7 @@
 											<el-label class="mr5 vbm"><span style="color:red;">* </span>重点部位名称</el-label>
 										</el-col>
 										<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-											<el-input size="small" v-model="zdbw.zdbwmc" placeholder="重点部位名称" class="searchSelect"></el-input>
+											<el-input size="small" v-model="zdbw.zdbwmc" maxlength="50" placeholder="重点部位名称" class="searchSelect"></el-input>
 										</el-col>
 										<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 											<el-label class="mr5 vbm"><span style="color:red;">* </span>重点部位类型</el-label>
@@ -373,7 +373,7 @@
 											<el-label class="mr5 vbm">重点部位位置</el-label>
 										</el-col>
 										<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-											<el-input size="small" v-model="zdbw.zdbwwz" placeholder="重点部位位置" class="searchSelect"></el-input>
+											<el-input size="small" v-model="zdbw.zdbwwz" maxlength="50" placeholder="重点部位位置" class="searchSelect"></el-input>
 										</el-col>
 										<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 									</el-row>
@@ -382,7 +382,7 @@
 											<el-label class="mr5 vbm">危险性分析</el-label>
 										</el-col>
 										<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-											<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.wxxfx" placeholder="危险性分析" class="searchSelect"></el-input>
+											<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.wxxfx" maxlength="200" placeholder="危险性分析" class="searchSelect"></el-input>
 										</el-col>
 										<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 									</el-row>
@@ -391,7 +391,7 @@
 											<el-label class="mr5 vbm">注意事项</el-label>
 										</el-col>
 										<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-											<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.zysx" placeholder="注意事项" class="searchSelect"></el-input>
+											<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.zysx" maxlength="200" placeholder="注意事项" class="searchSelect"></el-input>
 										</el-col>
 										<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 									</el-row>
@@ -400,7 +400,7 @@
 											<el-label class="mr5 vbm">备注</el-label>
 										</el-col>
 										<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-											<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.bz" placeholder="备注" class="searchSelect"></el-input>
+											<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.bz" maxlength="200" placeholder="备注" class="searchSelect"></el-input>
 										</el-col>
 										<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 									</el-row>
@@ -434,13 +434,13 @@
 												<el-label class="mr5 vbm">区域面积(㎡)</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input-number v-model="zdbw.jzl.qymj" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small" :min="0"></el-input-number>
+												<el-input-number v-model="zdbw.jzl.qymj" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small" :min="0" :max="99999999.99"></el-input-number>
 											</el-col>
 											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 												<el-label class="mr5 vbm">功能描述</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.jzl.gnms" placeholder="功能描述" class="searchSelect"></el-input>
+												<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.jzl.gnms" maxlength="200" placeholder="功能描述" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -461,13 +461,13 @@
 													<el-label class="mr5 vbm">危险介质{{index1+1}}名称</el-label>
 												</el-col>
 												<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-													<el-input size="small" v-model="wxjz.jzmc" placeholder="危险介质名称" class="searchSelect"></el-input>	
+													<el-input size="small" v-model="wxjz.jzmc" maxlength="50" placeholder="危险介质名称" class="searchSelect"></el-input>	
 												</el-col>
 												<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 													<el-label class="mr5 vbm">介质{{index1+1}}实际储量</el-label>
 												</el-col>
 												<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-													<el-input-number v-model="wxjz.jzsjcl" size="small" :min="0" :max="99999.99"></el-input-number>
+													<el-input-number v-model="wxjz.jzsjcl" size="small" :min="0" :max="999.99"></el-input-number>
 												</el-col>
 												<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
 													<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainWxjz(index,wxjz)" class="r" style="float:left;"></el-button>
@@ -478,13 +478,13 @@
 													<el-label class="mr5 vbm">介质{{index1+1}}理化特性</el-label>
 												</el-col>
 												<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-													<el-input size="small" v-model="wxjz.jzlhtx" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="介质理化特性" class="searchSelect"></el-input>	
+													<el-input size="small" v-model="wxjz.jzlhtx" maxlength="200" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="介质理化特性" class="searchSelect"></el-input>	
 												</el-col>
 												<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 													<el-label class="mr5 vbm">介质{{index1+1}}备注</el-label>
 												</el-col>
 												<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-													<el-input size="small" v-model="wxjz.jzbz" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="介质备注" class="searchSelect"></el-input>	
+													<el-input size="small" v-model="wxjz.jzbz" maxlength="200" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="介质备注" class="searchSelect"></el-input>	
 												</el-col>
 												<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 											</el-row>
@@ -508,7 +508,7 @@
 												<el-label class="mr5 vbm">装置组成</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.zzl.zzzc" placeholder="功能描述" class="searchSelect"></el-input>
+												<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.zzl.zzzc" maxlength="200" placeholder="功能描述" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -517,13 +517,13 @@
 												<el-label class="mr5 vbm">占地面积(㎡)</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input-number v-model="zdbw.zzl.zdmj" size="small" :min="0"></el-input-number>
+												<el-input-number v-model="zdbw.zzl.zdmj" size="small" :min="0" :max="99999999.99"></el-input-number>
 											</el-col>
 											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 												<el-label class="mr5 vbm">装置高度(m)</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input-number v-model="zdbw.zzl.zzgd" size="small" :min="0"></el-input-number>
+												<el-input-number v-model="zdbw.zzl.zzgd" size="small" :min="0" :max="99999999.99"></el-input-number>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -532,13 +532,13 @@
 												<el-label class="mr5 vbm">技术负责人</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input size="small" v-model="zdbw.zzl.jsfzr" placeholder="技术负责人" class="searchSelect"></el-input>
+												<el-input size="small" v-model="zdbw.zzl.jsfzr" maxlength="25" placeholder="技术负责人" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 												<el-label class="mr5 vbm">技术负责人电话</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-													<el-input size="small" v-model="zdbw.zzl.jsfzrdh" placeholder="技术负责人电话" class="searchSelect"></el-input>
+													<el-input size="small" v-model="zdbw.zzl.jsfzrdh" maxlength="30" placeholder="技术负责人电话" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -547,7 +547,7 @@
 												<el-label class="mr5 vbm">原料信息</el-label>
 											</el-col>
 											<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-												<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.zzl.ylxx" placeholder="原料信息" class="searchSelect"></el-input>
+												<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.zzl.ylxx" maxlength="200" placeholder="原料信息" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -556,7 +556,7 @@
 												<el-label class="mr5 vbm">产物信息</el-label>
 											</el-col>
 											<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-												<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.zzl.cwxx" placeholder="产物信息" class="searchSelect"></el-input>
+												<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.zzl.cwxx" maxlength="200" placeholder="产物信息" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -565,7 +565,7 @@
 												<el-label class="mr5 vbm">工艺流程</el-label>
 											</el-col>
 											<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-												<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.zzl.gylc" placeholder="工艺流程" class="searchSelect"></el-input>
+												<el-input size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" v-model="zdbw.zzl.gylc" maxlength="200" placeholder="工艺流程" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -578,13 +578,13 @@
 												<el-label class="mr5 vbm">储罐数量</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input-number v-model="zdbw.cgl.cgsl" size="small" :min="0" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" ></el-input-number>
+												<el-input-number v-model="zdbw.cgl.cgsl" size="small" :min="0" :max="9999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" ></el-input-number>
 											</el-col>
 											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 												<el-label class="mr5 vbm">储罐间隔(m)</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input-number v-model="zdbw.cgl.cgjg" size="small" :min="0"></el-input-number>
+												<el-input-number v-model="zdbw.cgl.cgjg" size="small" :min="0" :max="99999999.99"></el-input-number>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -593,13 +593,13 @@
 												<el-label class="mr5 vbm">总容积(m³)</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input-number v-model="zdbw.cgl.zrj" size="small" :min="0" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" ></el-input-number>
+												<el-input-number v-model="zdbw.cgl.zrj" size="small" :min="0" :max="99999999.99" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" ></el-input-number>
 											</el-col>
 											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 												<el-label class="mr5 vbm">存储介质描述</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input v-model="zdbw.cgl.ccjzms" size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"  placeholder="存储介质描述" class="searchSelect"></el-input>
+												<el-input v-model="zdbw.cgl.ccjzms" size="small" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" maxlength="200" placeholder="存储介质描述" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -608,13 +608,13 @@
 												<el-label class="mr5 vbm">技术负责人</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input size="small" v-model="zdbw.cgl.jsfzr" placeholder="技术负责人" class="searchSelect"></el-input>
+												<el-input size="small" v-model="zdbw.cgl.jsfzr" maxlength="25" placeholder="技术负责人" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 												<el-label class="mr5 vbm">技术负责人电话</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-													<el-input size="small" v-model="zdbw.cgl.jsfzrdh" placeholder="技术负责人电话" class="searchSelect"></el-input>
+													<el-input size="small" v-model="zdbw.cgl.jsfzrdh" maxlength="30" placeholder="技术负责人电话" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -623,13 +623,13 @@
 												<el-label class="mr5 vbm">毗邻情况(东)</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input size="small" v-model="zdbw.cgl.plqkd" placeholder="毗邻情况(东)" class="searchSelect"></el-input>
+												<el-input size="small" v-model="zdbw.cgl.plqkd" maxlength="100" placeholder="毗邻情况(东)" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 												<el-label class="mr5 vbm">毗邻情况(南)</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input size="small" v-model="zdbw.cgl.plqkn" placeholder="毗邻情况(南)" class="searchSelect"></el-input>
+												<el-input size="small" v-model="zdbw.cgl.plqkn" maxlength="100" placeholder="毗邻情况(南)" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -638,13 +638,13 @@
 												<el-label class="mr5 vbm">毗邻情况(西)</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input size="small" v-model="zdbw.cgl.plqkx" placeholder="毗邻情况(西)" class="searchSelect"></el-input>
+												<el-input size="small" v-model="zdbw.cgl.plqkx" maxlength="100" placeholder="毗邻情况(西)" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 												<el-label class="mr5 vbm">毗邻情况(北)</el-label>
 											</el-col>
 											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-												<el-input size="small" v-model="zdbw.cgl.plqkb" placeholder="毗邻情况(北)" class="searchSelect"></el-input>
+												<el-input size="small" v-model="zdbw.cgl.plqkb" maxlength="100" placeholder="毗邻情况(北)" class="searchSelect"></el-input>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -666,7 +666,7 @@
 													<el-label class="mr5 vbm">储罐{{index1+1}}名称</el-label>
 												</el-col>
 												<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-													<el-input size="small" v-model="cg.cgmc" placeholder="储罐名称" class="searchSelect"></el-input>	
+													<el-input size="small" v-model="cg.cgmc" maxlength="50" placeholder="储罐名称" class="searchSelect"></el-input>	
 												</el-col>
 												<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">&nbsp;</el-col>	
 												<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
@@ -725,13 +725,13 @@
 													<el-label class="mr5 vbm">工作压力</el-label>
 												</el-col>
 												<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-													<el-input size="small" v-model="cg.gzyl" placeholder="工作压力" class="searchSelect"></el-input>
+													<el-input size="small" v-model="cg.gzyl" maxlength="15" placeholder="工作压力" class="searchSelect"></el-input>
 												</el-col>
 												<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 													<el-label class="mr5 vbm">存储温度</el-label>
 												</el-col>
 												<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-													<el-input size="small" v-model="cg.ccwd" placeholder="存储温度" class="searchSelect"></el-input>
+													<el-input size="small" v-model="cg.ccwd" maxlength="15" placeholder="存储温度" class="searchSelect"></el-input>
 												</el-col>
 												<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 											</el-row>
@@ -740,13 +740,13 @@
 													<el-label class="mr5 vbm">存储介质名称</el-label>
 												</el-col>
 												<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-													<el-input size="small" v-model="cg.ccjzmc" placeholder="存储介质名称" class="searchSelect"></el-input>
+													<el-input size="small" v-model="cg.ccjzmc" maxlength="50" placeholder="存储介质名称" class="searchSelect"></el-input>
 												</el-col>
 												<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 													<el-label class="mr5 vbm">介质理化性质</el-label>
 												</el-col>
 												<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-													<el-input size="small" v-model="cg.ccjzlhxz" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="存储介质理化性质" class="searchSelect"></el-input>	
+													<el-input size="small" v-model="cg.ccjzlhxz" maxlength="200" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="存储介质理化性质" class="searchSelect"></el-input>	
 												</el-col>
 												<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 											</el-row>
@@ -761,7 +761,7 @@
 													<el-label class="mr5 vbm">介质液位高度(m)</el-label>
 												</el-col>
 												<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-													<el-input-number v-model="cg.ccjzywgd" size="small" :min="0" :max="99999999.99"></el-input-number>	
+													<el-input-number v-model="cg.ccjzywgd" size="small" :min="0" :max="999.99"></el-input-number>	
 												</el-col>
 												<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 											</el-row>
@@ -770,7 +770,7 @@
 													<el-label class="mr5 vbm">介质备注</el-label>
 												</el-col>
 												<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-													<el-input size="small" v-model="cg.bz" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="介质备注" class="searchSelect"></el-input>	
+													<el-input size="small" v-model="cg.bz" maxlength="200" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="介质备注" class="searchSelect"></el-input>	
 												</el-col>
 												<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 											</el-row>
@@ -791,7 +791,7 @@
 								<el-label class="mr5 vbm">备注</el-label>
 							</el-col>
 							<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-								<el-input size="small" v-model="editForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+								<el-input size="small" v-model="editForm.bz" maxlength="200" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
 							</el-col>
 						</el-row>
 					</el-form>
