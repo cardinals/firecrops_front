@@ -154,7 +154,7 @@ var vue = new Vue({
             }
             var params = {
                 uuid:this.searchForm.uuid,
-                dwmc: this.searchForm.dwmc,
+                dwmc: this.searchForm.dwmc.replace(/%/g,"\\%"),
                 dwxz: this.searchForm.dwxz,
                 jzfl: this.searchForm.jzfl,
                 fhdj: this.searchForm.fhdj,

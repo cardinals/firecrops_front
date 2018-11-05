@@ -128,8 +128,8 @@ var vue = new Vue({
                 //add by yushch
                 uuid: this.searchForm.uuid,
                 //end add
-                dxmc: this.searchForm.dxmc,
-                dxdz: this.searchForm.dxdz,
+                dxmc: this.searchForm.dxmc.replace(/%/g,"\\%"),
+                dxdz: this.searchForm.dxdz.replace(/%/g,"\\%"),
                 xfgx: xfgx,
                 jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSize,
