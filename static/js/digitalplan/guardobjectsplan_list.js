@@ -189,9 +189,9 @@ var vue = new Vue({
                 }
             }
             var params = {
-                yamc: this.searchForm.yamc,
+                yamc: this.searchForm.yamc.replace(/%/g,"\\%"),
                 yalx: this.searchForm.yalx[this.searchForm.yalx.length-1],
-                dxmc: this.searchForm.dxmc,
+                dxmc: this.searchForm.dxmc.replace(/%/g,"\\%"),
                 sfkqy: this.searchForm.sfkqy,
                 jgid: jgid,
                 jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',

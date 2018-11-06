@@ -163,8 +163,8 @@ var vue = new Vue({
                 }
             }
             var params={
-                yamc: this.searchForm.yamc,
-                dxmc: this.searchForm.dxmc,
+                yamc: this.searchForm.yamc.replace(/%/g,"\\%"),
+                dxmc: this.searchForm.dxmc.replace(/%/g,"\\%"),
                 yalx: this.searchForm.yalxdm[this.searchForm.yalxdm.length-1],
                 sfkqy: this.searchForm.sfkqy,
                 jgid: jgid,
