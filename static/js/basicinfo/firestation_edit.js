@@ -152,6 +152,34 @@ new Vue({
             },
             //上级队站Disabled
             dzlxDisabled: false,
+            editFormRules: {
+                dzmc: [
+                    { required: true, message: '请输入队站名称', trigger: 'blur' },
+                ],
+                dzjc: [
+                    { required: true, message: '请输入队站简称', trigger: 'blur' },
+                ],
+                dzlx: [
+                    { validator: (rule,value,callback)=>{
+                        if(value.length == 0){
+                            callback(new Error("请选择队站类型"));
+                        }else{
+                            callback();
+                        }
+               
+                    }, trigger: 'change' }
+                ],
+                sjdzid: [
+                    { validator: (rule,value,callback)=>{
+                        if(value.length == 0){
+                            callback(new Error("请选择上级队站"));
+                        }else{
+                            callback();
+                        }
+               
+                    }, trigger: 'change' }
+                ],
+            },
         }
     },
     created: function () {
@@ -390,6 +418,14 @@ new Vue({
         
         //保存
         save: function (formName) {
+            // this.$refs[formName].validate((valid) => {
+            //     if (valid) {
+            //       alert('submit!');
+            //     } else {
+            //       console.log('error submit!!');
+            //       return false;
+            //     }
+            // });
             if(this.validateSave()){
                 var datasource = this.shiroData.organizationVO.jgid;
                 var jdh = this.shiroData.organizationVO.jgid.substr(0,2) + "000000";
