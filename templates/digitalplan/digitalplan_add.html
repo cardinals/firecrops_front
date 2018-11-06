@@ -27,7 +27,7 @@
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
 								<!-- <el-form-item label="预案对象" prop="dxmc"> -->
-								<el-input size="small" v-model="addForm.dxmc" placeholder="预案对象" disabled></el-input>
+								<el-input size="small" v-model="addForm.dxmc" maxlength="100" placeholder="预案对象" disabled></el-input>
 								<!-- </el-form-item> -->
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" style="padding: 4px 0;" class="tl">
@@ -38,7 +38,7 @@
 									<span style="color:red;">* </span>预案名称</el-label>
 							</el-col>
 							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="addForm.yamc" placeholder="预案名称" clearable></el-input>
+								<el-input size="small" v-model="addForm.yamc" maxlength="50" placeholder="预案名称" clearable></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
@@ -101,7 +101,7 @@
 											<span style="color:red;">* </span>灾情部位</el-label>
 									</el-col>
 									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-input v-model="domain.zqbw" size="small" placeholder="灾情部位"></el-input>
+										<el-input v-model="domain.zqbw" maxlength="50" size="small" placeholder="灾情部位"></el-input>
 									</el-col>
 									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" class="tl">
 										<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="partsList('init',index)"></el-button>
@@ -180,7 +180,7 @@
 										<el-label class="mr5">灾情描述</el-label>
 									</el-col>
 									<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-										<el-input size="small" v-model="domain.zqms" placeholder="灾情描述" type="textarea" autosize></el-input>
+										<el-input size="small" v-model="domain.zqms" maxlength="200" placeholder="灾情描述" type="textarea" autosize></el-input>
 									</el-col>
 									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								</el-row>
@@ -189,7 +189,7 @@
 										<el-label class="mr5">设定依据</el-label>
 									</el-col>
 									<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-										<el-input size="small" v-model="domain.zqsdyj" placeholder="灾情设定依据" type="textarea" autosize></el-input>
+										<el-input size="small" v-model="domain.zqsdyj" maxlength="1000" placeholder="灾情设定依据" type="textarea" autosize></el-input>
 									</el-col>
 									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								</el-row>
@@ -203,7 +203,7 @@
 										<el-label class="mr5">战术要点</el-label>
 									</el-col>
 									<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-										<el-input v-model="domain.keypointsMap.zsyd" size="small" type="textarea" autosize placeholder="战术要点"></el-input>
+										<el-input v-model="domain.keypointsMap.zsyd" maxlength="1000" size="small" type="textarea" autosize placeholder="战术要点"></el-input>
 									</el-col>
 									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								</el-row>
@@ -212,7 +212,7 @@
 										<el-label class="mr5">特别警示</el-label>
 									</el-col>
 									<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-										<el-input v-model="domain.keypointsMap.tbjs" size="small" type="textarea" autosize placeholder="特别警示"></el-input>
+										<el-input v-model="domain.keypointsMap.tbjs" maxlength="1000" size="small" type="textarea" autosize placeholder="特别警示"></el-input>
 									</el-col>
 									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								</el-row>
@@ -256,7 +256,7 @@
 												<el-label class="mr5">停靠位置</el-label>
 											</el-col>
 											<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-												<el-input v-model="llbs.tkwz" size="small" type="textarea" autosize placeholder="停靠位置"></el-input>
+												<el-input v-model="llbs.tkwz" maxlength="25" size="small" type="textarea" autosize placeholder="停靠位置"></el-input>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -265,7 +265,7 @@
 												<el-label class="mr5">装备提示</el-label>
 											</el-col>
 											<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-												<el-input v-model="llbs.clzbts" size="small" type="textarea" autosize placeholder="车辆装备提示"></el-input>
+												<el-input v-model="llbs.clzbts" maxlength="1000" size="small" type="textarea" autosize placeholder="车辆装备提示"></el-input>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -309,7 +309,7 @@
 							<el-label class="mr5 vbm">备注</el-label>
 						</el-col>
 						<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-							<el-input size="small" v-model="addForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+							<el-input size="small" v-model="addForm.bz" maxlength="250" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
 						</el-col>
 						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 					</el-row>
@@ -319,7 +319,7 @@
 						<el-row>
 							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
 								<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
-								<el-button type="primary" icon="document" size="small" class="btn_save" @click="save('addForm')">暂存</el-button>
+								<el-button type="primary" icon="document" size="small" class="btn_save" @click="save('addForm')"> 暂存</el-button>
 								<el-button type="success" icon="check" size="small" class="btn_submit" @click="submit('addForm')">提交</el-button>
 							</el-col>
 						</el-row>
