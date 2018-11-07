@@ -77,7 +77,7 @@
 						<el-col :xs="13" :sm="13" :md="13" :lg="13" :xl="13">&nbsp;</el-col>
 					</el-row>
 					<!-- 1001安全出口\1002疏散楼梯\1003消防电梯\2010半固定设施\3005半固定泡沫设施 -->
-					<el-form label-width="100px" style="margin:0;" v-if="this.addForm.jbxx_xfsslx[1] === '1001'||
+					<el-form label-width="100px" v-if="this.addForm.jbxx_xfsslx[1] === '1001'||
 						  this.addForm.jbxx_xfsslx[1] === '1002'||
 						  this.addForm.jbxx_xfsslx[1] === '1003'||
 						  this.addForm.jbxx_xfsslx[1] === '2010'||
@@ -100,7 +100,7 @@
 						</el-row>
 					</el-form>
 					<!-- 避难层（间） -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '1004'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '1004'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -112,7 +112,7 @@
 						</el-row>
 					</el-form>
 					<!-- 应急广播 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '1005'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '1005'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -133,7 +133,7 @@
 						</el-row>
 					</el-form>
 					<!-- 消防泵房 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '2001'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '2001'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -177,7 +177,7 @@
 						</el-row>
 					</el-form>
 					<!-- 消防水箱 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '2002'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '2002'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -204,7 +204,7 @@
 						</el-row>
 					</el-form>
 					<!-- 消防水池 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '2003'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '2003'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -252,7 +252,7 @@
 						</el-row>
 					</el-form>
 					<!-- 2004室内消火栓\2005室外消火栓\3003固定泡沫炮 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '2004'||
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '2004'||
 					addForm.jbxx_xfsslx[1] === '2005'||
 					addForm.jbxx_xfsslx[1] === '3003'">
 						<el-row class="tr mb5">
@@ -285,7 +285,7 @@
 						</el-row>
 					</el-form>
 					<!-- 水泵接合器 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '2006'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '2006'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -320,7 +320,7 @@
 						</el-row>
 					</el-form>
 					<!-- 喷淋系统 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '2007'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '2007'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -341,7 +341,7 @@
 						</el-row>
 					</el-form>
 					<!-- 冷却水系统 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '2008'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '2008'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -371,7 +371,7 @@
 						</el-row>
 					</el-form>
 					<!-- 固定水炮 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '2009'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '2009'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -402,7 +402,7 @@
 						</el-row>
 					</el-form>
 					<!-- 泡沫泵房 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '3001'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '3001'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -436,7 +436,7 @@
 						</el-row>
 					</el-form>
 					<!-- 泡沫消火栓 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '3002'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '3002'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -457,7 +457,7 @@
 						</el-row>
 					</el-form>
 					<!-- 泡沫发生器 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '3004'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '3004'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -491,7 +491,7 @@
 						</el-row>
 					</el-form>
 					<!-- 固定式蒸汽系统\半固定式蒸汽系统 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '4001'||addForm.jbxx_xfsslx[1] === '4002'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '4001'||addForm.jbxx_xfsslx[1] === '4002'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -519,7 +519,7 @@
 						</el-row>
 					</el-form>
 					<!-- 消防控制室 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[0] === '5000'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[0] === '5000'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -552,7 +552,7 @@
 						</el-row>
 					</el-form>
 					<!-- 排烟口/出烟口 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '6001'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '6001'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -564,7 +564,7 @@
 						</el-row>
 					</el-form>
 					<!-- 防排烟系统 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '6002'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '6002'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">系统启闭位置</el-label>
@@ -585,7 +585,7 @@
 						</el-row>
 					</el-form>
 					<!-- 防火分区 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[0] === '7000'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[0] === '7000'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">区域面积(㎡)</el-label>
@@ -618,7 +618,7 @@
 						</el-row>
 					</el-form>
 					<!-- 气体灭火系统\干粉灭火系统 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[1] === '8001'||addForm.jbxx_xfsslx[1] === '8002'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[1] === '8001'||addForm.jbxx_xfsslx[1] === '8002'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">启闭位置</el-label>
@@ -636,7 +636,7 @@
 						</el-row>
 					</el-form>
 					<!-- 其他消防设施 -->
-					<el-form label-width="100px" style="margin:0;" v-else-if="addForm.jbxx_xfsslx[0] === '9000'">
+					<el-form label-width="100px" v-else-if="addForm.jbxx_xfsslx[0] === '9000'">
 						<el-row class="tr mb5">
 							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 								<el-label class="mr5 vbm">位置</el-label>
@@ -717,7 +717,7 @@
 				<el-dialog title="选择所属单位" :visible.sync="unitsListVisible" :close-on-click-modal="false">
 					<div id="tableView" v-loading="loading_units" element-loading-text="加载中">
 						<el-row>
-							<el-form :inline="true" class="el-form demo-form-inline">
+							<el-form :inline="true" >
 								<el-row class="mb5">
 									<el-col :span="12" class="searchInline">
 										<label class="el-form-item__label" style="width:95px;" class="tr vbm">单位名称</label>
