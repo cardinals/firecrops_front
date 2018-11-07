@@ -26,7 +26,7 @@
 									<span style="color:red;">* </span>建筑名称</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.jzmc" placeholder="建筑名称"></el-input>
+								<el-input maxlength="100" size="small" v-model="editForm.jzmc" placeholder="建筑名称"></el-input>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5 vbm">
@@ -46,7 +46,7 @@
 								<el-label class="mr5 vbm">建筑位置</el-label>
 							</el-col>
 							<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-								<el-input size="small" v-model="editForm.jzwz" placeholder="建筑位置"></el-input>
+								<el-input maxlength="100" size="small" v-model="editForm.jzwz" placeholder="建筑位置"></el-input>
 							</el-col>
 							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
@@ -73,7 +73,7 @@
 								<el-label class="mr5">辖区行车路线</el-label>
 							</el-col>
 							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input class="mt_4" size="small" v-model="editForm.xqxclx" placeholder="辖区行车路线"></el-input>
+								<el-input maxlength="100" class="mt_4" size="small" v-model="editForm.xqxclx" placeholder="辖区行车路线"></el-input>
 							</el-col>
 							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
 								<el-label class="mr5">预计到达时长(min)</el-label>
@@ -219,7 +219,7 @@
 									<el-label class="mr5 vbm">技术负责人</el-label>
 								</el-col>
 								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input class="mt_4" size="small" v-model="editForm.zzl_jsfzr" placeholder="技术负责人"></el-input>
+									<el-input  class="mt_4" size="small" v-model="editForm.zzl_jsfzr" placeholder="技术负责人"></el-input>
 								</el-col>
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
