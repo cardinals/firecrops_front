@@ -14,7 +14,7 @@
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
 				<div id="inforView" class="pt15">
-					<el-form label-width="75px" :inline="true" class="el-form demo-form-inline" ref="editForm" :model="editForm" label-position="right">
+					<el-form label-width="75px"  ref="editForm" :model="editForm">
 						<el-row class="mb5 row-edit-subtitle">
 							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
 								<strong class="col-edit-subtitle">基本信息</strong>
@@ -352,7 +352,7 @@
 									<el-button type="primary" icon="plus" size="small" style="float:right;" @click="addDomain"></el-button>
 								</el-col>
 							</el-row>
-							<el-form :model="editForm.chuguanList" ref="editForm.chuguanList" label-width="100px" class="margin:0;">
+							<el-form :model="editForm.chuguanList" ref="editForm.chuguanList" label-width="100px">
 								<el-form-item v-for="(domain, index) in editForm.chuguanList" :key="domain.key" :prop="'editForm.chuguanList.' + index + '.value'"
 								 label-position="right">
 									<el-card class="card_style">
