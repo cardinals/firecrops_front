@@ -191,7 +191,7 @@ var vue = new Vue({
             var _self = this;
             _self.loading = true;//表格重新加载
             var params = {
-                gsmc:this.searchForm.GSMC,
+                gsmc:this.searchForm.GSMC.replace(/%/g,"\\%"),
                 gslb:this.searchForm.selected_GSLB,
                 sfqy:this.searchForm.SFQY,
                 pageSize: this.pageSize,

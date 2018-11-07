@@ -96,11 +96,11 @@ var vue = new Vue({
             var _self = this;
             _self.loading = true;//表格重新加载
             var params={
-                name:this.searchForm.NAME,
-                englishName: this.searchForm.ENGLISH_NAME,
+                name:this.searchForm.NAME.replace(/%/g,"\\%"),
+                englishName: this.searchForm.ENGLISH_NAME.replace(/%/g,"\\%"),
                 type: this.searchForm.option_LXDM,
-                cas: this.searchForm.CAS,
-                dangerId: this.searchForm.DANGER_ID,
+                cas: this.searchForm.CAS.replace(/%/g,"\\%"),
+                dangerId: this.searchForm.DANGER_ID.replace(/%/g,"\\%"),
                 expression:this.searchForm.EXPRESSION.toUpperCase(),
                 pageSize: this.pageSize,
                 pageNum: this.currentPage

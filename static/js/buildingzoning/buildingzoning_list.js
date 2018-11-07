@@ -63,9 +63,9 @@ var vue = new Vue({
             this.searchForm.jzid = this.GetQueryString("jzid");//获取队站ID
             var params={
                 jzid:this.searchForm.jzid,
-                jzmc:this.searchForm.jzmc,
+                jzmc:this.searchForm.jzmc.replace(/%/g,"\\%"),
                 jzlx:this.searchForm.option_JZLX,
-                jzwz:this.searchForm.jzwz,
+                jzwz:this.searchForm.jzwz.replace(/%/g,"\\%"),
                 jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
