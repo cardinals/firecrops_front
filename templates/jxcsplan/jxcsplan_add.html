@@ -24,7 +24,7 @@
 					<el-row>
 						<el-col :span="11">
 							<el-form-item prop="dwmc" label="单位名称">
-                                <el-input size="small" v-model="addForm.dwmc" placeholder="单位名称"></el-input>
+                                <el-input size="small" maxlength="100" v-model="addForm.dwmc" placeholder="单位名称"></el-input>
                             </el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
@@ -40,13 +40,13 @@
 					<el-row>
 						<el-col :span="11">
 							<el-form-item prop="dwdz" label="单位地址">
-								<el-input size="small" v-model="addForm.dwdz" placeholder="单位地址"></el-input>
+								<el-input size="small" maxlength="100" v-model="addForm.dwdz" placeholder="单位地址"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
 						<el-col :span="11">
 							<el-form-item prop="dwgk" label="单位概况">
-								<el-input size="small" v-model="addForm.dwgk" placeholder="单位概况"></el-input>
+								<el-input size="small" maxlength="1000" v-model="addForm.dwgk" placeholder="单位概况"></el-input>
 							</el-form-item>
 						</el-col>
 					</el-row>
@@ -60,7 +60,7 @@
 						<el-col :span="1">&nbsp;</el-col>
 						<el-col :span="11">
 							<el-form-item prop="zbdh" label="值班电话">
-								<el-input size="small" v-model="addForm.zbdh" placeholder="值班电话"></el-input>
+								<el-input size="small" maxlength="50" v-model="addForm.zbdh" placeholder="值班电话"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
@@ -83,7 +83,7 @@
 						<el-col :span="1">&nbsp;</el-col>
 						<el-col :span="11">
 							<el-form-item prop="xqfzr" label="辖区负责人">
-								<el-input size="small" v-model="addForm.xqfzr" placeholder="辖区负责人"></el-input>
+								<el-input size="small" maxlength="25" v-model="addForm.xqfzr" placeholder="辖区负责人"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
@@ -91,7 +91,7 @@
 					<el-row>
 						<el-col :span="11">
 							<el-form-item prop="xqfzrdh" label="辖区负责人电话">
-								<el-input size="small" v-model="addForm.xqfzrdh" placeholder="辖区负责人电话"></el-input>
+								<el-input size="small" maxlength="15" v-model="addForm.xqfzrdh" placeholder="辖区负责人电话"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
@@ -107,13 +107,13 @@
 					<el-row>
 						<el-col :span="11">
 							<el-form-item prop="lon" label="经度">
-								<el-input-number size="small" :precision="2" v-model="addForm.lon" placeholder="经度"></el-input-number>
+								<el-input-number size="small" :precision="2" v-model="addForm.lon" placeholder="经度" :min="-99999.9999999999" :max="99999.9999999999"></el-input-number>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
 						<el-col :span="11">
 							<el-form-item prop="lat" label="纬度">
-								<el-input-number size="small" :precision="2" v-model="addForm.lat" placeholder="纬度"></el-input-number>
+								<el-input-number size="small" :precision="2" v-model="addForm.lat" placeholder="纬度" :min="-99999.9999999999" :max="99999.9999999999"></el-input-number>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
@@ -121,13 +121,13 @@
 					<el-row>
 						<el-col :span="11">
 							<el-form-item prop="plqkd" label="毗邻情况(东)">
-								<el-input size="small" v-model="addForm.plqkd" placeholder="毗邻情况(东)"></el-input>
+								<el-input size="small" maxlength="100" v-model="addForm.plqkd" placeholder="毗邻情况(东)"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
 						<el-col :span="11">
 							<el-form-item prop="plqkn" label="毗邻情况(南)">
-								<el-input size="small" v-model="addForm.plqkn" placeholder="毗邻情况(南)"></el-input>
+								<el-input size="small" maxlength="100" v-model="addForm.plqkn" placeholder="毗邻情况(南)"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
@@ -135,13 +135,13 @@
 					<el-row>
 						<el-col :span="11">
 							<el-form-item prop="plqkx" label="毗邻情况(西)">
-								<el-input size="small" v-model="addForm.plqkx" placeholder="毗邻情况(西)"></el-input>
+								<el-input size="small" maxlength="100" v-model="addForm.plqkx" placeholder="毗邻情况(西)"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
 						<el-col :span="11">
 							<el-form-item prop="plqkb" label="毗邻情况(北)">
-								<el-input size="small" v-model="addForm.plqkb" placeholder="毗邻情况(北)"></el-input>
+								<el-input size="small" maxlength="100" v-model="addForm.plqkb" placeholder="毗邻情况(北)"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
@@ -167,7 +167,7 @@
 						<el-col :span="1">&nbsp;</el-col>
 						<el-col :span="11">
 							<el-form-item prop="zdmj" label="占地面积(㎡)">
-								<el-input-number v-model="addForm.zdmj" size="small" :min="0" class="searchSelect"></el-input-number>
+								<el-input-number v-model="addForm.zdmj" size="small" :min="0" :max="9999999999.99" class="searchSelect"></el-input-number>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
@@ -175,13 +175,13 @@
 					<el-row>
 						<el-col :span="11">
 							<el-form-item prop="zbxftd" label="周边消防通道">
-								<el-input size="small" v-model="addForm.zbxftd" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="周边消防通道"></el-input>
+								<el-input size="small" maxlength="200" v-model="addForm.zbxftd" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="周边消防通道"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
 						<el-col :span="11">
 							<el-form-item prop="jzmj" label="建筑面积(㎡)">
-								<el-input-number v-model="addForm.jzmj" size="small" :min="0" class="searchSelect"></el-input-number>
+								<el-input-number v-model="addForm.jzmj" size="small" :min="0" :max="9999999999.99" class="searchSelect"></el-input-number>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
@@ -189,13 +189,13 @@
 					<el-row>
 						<el-col :span="11">
 							<el-form-item prop="zdbwms" label="重点部位描述">
-								<el-input size="small" v-model="addForm.zdbwms" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="重点部位描述"></el-input>
+								<el-input size="small" maxlength="200" v-model="addForm.zdbwms" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="重点部位描述"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
 						<el-col :span="11">
 							<el-form-item prop="gnfqms" label="功能分区描述">
-								<el-input size="small" v-model="addForm.gnfqms" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="功能分区描述"></el-input>
+								<el-input size="small" maxlength="200" v-model="addForm.gnfqms" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="功能分区描述"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
@@ -246,7 +246,7 @@
 								<el-row>
 									<el-col :span="11">
 										<el-form-item prop="xfssmc" label="设施名称" class="is-required">
-											<el-input v-model="domain.xfssmc" size="small" placeholder="消防设施名称"></el-input>
+											<el-input v-model="domain.xfssmc" maxlength="50" size="small" placeholder="消防设施名称"></el-input>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
@@ -261,13 +261,13 @@
 								<el-row>
 									<el-col :span="11">
 										<el-form-item prop="wz" label="位置">
-											<el-input v-model="domain.wz" size="small" placeholder="位置"></el-input>
+											<el-input v-model="domain.wz" maxlength="25" size="small" placeholder="位置"></el-input>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
 									<el-col :span="11">
 										<el-form-item prop="sl" label="数量">
-											<el-input-number v-model="domain.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small" :min="0" placeholder="数量"></el-input-number>
+											<el-input-number v-model="domain.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small" :min="0" :max="99999" placeholder="数量"></el-input-number>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
@@ -275,7 +275,7 @@
 								<el-row>
 									<el-col :span="23">
 										<el-form-item prop="bz" label="备注">
-											<el-input v-model="domain.bz" size="small" placeholder="备注" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+											<el-input v-model="domain.bz" maxlength="250" size="small" placeholder="备注" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
@@ -318,7 +318,7 @@
 					<el-row class="tr">
 						<el-col :span="23">
 							<el-form-item prop="bz" label="备注">
-								<el-input size="small" v-model="addForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+								<el-input size="small" maxlength="250" v-model="addForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
@@ -388,13 +388,13 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item prop="jzmc" label="建筑名称">
-									<el-input v-model="buildingForm.jzmc" size="small" placeholder="建筑名称"></el-input>
+									<el-input v-model="buildingForm.jzmc" maxlength="50" size="small" placeholder="建筑名称"></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item prop="jzwz" label="建筑位置">
-									<el-input v-model="buildingForm.jzwz" size="small" placeholder="建筑位置"></el-input>
+									<el-input v-model="buildingForm.jzwz" maxlength="100" size="small" placeholder="建筑位置"></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -419,13 +419,13 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item prop="zdmj" label="占地面积">
-									<el-input v-model="buildingForm.zdmj" size="small" placeholder="占地面积"></el-input>
+									<el-input-number v-model="buildingForm.zdmj" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item prop="jzmj" label="建筑面积">
-									<el-input v-model="buildingForm.jzmj" size="small" placeholder="建筑面积"></el-input>
+									<el-input-number v-model="buildingForm.jzmj" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -433,13 +433,13 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item prop="dsgd" label="地上高度(m)">
-									<el-input v-model="buildingForm.dsgd" size="small" placeholder="地上高度(m)"></el-input>
+									<el-input-number v-model="buildingForm.dsgd" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item prop="dxgd" label="地下高度(m)">
-									<el-input v-model="buildingForm.dxgd" size="small" placeholder="地下高度(m)"></el-input>
+									<el-input-number v-model="buildingForm.dxgd" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -447,13 +447,13 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item prop="dscs" label="地上层数">
-									<el-input v-model="buildingForm.dscs" size="small" placeholder="地上层数"></el-input>
+									<el-input-number v-model="buildingForm.dscs" size="small" :min="0" :max="9999" class="searchSelect"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item prop="dxcs" label="地下层数">
-									<el-input v-model="buildingForm.dxcs" size="small" placeholder="地下层数"></el-input>
+									<el-input-number v-model="buildingForm.dxcs" size="small" :min="0" :max="9999" class="searchSelect"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -461,13 +461,13 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item prop="bnc" label="避难层">
-									<el-input v-model="buildingForm.bnc" size="small" placeholder="避难层"></el-input>
+									<el-input v-model="buildingForm.bnc" maxlength="100" size="small" placeholder="避难层"></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item prop="yjddsc" label="预计到达时长">
-									<el-input v-model="buildingForm.yjddsc" size="small" placeholder="预计到达时长(min)"></el-input>
+									<el-input-number v-model="buildingForm.yjddsc" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -475,7 +475,7 @@
 						<el-row>
 							<el-col :span="23">
 								<el-form-item prop="xqxclx" label="辖区行车路线">
-									<el-input v-model="buildingForm.xqxclx" size="small" placeholder="辖区行车路线"></el-input>
+									<el-input v-model="buildingForm.xqxclx" maxlength="200" size="small" placeholder="辖区行车路线"></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -483,7 +483,7 @@
 						<el-row>
 							<el-col :span="23">
 								<el-form-item prop="gnms" label="功能描述">
-									<el-input v-model="buildingForm.gnms" size="small" placeholder="功能描述"></el-input>
+									<el-input v-model="buildingForm.gnms" maxlength="200" size="small" placeholder="功能描述"></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -491,7 +491,7 @@
 						<el-row>
 							<el-col :span="23">
 								<el-form-item prop="bz" label="备注">
-									<el-input v-model="buildingForm.bz" size="small" placeholder="备注"></el-input>
+									<el-input v-model="buildingForm.bz" maxlength="250" size="small" placeholder="备注"></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
