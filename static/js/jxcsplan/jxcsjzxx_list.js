@@ -90,9 +90,9 @@ var vue = new Vue({
             }
             this.loading = true;//表格重新加载
             var params = {
-                jzmc: this.searchForm.jzmc,
+                jzmc: this.searchForm.jzmc.replace(/%/g,"\\%"),
                 jzsyxz: this.searchForm.jzsyxz[this.searchForm.jzsyxz.length - 1],
-                jzwz: this.searchForm.jzwz,
+                jzwz: this.searchForm.jzwz.replace(/%/g,"\\%"),
                 jzjg: this.searchForm.jzjg[this.searchForm.jzjg.length - 1],
                 jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
                 pageSize: this.pageSize,

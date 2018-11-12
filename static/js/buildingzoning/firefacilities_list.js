@@ -64,7 +64,7 @@ var vue = new Vue({
             this.loading = true;//表格重新加载
             var params = {
                 jbxx_xfssmc: this.searchForm.jbxx_xfssmc.replace(/%/g,"\\%"),
-                jbxx_xfsslx: this.searchForm.jbxx_xfsslx[this.searchForm.jbxx_xfsslx.length - 1].replace(/%/g,"\\%"),
+                jbxx_xfsslx: this.searchForm.jbxx_xfsslx[this.searchForm.jbxx_xfsslx.length - 1],
                 jbxx_jzmc: this.searchForm.jbxx_jzmc.replace(/%/g,"\\%"),
                 jbxx_iszddw: this.searchForm.jbxx_iszddw,
                 jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',

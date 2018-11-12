@@ -85,8 +85,8 @@ var vue = new Vue({
                 }
             }
             var params = {
-                zbmc: this.searchForm.zbmc,
-                zbbm: this.searchForm.zbbm,
+                zbmc: this.searchForm.zbmc.replace(/%/g,"\\%"),
+                zbbm: this.searchForm.zbbm.replace(/%/g,"\\%"),
                 ssdz: ssdz,
                 zblx: zblx,
                 jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',

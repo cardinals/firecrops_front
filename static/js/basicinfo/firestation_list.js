@@ -89,8 +89,8 @@ var vue = new Vue({
             }
             var params={
                 dzid: dzid,
-                dzmc: this.searchForm.dzmc,
-                dzdz: this.searchForm.dzdz,
+                dzmc: this.searchForm.dzmc.replace(/%/g,"\\%"),
+                dzdz: this.searchForm.dzdz.replace(/%/g,"\\%"),
                 dzlx :this.searchForm.dzlx[this.searchForm.dzlx.length-1],
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,

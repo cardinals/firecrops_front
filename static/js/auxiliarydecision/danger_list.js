@@ -101,7 +101,7 @@ var vue = new Vue({
                 type: this.searchForm.option_LXDM,
                 cas: this.searchForm.CAS.replace(/%/g,"\\%"),
                 dangerId: this.searchForm.DANGER_ID.replace(/%/g,"\\%"),
-                expression:this.searchForm.EXPRESSION.toUpperCase(),
+                expression:this.searchForm.EXPRESSION.toUpperCase().replace(/%/g,"\\%"),
                 pageSize: this.pageSize,
                 pageNum: this.currentPage
             };

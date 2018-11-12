@@ -20,71 +20,44 @@
 							</el-col>
 						</el-row>
 						<el-row>
-							<el-col :span="8">
+							<el-col :span="11">
 								<el-form-item label="队站名称" prop="dzmc">
 									<el-input v-model="editForm.dzmc" placeholder="队站名称" size="small" auto-complete="off"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :span="8">
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
 								<el-form-item label="队站简称" prop="dzjc">
 									<el-input v-model="editForm.dzjc" placeholder="队站简称" size="small" auto-complete="off"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :span="8">
-								<el-form-item label="队站编码" prop="dzbm">
-									<el-input v-model="editForm.dzbm" placeholder="队站编码" size="small" auto-complete="off"></el-input>
-								</el-form-item>
-							</el-col>
-							<!-- <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm"><span style="color:red;">* </span>队站名称</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="editForm.dzmc" placeholder="队站名称"></el-input>
-							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm"><span style="color:red;">* </span>队站简称</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="editForm.dzjc" placeholder="队站简称"></el-input>
-							</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">队站编码</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-input size="small" v-model="editForm.dzbm" placeholder="队站编码"></el-input>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col> -->
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
 
 						<el-row>
-							<el-col :span="8">
+							<el-col :span="11">
 								<el-form-item label="队站类型" prop="dzlx" class="is-required">
 									<el-cascader :options="dzlxData" :props="props" size="small" v-model="editForm.dzlx" placeholder="请选择" class="searchSelect"
 									clearable change-on-select :show-all-levels="true" @change="dzlxChange"></el-cascader>
 								</el-form-item>
 							</el-col>
-							<el-col :span="16">
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item label="队站编码" prop="dzbm">
+									<el-input v-model="editForm.dzbm" placeholder="队站编码" size="small" auto-complete="off"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
 								<el-form-item label="上级队站" prop="sjdzid" class="is-required">
 									<el-cascader :options="sjdzData" :props="sjdzprops" size="small" v-model="editForm.sjdzid" placeholder="请选择" class="searchSelect"
 									clearable change-on-select :show-all-levels="true"></el-cascader>
 								</el-form-item>
 							</el-col>
-							<!-- <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm"><span style="color:red;">* </span>队站类型</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-cascader :options="dzlxData" :props="props" size="small" v-model="editForm.dzlx" placeholder="请选择" class="searchSelect"
-								 clearable change-on-select :show-all-levels="true" @change="dzlxChange"></el-cascader> -->
-								 <!-- clearable change-on-select :show-all-levels="true" @change="dzlxChange" :disabled="dzlxDisabled"></el-cascader> -->
-							<!-- </el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm"><span style="color:red;">* </span>上级队站</el-label>
-							</el-col>
-							<el-col :xs="13" :sm="13" :md="13" :lg="13" :xl="13">
-								<el-cascader :options="sjdzData" :props="sjdzprops" size="small" v-model="editForm.sjdzid" placeholder="请选择" class="searchSelect"
-								 clearable change-on-select :show-all-levels="true"></el-cascader>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col> -->
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="12">&nbsp;</el-col>
 						</el-row>
 
 						<el-row class="mb5 row-edit-subtitle">

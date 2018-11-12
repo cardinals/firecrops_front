@@ -105,7 +105,7 @@ var vue = new Vue({
                 }
             }
             var params = {
-                yjmc: this.searchForm.yjmc,
+                yjmc: this.searchForm.yjmc.replace(/%/g,"\\%"),
                 ssdz: ssdz,
                 yjlx: this.searchForm.yjlx[this.searchForm.yjlx.length-1],
                 zcbl_min: cbl_min,

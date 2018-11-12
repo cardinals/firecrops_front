@@ -52,8 +52,8 @@ var vue = new Vue({
                 this.currentPage = 1;
             }
             var params = {
-                wjm: this.searchForm.wjm,
-                zddwmc: this.searchForm.zddwmc,
+                wjm: this.searchForm.wjm.replace(/%/g,"\\%"),
+                zddwmc: this.searchForm.zddwmc.replace(/%/g,"\\%"),
                 jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
