@@ -7,3 +7,10 @@ input[type=file] {
 .el-message{
     z-index: 10005 !important;
 }
+.el-cascader, .el-select{
+    width: 100%
+}
+.el-card__header {
+    padding: 5px 25px;
+    line-height: 30px;
+}
