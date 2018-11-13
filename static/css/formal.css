@@ -245,14 +245,8 @@ body{height:100%;overflow:hidden;}
 .el-input-number--small {
     width: 100%;
 }
-.el-input-number .el-input {
+.el-input-number {
     display: inline-block;
-}
-.el-input-number__decrease {
-    top: 3px;
-}
-.el-input-number__increase {
-    top: 3px;
 }
 .editform-button {
     text-align: center;
