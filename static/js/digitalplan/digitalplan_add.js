@@ -487,7 +487,7 @@ new Vue({
         //灾情部位选择弹出页---------------------------------------------------------------
         partsList: function (type, val) {
             if (this.addForm.dxid == null || this.addForm.dxid == "") {
-                this.$message({
+                this.$message.warning({
                     message: "请先选择预案对象",
                     showClose: true,
                 });
@@ -545,7 +545,7 @@ new Vue({
         //所属建筑选择弹出页---------------------------------------------------------------
         buildingList: function (type, val) {
             if (this.addForm.dxid == null || this.addForm.dxid == "") {
-                this.$message({
+                this.$message.warning({
                     message: "请先选择预案对象",
                     showClose: true,
                 });
@@ -603,7 +603,7 @@ new Vue({
         //消防队站选择弹出页---------------------------------------------------------------
         fireStaList: function (type, val, val1) {
             if (this.addForm.dxid == null || this.addForm.dxid == "") {
-                this.$message({
+                this.$message.warning({
                     message: "请先选择预案对象",
                     showClose: true,
                 });
@@ -673,54 +673,6 @@ new Vue({
             this.fireStaList('reset', '', '');
         },
 
-        //保存/提交前校验
-        checkedBefore: function () {
-            if (this.addForm.dxid == null || this.addForm.dxid == "") {
-                this.$message.warning({
-                    message: "请选择预案对象！",
-                    showClose: true
-                });
-                return false;
-            } else if (this.addForm.yamc == null || this.addForm.yamc == "") {
-                this.$message.warning({
-                    message: "请填写预案名称！",
-                    showClose: true
-                });
-                return false;
-            } else if (this.addForm.yajb == null || this.addForm.yajb == "") {
-                this.$message.warning({
-                    message: "请选择预案级别！",
-                    showClose: true
-                });
-                return false;
-            } else if (this.addForm.yalx == []) {
-                this.$message.warning({
-                    message: "请选择预案类型！",
-                    showClose: true
-                });
-                return false;
-            }
-            for (var i = 0; i < this.addForm.disasterList.length; i++) {
-                if (this.addForm.disasterList[i].zqbw == "") {
-                    this.$message.warning({
-                        message: "请选择/填写灾情" + (i + 1) + "的灾情部位! 或删除空白灾情！",
-                        showClose: true
-                    });
-                    return false;
-                } else {
-                    for (var k = 0; k < this.addForm.disasterList[i].forcedevList.length; k++) {
-                        if (this.addForm.disasterList[i].forcedevList[k].dzid == "") {
-                            this.$message.warning({
-                                message: "请为灾情" + (i + 1) + "中力量部署选择消防队站！或删除空白力量部署！",
-                                showClose: true
-                            });
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        },
         //点击保存事件
         save: function (addForm) {
             this.$refs[addForm].validate((valid) => {
@@ -978,9 +930,8 @@ new Vue({
                 const isRAR = file.name.endsWith("rar");
                 if (isZip) {
                     this.isFile = true;
-                }
-                else {
-                    this.$message.error('仅可上传zip格式压缩文件!');
+                } else {
+                    this.$message.warning('仅可上传zip格式压缩文件!');
                     fileList.splice(-1, 1);
                 }
             } else if (fileList.length > 1) {
@@ -994,10 +945,11 @@ new Vue({
             if (isPng || isJpg) {
                 this.isPic = true;
             } else {
-                this.$message.error('上传图片只能是 png/jpg 格式!');
+                this.$message.warning('上传图片只能是 png/jpg 格式!');
                 fileList.splice(-1, 1);
             }
         },
+        //大中队级预案显示模板下载按钮
         ifShowDown: function (val) {
             var templete = $('.templete'),
                 space = $('.space'),
@@ -1010,6 +962,7 @@ new Vue({
                 space.css('display', 'block');
             }
         },
+        //大中队级预案模板下载
         templeteDown: function (val) {
             window.open(baseUrl + "/dpapi/yafjxz/downTemplet");
         },
