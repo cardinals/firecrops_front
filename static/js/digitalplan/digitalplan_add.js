@@ -686,6 +686,7 @@ new Vue({
                             yazt: '01',
                             yajb: this.addForm.yajb,
                             bz: this.addForm.bz,
+                            disasterList: this.addForm.disasterList,
                             zzrid: this.shiroData.userid,
                             zzrmc: this.shiroData.realName,
                             jgid: this.shiroData.organizationVO.uuid,
@@ -695,6 +696,7 @@ new Vue({
                             datasource: this.shiroData.organizationVO.jgid
                         };
                         axios.post('/dpapi/digitalplanlist/insertByVO', params).then(function (res) {
+                            debugger
                             this.upLoadData.yaid = res.data.result.uuid;
                             if (this.isFile) {
                                 this.$refs.upload.submit();//附件上传
@@ -728,6 +730,7 @@ new Vue({
                             yazt: '01',
                             yajb: this.addForm.yajb,
                             bz: this.addForm.bz,
+                            disasterList: this.addForm.disasterList,
                             zzrid: this.shiroData.userid,
                             zzrmc: this.shiroData.realName,
                             jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
@@ -783,6 +786,7 @@ new Vue({
                             shzt: '01',
                             yajb: this.addForm.yajb,
                             bz: this.addForm.bz,
+                            disasterList: this.addForm.disasterList,
                             zzrid: this.shiroData.userid,
                             zzrmc: this.shiroData.realName,
                             jgid: this.shiroData.organizationVO.uuid,
@@ -820,6 +824,7 @@ new Vue({
                             shzt: '01',
                             yajb: this.addForm.yajb,
                             bz: this.addForm.bz,
+                            disasterList: this.addForm.disasterList,
                             zzrid: this.shiroData.userid,
                             zzrmc: this.shiroData.realName,
                             jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
