@@ -49,7 +49,7 @@
 								</el-select>
 							</el-form-item>
 						</el-col>
-						<el-col :span="1">
+						<el-col :span="1" style="padding: 4px 0;">
 							<el-button class="templete" icon="document" size="small" style="border:none; display:none;" @click="templeteDown"></el-button>
 							<span class="space">&nbsp;</span>
 						</el-col>
@@ -81,7 +81,7 @@
 									<el-input v-model="domain.zqbw" maxlength="50" size="small" placeholder="灾情部位"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :span="1" class="tl">
+							<el-col :span="1" style="padding: 4px 0;">
 								<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="partsList('init',index)"></el-button>
 							</el-col>
 							<el-col :span="7">
@@ -89,7 +89,7 @@
 									<el-input v-model="domain.jzmc" size="small" placeholder="所属建筑" disabled></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :span="1" class="tl">
+							<el-col :span="1" style="padding: 4px 0;">
 								<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="buildingList('init',index)"></el-button>
 							</el-col>
 							<el-col :span="7">
@@ -121,7 +121,7 @@
 									<el-input-number v-model="domain.rsmj" size="small" :min="0"></el-input-number>
 								</el-form-item>
 							</el-col>
-							<el-col :span="1">(㎡)</el-col>
+							<el-col :span="1" style="line-height: 36px;">(㎡)</el-col>
 						</el-row>
 						<el-row>
 							<el-col :span="7">
@@ -145,7 +145,7 @@
 									<el-input-number v-model="domain.qhbwgd" size="small" :min="0"></el-input-number>
 								</el-form-item>
 							</el-col>
-							<el-col :span="1">(m)</el-col>
+							<el-col :span="1" style="line-height: 36px;">(m)</el-col>
 						</el-row>
 						<el-row>
 							<el-col :span="23">
@@ -196,7 +196,7 @@
 										<el-input v-model="llbs.dzmc" size="small" placeholder="消防队站" disabled></el-input>
 									</el-form-item>
 								</el-col>
-								<el-col :span="1" class="tl">
+								<el-col :span="1" style="padding: 4px 0;">
 									<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="fireStaList('init',index,index1)"></el-button>
 								</el-col>
 								<el-col :span="7">
