@@ -1,16 +1,16 @@
 input[type=file] {
     display: none;
 }
-.el-card__body{
+#planadd .el-card__body{
     padding: 10px 0px 10px 0px;    
 }
 .el-message{
     z-index: 10005 !important;
 }
-.el-cascader, .el-select{
+#planadd .el-cascader, #planadd .el-select{
     width: 100%
 }
-.el-card__header {
+#planadd .el-card__header {
     padding: 5px 25px;
     line-height: 30px;
 }
