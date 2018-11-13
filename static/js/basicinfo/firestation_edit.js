@@ -217,7 +217,7 @@ new Vue({
                 axios.get('/dpapi/xfdz/doFindDzlxByOrgId/' + this.shiroData.organizationVO.uuid).then(function (res1) {
                     var dzlx = res1.data.result;
                     if(dzlx == '0100'){
-                        this.dzlxData = res.data.result;
+                        this.dzlxData = res.data.result.slice(1);
                     }else{
                         switch(dzlx){
                             case '0100':
