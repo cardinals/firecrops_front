@@ -13,283 +13,236 @@
 			<div class="main-container" v-loading="loading1" element-loading-text="加载中">
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
-				<div id="inforView" class="pt15">
+				<el-form ref="addForm" :model="addForm" label-width="90px" :rules="inforRules">
 					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+						<el-col :span="24">
 							<strong style="color: #20a0ff;">预案基本信息</strong>
 						</el-col>
 					</el-row>
-					<el-form :inline="true" class="el-form demo-form-inline" ref="addForm" :model="addForm" label-position="right">
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">
-									<span style="color:red;">* </span>预案对象</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<!-- <el-form-item label="预案对象" prop="dxmc"> -->
+					<el-row>
+						<el-col :span="7">
+							<el-form-item label="预案对象" prop="dxmc">
 								<el-input size="small" v-model="addForm.dxmc" maxlength="100" placeholder="预案对象" disabled></el-input>
-								<!-- </el-form-item> -->
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" style="padding: 4px 0;" class="tl">
-								<el-button icon="search" size="small" style="border: none;" @click="keyunitList('init')"></el-button>
-							</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">
-									<span style="color:red;">* </span>预案名称</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+							</el-form-item>
+						</el-col>
+						<el-col :span="1" style="padding: 4px 0;" class="tl">
+							<el-button icon="search" size="small" style="border: none;" @click="keyunitList('init')"></el-button>
+						</el-col>
+						<el-col :span="7">
+							<el-form-item label="预案名称" prop="yamc">
 								<el-input size="small" v-model="addForm.yamc" maxlength="50" placeholder="预案名称" clearable></el-input>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">预案编号</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+							</el-form-item>
+						</el-col>
+						<el-col :span="1">&nbsp;</el-col>
+						<el-col :span="7">
+							<el-form-item label="预案编号">
 								<el-input size="small" v-model="addForm.yabm" placeholder="保存/提交后系统自动生成" disabled></el-input>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-						</el-row>
-						<el-row class="tr">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">
-									<span style="color:red;">* </span>预案级别</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+							</el-form-item>
+						</el-col>
+						<el-col :span="1">&nbsp;</el-col>
+					</el-row>
+					<el-row>
+						<el-col :span="7">
+							<el-form-item label="预案级别" prop="yajb">
 								<el-select @change="ifShowDown" size="small" v-model="addForm.yajb" placeholder="请选择" class="searchSelect" clearable>
 									<el-option v-for="item in YAJB_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 								</el-select>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
-								<el-button class="templete" icon="document" size="small" style="border:none; display:none;" @click="templeteDown"></el-button>
-								<span class="space">&nbsp;</span>
-							</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">
-									<span style="color:red;">* </span>预案类型</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<!-- <el-form-item label="预案类型" prop="yalx"> -->
+							</el-form-item>
+						</el-col>
+						<el-col :span="1">
+							<el-button class="templete" icon="document" size="small" style="border:none; display:none;" @click="templeteDown"></el-button>
+							<span class="space">&nbsp;</span>
+						</el-col>
+						<el-col :span="7">
+							<el-form-item label="预案类型" prop="yalx" class="is-required">
 								<el-cascader :options="YALX_dataTree" :props="defaultProps" size="small" v-model="addForm.yalx" placeholder="请选择" class="searchSelect"
 								 clearable change-on-select :show-all-levels="false"></el-cascader>
-								<!-- </el-form-item> -->
-							</el-col>
-						</el-row>
-					</el-form>
-				</div>
-				<div id="disasterView" class="pt15">
-					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;">
-						<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" style="line-height: 29px;">
+							</el-form-item>
+						</el-col>
+					</el-row>
+					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+						<el-col :span="12" style="line-height: 29px;">
 							<div style="color: #20a0ff;">
 								<strong>灾情设定与力量部署</strong>
 							</div>
 						</el-col>
-						<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="pb1">
+						<el-col :span="12" class="pb1">
 							<el-button type="primary" icon="plus" size="small" class="r" @click="addDomain"></el-button>
 						</el-col>
 					</el-row>
-					<el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" style="margin:0;">
-						<el-form-item v-for="(domain, index) in dynamicValidateForm" :key="domain.key" :prop="'dynamicValidateForm.' + index + '.value'"
-						 label-position="right">
-							<el-card class="card_style">
-								<div slot="header" class="clearfix">
-									<strong class="card_title_font">灾情{{index+1}}</strong>
-									<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomain(domain)" class="r" style="margin:3px -20px 0"></el-button>
-								</div>
-								<el-row class="tr">
-									<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-										<el-label class="mr5">
-											<span style="color:red;">* </span>灾情部位</el-label>
-									</el-col>
-									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-input v-model="domain.zqbw" maxlength="50" size="small" placeholder="灾情部位"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" class="tl">
-										<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="partsList('init',index)"></el-button>
-									</el-col>
-									<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-										<el-label class="mr5">所属建筑</el-label>
-									</el-col>
-									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-input v-model="domain.jzmc" size="small" placeholder="所属建筑" disabled></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" class="tl">
-										<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="buildingList('init',index)"></el-button>
-									</el-col>
-									<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-										<el-label class="mr5">燃烧物质</el-label>
-									</el-col>
-									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-cascader :options="RSWZ_dataTree" :props="defaultProps" size="small" v-model="domain.rswz" placeholder="请选择" clearable
-										 change-on-select :show-all-levels="false"></el-cascader>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row class="tr">
-								<el-row class="tr">
-									<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-										<el-label class="mr5">灾情等级</el-label>
-									</el-col>
-									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-cascader :options="ZQDJ_dataTree" :props="defaultProps" size="small" v-model="domain.zqdj" placeholder="请选择" clearable
-										 :show-all-levels="false"></el-cascader>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-									<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-										<el-label class="mr5">起火原因</el-label>
-									</el-col>
-									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-select size="small" v-model="domain.qhyy" placeholder="请选择" clearable>
-											<el-option v-for="item in QHYY_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-col>
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">燃烧面积(㎡)</el-label>
-									</el-col>
-									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-input v-model="domain.rsmj" size="small" placeholder="燃烧面积"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row>
-								<el-row class="tr">
-									<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-										<el-label class="mr5">灾害场所</el-label>
-									</el-col>
-									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-select size="small" v-model="domain.zhcs" placeholder="请选择" clearable>
-											<el-option v-for="item in ZHCS_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-									<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-										<el-label class="mr5">火灾危险性</el-label>
-									</el-col>
-									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-select size="small" v-model="domain.gyjzhzwxx" placeholder="请选择" clearable>
-											<el-option v-for="item in HZWXX_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-col>
-									<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-										<el-label class="mr5">起火高度(m)</el-label>
-									</el-col>
-									<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-										<el-input v-model="domain.qhbwgd" size="small" placeholder="起火高度"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row>
-								<el-row class="tr">
-									<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-										<el-label class="mr5">灾情描述</el-label>
-									</el-col>
-									<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-										<el-input size="small" v-model="domain.zqms" maxlength="200" placeholder="灾情描述" type="textarea" autosize></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row>
-								<el-row class="tr">
-									<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-										<el-label class="mr5">设定依据</el-label>
-									</el-col>
-									<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-										<el-input size="small" v-model="domain.zqsdyj" maxlength="1000" placeholder="灾情设定依据" type="textarea" autosize></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row>
-								<el-row style="border-bottom: 1px solid #d1dbe5;line-height: 29px; margin-left: 15px;" class="mt5">
-									<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-										<strong>&nbsp;&nbsp;要点提示</strong>
-									</el-col>
-								</el-row>
-								<el-row class="tr">
-									<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-										<el-label class="mr5">战术要点</el-label>
-									</el-col>
-									<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-										<el-input v-model="domain.keypointsMap.zsyd" maxlength="1000" size="small" type="textarea" autosize placeholder="战术要点"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row>
-								<el-row class="tr">
-									<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-										<el-label class="mr5">特别警示</el-label>
-									</el-col>
-									<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-										<el-input v-model="domain.keypointsMap.tbjs" maxlength="1000" size="small" type="textarea" autosize placeholder="特别警示"></el-input>
-									</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								</el-row>
-								<el-row style="border-bottom: 1px solid #d1dbe5; line-height: 29px; margin-left: 15px;" class="mt5">
-									<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-										<strong>&nbsp;&nbsp;力量部署</strong>
-									</el-col>
-									<el-col :xs="11" :sm="11" :md="11" :lg="11" :xl="11">&nbsp;</el-col>
-									<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
-										<el-button type="primary" icon="plus" size="small" style="float:left;" @click="addDomainllbs(index)"></el-button>
-									</el-col>
-								</el-row>
-								<el-form :model="domain.forcedevList" ref="domain.forcedevList" label-width="100px" style="margin:0;">
-									<el-form-item v-for="(llbs,index1) in domain.forcedevList" :key="llbs.key" :prop="'forcedevList.' + index1 + '.value'" label-position="right">
-										<el-row class="tr">
-											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-												<el-label class="mr5">
-													<span style="color:red;">* </span>消防队站</el-label>
-											</el-col>
-											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input v-model="llbs.dzmc" size="small" placeholder="消防队站" disabled></el-input>
-											</el-col>
-											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1" class="tl">
-												<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="fireStaList('init',index,index1)"></el-button>
-											</el-col>
-											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-												<el-label class="mr5">方案类型</el-label>
-											</el-col>
-											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-select size="small" v-model="llbs.djfalx" placeholder="请选择" clearable>
-													<el-option v-for="item in DJFALX_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-												</el-select>
-											</el-col>
-											<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">&nbsp;</el-col>
-											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
-												<el-button type="danger" icon="minus" size="small" @click.prevent="removellbs(llbs,index)" class="r" style="margin:5px 0 0; float: left;"></el-button>
-											</el-col>
-										</el-row>
-										<el-row class="tr">
-											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-												<el-label class="mr5">停靠位置</el-label>
-											</el-col>
-											<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-												<el-input v-model="llbs.tkwz" maxlength="25" size="small" type="textarea" autosize placeholder="停靠位置"></el-input>
-											</el-col>
-											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-										</el-row>
-										<el-row class="tr mb10">
-											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-												<el-label class="mr5">装备提示</el-label>
-											</el-col>
-											<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-												<el-input v-model="llbs.clzbts" maxlength="1000" size="small" type="textarea" autosize placeholder="车辆装备提示"></el-input>
-											</el-col>
-											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-										</el-row>
+					<el-card v-for="(domain, index) in addForm.disasterList" :key="index" class="card_style">
+						<div slot="header" class="clearfix">
+							<strong class="card_title_font">灾情{{index+1}}</strong>
+							<el-button type="danger" icon="minus" size="small" @click.prevent="removeDisaster(domain)" class="r" style="margin:3px -20px 0"></el-button>
+						</div>
+						<el-row>
+							<el-col :span="7">
+								<el-form-item label="灾情部位" :prop="'disasterList.' + index + '.zqbw'" :rules="inforRules.zqbw">
+									<el-input v-model="domain.zqbw" maxlength="50" size="small" placeholder="灾情部位"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1" class="tl">
+								<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="partsList('init',index)"></el-button>
+							</el-col>
+							<el-col :span="7">
+								<el-form-item label="所属建筑">
+									<el-input v-model="domain.jzmc" size="small" placeholder="所属建筑" disabled></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1" class="tl">
+								<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="buildingList('init',index)"></el-button>
+							</el-col>
+							<el-col :span="7">
+								<el-form-item label="燃烧物质">
+									<el-cascader :options="RSWZ_dataTree" :props="defaultProps" size="small" v-model="domain.rswz" placeholder="请选择" clearable
+									 change-on-select :show-all-levels="false"></el-cascader>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="7">
+								<el-form-item label="灾情等级">
+									<el-cascader :options="ZQDJ_dataTree" :props="defaultProps" size="small" v-model="domain.zqdj" placeholder="请选择" clearable
+									 :show-all-levels="false"></el-cascader>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="7">
+								<el-form-item label="起火原因">
+									<el-select size="small" v-model="domain.qhyy" placeholder="请选择" clearable>
+										<el-option v-for="item in QHYY_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="7">
+								<el-form-item label="燃烧面积">
+									<el-input-number v-model="domain.rsmj" size="small" :min="0"></el-input-number>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">(㎡)</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="7">
+								<el-form-item label="灾害场所">
+									<el-select size="small" v-model="domain.zhcs" placeholder="请选择" clearable>
+										<el-option v-for="item in ZHCS_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="7">
+								<el-form-item label="火灾危险性">
+									<el-select size="small" v-model="domain.gyjzhzwxx" placeholder="请选择" clearable>
+										<el-option v-for="item in HZWXX_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="7">
+								<el-form-item label="起火高度">
+									<el-input-number v-model="domain.qhbwgd" size="small" :min="0"></el-input-number>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">(m)</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="灾情描述">
+									<el-input size="small" v-model="domain.zqms" maxlength="200" placeholder="灾情描述" type="textarea" autosize></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="设定依据">
+									<el-input size="small" v-model="domain.zqsdyj" maxlength="1000" placeholder="灾情设定依据" type="textarea" autosize></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row style="border-bottom: 1px solid #d1dbe5;line-height: 29px;" class="ml15 mr15 mb5 mt15">
+							<strong>&nbsp;&nbsp;要点提示</strong>
+						</el-row>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="战术要点">
+									<el-input v-model="domain.keypointsMap.zsyd" maxlength="1000" size="small" type="textarea" autosize placeholder="战术要点"></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="特别警示">
+									<el-input v-model="domain.keypointsMap.tbjs" maxlength="1000" size="small" type="textarea" autosize placeholder="特别警示"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row style="border-bottom: 1px solid #d1dbe5; line-height: 29px;" class="ml15 mr15 mb5 mt15">
+							<el-col :span="12">
+								<strong>&nbsp;&nbsp;力量部署</strong>
+							</el-col>
+							<el-col :span="11">&nbsp;</el-col>
+							<el-col :span="1">
+								<el-button type="primary" icon="plus" size="small" class="r" @click="addDomainllbs(index)"></el-button>
+							</el-col>
+						</el-row>
+						<div v-for="(llbs,index1) in domain.forcedevList" :key="index1">
+							<el-row class="mr15">
+								<el-col :span="7">
+									<el-form-item label="消防队站" :prop="'disasterList.' + index + '.forcedevList.' + index1 + '.dzmc'" :rules="inforRules.dzmc">
+										<el-input v-model="llbs.dzmc" size="small" placeholder="消防队站" disabled></el-input>
 									</el-form-item>
-								</el-form>
-							</el-card>
-						</el-form-item>
-					</el-form>
-				</div>
+								</el-col>
+								<el-col :span="1" class="tl">
+									<el-button icon="search" size="small" style="border: none;background-color: #F5FAFC;" @click="fireStaList('init',index,index1)"></el-button>
+								</el-col>
+								<el-col :span="7">
+									<el-form-item label="方案类型">
+										<el-select size="small" v-model="llbs.djfalx" placeholder="请选择" clearable>
+											<el-option v-for="item in DJFALX_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
+								<el-col :span="8">&nbsp;</el-col>
+								<el-col :span="1">
+									<el-button type="danger" icon="minus" size="small" @click.prevent="removellbs(llbs,index)" class="r"></el-button>
+								</el-col>
+							</el-row>
+							<el-row class="mr15">
+								<el-col :span="23">
+									<el-form-item label="停靠位置">
+										<el-input v-model="llbs.tkwz" maxlength="25" size="small" type="textarea" autosize placeholder="停靠位置"></el-input>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<el-row class="mr15">
+								<el-col :span="23">
+									<el-form-item label="装备提示">
+										<el-input v-model="llbs.clzbts" maxlength="1000" size="small" type="textarea" autosize placeholder="车辆装备提示"></el-input>
+									</el-form-item>
+								</el-col>
+							</el-row>
+						</div>
+					</el-card>
+				</el-form>
 				<div id="uploadPlan" class="pt15">
 					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+						<el-col :span="24">
 							<strong style="color: #20a0ff;">预案上传</strong>
 						</el-col>
 					</el-row>
 					<el-row>
-						<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+						<el-col :span="12">
 							<el-upload class="upload-demo" ref="upload" action="/dpapi/yafjxz/upload" :data="upLoadData" :on-preview="handlePreview"
 							 :on-remove="fileRemove" :on-success="fileSuccess" :on-change="handleChange" :file-list="fileList" :auto-upload="false">
 								<el-button type="primary" icon="search" slot="trigger" size="small" type="primary">选取预案文件</el-button>
 								<span slot="tip" class="el-upload__tip ml10">只能上传zip压缩文件</span>
 							</el-upload>
 						</el-col>
-						<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+						<el-col :span="12">
 							<el-upload class="upload-demo" ref="uploadPics" action="/dpapi/yafjxz/upload" :data="upLoadData" :on-preview="handlePreview"
 							 :on-remove="picRemove" :on-success="picSuccess" :on-change="PicChange" :file-list="picList" :auto-upload="false">
 								<el-button type="primary" icon="search" slot="trigger" size="small" type="primary">选取图片文件</el-button>
@@ -300,47 +253,43 @@
 				</div>
 				<div id="remark" class="pt15">
 					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+						<el-col :span="24">
 							<strong style="color: #20a0ff;">备注</strong>
 						</el-col>
 					</el-row>
 					<el-row class="tr">
-						<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+						<el-col :span="2">
 							<el-label class="mr5 vbm">备注</el-label>
 						</el-col>
-						<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
+						<el-col :span="21">
 							<el-input size="small" v-model="addForm.bz" maxlength="250" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
 						</el-col>
-						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						<el-col :span="1">&nbsp;</el-col>
 					</el-row>
 				</div>
 				<el-row class="mt35 mb20">
-					<el-form :inline="true" class="el-form demo-form-inline">
-						<el-row>
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
-								<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
-								<el-button type="primary" icon="document" size="small" class="btn_save" @click="save('addForm')"> 暂存</el-button>
-								<el-button type="success" icon="check" size="small" class="btn_submit" @click="submit('addForm')">提交</el-button>
-							</el-col>
-						</el-row>
-					</el-form>
+					<el-row>
+						<el-col :span="24" class="editform-button">
+							<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
+							<el-button type="primary" icon="document" size="small" class="btn_save" @click="save('addForm')"> 暂存</el-button>
+							<el-button type="success" icon="check" size="small" class="btn_submit" @click="submit('addForm')">提交</el-button>
+						</el-col>
+					</el-row>
 				</el-row>
 				<!--选择重点单位界面-->
 				<el-dialog title="选择重点单位" :visible.sync="unitsListVisible" :close-on-click-modal="false">
 					<div id="tableView" v-loading="loading_units" element-loading-text="加载中">
 						<el-row>
-							<el-form :inline="true" class="el-form demo-form-inline">
-								<el-row>
-									<el-col :span="18" class="searchInline">
-										<label class="el-form-item__label" style="width:90px;">单位名称</label>
-										<el-input size="small" v-model="searchForm_units.dwmc" placeholder="单位名称" clearable></el-input>
-									</el-col>
-									<el-col :span="6" class="btnSearchPlus">
-										<el-button type="primary" icon="search" size="small" @click="keyunitList('click')">查询</el-button>
-										<el-button type="clear" icon="delete" size="small" @click="clearkeyunitList">清空</el-button>
-									</el-col>
-								</el-row>
-							</el-form>
+							<el-row>
+								<el-col :span="18" class="searchInline">
+									<label class="el-form-item__label" style="width:90px;">单位名称</label>
+									<el-input size="small" v-model="searchForm_units.dwmc" placeholder="单位名称" clearable></el-input>
+								</el-col>
+								<el-col :span="6" class="btnSearchPlus">
+									<el-button type="primary" icon="search" size="small" @click="keyunitList('click')">查询</el-button>
+									<el-button type="clear" icon="delete" size="small" @click="clearkeyunitList">清空</el-button>
+								</el-col>
+							</el-row>
 						</el-row>
 						<div class="table_container">
 							<el-table border id="table" :data="tableData_units.slice((currentPage_units-1)*pageSize_units,currentPage_units*pageSize_units)"
@@ -365,18 +314,14 @@
 				<el-dialog title="选择灾情部位" :visible.sync="partsListVisible" :close-on-click-modal="false">
 					<div id="tableView" v-loading="loading_parts" element-loading-text="加载中">
 						<el-row>
-							<el-form :inline="true" class="el-form demo-form-inline">
-								<el-row>
-									<el-col :span="18" class="searchInline">
-										<label class="el-form-item__label" style="width:90px;">部位名称</label>
-										<el-input size="small" v-model="searchForm_parts.zdbwmc" placeholder="部位名称" clearable></el-input>
-									</el-col>
-									<el-col :span="6" class="btnSearchPlus">
-										<el-button type="primary" icon="search" size="small" @click="partsList('click','')">查询</el-button>
-										<el-button type="clear" icon="delete" size="small" @click="clearpartsList">清空</el-button>
-									</el-col>
-								</el-row>
-							</el-form>
+							<el-col :span="18" class="searchInline">
+								<label class="el-form-item__label" style="width:90px;">部位名称</label>
+								<el-input size="small" v-model="searchForm_parts.zdbwmc" placeholder="部位名称" clearable></el-input>
+							</el-col>
+							<el-col :span="6" class="btnSearchPlus">
+								<el-button type="primary" icon="search" size="small" @click="partsList('click','')">查询</el-button>
+								<el-button type="clear" icon="delete" size="small" @click="clearpartsList">清空</el-button>
+							</el-col>
 						</el-row>
 						<div class="table_container">
 							<el-table border id="table" :data="tableData_parts.slice((currentPage_parts-1)*pageSize_parts,currentPage_parts*pageSize_parts)"
@@ -401,18 +346,14 @@
 				<el-dialog title="选择所属建筑" :visible.sync="buildingListVisible" :close-on-click-modal="false">
 					<div id="tableView" v-loading="loading_building" element-loading-text="加载中">
 						<el-row>
-							<el-form :inline="true" class="el-form demo-form-inline">
-								<el-row>
-									<el-col :span="18" class="searchInline">
-										<label class="el-form-item__label" style="width:90px;">建筑名称</label>
-										<el-input size="small" v-model="searchForm_building.jzmc" placeholder="建筑名称" clearable></el-input>
-									</el-col>
-									<el-col :span="6" class="btnSearchPlus">
-										<el-button type="primary" icon="search" size="small" @click="buildingList('click','')">查询</el-button>
-										<el-button type="clear" icon="delete" size="small" @click="clearbuildingList">清空</el-button>
-									</el-col>
-								</el-row>
-							</el-form>
+							<el-col :span="18" class="searchInline">
+								<label class="el-form-item__label" style="width:90px;">建筑名称</label>
+								<el-input size="small" v-model="searchForm_building.jzmc" placeholder="建筑名称" clearable></el-input>
+							</el-col>
+							<el-col :span="6" class="btnSearchPlus">
+								<el-button type="primary" icon="search" size="small" @click="buildingList('click','')">查询</el-button>
+								<el-button type="clear" icon="delete" size="small" @click="clearbuildingList">清空</el-button>
+							</el-col>
 						</el-row>
 						<div class="table_container">
 							<el-table border id="table" :data="tableData_building.slice((currentPage_building-1)*pageSize_building,currentPage_building*pageSize_building)"
@@ -437,18 +378,14 @@
 				<el-dialog title="选择消防队站" :visible.sync="fireStaListVisible" :close-on-click-modal="false">
 					<div id="tableView" v-loading="loading_fireSta" element-loading-text="加载中">
 						<el-row>
-							<el-form :inline="true" class="el-form demo-form-inline">
-								<el-row>
-									<el-col :span="18" class="searchInline">
-										<label class="el-form-item__label" style="width:90px;">队站名称</label>
-										<el-input size="small" v-model="searchForm_fireSta.dzmc" placeholder="队站名称" clearable></el-input>
-									</el-col>
-									<el-col :span="6" class="btnSearchPlus">
-										<el-button type="primary" icon="search" size="small" @click="fireStaList('click','','')">查询</el-button>
-										<el-button type="clear" icon="delete" size="small" @click="clearfireStaList">清空</el-button>
-									</el-col>
-								</el-row>
-							</el-form>
+							<el-col :span="18" class="searchInline">
+								<label class="el-form-item__label" style="width:90px;">队站名称</label>
+								<el-input size="small" v-model="searchForm_fireSta.dzmc" placeholder="队站名称" clearable></el-input>
+							</el-col>
+							<el-col :span="6" class="btnSearchPlus">
+								<el-button type="primary" icon="search" size="small" @click="fireStaList('click','','')">查询</el-button>
+								<el-button type="clear" icon="delete" size="small" @click="clearfireStaList">清空</el-button>
+							</el-col>
 						</el-row>
 						<div class="table_container">
 							<el-table border id="table" :data="tableData_fireSta.slice((currentPage_fireSta-1)*pageSize_fireSta,currentPage_fireSta*pageSize_fireSta)"
