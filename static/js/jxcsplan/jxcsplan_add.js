@@ -51,7 +51,6 @@ new Vue({
                 jzfl:"",//建筑分类
                 jzxxList: [],
                 xfssList:[],
-                
             },
             //搜索表单
             searchForm_building: {
@@ -133,8 +132,11 @@ new Vue({
                     }, trigger: 'change' }
                 ],
                 jzmc:[
-                    { required: true, message: '请输入建筑名称', trigger: 'blur' }
-                ]
+                    { required: true, message: '请选择建筑名称', trigger: 'blur' }
+                ],
+                xfssmc: [
+                    { required: true, message: '请输入消防设施名称', trigger: 'blur' }
+                ],
             },
             buildingFormRules:{
                 jzmc:[

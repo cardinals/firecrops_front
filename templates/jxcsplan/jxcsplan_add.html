@@ -14,204 +14,203 @@
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
 				<el-form ref="addForm" :model="addForm" label-width="120px" :rules="addFormRules">
-				<!--基本信息-->
-				<div id="inforView" class="pt15">
-					<el-row style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-						<el-col :span="24">
-							<strong style="color: #20a0ff;">基本信息</strong>
-						</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="11">
-							<el-form-item prop="dwmc" label="单位名称">
-                                <el-input size="small" maxlength="100" v-model="addForm.dwmc" placeholder="单位名称"></el-input>
-                            </el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-						<el-col :span="11">
-							<el-form-item prop="jxdwlx" label="单位类型">
-								<el-select size="small" v-model="addForm.jxdwlx" placeholder="单位类型" class="searchSelect" clearable>
-									<el-option v-for="item in JXDWLX_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-								</el-select>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="11">
-							<el-form-item prop="dwdz" label="单位地址">
-								<el-input size="small" maxlength="100" v-model="addForm.dwdz" placeholder="单位地址"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-						<el-col :span="11">
-							<el-form-item prop="dwgk" label="单位概况">
-								<el-input size="small" maxlength="1000" v-model="addForm.dwgk" placeholder="单位概况"></el-input>
-							</el-form-item>
-						</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="11">
-							<el-form-item prop="xzqh" label="行政区划">
-								<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="行政区划" class="searchSelect"
-								 clearable change-on-select :show-all-levels="false"></el-cascader>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-						<el-col :span="11">
-							<el-form-item prop="zbdh" label="值班电话">
-								<el-input size="small" maxlength="50" v-model="addForm.zbdh" placeholder="值班电话"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-					</el-row>
-				</div>
-				<!--消防管辖-->
-				<div id="xfgxView" class="pt15">
-					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-						<el-col :span="24">
-							<strong style="color: #20a0ff;">消防管辖</strong>
-						</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="11">
-							<el-form-item prop="xfgx" label="消防管辖" class="is-required">
-								<el-cascader v-model="addForm.xfgx" :options="XFGX_dataTree" :props="ssdzProps" size="small" placeholder="全部" class="searchSelect"
-                                        clearable :show-all-levels="false"></el-cascader>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-						<el-col :span="11">
-							<el-form-item prop="xqfzr" label="辖区负责人">
-								<el-input size="small" maxlength="25" v-model="addForm.xqfzr" placeholder="辖区负责人"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="11">
-							<el-form-item prop="xqfzrdh" label="辖区负责人电话">
-								<el-input size="small" maxlength="15" v-model="addForm.xqfzrdh" placeholder="辖区负责人电话"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-					</el-row>
-				</div>
-				<!--位置信息-->
-				<div id="positionView" class="pt15">
-					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-						<el-col :span="24">
-							<strong style="color: #20a0ff;">位置信息</strong>
-						</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="11">
-							<el-form-item prop="lon" label="经度">
-								<el-input-number size="small" :precision="2" v-model="addForm.lon" placeholder="经度" :min="-99999.9999999999" :max="99999.9999999999"></el-input-number>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-						<el-col :span="11">
-							<el-form-item prop="lat" label="纬度">
-								<el-input-number size="small" :precision="2" v-model="addForm.lat" placeholder="纬度" :min="-99999.9999999999" :max="99999.9999999999"></el-input-number>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="11">
-							<el-form-item prop="plqkd" label="毗邻情况(东)">
-								<el-input size="small" maxlength="100" v-model="addForm.plqkd" placeholder="毗邻情况(东)"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-						<el-col :span="11">
-							<el-form-item prop="plqkn" label="毗邻情况(南)">
-								<el-input size="small" maxlength="100" v-model="addForm.plqkn" placeholder="毗邻情况(南)"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="11">
-							<el-form-item prop="plqkx" label="毗邻情况(西)">
-								<el-input size="small" maxlength="100" v-model="addForm.plqkx" placeholder="毗邻情况(西)"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-						<el-col :span="11">
-							<el-form-item prop="plqkb" label="毗邻情况(北)">
-								<el-input size="small" maxlength="100" v-model="addForm.plqkb" placeholder="毗邻情况(北)"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-					</el-row>
-				</div>
-				<!--建筑信息-->
-				<div id="buildingView" class="pt15">
-					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;">
-						<el-col :span="12" style="line-height: 29px;">
-							<div style="color: #20a0ff;">
-								<strong>建筑信息</strong>
-							</div>
-						</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="11">
-							<el-form-item prop="jzfl" label="建筑分类">
-								<el-select size="small" v-model="addForm.jzfl" placeholder="单位建筑分类" class="searchSelect" clearable>
-									<el-option v-for="item in jzflData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-								</el-select>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-						<el-col :span="11">
-							<el-form-item prop="zdmj" label="占地面积(㎡)">
-								<el-input-number v-model="addForm.zdmj" size="small" :min="0" :max="9999999999.99" class="searchSelect"></el-input-number>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="11">
-							<el-form-item prop="zbxftd" label="周边消防通道">
-								<el-input size="small" maxlength="200" v-model="addForm.zbxftd" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="周边消防通道"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-						<el-col :span="11">
-							<el-form-item prop="jzmj" label="建筑面积(㎡)">
-								<el-input-number v-model="addForm.jzmj" size="small" :min="0" :max="9999999999.99" class="searchSelect"></el-input-number>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="11">
-							<el-form-item prop="zdbwms" label="重点部位描述">
-								<el-input size="small" maxlength="200" v-model="addForm.zdbwms" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="重点部位描述"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-						<el-col :span="11">
-							<el-form-item prop="gnfqms" label="功能分区描述">
-								<el-input size="small" maxlength="200" v-model="addForm.gnfqms" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="功能分区描述"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-					</el-row>
-					<el-row class="mb5" style="border-bottom: 1px solid #d1dbe5; line-height: 29px;" class="mt5">
-						<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-							<strong>&nbsp;&nbsp;单位建筑情况</strong>
-						</el-col>
-						<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="pb1">
-							<el-button type="primary" icon="plus" size="small" class="r" @click="addDomainJzxx"></el-button>
-						</el-col>
-					</el-row>
-					<el-form :model="addForm.jzxxList" ref="addForm.jzxxList" label-width="100px" style="margin:0;" :rules="addFormRules">
-						<el-row v-for="(jzxx,index) in addForm.jzxxList" :key="jzxx.key" :prop="'addForm.jzxxList.' + index + '.value'">
+					<!--基本信息-->
+					<div id="inforView" class="pt15">
+						<el-row style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+							<el-col :span="24">
+								<strong style="color: #20a0ff;">基本信息</strong>
+							</el-col>
+						</el-row>
+						<el-row>
 							<el-col :span="11">
-								<el-form-item prop="jzmc" label="建筑名称">
+								<el-form-item prop="dwmc" label="单位名称">
+									<el-input size="small" maxlength="100" v-model="addForm.dwmc" placeholder="单位名称"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="jxdwlx" label="单位类型">
+									<el-select size="small" v-model="addForm.jxdwlx" placeholder="单位类型" class="searchSelect" clearable>
+										<el-option v-for="item in JXDWLX_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="dwdz" label="单位地址">
+									<el-input size="small" maxlength="100" v-model="addForm.dwdz" placeholder="单位地址"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="dwgk" label="单位概况">
+									<el-input size="small" maxlength="500" v-model="addForm.dwgk" placeholder="单位概况"></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="xzqh" label="行政区划">
+									<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="行政区划" class="searchSelect"
+									clearable change-on-select :show-all-levels="false"></el-cascader>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="zbdh" label="值班电话">
+									<el-input size="small" maxlength="50" v-model="addForm.zbdh" placeholder="值班电话"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+					</div>
+					<!--消防管辖-->
+					<div id="xfgxView" class="pt15">
+						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+							<el-col :span="24">
+								<strong style="color: #20a0ff;">消防管辖</strong>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="xfgx" label="消防管辖" class="is-required">
+									<el-cascader v-model="addForm.xfgx" :options="XFGX_dataTree" :props="ssdzProps" size="small" placeholder="全部" class="searchSelect"
+											clearable :show-all-levels="false"></el-cascader>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="xqfzr" label="辖区负责人">
+									<el-input size="small" maxlength="25" v-model="addForm.xqfzr" placeholder="辖区负责人"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="xqfzrdh" label="辖区负责人电话">
+									<el-input size="small" maxlength="50" v-model="addForm.xqfzrdh" placeholder="辖区负责人电话"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+					</div>
+					<!--位置信息-->
+					<div id="positionView" class="pt15">
+						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+							<el-col :span="24">
+								<strong style="color: #20a0ff;">位置信息</strong>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="lon" label="经度">
+									<el-input-number size="small" :precision="2" v-model="addForm.lon" placeholder="经度" :min="-99999.9999999999" :max="99999.9999999999"></el-input-number>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="lat" label="纬度">
+									<el-input-number size="small" :precision="2" v-model="addForm.lat" placeholder="纬度" :min="-99999.9999999999" :max="99999.9999999999"></el-input-number>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="plqkd" label="毗邻情况(东)">
+									<el-input size="small" maxlength="100" v-model="addForm.plqkd" placeholder="毗邻情况(东)"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="plqkn" label="毗邻情况(南)">
+									<el-input size="small" maxlength="100" v-model="addForm.plqkn" placeholder="毗邻情况(南)"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="plqkx" label="毗邻情况(西)">
+									<el-input size="small" maxlength="100" v-model="addForm.plqkx" placeholder="毗邻情况(西)"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="plqkb" label="毗邻情况(北)">
+									<el-input size="small" maxlength="100" v-model="addForm.plqkb" placeholder="毗邻情况(北)"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+					</div>
+					<!--建筑信息-->
+					<div id="buildingView" class="pt15">
+						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;">
+							<el-col :span="12" style="line-height: 29px;">
+								<div style="color: #20a0ff;">
+									<strong>建筑信息</strong>
+								</div>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="jzfl" label="建筑分类">
+									<el-select size="small" v-model="addForm.jzfl" placeholder="单位建筑分类" class="searchSelect" clearable>
+										<el-option v-for="item in jzflData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="zdmj" label="占地面积(㎡)">
+									<el-input-number v-model="addForm.zdmj" size="small" :min="0" :max="9999999999.99" class="searchSelect"></el-input-number>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="zbxftd" label="周边消防通道">
+									<el-input size="small" maxlength="200" v-model="addForm.zbxftd" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="周边消防通道"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="jzmj" label="建筑面积(㎡)">
+									<el-input-number v-model="addForm.jzmj" size="small" :min="0" :max="9999999999.99" class="searchSelect"></el-input-number>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="zdbwms" label="重点部位描述">
+									<el-input size="small" maxlength="200" v-model="addForm.zdbwms" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="重点部位描述"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="gnfqms" label="功能分区描述">
+									<el-input size="small" maxlength="200" v-model="addForm.gnfqms" type="textarea" :autosize="{ minRows: 1, maxRows: 4}" placeholder="功能分区描述"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row class="mb5" style="border-bottom: 1px solid #d1dbe5; line-height: 29px;" class="mt5">
+							<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+								<strong>&nbsp;&nbsp;单位建筑情况</strong>
+							</el-col>
+							<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="pb1">
+								<el-button type="primary" icon="plus" size="small" class="r" @click="addDomainJzxx"></el-button>
+							</el-col>
+						</el-row>
+						<el-row v-for="(jzxx,index) in addForm.jzxxList" :key="jzxx.key">
+							<el-col :span="11">
+								<el-form-item prop="jzmc" label="建筑名称" :prop="'jzxxList.' + index + '.jzmc'" :rules="addFormRules.jzmc">
 									<el-input size="small" v-model="jzxx.jzmc" placeholder="建筑名称" class="searchSelect" disabled></el-input>
 								</el-form-item>
 							</el-col>
@@ -222,21 +221,19 @@
 								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainJzxx(jzxx)" class="r"></el-button>
 							</el-col>
 						</el-row>
-					</el-form>
-				</div>
-				<!--消防信息-->
-				<div id="fireView" class="pt15">
-					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;">
-						<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" style="line-height: 29px;">
-							<div style="color: #20a0ff;">
-								<strong>消防信息</strong>
-							</div>
-						</el-col>
-						<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="pb1">
-							<el-button type="primary" icon="plus" size="small" class="r" @click="addFireDomain"></el-button>
-						</el-col>
-					</el-row>
-					<el-form :model="addForm.xfssList" ref="addForm.xfssList" label-width="100px" style="margin:0;">
+					</div>
+					<!--消防信息-->
+					<div id="fireView" class="pt15">
+						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;">
+							<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" style="line-height: 29px;">
+								<div style="color: #20a0ff;">
+									<strong>消防信息</strong>
+								</div>
+							</el-col>
+							<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" class="pb1">
+								<el-button type="primary" icon="plus" size="small" class="r" @click="addFireDomain"></el-button>
+							</el-col>
+						</el-row>
 						<div v-for="(domain, index) in addForm.xfssList" :key="domain.key" label-position="right">
 							<el-card class="card_style">
 								<div slot="header" class="clearfix">
@@ -245,7 +242,7 @@
 								</div>
 								<el-row>
 									<el-col :span="11">
-										<el-form-item prop="xfssmc" label="设施名称" class="is-required">
+										<el-form-item label="设施名称" :prop="'xfssList.' + index + '.xfssmc'" :rules="addFormRules.xfssmc">
 											<el-input v-model="domain.xfssmc" maxlength="50" size="small" placeholder="消防设施名称"></el-input>
 										</el-form-item>
 									</el-col>
@@ -253,7 +250,7 @@
 									<el-col :span="11">
 										<el-form-item prop="xfsslx" label="消防设施类型">
 											<el-cascader :options="XfsslxDataTree" :props="defaultProps" size="small" v-model="domain.xfsslx" placeholder="消防设施类型" class="searchSelect"
-									 			clearable change-on-select :show-all-levels="false"></el-cascader>
+													clearable change-on-select :show-all-levels="false"></el-cascader>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
@@ -261,7 +258,7 @@
 								<el-row>
 									<el-col :span="11">
 										<el-form-item prop="wz" label="位置">
-											<el-input v-model="domain.wz" maxlength="25" size="small" placeholder="位置"></el-input>
+											<el-input v-model="domain.wz" maxlength="50" size="small" placeholder="位置"></el-input>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
@@ -275,68 +272,62 @@
 								<el-row>
 									<el-col :span="23">
 										<el-form-item prop="bz" label="备注">
-											<el-input v-model="domain.bz" maxlength="250" size="small" placeholder="备注" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+											<el-input v-model="domain.bz" maxlength="200" size="small" placeholder="备注" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
 								</el-row>
 							</el-card>
 						</div>
-					</el-form>
-				</div>
-				<div id="uploadPlan" class="pt15">
-					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-							<strong style="color: #20a0ff;">附件上传</strong>
-						</el-col>
-					</el-row>
-					<el-row>
-						<el-col :xs="11" :sm="11" :md="11" :lg="11" :xl="11">
-							<el-upload class="upload-demo" ref="uploadPics" action="/dpapi/jxcsfjxz/upload" :data="upLoadData" :on-preview="handlePreview"
-									 :on-remove="picRemove" :on-success="picSuccess" :on-change="PicChange" :file-list="picList" :auto-upload="false">
-							<el-button type="primary" icon="search" slot="trigger" size="small" type="primary">选取图片文件</el-button>
-								<span slot="tip" class="el-upload__tip ml10">只能上传png、png、bmp、jpeg格式的文件</span>
-							</el-upload>
-						</el-col>
-						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-						<el-col :xs="11" :sm="11" :md="11" :lg="11" :xl="11">
-							<el-upload class="upload-demo" ref="upload" action="/dpapi/jxcsfjxz/upload" :data="upLoadData" :on-preview="handlePreview"
-							 :on-remove="fileRemove" :on-success="fileSuccess" :on-change="handleChange" :file-list="fileList" :auto-upload="false">
-								<el-button type="primary" icon="search" slot="trigger" size="small" type="primary">选取视频文件</el-button>
-								<span slot="tip" class="el-upload__tip ml10">只能上传mp4格式的文件</span>
-							</el-upload>
-						</el-col>
-						<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-					</el-row>
-				</div>
-				<div id="remark" class="pt15">
-					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-						<el-col :span="24">
-							<strong style="color: #20a0ff;">备注</strong>
-						</el-col>
-					</el-row>
-					<el-row class="tr">
-						<el-col :span="23">
-							<el-form-item prop="bz" label="备注">
-								<el-input size="small" maxlength="250" v-model="addForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
-					</el-row>
-				</div>
-			</el-form>
-				<el-row class="mt10 mb20">
-					<el-form :inline="true" class="el-form demo-form-inline">
-						<el-row>
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
-								<el-button id="hidden_btn" type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
-								<el-button type="primary" icon="document" size="small" class="btn_save" @click="save('addForm')">暂存</el-button>
-								<el-button type="success" icon="check" size="small" class="btn_submit" @click="submit('addForm')">提交</el-button>
+					</div>
+					<div id="uploadPlan" class="pt15">
+						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+								<strong style="color: #20a0ff;">附件上传</strong>
 							</el-col>
 						</el-row>
-					</el-form>
+						<el-row>
+							<el-col :xs="11" :sm="11" :md="11" :lg="11" :xl="11">
+								<el-upload class="upload-demo" ref="uploadPics" action="/dpapi/jxcsfjxz/upload" :data="upLoadData" :on-preview="handlePreview"
+										:on-remove="picRemove" :on-success="picSuccess" :on-change="PicChange" :file-list="picList" :auto-upload="false">
+								<el-button type="primary" icon="search" slot="trigger" size="small" type="primary">选取图片文件</el-button>
+									<span slot="tip" class="el-upload__tip ml10">只能上传png、png、bmp、jpeg格式的文件</span>
+								</el-upload>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :xs="11" :sm="11" :md="11" :lg="11" :xl="11">
+								<el-upload class="upload-demo" ref="upload" action="/dpapi/jxcsfjxz/upload" :data="upLoadData" :on-preview="handlePreview"
+								:on-remove="fileRemove" :on-success="fileSuccess" :on-change="handleChange" :file-list="fileList" :auto-upload="false">
+									<el-button type="primary" icon="search" slot="trigger" size="small" type="primary">选取视频文件</el-button>
+									<span slot="tip" class="el-upload__tip ml10">只能上传mp4格式的文件</span>
+								</el-upload>
+							</el-col>
+							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+						</el-row>
+					</div>
+					<div id="remark" class="pt15">
+						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+							<el-col :span="24">
+								<strong style="color: #20a0ff;">备注</strong>
+							</el-col>
+						</el-row>
+						<el-row class="tr">
+							<el-col :span="23">
+								<el-form-item prop="bz" label="备注">
+									<el-input size="small" maxlength="200" v-model="addForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+					</div>
+				</el-form>
+				<el-row class="mt10 mb20">
+					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
+						<el-button id="hidden_btn" type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
+						<el-button type="primary" icon="document" size="small" class="btn_save" @click="save('addForm')">暂存</el-button>
+						<el-button type="success" icon="check" size="small" class="btn_submit" @click="submit('addForm')">提交</el-button>
+					</el-col>	
 				</el-row>
-				
 				<!--选择所属建筑界面-->
 				<el-dialog :title="dialogTitle" :visible.sync="buildingListVisible" :close-on-click-modal="false">
 					<div id="tableView" v-loading="loading_building" element-loading-text="加载中" v-show="buildingSearch">
@@ -385,126 +376,126 @@
 					</div>
 					<div v-show="addBuildingVisible">
 						<el-form :model="buildingForm" ref="buildingForm" label-width="100px" style="margin:0;" :rules="buildingFormRules">
-						<el-row>
-							<el-col :span="11">
-								<el-form-item prop="jzmc" label="建筑名称">
-									<el-input v-model="buildingForm.jzmc" maxlength="50" size="small" placeholder="建筑名称"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-							<el-col :span="11">
-								<el-form-item prop="jzwz" label="建筑位置">
-									<el-input v-model="buildingForm.jzwz" maxlength="100" size="small" placeholder="建筑位置"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-						</el-row>
-						<el-row>
-							<el-col :span="11">
-								<el-form-item prop="jzsyxz" label="建筑使用性质">
-									<el-cascader :options="JzsyxzDataTree" :props="defaultProps" size="small" v-model="buildingForm.jzsyxz" placeholder="建筑使用性质" class="searchSelect"
-									 clearable change-on-select :show-all-levels="false"></el-cascader>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-							<el-col :span="11">
-								<el-form-item prop="jzjg" label="建筑结构">
-									<el-select size="small" v-model="buildingForm.jzjg" placeholder="建筑结构" clearable>
-										<el-option v-for="item in JZJG_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-									</el-select>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-						</el-row>
-						<el-row>
-							<el-col :span="11">
-								<el-form-item prop="zdmj" label="占地面积">
-									<el-input-number v-model="buildingForm.zdmj" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-							<el-col :span="11">
-								<el-form-item prop="jzmj" label="建筑面积">
-									<el-input-number v-model="buildingForm.jzmj" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-						</el-row>
-						<el-row>
-							<el-col :span="11">
-								<el-form-item prop="dsgd" label="地上高度(m)">
-									<el-input-number v-model="buildingForm.dsgd" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-							<el-col :span="11">
-								<el-form-item prop="dxgd" label="地下高度(m)">
-									<el-input-number v-model="buildingForm.dxgd" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-						</el-row>
-						<el-row>
-							<el-col :span="11">
-								<el-form-item prop="dscs" label="地上层数">
-									<el-input-number v-model="buildingForm.dscs" size="small" :min="0" :max="9999" class="searchSelect"></el-input-number>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-							<el-col :span="11">
-								<el-form-item prop="dxcs" label="地下层数">
-									<el-input-number v-model="buildingForm.dxcs" size="small" :min="0" :max="9999" class="searchSelect"></el-input-number>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-						</el-row>
-						<el-row>
-							<el-col :span="11">
-								<el-form-item prop="bnc" label="避难层">
-									<el-input v-model="buildingForm.bnc" maxlength="100" size="small" placeholder="避难层"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-							<el-col :span="11">
-								<el-form-item prop="yjddsc" label="预计到达时长">
-									<el-input-number v-model="buildingForm.yjddsc" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-						</el-row>
-						<el-row>
-							<el-col :span="23">
-								<el-form-item prop="xqxclx" label="辖区行车路线">
-									<el-input v-model="buildingForm.xqxclx" maxlength="200" size="small" placeholder="辖区行车路线"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-						</el-row>
-						<el-row>
-							<el-col :span="23">
-								<el-form-item prop="gnms" label="功能描述">
-									<el-input v-model="buildingForm.gnms" maxlength="200" size="small" placeholder="功能描述"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-						</el-row>
-						<el-row>
-							<el-col :span="23">
-								<el-form-item prop="bz" label="备注">
-									<el-input v-model="buildingForm.bz" maxlength="250" size="small" placeholder="备注"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-						</el-row>
-						<el-row>
-							<el-col :span="9">&nbsp;</el-col>
-							<el-col :span="6">
-								<el-button type="clear" icon="close" size="small" class="btn_cancle" @click="cancelAddBuilding"> 返回</el-button>
-								<el-button type="primary" icon="check" size="small" class="btn_submit" @click="submitBuildingForm('buildingForm')">提交</el-button>
-							</el-col>
-							<el-col :span="9">&nbsp;</el-col>
-						</el-row>
-					</el-form>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="jzmc" label="建筑名称">
+										<el-input v-model="buildingForm.jzmc" maxlength="50" size="small" placeholder="建筑名称"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="jzwz" label="建筑位置">
+										<el-input v-model="buildingForm.jzwz" maxlength="100" size="small" placeholder="建筑位置"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="jzsyxz" label="建筑使用性质">
+										<el-cascader :options="JzsyxzDataTree" :props="defaultProps" size="small" v-model="buildingForm.jzsyxz" placeholder="建筑使用性质" class="searchSelect"
+										clearable change-on-select :show-all-levels="false"></el-cascader>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="jzjg" label="建筑结构">
+										<el-select size="small" v-model="buildingForm.jzjg" placeholder="建筑结构" clearable>
+											<el-option v-for="item in JZJG_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="zdmj" label="占地面积">
+										<el-input-number v-model="buildingForm.zdmj" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="jzmj" label="建筑面积">
+										<el-input-number v-model="buildingForm.jzmj" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="dsgd" label="地上高度(m)">
+										<el-input-number v-model="buildingForm.dsgd" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="dxgd" label="地下高度(m)">
+										<el-input-number v-model="buildingForm.dxgd" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="dscs" label="地上层数">
+										<el-input-number v-model="buildingForm.dscs" size="small" :min="0" :max="9999" class="searchSelect"></el-input-number>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="dxcs" label="地下层数">
+										<el-input-number v-model="buildingForm.dxcs" size="small" :min="0" :max="9999" class="searchSelect"></el-input-number>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="bnc" label="避难层">
+										<el-input v-model="buildingForm.bnc" maxlength="100" size="small" placeholder="避难层"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="yjddsc" label="预计到达时长">
+										<el-input-number v-model="buildingForm.yjddsc" size="small" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="23">
+									<el-form-item prop="xqxclx" label="辖区行车路线">
+										<el-input type="textarea" v-model="buildingForm.xqxclx" maxlength="200" size="small" placeholder="辖区行车路线"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="23">
+									<el-form-item prop="gnms" label="功能描述">
+										<el-input type="textarea" v-model="buildingForm.gnms" maxlength="200" size="small" placeholder="功能描述"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="23">
+									<el-form-item prop="bz" label="备注">
+										<el-input type="textarea" v-model="buildingForm.bz" maxlength="200" size="small" placeholder="备注"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="9">&nbsp;</el-col>
+								<el-col :span="6">
+									<el-button type="clear" icon="close" size="small" class="btn_cancle" @click="cancelAddBuilding"> 返回</el-button>
+									<el-button type="primary" icon="check" size="small" class="btn_submit" @click="submitBuildingForm('buildingForm')">提交</el-button>
+								</el-col>
+								<el-col :span="9">&nbsp;</el-col>
+							</el-row>
+						</el-form>
 					</div>
 				</el-dialog>
 			</div>
