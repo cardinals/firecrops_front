@@ -113,7 +113,7 @@ body{height:100%;overflow:hidden;}
 }
 #basic-Inform-Title{
     margin-left: 40px;
-    width: calc(100% - 324px);
+    width: calc(100% - 180px);
 }
 #basic-Inform-Picture{
     float: left;
