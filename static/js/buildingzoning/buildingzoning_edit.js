@@ -101,6 +101,16 @@ new Vue({
                 }]
             },
 
+            editFormRules:{
+                jzmc:[
+                    { required: true, message: '请输入建筑名称', trigger: 'blur' }
+                ],
+
+                jzlx: [
+                    { required: true, message: '请选择建筑类型', trigger: 'change' }
+                ]
+            },
+
             props: {
                 value: 'codeValue',
                 label: 'codeName',
