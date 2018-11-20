@@ -383,12 +383,11 @@
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
 										<el-row class="tr mt5">
-											<!-- test -->
 											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
 												<el-label class="mr5 vbm">工作压力</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input-number  :min="0" :max="30" :precision="2" size="small" v-model="domain.gzyl" placeholder="工作压力"></el-input-number>
+												<el-input maxlength="30" size="small" v-model="domain.gzyl" placeholder="工作压力"></el-input>
 											</el-col>
 											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 												<el-label class="mr5 vbm">储罐高度(m)</el-label>
@@ -405,12 +404,11 @@
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
 										<el-row class="tr mt5">
-											<!-- test -->
 											<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
 												<el-label class="mr5 vbm">存储温度</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input-number  :min="0" :max="30" :precision="2" size="small" v-model="domain.ccwd" placeholder="存储温度"></el-input-number>
+												<el-input maxlength="30" size="small" v-model="domain.ccwd" placeholder="存储温度"></el-input>
 											</el-col>
 											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 												<el-label class="mr5 vbm">储罐直径(m)</el-label>
@@ -444,13 +442,13 @@
 												<el-label class="mr5 vbm">液位高度(m)</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input-number  :min="0" :max="99.99" class="mt3" :precision="2" size="small" v-model="domain.ccjzywgd" placeholder="存储机制液位高度(m)"></el-input-number>
+												<el-input-number  :min="0" :max="999.99" class="mt3" :precision="2" size="small" v-model="domain.ccjzywgd" placeholder="存储机制液位高度(m)"></el-input-number>
 											</el-col>
 											<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
 												<el-label class="mr5 vbm">实际储量(m³)</el-label>
 											</el-col>
 											<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-												<el-input-number :min="0" :max="99.99" class="mt3" :precision="2" size="small" v-model="domain.ccjzsjcl" placeholder="存储介质实际储量(m³)"></el-input-number>
+												<el-input-number :min="0" :max="99999999.99" class="mt3" :precision="2" size="small" v-model="domain.ccjzsjcl" placeholder="存储介质实际储量(m³)"></el-input-number>
 											</el-col>
 											<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 										</el-row>
@@ -459,7 +457,7 @@
 												<el-label class="mr5 vbm">理化性质</el-label>
 											</el-col>
 											<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-												<el-input class="mt_4" size="small" v-model="domain.ccjzlhxz" placeholder="存储介质理化性质"></el-input>
+												<el-input  maxlength="200" class="mt_4" size="small" v-model="domain.ccjzlhxz" placeholder="存储介质理化性质"></el-input>
 											</el-col>
 										</el-row>
 										<el-row class="tr mt5">
@@ -467,7 +465,7 @@
 												<el-label class="mr5 vbm">备注</el-label>
 											</el-col>
 											<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-												<el-input size="small" v-model="domain.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+												<el-input maxlength="9" size="small" v-model="domain.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 											</el-col>
 										</el-row>
 									</el-card>
@@ -486,7 +484,7 @@
 								<el-label class="mr5 vbm">备注</el-label>
 							</el-col>
 							<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-								<el-input size="small" v-model="editForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+								<el-input  maxlength="9" size="small" v-model="editForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
 							</el-col>
 						</el-row>
 					</el-form>
