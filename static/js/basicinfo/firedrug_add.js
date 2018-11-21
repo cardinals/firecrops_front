@@ -36,6 +36,20 @@ new Vue({
                 bz: '',
                 jdh: ''
             },
+            //信息校验规则
+            inforRules: {
+                yjmc: [{ required: true, message: '请输入药剂名称', trigger: 'blur' }],
+                ssdz: [{
+                    validator: (rule, value, callback) => {
+                        if (value.length == 0) {
+                            callback(new Error("请选择所属队站"));
+                        } else {
+                            callback();
+                        }
+
+                    }, trigger: 'change'
+                }]
+            },
             //树结构配置
             defaultProps: {
                 children: 'children',
@@ -175,105 +189,99 @@ new Vue({
 
         //保存
         save: function (formName) {
-            if (this.addForm.yjmc == "" || this.addForm == null) {
-                this.$message.warning({
-                    message: '请输入药剂名称！',
-                    showClose: true
-                });
-            } else if(this.addForm.ssdz.length == 0){
-                this.$message.warning({
-                    message: '请选择所属队站!',
-                    showClose: true
-                });
-                return false;
-            }else {
-                if (this.status == 0) {//新增
-                    var params = {
-                        yjmc: this.addForm.yjmc,
-                        yjbm: this.addForm.yjbm,
-                        yjlx: this.addForm.yjlx[this.addForm.yjlx.length - 1],
-                        sccj: this.addForm.sccj,
-                        pc: this.addForm.pc,
-                        zcbl: this.addForm.zcbl,
-                        czl: this.addForm.czl,
-                        kcl: this.addForm.kcl,
-                        scsj: this.addForm.scsj,
-                        hhb: this.addForm.hhb,
-                        xzqh: this.addForm.xzqh[this.addForm.xzqh.length - 1],
-                        ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
-                        ssdzmc: this.addForm.ssdzmc,
-                        bz: this.addForm.bz,
-                        jdh: this.shiroData.organizationVO.jgid.substr(0,2) + "000000",
-                        datasource: this.shiroData.organizationVO.jgid,
-                        cjrid: this.shiroData.userid,
-                        cjrmc: this.shiroData.realName
-                    }
-                    axios.post('/dpapi/firedrug/insertByVO', params).then(function (res) {
-                        if (res.data.result >= 1) {
-                            this.$alert('成功保存' + res.data.result + '条消防药剂信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/firedrug_list");
-                                }
-                            });
-                        } else {
-                            this.$alert('保存失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/firedrug_list");
-                                }
-                            });
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    if (this.status == 0) {//新增
+                        var params = {
+                            yjmc: this.addForm.yjmc,
+                            yjbm: this.addForm.yjbm,
+                            yjlx: this.addForm.yjlx[this.addForm.yjlx.length - 1],
+                            sccj: this.addForm.sccj,
+                            pc: this.addForm.pc,
+                            zcbl: this.addForm.zcbl,
+                            czl: this.addForm.czl,
+                            kcl: this.addForm.kcl,
+                            scsj: this.addForm.scsj,
+                            hhb: this.addForm.hhb,
+                            xzqh: this.addForm.xzqh[this.addForm.xzqh.length - 1],
+                            ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
+                            ssdzmc: this.addForm.ssdzmc,
+                            bz: this.addForm.bz,
+                            jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + "000000",
+                            datasource: this.shiroData.organizationVO.jgid,
+                            cjrid: this.shiroData.userid,
+                            cjrmc: this.shiroData.realName
                         }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
-                } else {//修改
-                    var params = {
-                        uuid: this.addForm.uuid,
-                        yjmc: this.addForm.yjmc,
-                        yjbm: this.addForm.yjbm,
-                        yjlx: this.addForm.yjlx[this.addForm.yjlx.length - 1],
-                        sccj: this.addForm.sccj,
-                        pc: this.addForm.pc,
-                        zcbl: this.addForm.zcbl,
-                        czl: this.addForm.czl,
-                        kcl: this.addForm.kcl,
-                        scsj: this.addForm.scsj,
-                        hhb: this.addForm.hhb,
-                        xzqh: this.addForm.xzqh[this.addForm.xzqh.length - 1],
-                        ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
-                        ssdzmc: this.addForm.ssdzmc,
-                        bz: this.addForm.bz,
-                        jdh: this.shiroData.organizationVO.jgid.substr(0,2) + "000000",
-                        datasource: this.shiroData.organizationVO.jgid,
-                        xgrid: this.shiroData.userid,
-                        xgrmc: this.shiroData.realName
-                    }
-                    axios.post('/dpapi/firedrug/doUpdateDrug', params).then(function (res) {
-                        if (res.data.result >= 1) {
-                            this.$alert('成功修改' + res.data.result + '条消防药剂信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/firedrug_list");
-                                }
-                            });
-                        } else {
-                            this.$alert('修改失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/firedrug_list");
-                                }
-                            });
+                        axios.post('/dpapi/firedrug/insertByVO', params).then(function (res) {
+                            if (res.data.result >= 1) {
+                                this.$alert('成功保存' + res.data.result + '条消防药剂信息', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("basicinfo/firedrug_list");
+                                    }
+                                });
+                            } else {
+                                this.$alert('保存失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("basicinfo/firedrug_list");
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    } else {//修改
+                        var params = {
+                            uuid: this.addForm.uuid,
+                            yjmc: this.addForm.yjmc,
+                            yjbm: this.addForm.yjbm,
+                            yjlx: this.addForm.yjlx[this.addForm.yjlx.length - 1],
+                            sccj: this.addForm.sccj,
+                            pc: this.addForm.pc,
+                            zcbl: this.addForm.zcbl,
+                            czl: this.addForm.czl,
+                            kcl: this.addForm.kcl,
+                            scsj: this.addForm.scsj,
+                            hhb: this.addForm.hhb,
+                            xzqh: this.addForm.xzqh[this.addForm.xzqh.length - 1],
+                            ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
+                            ssdzmc: this.addForm.ssdzmc,
+                            bz: this.addForm.bz,
+                            jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + "000000",
+                            datasource: this.shiroData.organizationVO.jgid,
+                            xgrid: this.shiroData.userid,
+                            xgrmc: this.shiroData.realName
                         }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
+                        axios.post('/dpapi/firedrug/doUpdateDrug', params).then(function (res) {
+                            if (res.data.result >= 1) {
+                                this.$alert('成功修改' + res.data.result + '条消防药剂信息', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("basicinfo/firedrug_list");
+                                    }
+                                });
+                            } else {
+                                this.$alert('修改失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("basicinfo/firedrug_list");
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    }
+                } else {
+                    console.log('error save!!');
+                    return false;
                 }
-            }
+            });
         },
         //取消
         cancel: function () {

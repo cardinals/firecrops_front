@@ -126,15 +126,15 @@
                             </el-row>
                             <el-row>
                                 <el-col :span="23">
-                                    <el-form-item label="审核意见" prop="reserve1">
+                                    <el-form-item id="shyj" label="审核意见" prop="reserve1">
                                         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}"
                                             placeholder="请输入内容" v-model="approveForm.reserve1">
                                         </el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="1">
+                                <!-- <el-col :span="1">
                                     <v-text v-show="isReject" style="color: red">&nbsp;<strong>*</strong></v-text>
-                                </el-col>
+                                </el-col> -->
                             </el-row>
                             <el-row class="mt10 mb20">
                                 <el-form :inline="true" class="el-form demo-form-inline">

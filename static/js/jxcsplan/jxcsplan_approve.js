@@ -321,10 +321,23 @@ var vue = new Vue({
         },
         //审核状态为未通过时审核意见显示*代表必填
         radioChange: function () {
-            if (this.approveForm.shzt == '02')
+            var shyj = $('#shyj'),
+                $this = $(this);
+            if (this.approveForm.shzt == '02') {
+                if (!shyj.hasClass('is-required')) {
+                    shyj.addClass('is-required');
+                }
                 this.isReject = true;
-            else
+            } else {
+                if (shyj.hasClass('is-required')) {
+                    shyj.removeClass('is-required');
+                }
                 this.isReject = false;
+            }
+            // if (this.approveForm.shzt == '02')
+            //     this.isReject = true;
+            // else
+            //     this.isReject = false;
         },
         //表格重新加载数据
         loadingData: function () {
