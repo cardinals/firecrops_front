@@ -408,7 +408,7 @@
 								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item prop="jzjg" label="建筑结构">
-										<el-select size="small" v-model="buildingForm.jzjg" placeholder="建筑结构" clearable>
+										<el-select size="small" v-model="buildingForm.jzjg" placeholder="建筑结构" clearable class="searchSelect">
 											<el-option v-for="item in JZJG_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 										</el-select>
 									</el-form-item>
@@ -495,13 +495,11 @@
 								</el-col>
 								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
-							<el-row>
-								<el-col :span="9">&nbsp;</el-col>
-								<el-col :span="6">
+							<el-row class="mt35 mb20 editform-button">
+								<el-col :span="24">
 									<el-button type="clear" icon="close" size="small" class="btn_cancle" @click="cancelAddBuilding"> 返回</el-button>
 									<el-button type="primary" icon="check" size="small" class="btn_submit" @click="submitBuildingForm('buildingForm')">提交</el-button>
 								</el-col>
-								<el-col :span="9">&nbsp;</el-col>
 							</el-row>
 						</el-form>
 					</div>
