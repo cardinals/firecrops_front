@@ -166,7 +166,6 @@ new Vue({
                         }else{
                             callback();
                         }
-               
                     }, trigger: 'change' }
                 ],
                 sjdzid: [
@@ -179,17 +178,13 @@ new Vue({
                
                     }, trigger: 'change' }
                 ],
+                dzbm: [
+                    { pattern: /^[A-Za-z0-9 ]+$/, message: '队站编码应为数字和字母',trigger: 'blur'},
+                ],
             },
         }
     },
     created: function () {
-        /**菜单选中 by li.xue 20180628*/
-        /**
-        var index = getQueryString("index");
-        $("#activeIndex").val(index);
-        this.activeIndex = index;
-         */
-        
         /**面包屑 by li.xue 20180628*/
         var type = getQueryString("type");
         if (type == "XZ") {
@@ -418,141 +413,139 @@ new Vue({
         
         //保存
         save: function (formName) {
-            // this.$refs[formName].validate((valid) => {
-            //     if (valid) {
-            //       alert('submit!');
-            //     } else {
-            //       console.log('error submit!!');
-            //       return false;
-            //     }
-            // });
-            if(this.validateSave()){
-                var datasource = this.shiroData.organizationVO.jgid;
-                var jdh = this.shiroData.organizationVO.jgid.substr(0,2) + "000000";
-                var params = {
-                    dzmc: this.editForm.dzmc,
-                    dzjc: this.editForm.dzjc,
-                    dzbm: this.editForm.dzbm,
-                    dzlx: this.editForm.dzlx[this.editForm.dzlx.length-1],
-                    sjdzid: this.editForm.sjdzid[this.editForm.sjdzid.length-1],
-                    dzdz: this.editForm.dzdz,
-                    xzqh: this.editForm.xzqh[this.editForm.xzqh.length-1],
-                    lon: this.editForm.lon,
-                    lat: this.editForm.lat,
-                    gisX: this.editForm.gisX,
-                    gisY: this.editForm.gisY,
-                    gxsys: this.editForm.gxsys,
-                    gxzddws: this.editForm.gxzddws,
-                    xqfw: this.editForm.xqfw,
-                    xqmj: this.editForm.xqmj,
-                    lxr: this.editForm.lxr,
-                    lxdh: this.editForm.lxdh,
-                    czhm: this.editForm.czhm,
-                    zqcls: this.editForm.zqcls,
-                    zbqcs: this.editForm.zbqcs,
-                    mhjzl: this.editForm.mhjzl,
-                    bz: this.editForm.bz,
-                    cjrid: "",
-                    cjrmc: "",
-                    xgrid: "",
-                    xgrmc: "",
-                    zongdVO: this.editForm.zongdVO,
-                    zhidVO: this.editForm.zhidVO,
-                    dadVO: this.editForm.dadVO,
-                    zhongdVO: this.editForm.zhongdVO,
-                    qtxfdwVO: this.editForm.qtxfdwVO,
-                    jdh: jdh,
-                    datasource: datasource
-                };
-                //从表JDH
-                if(params.dzlx!=null && params.dzlx!=""){
-                    switch(params.dzlx.substr(0,2)){
-                        case "02":
-                            params.zongdVO.jdh = jdh;
-                            params.zongdVO.datasource = datasource;
-                            break;
-                        case "03":
-                            params.zhidVO.jdh = jdh;
-                            params.zhidVO.datasource = datasource;
-                            break;
-                        case "05":
-                            params.DadVO.jdh = jdh;
-                            params.DadVO.datasource = datasource;
-                            break;
-                        case "09":
-                            params.zhongdVO.jdh = jdh;
-                            params.zhongdVO.datasource = datasource;
-                            break;
-                        case "0A":
-                            params.qtxfdwVO.jdh = jdh;
-                            params.qtxfdwVO.datasource = datasource;
-                            break;
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    var datasource = this.shiroData.organizationVO.jgid;
+                    var jdh = this.shiroData.organizationVO.jgid.substr(0,2) + "000000";
+                    var params = {
+                        dzmc: this.editForm.dzmc,
+                        dzjc: this.editForm.dzjc,
+                        dzbm: this.editForm.dzbm,
+                        dzlx: this.editForm.dzlx[this.editForm.dzlx.length-1],
+                        sjdzid: this.editForm.sjdzid[this.editForm.sjdzid.length-1],
+                        dzdz: this.editForm.dzdz,
+                        xzqh: this.editForm.xzqh[this.editForm.xzqh.length-1],
+                        lon: this.editForm.lon,
+                        lat: this.editForm.lat,
+                        gisX: this.editForm.gisX,
+                        gisY: this.editForm.gisY,
+                        gxsys: this.editForm.gxsys,
+                        gxzddws: this.editForm.gxzddws,
+                        xqfw: this.editForm.xqfw,
+                        xqmj: this.editForm.xqmj,
+                        lxr: this.editForm.lxr,
+                        lxdh: this.editForm.lxdh,
+                        czhm: this.editForm.czhm,
+                        zqcls: this.editForm.zqcls,
+                        zbqcs: this.editForm.zbqcs,
+                        mhjzl: this.editForm.mhjzl,
+                        bz: this.editForm.bz,
+                        cjrid: "",
+                        cjrmc: "",
+                        xgrid: "",
+                        xgrmc: "",
+                        zongdVO: this.editForm.zongdVO,
+                        zhidVO: this.editForm.zhidVO,
+                        dadVO: this.editForm.dadVO,
+                        zhongdVO: this.editForm.zhongdVO,
+                        qtxfdwVO: this.editForm.qtxfdwVO,
+                        jdh: jdh,
+                        datasource: datasource
+                    };
+                    //从表JDH
+                    if(params.dzlx!=null && params.dzlx!=""){
+                        switch(params.dzlx.substr(0,2)){
+                            case "02":
+                                params.zongdVO.jdh = jdh;
+                                params.zongdVO.datasource = datasource;
+                                break;
+                            case "03":
+                                params.zhidVO.jdh = jdh;
+                                params.zhidVO.datasource = datasource;
+                                break;
+                            case "05":
+                                params.dadVO.jdh = jdh;
+                                params.dadVO.datasource = datasource;
+                                break;
+                            case "09":
+                                params.zhongdVO.jdh = jdh;
+                                params.zhongdVO.datasource = datasource;
+                                break;
+                            case "0A":
+                                params.qtxfdwVO.jdh = jdh;
+                                params.qtxfdwVO.datasource = datasource;
+                                break;
+                        }
                     }
+                    if (this.status == 0) {//新增
+                        axios.get('/dpapi/xfdz/doCheckName/' + this.editForm.dzmc).then(function (res) {
+                            if (res.data.result > 0) {
+                                this.$message.warning({
+                                    message: '中文名已存在，请重新命名',
+                                    showClose: true
+                                });
+                            } else {
+                                params.cjrid = this.shiroData.userid;
+                                params.cjrmc = this.shiroData.realName;
+                                
+                                axios.post('/dpapi/xfdz/insertByXfdzVO', params).then(function (res) {
+                                    if (res.data.result != null) {
+                                        this.$alert('成功保存队站信息', '提示', {
+                                            type: 'success',
+                                            confirmButtonText: '确定',
+                                            callback: action => {
+                                                loadDiv("basicinfo/firestation_list");
+                                            }
+                                        });
+                                    } else {
+                                        this.$alert('保存失败', '提示', {
+                                            type: 'error',
+                                            confirmButtonText: '确定',
+                                            callback: action => {
+                                                loadDiv("basicinfo/firestation_list");
+                                            }
+                                        });
+                                    }
+                                }.bind(this), function (error) {
+                                    console.log(error);
+                                })
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    } else {//修改
+                        params.xgrid = this.shiroData.userid;
+                        params.xgrmc = this.shiroData.realName;
+                        params.dzid = this.editForm.dzid;
+                        
+                        axios.post('/dpapi/xfdz/updateByXfdzVO', params).then(function (res) {
+                            if (res.data.result != null) {
+                                this.$alert('成功修改队站信息', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("basicinfo/firestation_list");
+                                    }
+                                });
+                            } else {
+                                this.$alert('修改失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("basicinfo/firestation_list");
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    }
+                } else {
+                    console.log('error save!!');
+                    return false;
                 }
-                if (this.status == 0) {//新增
-                    axios.get('/dpapi/xfdz/doCheckName/' + this.editForm.dzmc).then(function (res) {
-                        if (res.data.result > 0) {
-                            this.$message.warning({
-                                message: '中文名已存在，请重新命名',
-                                showClose: true
-                            });
-                        } else {
-                            params.cjrid = this.shiroData.userid;
-                            params.cjrmc = this.shiroData.realName;
-                            
-                            axios.post('/dpapi/xfdz/insertByXfdzVO', params).then(function (res) {
-                                if (res.data.result != null) {
-                                    this.$alert('成功保存队站信息', '提示', {
-                                        type: 'success',
-                                        confirmButtonText: '确定',
-                                        callback: action => {
-                                            loadDiv("basicinfo/firestation_list");
-                                        }
-                                    });
-                                } else {
-                                    this.$alert('保存失败', '提示', {
-                                        type: 'error',
-                                        confirmButtonText: '确定',
-                                        callback: action => {
-                                            loadDiv("basicinfo/firestation_list");
-                                        }
-                                    });
-                                }
-                            }.bind(this), function (error) {
-                                console.log(error);
-                            })
-                        }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
-                } else {//修改
-                    params.xgrid = this.shiroData.userid;
-                    params.xgrmc = this.shiroData.realName;
-                    params.dzid = this.editForm.dzid;
-                    
-                    axios.post('/dpapi/xfdz/updateByXfdzVO', params).then(function (res) {
-                        if (res.data.result != null) {
-                            this.$alert('成功修改队站信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/firestation_list");
-                                }
-                            });
-                        } else {
-                            this.$alert('修改失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/firestation_list");
-                                }
-                            });
-                        }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
-                }
-            }
+            });
+            
         },
         cancel: function () {
             loadDiv("basicinfo/firestation_list");
