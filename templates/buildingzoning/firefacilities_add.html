@@ -13,7 +13,7 @@
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
 				<div id="inforView" class="pt15">
-					<el-form ref="addForm" :model="addForm" label-width="140px" :rules="inforRules">
+					<el-form ref="addForm" :model="addForm" label-width="150px" :rules="inforRules">
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
 							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
 								<strong style="color: #20a0ff;">基本信息</strong>
@@ -25,6 +25,7 @@
 									<el-input size="small" v-model="addForm.jbxx_xfssmc" maxlength="50" placeholder="消防设施名称" clearable></el-input>
 								</el-form-item>
 							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="所属建筑" prop="jbxx_jzmc">
 									<el-input size="small" v-model="addForm.jbxx_jzmc" placeholder="所属建筑" disabled></el-input>
@@ -44,6 +45,7 @@
 									</el-select>
 								</el-form-item>
 							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="所属重点单位" prop="jbxx_zddwmc">
 									<el-input size="small" v-model="addForm.jbxx_zddwmc" placeholder="所属重点单位" disabled></el-input>
@@ -79,6 +81,7 @@
 									<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
 								</el-form-item>
 							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="数量">
 									<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
@@ -101,6 +104,7 @@
 									<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
 								</el-form-item>
 							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="有无应急广播">
 									<el-select size="small" v-model="detailForm.ywyjgb" placeholder="有无应急广播" class="searchSelect" clearable>
@@ -126,12 +130,12 @@
 										 :min="0" :max="9999999999"></el-input-number>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
-									<el-form-item label="消火栓最大流量">
+									<el-form-item label="消火栓最大流量(L/s)">
 										<el-input-number v-model="detailForm.xhszdll" size="small" :min="0" :max="99999999.99"></el-input-number>
 									</el-form-item>
 								</el-col>
-								<el-col :span="1" style="line-height: 30px;">&nbsp;(L/s)</el-col>
 							</el-row>
 							<el-row>
 								<el-col :span="11">
@@ -140,12 +144,12 @@
 										 :min="0" :max="9999999999"></el-input-number>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
-									<el-form-item label="喷淋泵最大流量">
+									<el-form-item label="喷淋泵最大流量(L/s)">
 										<el-input-number v-model="detailForm.plbzdll" size="small" :min="0" :max="99999999.99"></el-input-number>
 									</el-form-item>
 								</el-col>
-								<el-col :span="1" style="line-height: 30px;">&nbsp;(L/s)</el-col>
 							</el-row>
 						</el-row>
 						<!-- 消防水箱 -->
@@ -163,6 +167,7 @@
 										<el-input-number v-model="detailForm.sxrl" size="small" :min="0" :max="99999999.99"></el-input-number>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="补给速度(L/s)">
 										<el-input-number v-model="detailForm.bjsd" size="small" :min="0" :max="999.99"></el-input-number>
@@ -188,6 +193,7 @@
 										</el-select>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="补给速度(L/s)">
 										<el-input-number v-model="detailForm.bjsd" size="small" :min="0" :max="999.99"></el-input-number>
@@ -201,6 +207,7 @@
 										<el-input v-else size="small" placeholder="取水口(井)位置" disabled></el-input>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="水箱容量(m³)">
 										<el-input-number v-model="detailForm.sxrl" size="small" :min="0" :max="99999999.99"></el-input-number>
@@ -226,6 +233,7 @@
 										 :min="0" :max="9999999999"></el-input-number>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="是否可用">
 										<el-select size="small" v-model="detailForm.sfky" placeholder="是否可用" class="searchSelect" clearable>
@@ -244,6 +252,7 @@
 										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="安装形式">
 										<el-select size="small" v-model="detailForm.azxs" placeholder="安装形式" class="searchSelect" clearable>
@@ -258,6 +267,7 @@
 										<el-input v-model="detailForm.xh" maxlength="25" size="small" placeholder="型号"></el-input>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="进水口尺寸(mm)">
 										<el-input-number v-model="detailForm.jskcc" size="small" :min="0" :max="999.99"></el-input-number>
@@ -273,6 +283,7 @@
 										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="有无喷淋系统">
 										<el-select size="small" v-model="detailForm.ywplxt" placeholder="有无喷淋系统" class="searchSelect" clearable>
@@ -301,12 +312,12 @@
 										</el-select>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
-									<el-form-item label="供水强度">
+									<el-form-item label="供水强度(L/min.㎡)">
 										<el-input-number v-model="detailForm.gsqd" size="small" :min="0" :max="999.99"></el-input-number>
 									</el-form-item>
 								</el-col>
-								<el-col :span="2" style="line-height: 30px;">&nbsp;(L/min.㎡)</el-col>
 							</el-row>
 						</el-row>
 						<!-- 固定水炮 -->
@@ -325,6 +336,7 @@
 										 :min="0" :max="99999"></el-input-number>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="是否可用">
 										<el-select size="small" v-model="detailForm.isky" placeholder="是否可用" class="searchSelect" clearable>
@@ -343,6 +355,7 @@
 										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="泡沫液类型">
 										<el-cascader :options="pmylxDataTree" v-model="detailForm.pmylx" :props="defaultProps" size="small" placeholder="泡沫液类型" class="searchSelect"
@@ -356,12 +369,12 @@
 										<el-input-number v-model="detailForm.pmycl" size="small" :min="0" :max="99999999.99"></el-input-number>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
-									<el-form-item label="泡沫泵最大流量">
+									<el-form-item label="泡沫泵最大流量(L/s)">
 										<el-input-number v-model="detailForm.pmbzdll" size="small" :min="0" :max="99999999.99"></el-input-number>
 									</el-form-item>
 								</el-col>
-								<el-col :span="2" style="line-height: 30px;">&nbsp;(L/s)</el-col>
 							</el-row>
 						</el-row>
 						<!-- 泡沫消火栓 -->
@@ -371,6 +384,7 @@
 									<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
 								</el-form-item>
 							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="是否可用">
 									<el-select size="small" v-model="detailForm.isky" placeholder="是否可用" class="searchSelect" clearable>
@@ -388,6 +402,7 @@
 										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="型号">
 										<el-input v-model="detailForm.xh" maxlength="25" size="small" placeholder="型号"></el-input>
@@ -401,6 +416,7 @@
 										 :min="0" :max="99999"></el-input-number>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="流量(L/s)">
 										<el-input-number v-model="detailForm.ll" size="small" :min="0" :max="999.99"></el-input-number>
@@ -424,6 +440,7 @@
 										 :min="0" :max="99999"></el-input-number>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="额定压力(Mpa)">
 										<el-input-number v-model="detailForm.edyl" size="small" :min="0" :max="999.99"></el-input-number>
@@ -449,6 +466,7 @@
 										</el-select>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="联动控制是否可用">
 										<el-select size="small" v-model="detailForm.isldkz" placeholder="联动控制是否可用" class="searchSelect" clearable>
@@ -474,6 +492,7 @@
 									<el-input v-model="detailForm.qbwz" maxlength="50" size="small" placeholder="系统启闭位置"></el-input>
 								</el-form-item>
 							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="是否可用">
 									<el-select size="small" v-model="detailForm.isky" placeholder="是否可用" class="searchSelect" clearable>
@@ -491,6 +510,7 @@
 										<el-input-number v-model="detailForm.qymj" size="small" :min="0" :max="99999999.99"></el-input-number>
 									</el-form-item>
 								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="区域位置">
 										<el-input v-model="detailForm.qywz" maxlength="50" size="small" placeholder="区域位置"></el-input>
@@ -517,6 +537,7 @@
 									<el-input v-model="detailForm.qbwz" maxlength="50" size="small" placeholder="起闭位置"></el-input>
 								</el-form-item>
 							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="作用范围">
 									<el-input v-model="detailForm.zyfw" maxlength="50" size="small" placeholder="作用范围"></el-input>
@@ -530,6 +551,7 @@
 									<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
 								</el-form-item>
 							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="描述">
 									<el-input v-model="detailForm.ms" maxlength="200" size="small" placeholder="描述"></el-input>
@@ -541,7 +563,7 @@
 							<strong style="color: #20a0ff;">备注</strong>
 						</el-row>
 						<el-row>
-							<el-col :span="22">
+							<el-col :span="23">
 								<el-form-item label="备注">
 									<el-input size="small" v-model="addForm.jbxx_bz" maxlength="200" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="备注"></el-input>
 								</el-form-item>
