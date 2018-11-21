@@ -17,32 +17,31 @@
 					<el-row>
 						<el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
 							<el-row>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="9" class="searchInline">
 									<label class="el-form-item__label searchLabel">药剂名称</label>
-									<el-input v-model="searchForm.yjmc" placeholder="药剂名称" size="small" clearable></el-input>
+									<el-input v-model="searchForm.yjmc" maxlength="50" placeholder="药剂名称" size="small" clearable></el-input>
 								</el-col>
-								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
-								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+								<el-col :span="2">&nbsp;</el-col>
+								<el-col :span="9" class="searchInline">
 									<label class="el-form-item__label searchLabel">药剂类型</label>
 									<el-cascader :options="allYjlxDataTree" :props="defaultProps" size="small" v-model="searchForm.yjlx" placeholder="全部" class="searchSelect"
 									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-col>
-								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+								<el-col :span="2">&nbsp;</el-col>
 							</el-row>
 							<el-row>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="9" class="searchInline">
 									<label class="el-form-item__label searchLabel">所属队站</label>
 									<el-cascader v-model="searchForm.ssdz" :options="allSsdzData" :props="ssdzProps" size="small" placeholder="全部" class="searchSelect"
 									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-col>
-								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
-								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+								<el-col :span="2">&nbsp;</el-col>
+								<el-col :span="9" class="searchInline">
 									<label class="el-form-item__label searchLabel">储备量</label>
 									<el-slider v-model="searchForm.cbl" range :max="1000" class="searchSelect"></el-slider>
 								</el-col>
-								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
 							</el-row>
 							<div>
 								<el-form>
@@ -144,7 +143,7 @@
 									<el-row class="mb10">
 										<el-col :span="12">
 											<div>
-												<strong class="dtdlStyle">总储备量（t）：</strong>
+												<strong class="dtdlStyle">总储备量(t)：</strong>
 												<v-text v-text="tableData_detail.zcbl||'无'"></v-text>
 											</div>
 										</el-col>
@@ -159,7 +158,7 @@
 									<el-row class="mb10">
 										<el-col :span="12">
 											<div>
-												<strong class="dtdlStyle">车载量（t）：</strong>
+												<strong class="dtdlStyle">车载量(t)：</strong>
 												<v-text v-text="tableData_detail.kcl||'无'"></v-text>
 											</div>
 										</el-col>
@@ -173,7 +172,7 @@
 									<el-row class="mb10">
 										<el-col :span="12">
 											<div>
-												<strong class="dtdlStyle">库存量（t）：</strong>
+												<strong class="dtdlStyle">库存量(t)：</strong>
 												<v-text v-text="tableData_detail.kcl||'无'"></v-text>
 											</div>
 										</el-col>

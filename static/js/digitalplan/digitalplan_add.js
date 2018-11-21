@@ -696,7 +696,6 @@ new Vue({
                             datasource: this.shiroData.organizationVO.jgid
                         };
                         axios.post('/dpapi/digitalplanlist/insertByVO', params).then(function (res) {
-                            debugger
                             this.upLoadData.yaid = res.data.result.uuid;
                             if (this.isFile) {
                                 this.$refs.upload.submit();//附件上传

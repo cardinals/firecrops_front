@@ -32,6 +32,21 @@ new Vue({
                 xgrmc: '',
                 detailMap: {}
             },
+            //信息校验规则
+            inforRules: {
+                jbxx_xfssmc: [{ required: true, message: '请选择消防设施名称', trigger: 'blur' }],
+                jbxx_iszddw: [{ required: true, message: '请选择是否属于重点单位', trigger: 'change' }],
+                jbxx_xfsslx: [{
+                    validator: (rule, value, callback) => {
+                        if (value.length == 0) {
+                            callback(new Error("请选择消防设施类型"));
+                        } else {
+                            callback();
+                        }
+
+                    }, trigger: 'change'
+                }]
+            },
             //树结构配置
             defaultProps: {
                 children: 'children',
@@ -234,7 +249,7 @@ new Vue({
             this.buildingListVisible = true;
             this.loading_building = true;
             var params = {
-                jzmc: this.searchForm_building.jzmc.replace(/%/g,"\\%"),
+                jzmc: this.searchForm_building.jzmc.replace(/%/g, "\\%"),
                 pageSize: this.pageSize_building,
                 pageNum: this.currentPage_building,
                 orgUuid: this.shiroData.organizationVO.uuid,
@@ -281,7 +296,7 @@ new Vue({
             this.unitsListVisible = true;
             this.loading_units = true;
             var params = {
-                dwmc: this.searchForm_units.dwmc.replace(/%/g,"\\%"),
+                dwmc: this.searchForm_units.dwmc.replace(/%/g, "\\%"),
                 pageSize: this.pageSize_units,
                 pageNum: this.currentPage_units,
                 orgUuid: this.shiroData.organizationVO.uuid,
@@ -458,135 +473,111 @@ new Vue({
                 console.log(error);
             })
         },
-        //保存前校验
-        checkForm: function () {
-            if (this.addForm.jbxx_xfssmc == '' || this.addForm == null) {
-                this.$message.warning({
-                    message: '请输入消防设施名称',
-                    showClose: true
-                });
-                return false;
-            } else if (this.addForm.jbxx_iszddw == '') {
-                this.$message.warning({
-                    message: '请选择是否属于重点单位',
-                    showClose: true
-                });
-                return false;
-            } else if (this.addForm.jbxx_iszddw == '1' && this.addForm.jbxx_zddwid == '') {
-                this.$message.warning({
-                    message: '请选择所属重点单位',
-                    showClose: true
-                });
-                return false;
-            } else if (this.addForm.jbxx_xfsslx.length == 0) {
-                this.$message.warning({
-                    message: '请选择消防设施类型',
-                    showClose: true
-                });
-                return false;
-            }
-            return true;
-        },
         //保存
-        save: function () {
-            if (this.checkForm() == true) {
-                if (this.status == 0) {//新增
-                    if (this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1] == '3001') {
-                        this.addForm.detailMap = {
-                            wz: this.detailForm.wz,
-                            pmylx: this.detailForm.pmylx[this.detailForm.pmylx.length - 1],
-                            pmycl: this.detailForm.pmycl,
-                            pmbzdll: this.detailForm.pmbzdll
-                        }
-                    } else {
-                        this.addForm.detailMap = this.detailForm;
-                    }
-                    var params = {
-                        jbxx_xfssmc: this.addForm.jbxx_xfssmc,
-                        jbxx_jzid: this.addForm.jbxx_jzid,
-                        jbxx_jzmc: this.addForm.jbxx_jzmc,
-                        jbxx_iszddw: this.addForm.jbxx_iszddw,
-                        jbxx_zddwid: this.addForm.jbxx_zddwid,
-                        jbxx_zddwmc: this.addForm.jbxx_zddwmc,
-                        jbxx_xfsslx: this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1],
-                        jbxx_bz: this.addForm.jbxx_bz,
-                        jbxx_jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
-                        jbxx_datasource: this.shiroData.organizationVO.jgid,
-                        cjrid: this.shiroData.userid,
-                        cjrmc: this.shiroData.realName,
-                        detailMap: this.addForm.detailMap
-                    }
-                    axios.post('/dpapi/firefacilities/insertByVO', params).then(function (res) {
-                        if (res.data.result != null && res.data.result != '') {
-                            this.$alert('保存成功', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("buildingzoning/firefacilities_list");
-                                }
-                            });
+        save: function (addForm) {
+            this.$refs[addForm].validate((valid) => {
+                if (valid) {
+                    if (this.status == 0) {//新增
+                        if (this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1] == '3001') {
+                            this.addForm.detailMap = {
+                                wz: this.detailForm.wz,
+                                pmylx: this.detailForm.pmylx[this.detailForm.pmylx.length - 1],
+                                pmycl: this.detailForm.pmycl,
+                                pmbzdll: this.detailForm.pmbzdll
+                            }
                         } else {
-                            this.$alert('保存失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("buildingzoning/firefacilities_list");
-                                }
-                            });
+                            this.addForm.detailMap = this.detailForm;
                         }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
-                } else {//修改
-                    if (this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1] == '3001') {
-                        this.addForm.detailMap = {
-                            wz: this.detailForm.wz,
-                            pmylx: this.detailForm.pmylx[this.detailForm.pmylx.length - 1],
-                            pmycl: this.detailForm.pmycl,
-                            pmbzdll: this.detailForm.pmbzdll
+                        var params = {
+                            jbxx_xfssmc: this.addForm.jbxx_xfssmc,
+                            jbxx_jzid: this.addForm.jbxx_jzid,
+                            jbxx_jzmc: this.addForm.jbxx_jzmc,
+                            jbxx_iszddw: this.addForm.jbxx_iszddw,
+                            jbxx_zddwid: this.addForm.jbxx_zddwid,
+                            jbxx_zddwmc: this.addForm.jbxx_zddwmc,
+                            jbxx_xfsslx: this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1],
+                            jbxx_bz: this.addForm.jbxx_bz,
+                            jbxx_jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
+                            jbxx_datasource: this.shiroData.organizationVO.jgid,
+                            cjrid: this.shiroData.userid,
+                            cjrmc: this.shiroData.realName,
+                            detailMap: this.addForm.detailMap
                         }
-                    } else {
-                        this.addForm.detailMap = this.detailForm;
-                    }
-                    var params = {
-                        jbxx_xfssid: this.addForm.jbxx_xfssid,
-                        jbxx_xfssmc: this.addForm.jbxx_xfssmc,
-                        jbxx_jzid: this.addForm.jbxx_jzid,
-                        jbxx_jzmc: this.addForm.jbxx_jzmc,
-                        jbxx_iszddw: this.addForm.jbxx_iszddw,
-                        jbxx_zddwid: this.addForm.jbxx_zddwid,
-                        jbxx_zddwmc: this.addForm.jbxx_zddwmc,
-                        jbxx_xfsslx: this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1],
-                        jbxx_bz: this.addForm.jbxx_bz,
-                        jbxx_jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
-                        jbxx_datasource: this.shiroData.organizationVO.jgid,
-                        xgrid: this.shiroData.userid,
-                        xgrmc: this.shiroData.realName,
-                        detailMap: this.addForm.detailMap
-                    }
-                    axios.post('/dpapi/firefacilities/doUpdateFirefacilities', params).then(function (res) {
-                        if (res.data.result != null && res.data.result != '') {
-                            this.$alert('修改成功', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("buildingzoning/firefacilities_list");
-                                }
-                            });
+                        axios.post('/dpapi/firefacilities/insertByVO', params).then(function (res) {
+                            if (res.data.result != null && res.data.result != '') {
+                                this.$alert('保存成功', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("buildingzoning/firefacilities_list");
+                                    }
+                                });
+                            } else {
+                                this.$alert('保存失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("buildingzoning/firefacilities_list");
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    } else {//修改
+                        if (this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1] == '3001') {
+                            this.addForm.detailMap = {
+                                wz: this.detailForm.wz,
+                                pmylx: this.detailForm.pmylx[this.detailForm.pmylx.length - 1],
+                                pmycl: this.detailForm.pmycl,
+                                pmbzdll: this.detailForm.pmbzdll
+                            }
                         } else {
-                            this.$alert('修改失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("buildingzoning/firefacilities_list");
-                                }
-                            });
+                            this.addForm.detailMap = this.detailForm;
                         }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
+                        var params = {
+                            jbxx_xfssid: this.addForm.jbxx_xfssid,
+                            jbxx_xfssmc: this.addForm.jbxx_xfssmc,
+                            jbxx_jzid: this.addForm.jbxx_jzid,
+                            jbxx_jzmc: this.addForm.jbxx_jzmc,
+                            jbxx_iszddw: this.addForm.jbxx_iszddw,
+                            jbxx_zddwid: this.addForm.jbxx_zddwid,
+                            jbxx_zddwmc: this.addForm.jbxx_zddwmc,
+                            jbxx_xfsslx: this.addForm.jbxx_xfsslx[this.addForm.jbxx_xfsslx.length - 1],
+                            jbxx_bz: this.addForm.jbxx_bz,
+                            jbxx_jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
+                            jbxx_datasource: this.shiroData.organizationVO.jgid,
+                            xgrid: this.shiroData.userid,
+                            xgrmc: this.shiroData.realName,
+                            detailMap: this.addForm.detailMap
+                        }
+                        axios.post('/dpapi/firefacilities/doUpdateFirefacilities', params).then(function (res) {
+                            if (res.data.result != null && res.data.result != '') {
+                                this.$alert('修改成功', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("buildingzoning/firefacilities_list");
+                                    }
+                                });
+                            } else {
+                                this.$alert('修改失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("buildingzoning/firefacilities_list");
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    }
+                } else {
+                    console.log('error save!!');
+                    return false;
                 }
-            }
+            });
         },
         //取消
         cancel: function () {
