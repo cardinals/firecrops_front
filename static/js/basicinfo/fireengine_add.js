@@ -71,7 +71,29 @@ new Vue({
             ZHCS_data: [],
             HZWXX_data: [],
             DJFALX_data: [],
+            // 校验规则
+            clFormRules:{
+                clmc:[
+                    { required: true, message: '请输入车辆名称', trigger: 'blur' }
+                ],
 
+                cllx: [
+                    { required: true, message: '请选择车辆类型', trigger: 'change' }
+                ],
+
+                cphm:[
+                    { required: true, message: '请输入车牌号码', trigger: 'blur' }
+                ],
+
+                ssdz: [
+                    { required: true, message: '请选择所属队站', trigger: 'change' }
+                ],
+
+                clbm: [
+                    { required: true, message: '请输入车辆编码', trigger: 'blur' },
+                    { pattern: /^[A-Za-z0-9 ]+$/, message: '车辆编码应为数字和字母',trigger: 'blur' }
+                ],
+            },
             //级联选择器匹配结果集字段
             props: {
                 value: 'codeValue',
