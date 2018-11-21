@@ -101,8 +101,8 @@ new Vue({
                 }]
             },
 
-            editFormRules:{
-                jzmc:[
+            editFormRules: {
+                jzmc: [
                     { required: true, message: '请输入建筑名称', trigger: 'blur' }
                 ],
 
@@ -301,98 +301,104 @@ new Vue({
             }
         },
         //保存
-        save: function (formName) {
-            if (this.validateSave()) {
-                if (this.status == 0) {//新增
-                 
-                    this.editForm.cjrid = this.shiroData.userid;
-                    this.editForm.cjrmc = this.shiroData.realName;
-                    this.editForm.jdh = this.shiroData.organizationVO.jgid.substr(0,2)+'000000';
-                    this.editForm.datasource = this.shiroData.organizationVO.jgid;
-                    if (this.editForm.jzl_jzsyxz != null && this.editForm.jzl_jzsyxz.length > 0) {
-                        this.editForm.jzl_jzsyxz = this.editForm.jzl_jzsyxz[this.editForm.jzl_jzsyxz.length - 1];
-                    } else {
-                        this.editForm.jzl_jzsyxz = '';
-                    }
-                    if (this.editForm.chuguanList != null) {
-                        for (i = 0; i < this.editForm.chuguanList.length; i++) {
-                            if (this.editForm.chuguanList[i].cglx.length > 0) {
-                                this.editForm.chuguanList[i].cglx = this.editForm.chuguanList[i].cglx[this.editForm.chuguanList[i].cglx.length - 1];
-                            } else {
-                                this.editForm.chuguanList[i].cglx = '';
-                            }
-                        }
-                    } else {
-                        this.editForm.chuguanList = [];
-                    }
-
-                    axios.post('/dpapi/building/insertByVO', this.editForm).then(function (res) {
-                        if (res.data.result == 1) {
-                            this.$alert('成功保存单位建筑信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("buildingzoning/buildingzoning_list");
-                                }
-                            });
+        save: function (editForm) {
+            
+            this.$refs[editForm].validate((valid) => {
+                if (valid) {
+                    if (this.status == 0) {//新增
+                        this.editForm.cjrid = this.shiroData.userid;
+                        this.editForm.cjrmc = this.shiroData.realName;
+                        this.editForm.jdh = this.shiroData.organizationVO.jgid.substr(0, 2) + '000000';
+                        this.editForm.datasource = this.shiroData.organizationVO.jgid;
+                        if (this.editForm.jzl_jzsyxz != null && this.editForm.jzl_jzsyxz.length > 0) {
+                            this.editForm.jzl_jzsyxz = this.editForm.jzl_jzsyxz[this.editForm.jzl_jzsyxz.length - 1];
                         } else {
-                            this.$alert('保存失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("buildingzoning/buildingzoning_list");
-                                }
-                            });
+                            this.editForm.jzl_jzsyxz = '';
                         }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
-                    // }
-                } else {//修改
-                
-                    this.editForm.xgrid = this.shiroData.userid;
-                    this.editForm.xgrmc = this.shiroData.realName;
-                    if (this.editForm.jzl_jzsyxz != null && this.editForm.jzl_jzsyxz.length > 0) {
-                        this.editForm.jzl_jzsyxz = this.editForm.jzl_jzsyxz[this.editForm.jzl_jzsyxz.length - 1];
-                    } else {
-                        this.editForm.jzl_jzsyxz = '';
-                    }
-                    if (this.editForm.chuguanList != null) {
-                        for (i = 0; i < this.editForm.chuguanList.length; i++) {
-                            if (this.editForm.chuguanList[i].cglx.length > 0) {
-                                this.editForm.chuguanList[i].cglx = this.editForm.chuguanList[i].cglx[this.editForm.chuguanList[i].cglx.length - 1];
-                            } else {
-                                this.editForm.chuguanList[i].cglx = '';
+                        if (this.editForm.chuguanList != null) {
+                            for (i = 0; i < this.editForm.chuguanList.length; i++) {
+                                if (this.editForm.chuguanList[i].cglx.length > 0) {
+                                    this.editForm.chuguanList[i].cglx = this.editForm.chuguanList[i].cglx[this.editForm.chuguanList[i].cglx.length - 1];
+                                } else {
+                                    this.editForm.chuguanList[i].cglx = '';
+                                }
                             }
-                        }
-                    } else {
-                        this.editForm.chuguanList = [];
-                    }
-
-                    axios.post('/dpapi/building/doUpdateBuildingzoning', this.editForm).then(function (res) {
-                        if (res.data.result != null) {
-                            this.$alert('成功修改单位建筑信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("buildingzoning/buildingzoning_list");
-                                }
-                            });
                         } else {
-                            this.$alert('修改失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("buildingzoning/buildingzoning_list");
-                                }
-                            });
+                            this.editForm.chuguanList = [];
                         }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
 
+                        axios.post('/dpapi/building/insertByVO', this.editForm).then(function (res) {
+                            if (res.data.result == 1) {
+                                this.$alert('成功保存单位建筑信息', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("buildingzoning/buildingzoning_list");
+                                    }
+                                });
+                            } else {
+                                this.$alert('保存失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("buildingzoning/buildingzoning_list");
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                        // }
+                    } else {//修改
+
+                        this.editForm.xgrid = this.shiroData.userid;
+                        this.editForm.xgrmc = this.shiroData.realName;
+                        if (this.editForm.jzl_jzsyxz != null && this.editForm.jzl_jzsyxz.length > 0) {
+                            this.editForm.jzl_jzsyxz = this.editForm.jzl_jzsyxz[this.editForm.jzl_jzsyxz.length - 1];
+                        } else {
+                            this.editForm.jzl_jzsyxz = '';
+                        }
+                        if (this.editForm.chuguanList != null) {
+                            for (i = 0; i < this.editForm.chuguanList.length; i++) {
+                                if (this.editForm.chuguanList[i].cglx.length > 0) {
+                                    this.editForm.chuguanList[i].cglx = this.editForm.chuguanList[i].cglx[this.editForm.chuguanList[i].cglx.length - 1];
+                                } else {
+                                    this.editForm.chuguanList[i].cglx = '';
+                                }
+                            }
+                        } else {
+                            this.editForm.chuguanList = [];
+                        }
+
+                        axios.post('/dpapi/building/doUpdateBuildingzoning', this.editForm).then(function (res) {
+                            if (res.data.result != null) {
+                                this.$alert('成功修改单位建筑信息', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("buildingzoning/buildingzoning_list");
+                                    }
+                                });
+                            } else {
+                                this.$alert('修改失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("buildingzoning/buildingzoning_list");
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+
+                    }
+                   
+                } else {
+                    console.log('error save!!');
+                    return false;
                 }
-            }
+            });
         },
         cancel: function () {
             loadDiv("buildingzoning/buildingzoning_list");
