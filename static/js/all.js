@@ -12,7 +12,8 @@ axios.get('/api/shiro').then(function (res) {
     if(res.data.organizationVO == null || res.data.organizationVO == ""){
         res.data.organizationVO = {
             uuid: "",
-            jgjc: ""
+            jgjc: "",
+            jgid: ""
         }
     }
     shiroGlobal = res.data;
