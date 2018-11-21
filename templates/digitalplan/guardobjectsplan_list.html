@@ -21,11 +21,11 @@
 								<el-row>
 									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
 										<label class="el-form-item__label searchLabel">预案名称</label>
-										<el-input size="small" v-model="searchForm.yamc" placeholder="预案名称"></el-input>
+										<el-input size="small" v-model="searchForm.yamc" maxlength="25" placeholder="预案名称"></el-input>
 									</el-col>
 									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
 										<label class="el-form-item__label searchLabel">对象名称</label>
-										<el-input size="small" v-model="searchForm.dxmc" placeholder="对象名称"></el-input>
+										<el-input size="small" v-model="searchForm.dxmc" maxlength="50" placeholder="对象名称"></el-input>
 									</el-col>
 									<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
 										<label class="el-form-item__label searchLabel">预案类型</label>
