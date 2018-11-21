@@ -171,7 +171,7 @@ var vue = new Vue({
                     this.multipleSelection[i].xgrmc = this.shiroData.realName;
                 }
                 axios.post('/dpapi/firefacilities/doDeleteFacilities', this.multipleSelection).then(function (res) {
-                    this.$message({
+                    this.$message.success({
                         message: "成功删除" + res.data.result + "条消防设施信息",
                         showClose: true,
                         onClose: this.searchClick('delete')
