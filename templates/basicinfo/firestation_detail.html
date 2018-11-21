@@ -11,7 +11,7 @@
     <div id="detailDisplay" >
         <div>
             <el-row class="inform-text">
-                <el-col span="18">
+                <el-col :span="24">
                     <div>
                         <strong class="dtdlStyle">执勤车辆数(台)：</strong>
                         <v-text v-text="detailData.zqcls||'无'"></v-text>
@@ -19,7 +19,7 @@
                 </el-col>
              </el-row>
              <el-row class="inform-text inform-margin">
-                <el-col :span="18">
+                <el-col :span="24">
                     <div>
                         <strong class="dtdlStyle">装备器材数(个)：</strong>
                         <v-text v-text="detailData.zbqcs||'无'"></v-text>
@@ -27,7 +27,7 @@
                 </el-col>
             </el-row>
             <el-row class="inform-text inform-margin">
-                <el-col :span="18">
+                <el-col :span="24">
                     <div>
                         <strong class="dtdlStyle">灭火剂总量(t)：</strong>
                         <v-text v-text="detailData.mhjzl||'无'"></v-text>
@@ -35,11 +35,11 @@
                 </el-col>
             </el-row>
             <el-row class="inform-text inform-margin">
-                <el-col :span="18">
+                <el-col :span="24">
                     <div>
                         <strong class="dtdlStyle">队站地址：</strong>
-                        <v-text v-text="detailData.dzdz||'无'"></v-text>
-                        &nbsp&nbsp<a href="#" @click="this.tz"><div class="inform-address"></div></a>
+                        <a href="#" @click="this.tz"><div class="inform-address"></div></a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<v-text v-text="detailData.dzdz||'无'"></v-text>
                     </div>
                 </el-col>
             </el-row>
@@ -50,7 +50,7 @@
                     <el-row>
                         <el-col :span="12">
                             <div>
-                                <strong class="dtdlStyle">辖区面积：</strong>
+                                <strong class="dtdlStyle">辖区面积(㎡)：</strong>
                                 <v-text v-text="detailData.xqmj||'无'"></v-text>
                             </div>
                         </el-col>
