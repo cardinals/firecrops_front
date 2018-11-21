@@ -99,7 +99,7 @@
 				<!--消防设施详情界面-->
 				<el-dialog title="消防设施详情" :visible.sync="detailVisible" @close="closeDialog()" :close-on-click-modal="false">
 					<div v-loading="loading_detail" element-loading-text="加载中">
-						<el-row class="inform-text">
+						<el-row>
 							<el-col :span="24">
 								<div>
 									<strong class="dtdlStyle">消防设施名称：</strong>
@@ -107,7 +107,7 @@
 								</div>
 							</el-col>
 						</el-row>
-						<el-row class="inform-text inform-margin">
+						<el-row class="inform-margin">
 							<el-col :span="24">
 								<div>
 									<strong class="dtdlStyle">消防设施类型：</strong>
@@ -115,7 +115,7 @@
 								</div>
 							</el-col>
 						</el-row>
-						<el-row class="inform-text inform-margin">
+						<el-row class="inform-margin">
 							<el-col :span="24">
 								<div>
 									<strong class="dtdlStyle">所属建筑名称：</strong>
@@ -123,7 +123,7 @@
 								</div>
 							</el-col>
 						</el-row>
-						<el-row class="inform-text inform-margin" v-if="rowdata.jbxx_iszddw==='1'">
+						<el-row class="inform-margin" v-if="rowdata.jbxx_iszddw==='1'">
 							<el-col :span="24">
 								<div>
 									<strong class="dtdlStyle">所属重点单位：</strong>
