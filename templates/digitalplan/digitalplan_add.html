@@ -118,7 +118,7 @@
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="7">
 								<el-form-item label="燃烧面积">
-									<el-input-number v-model="domain.rsmj" size="small" :min="0"></el-input-number>
+									<el-input-number v-model="domain.rsmj" size="small" :min="0" :max="999999.99"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1" style="line-height: 36px;">(㎡)</el-col>
@@ -142,7 +142,7 @@
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="7">
 								<el-form-item label="起火高度">
-									<el-input-number v-model="domain.qhbwgd" size="small" :min="0"></el-input-number>
+									<el-input-number v-model="domain.qhbwgd" size="small" :min="0" :max="999999.99"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1" style="line-height: 36px;">(m)</el-col>
@@ -157,7 +157,7 @@
 						<el-row>
 							<el-col :span="23">
 								<el-form-item label="设定依据">
-									<el-input size="small" v-model="domain.zqsdyj" maxlength="1000" placeholder="灾情设定依据" type="textarea" autosize></el-input>
+									<el-input size="small" v-model="domain.zqsdyj" maxlength="500" placeholder="灾情设定依据" type="textarea" autosize></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -214,7 +214,7 @@
 							<el-row class="mr15">
 								<el-col :span="23">
 									<el-form-item label="停靠位置">
-										<el-input v-model="llbs.tkwz" maxlength="25" size="small" type="textarea" autosize placeholder="停靠位置"></el-input>
+										<el-input v-model="llbs.tkwz" maxlength="50" size="small" type="textarea" autosize placeholder="停靠位置"></el-input>
 									</el-form-item>
 								</el-col>
 							</el-row>
@@ -262,7 +262,7 @@
 							<el-label class="mr5 vbm">备注</el-label>
 						</el-col>
 						<el-col :span="21">
-							<el-input size="small" v-model="addForm.bz" maxlength="250" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+							<el-input size="small" v-model="addForm.bz" maxlength="200" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
 						</el-col>
 						<el-col :span="1">&nbsp;</el-col>
 					</el-row>
@@ -283,7 +283,7 @@
 							<el-row>
 								<el-col :span="18" class="searchInline">
 									<label class="el-form-item__label" style="width:90px;">单位名称</label>
-									<el-input size="small" v-model="searchForm_units.dwmc" placeholder="单位名称" clearable></el-input>
+									<el-input size="small" v-model="searchForm_units.dwmc" placeholder="单位名称" maxlength="100" clearable></el-input>
 								</el-col>
 								<el-col :span="6" class="btnSearchPlus">
 									<el-button type="primary" icon="search" size="small" @click="keyunitList('click')">查询</el-button>
@@ -316,7 +316,7 @@
 						<el-row>
 							<el-col :span="18" class="searchInline">
 								<label class="el-form-item__label" style="width:90px;">部位名称</label>
-								<el-input size="small" v-model="searchForm_parts.zdbwmc" placeholder="部位名称" clearable></el-input>
+								<el-input size="small" v-model="searchForm_parts.zdbwmc" maxlength="50" placeholder="部位名称" clearable></el-input>
 							</el-col>
 							<el-col :span="6" class="btnSearchPlus">
 								<el-button type="primary" icon="search" size="small" @click="partsList('click','')">查询</el-button>
@@ -348,7 +348,7 @@
 						<el-row>
 							<el-col :span="18" class="searchInline">
 								<label class="el-form-item__label" style="width:90px;">建筑名称</label>
-								<el-input size="small" v-model="searchForm_building.jzmc" placeholder="建筑名称" clearable></el-input>
+								<el-input size="small" v-model="searchForm_building.jzmc" maxlength="50" placeholder="建筑名称" clearable></el-input>
 							</el-col>
 							<el-col :span="6" class="btnSearchPlus">
 								<el-button type="primary" icon="search" size="small" @click="buildingList('click','')">查询</el-button>
@@ -380,7 +380,7 @@
 						<el-row>
 							<el-col :span="18" class="searchInline">
 								<label class="el-form-item__label" style="width:90px;">队站名称</label>
-								<el-input size="small" v-model="searchForm_fireSta.dzmc" placeholder="队站名称" clearable></el-input>
+								<el-input size="small" v-model="searchForm_fireSta.dzmc" maxlength="50" placeholder="队站名称" clearable></el-input>
 							</el-col>
 							<el-col :span="6" class="btnSearchPlus">
 								<el-button type="primary" icon="search" size="small" @click="fireStaList('click','','')">查询</el-button>
