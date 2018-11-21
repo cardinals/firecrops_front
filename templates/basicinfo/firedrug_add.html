@@ -14,155 +14,115 @@
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
 				<div id="inforView" class="pt15">
-					<el-form :inline="true" class="el-form demo-form-inline" ref="addForm" :model="addForm" label-position="right">
+					<el-form ref="addForm" :model="addForm" label-width="120px" :rules="inforRules">
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-								<strong style="color: #20a0ff;">基本信息</strong>
-							</el-col>
+							<strong style="color: #20a0ff;">基本信息</strong>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">
-									<span style="color:red;">* </span>药剂名称
-								</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-form-item required>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="药剂名称" prop="yjmc">
 									<el-input size="small" v-model="addForm.yjmc" placeholder="药剂名称" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-								<el-label class="mr5 vbm">药剂编码</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-form-item>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item label="药剂编码">
 									<el-input size="small" v-model="addForm.yjbm" placeholder="药剂编码" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">药剂类型</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-form-item>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="药剂类型">
 									<el-cascader :options="allYjlxDataTree" :props="defaultProps" size="small" v-model="addForm.yjlx" placeholder="请选择" class="searchSelect"
 									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-								<el-label class="mr5 vbm">混合比</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-form-item>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item label="混合比">
 									<el-input size="small" v-model="addForm.hhb" placeholder="混合比" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">行政区划</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-form-item>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="行政区划">
 									<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="请选择" class="searchSelect"
 									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-								<el-label class="mr5 vbm"><span style="color:red;">* </span>所属队站</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-form-item>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item label="所属队站" prop="ssdz" class="is-required">
 									<el-cascader :options="allSsdzDataTree" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="请选择" class="searchSelect"
 									 clearable change-on-select :show-all-levels="true"></el-cascader>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 						</el-row>
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-								<strong style="color: #20a0ff;">储备信息</strong>
+							<strong style="color: #20a0ff;">储备信息</strong>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="车载量(t)">
+									<el-input-number v-model="addForm.czl" @change="czlChange" size="small" :min="0"></el-input-number>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item label="总储备量(t)">
+									<el-input-number v-model="addForm.zcbl" size="small" :disabled="true" :min="0"></el-input-number>
+								</el-form-item>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">车载量(t)</el-label>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="库存量(t)">
+									<el-input-number v-model="addForm.kcl" @change="kclChange" size="small" :min="0"></el-input-number>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="addForm.czl" @change="czlChange" size="small" :min="0"></el-input-number>
-							</el-col>
-							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-								<el-label class="mr5 vbm">总储备量(t)</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="addForm.zcbl" size="small" :disabled="true" :min="0"></el-input-number>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">库存量(t)</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="addForm.kcl" @change="kclChange" size="small" :min="0"></el-input-number>
-							</el-col>
-							<el-col :xs="13" :sm="13" :md="13" :lg="13" :xl="13">&nbsp;</el-col>
 						</el-row>
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-								<strong style="color: #20a0ff;">生产信息</strong>
+							<strong style="color: #20a0ff;">生产信息</strong>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="生产厂家">
+									<el-input size="small" v-model="addForm.sccj" :min="0" :max="1000"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item label="生产时间">
+									<el-date-picker size="small" v-model="addForm.scsj" type="date" placeholder="选择日期" @change="dateChangebirthday" format="yyyy-MM-dd"
+									 value-format="yyyy-MM-dd" auto-complete="off"></el-date-picker>
+								</el-form-item>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">生产厂家</el-label>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="生产批次">
+									<el-input size="small" v-model="addForm.pc"></el-input>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="addForm.sccj" :min="0" :max="1000"></el-input>
-							</el-col>
-							<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-								<el-label class="mr5 vbm">生产时间</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-date-picker size="small" v-model="addForm.scsj" type="date" placeholder="选择日期" @change="dateChangebirthday" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-								 auto-complete="off"></el-date-picker>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">生产批次</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="addForm.pc"></el-input>
-							</el-col>
-							<el-col :xs="13" :sm="13" :md="13" :lg="13" :xl="13">&nbsp;</el-col>
 						</el-row>
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-								<strong style="color: #20a0ff;">备注</strong>
-							</el-col>
+							<strong style="color: #20a0ff;">备注</strong>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">备注</el-label>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="备注">
+									<el-input size="small" v-model="addForm.bz" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-								<el-input size="small" v-model="addForm.bz" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp; </el-col>
 						</el-row>
 					</el-form>
 				</div>
 				<el-row class="mt35 mb20">
-					<el-row>
-						<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
-							<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
-							<el-button type="success" icon="check" size="small" class="btn_save" @click="save('addForm')">保存</el-button>
-						</el-col>
+					<el-row class="editform-button">
+						<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
+						<el-button type="success" icon="check" size="small" class="btn_save" @click="save('addForm')">保存</el-button>
 					</el-row>
 				</el-row>
 			</div>
