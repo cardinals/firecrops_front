@@ -42,7 +42,7 @@ body{height:100%;overflow:hidden;}
     display: inline;
 }
 .inform-text{
-    width: 470px;
+    width: 100%;
 }
 .inform-margin{
     margin-top: 15px;
