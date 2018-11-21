@@ -244,9 +244,9 @@
 						</el-row>
 						<div v-for="(domain, index) in addForm.xfssList" :key="domain.key" label-position="right">
 							<el-card class="card_style">
-								<div slot="header" class="clearfix">
+								<div slot="header">
 									<strong class="card_title_font">消防设施{{index+1}}</strong>
-									<el-button type="danger" icon="minus" size="small" @click.prevent="removeFireDomain(domain)" class="r" style="margin: 4px -15px 0px 0px"></el-button>
+									<el-button type="danger" icon="minus" size="small" @click.prevent="removeFireDomain(domain)" class="r" style="margin: -4px -15px 0px 0px"></el-button>
 								</div>
 								<el-row>
 									<el-col :span="11">
