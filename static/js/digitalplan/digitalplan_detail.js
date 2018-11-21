@@ -58,25 +58,12 @@ new Vue({
         this.pkid = getQueryString("ID");
         this.planDetails(this.pkid);
         this.disasterSet(this.pkid);
-        this.fjDetail(this.pkid);
+        this.fjDetail();
+        this.picDetail();  
+        
     },
 
     methods: {
-        //标签页
-        handleClick: function (e) {
-            // console.log(e);
-        },
-        //面包屑
-        getBreadcrumb() {
-
-        },
-
-        //根据参数部分和参数名来获取参数值 
-        GetQueryString: function (name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]); return null;
-        },
         //预案详情基本信息
         planDetails: function (val) {
             this.loading = true;
@@ -96,7 +83,6 @@ new Vue({
                 }
                 doFindPhoto("YAJB", this.basicDetailData.yajb);
                 this.unitDetail(this.basicDetailData.dxid);
-                this.picDetail();  
                 this.loading = false;
             }.bind(this), function (error) {
                 console.log(error)
@@ -127,8 +113,12 @@ new Vue({
             })
         },
         //附件查询
-        fjDetail: function (val) {
-            axios.get('/dpapi/yafjxz/doFindByPlanId/' + val).then(function (res) {
+        fjDetail: function () {
+            var params = {
+                yaid: this.pkid,
+                kzm: 'zip'
+            }
+            axios.post('/dpapi/yafjxz/doFindByPlanId', params).then(function (res) {
                 this.fjDetailData = res.data.result.length;
                 // if (res.data.result.length > 0) {
 
