@@ -42,7 +42,7 @@ body{height:100%;overflow:hidden;}
     display: inline;
 }
 .inform-text{
-    width: 470px;
+    width: 100%;
 }
 .inform-margin{
     margin-top: 15px;
@@ -114,6 +114,11 @@ body{height:100%;overflow:hidden;}
 #basic-Inform-Title{
     margin-left: 40px;
     width: calc(100% - 180px);
+}
+/* 当右侧有按钮时使用此样式 */
+#basic-Inform-Title-button{
+    margin-left: 40px;
+    width: calc(100% - 324px);
 }
 #basic-Inform-Picture{
     float: left;
@@ -241,6 +246,9 @@ body{height:100%;overflow:hidden;}
 }
 .col-edit-subtitle{
     color: #20a0ff;
+}.row-edit-subtitle2{
+    border-bottom: 1px solid #d1dbe5;
+    line-height: 29px;
 }
 .el-input-number--small {
     width: 100%;
