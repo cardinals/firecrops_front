@@ -55,7 +55,7 @@ window.loadBreadcrumb = function (firstName, secondName) {
     }
     breadcrumb.push('>' + firstName + '</a>');
     if (secondName != "-1") {
-        breadcrumb.push('<span>&gt;</span>');
+        breadcrumb.push('<span>&nbsp;&gt;&nbsp;</span>');
         breadcrumb.push('<a class="a-back-detail" href="javascript:;">' + secondName + '</a>');
     }
     breadcrumb.push('</div></div></div></div></div>');
