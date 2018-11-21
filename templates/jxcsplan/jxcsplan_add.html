@@ -39,6 +39,21 @@
 						</el-row>
 						<el-row>
 							<el-col :span="11">
+								<el-form-item prop="unscid" label="社会信用代码">
+									<el-input size="small" maxlength="18" v-model="addForm.unscid" placeholder="统一社会信用代码"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="xzqh" label="行政区划">
+									<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="行政区划" class="searchSelect"
+									clearable change-on-select :show-all-levels="false"></el-cascader>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
 								<el-form-item prop="dwdz" label="单位地址">
 									<el-input size="small" maxlength="100" v-model="addForm.dwdz" placeholder="单位地址"></el-input>
 								</el-form-item>
@@ -51,13 +66,6 @@
 							</el-col>
 						</el-row>
 						<el-row>
-							<el-col :span="11">
-								<el-form-item prop="xzqh" label="行政区划">
-									<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="行政区划" class="searchSelect"
-									clearable change-on-select :show-all-levels="false"></el-cascader>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item prop="zbdh" label="值班电话">
 									<el-input size="small" maxlength="50" v-model="addForm.zbdh" placeholder="值班电话"></el-input>

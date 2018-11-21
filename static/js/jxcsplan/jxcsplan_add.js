@@ -51,6 +51,7 @@ new Vue({
                 jzfl:"",//建筑分类
                 jzxxList: [],
                 xfssList:[],
+                unscid:"",
             },
             //搜索表单
             searchForm_building: {
@@ -117,6 +118,11 @@ new Vue({
             addFormRules: {
                 dwmc: [
                     { required: true, message: '请输入单位名称', trigger: 'blur' }
+                ],
+                unscid:[
+                    { required: true, message: '请输入统一社会信用代码', trigger: 'blur' },
+                    { pattern: /^[A-Za-z0-9]+$/, message: '只能输入数字和字母',trigger: 'blur' },
+                    { min: 18, max: 18, message: '请输入18位统一社会信用代码', trigger: 'blur' }
                 ],
                 jxdwlx: [
                     { required: true, message: '请选择九小单位类型', trigger: 'change' }
@@ -443,6 +449,8 @@ new Vue({
                 axios.get('/dpapi/jxcsjbxx/' + this.status).then(function (res) {
                     var result = res.data.result;
                     this.addForm = res.data.result;
+                    this.searchXfss();
+                    this.searchJzxx();
                     //行政区划
                     var xzqhArray = [];
                     if (result.xzqh != null && result.xzqh != "" && result.xzqh.substr(2, 4) != "0000") {
@@ -481,45 +489,6 @@ new Vue({
                     }
                     this.addForm.xfgx = xfgxArray;
                     //doFindPhoto("JXDWLX", this.jbxxData.jxdwlx);
-                }.bind(this), function (error) {
-                    console.log(error)
-                })
-                //消防设施查询
-                axios.get('/dpapi/jxcsxfss/doFindXfssByDwid/' + this.status).then(function (res) {
-                    if(res.data.result.length == 0 || res.data.result == null || res.data.result == ''){
-                        this.addForm.xfssList = [];
-                    }else{
-                        this.addForm.xfssList = res.data.result;
-                    }
-                    //消防设施类型格式化
-                    for(var i in this.addForm.xfssList){
-                        var xfsslx_tmp = this.addForm.xfssList[i].xfsslx;
-                        if (xfsslx_tmp != '' && xfsslx_tmp != null) {
-                            if (xfsslx_tmp.endsWith("000")) {
-                                var jbxx_xfsslx = xfsslx_tmp;
-                                xfsslx_tmp = [];
-                                xfsslx_tmp.push(jbxx_xfsslx);
-                            } else {
-                                var jbxx_xfsslx1 = xfsslx_tmp.substring(0, 1) + '000';
-                                var jbxx_xfsslx2 = xfsslx_tmp;
-                                xfsslx_tmp = [];
-                                xfsslx_tmp.push(jbxx_xfsslx1, jbxx_xfsslx2);
-                            }
-                        } else {
-                            xfsslx_tmp = [];
-                        }
-                        this.addForm.xfssList[i].xfsslx = xfsslx_tmp;
-                    }
-                    
-                }.bind(this), function (error) {
-                    console.log(error)
-                })
-                //建筑信息查询
-                axios.get('/dpapi/jxcsjzxx/doFindJzxxByDwid/' + this.status).then(function (res) {
-                    if(this.addForm.jzxxList == null || this.addForm.jzxxList == '' || this.addForm.jzxxList.length == 0){
-                        this.addForm.jzxxList = [];
-                    }
-                    this.addForm.jzxxList = res.data.result;
                 }.bind(this), function (error) {
                     console.log(error)
                 })
@@ -566,10 +535,54 @@ new Vue({
                 this.loading1 = false;
             }
         },
-        
+        //消防设施查询
+        searchXfss: function(){
+            //消防设施查询
+            axios.get('/dpapi/jxcsxfss/doFindXfssByDwid/' + this.status).then(function (res) {
+                if(res.data.result.length == 0 || res.data.result == null || res.data.result == ''){
+                    this.addForm.xfssList = [];
+                }else{
+                    this.addForm.xfssList = res.data.result;
+                }
+                //消防设施类型格式化
+                for(var i in this.addForm.xfssList){
+                    var xfsslx_tmp = this.addForm.xfssList[i].xfsslx;
+                    if (xfsslx_tmp != '' && xfsslx_tmp != null) {
+                        if (xfsslx_tmp.endsWith("000")) {
+                            var jbxx_xfsslx = xfsslx_tmp;
+                            xfsslx_tmp = [];
+                            xfsslx_tmp.push(jbxx_xfsslx);
+                        } else {
+                            var jbxx_xfsslx1 = xfsslx_tmp.substring(0, 1) + '000';
+                            var jbxx_xfsslx2 = xfsslx_tmp;
+                            xfsslx_tmp = [];
+                            xfsslx_tmp.push(jbxx_xfsslx1, jbxx_xfsslx2);
+                        }
+                    } else {
+                        xfsslx_tmp = [];
+                    }
+                    this.addForm.xfssList[i].xfsslx = xfsslx_tmp;
+                }
+                
+            }.bind(this), function (error) {
+                console.log(error)
+            })
+        },
+        //建筑信息查询
+        searchJzxx: function(){
+            axios.get('/dpapi/jxcsjzxx/doFindJzxxByDwid/' + this.status).then(function (res) {
+                if(this.addForm.jzxxList == null || this.addForm.jzxxList == '' || this.addForm.jzxxList.length == 0){
+                    this.addForm.jzxxList = [];
+                }
+                this.addForm.jzxxList = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error)
+            })
+        },
+
         //保存/提交前校验
         checkedBefore: function () {
-            
+            debugger;
             if(this.addForm.jzfl == '1' && this.addForm.jzxxList.length >1){
                 this.$message.warning({
                     message: "单体建筑只能添加一条单位建筑信息！请更改建筑类型或删除多余建筑信息！",
@@ -635,7 +648,8 @@ new Vue({
                                 xfssList: this.addForm.xfssList,//消防设施
                                 datasource: this.shiroData.organizationVO.jgid,
                                 jdh:this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
-                                sjzt: '01'     //数据状态（01编辑中，03待审批，04已驳回，05已审批）
+                                sjzt: '01',     //数据状态（01编辑中，03待审批，04已驳回，05已审批）
+                                unscid:this.addForm.unscid
                             };
                             axios.post('/dpapi/jxcsjbxx/doInsertByVo', params).then(function (res) {
                                 this.upLoadData.dwid = res.data.result.uuid;
@@ -690,7 +704,8 @@ new Vue({
                                 xfssList: this.addForm.xfssList,//消防设施
                                 xgrid: this.shiroData.userid,
                                 xgrmc: this.shiroData.realName,
-                                sjzt: '01'     //数据状态（01编辑中，03待审批，04已驳回，05已审批）
+                                sjzt: '01',     //数据状态（01编辑中，03待审批，04已驳回，05已审批）
+                                unscid:this.addForm.unscid
                             };
                             axios.post('/dpapi/jxcsjbxx/doUpdateJxcsByVO', params).then(function (res) {
                                 if (this.deleteFile.length > 0) {
@@ -775,7 +790,8 @@ new Vue({
                                 datasource: this.shiroData.organizationVO.jgid,
                                 jdh:this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                                 sjzt: '03',     //数据状态（01编辑中，03待审批，04已驳回，05已审批）
-                                shzt: '01'      //审核状态（01未审核，02未通过。03已通过，99其他）
+                                shzt: '01',      //审核状态（01未审核，02未通过。03已通过，99其他）
+                                unscid:this.addForm.unscid
                             };
                             axios.post('/dpapi/jxcsjbxx/doInsertByVo', params).then(function (res) {
                                 this.upLoadData.dwid = res.data.result.uuid;
@@ -829,7 +845,8 @@ new Vue({
                                 xgrid: this.shiroData.userid,
                                 xgrmc: this.shiroData.realName,
                                 sjzt: '03',     //数据状态（01编辑中，03待审批，04已驳回，05已审批）
-                                shzt: '01'      //审核状态（01未审核，02未通过。03已通过，99其他）
+                                shzt: '01',      //审核状态（01未审核，02未通过。03已通过，99其他）
+                                unscid:this.addForm.unscid
                             };
                             axios.post('/dpapi/jxcsjbxx/doUpdateJxcsByVO', params).then(function (res) {
                                 if (this.deleteFile.length > 0) {
