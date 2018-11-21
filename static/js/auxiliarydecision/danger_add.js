@@ -12,6 +12,12 @@ new Vue({
             loading: false,
             typeData: [],
             shiroData: [],
+            //校验
+            addFormRules:{
+                name:[
+                    { required: true, message: '请输入中文名', trigger: 'blur' }
+                ]
+            },
             //搜索表单
             addForm: {
                 name: "",

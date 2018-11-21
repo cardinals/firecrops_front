@@ -1,4 +1,4 @@
-.el-form-item__content{
+/* .el-form-item__content{
     width: 100%;
 }
 .el-form-item{
@@ -7,4 +7,23 @@
 }
 .el-form--inline .el-form-item__content {
     display: inline-flex;
+} */
+input[type=file] {
+    display: none;
 }
+.el-cascader,.el-select{
+    width: 100%;
+}
+
+.el-card__header{
+    padding: 5px 25px;
+    line-height: 30px;
+}
+.el-card__body{
+    padding: 10px 0px 10px 0px;    
+}
+.el-message{
+    z-index: 10005 !important;
+}
+
+

@@ -13,345 +13,284 @@
 			<div class="main-container" v-loading="loading" element-loading-text="加载中">
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
-				<div id="inforView" class="pt15">
-					<el-form :inline="true" ref="addForm" :model="addForm" >
+				<el-form label-width="120px" ref="addForm" :model="addForm" :rules="addFormRules">
+					<div id="inforView" class="pt15">
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<el-col>
 								<strong style="color: #20a0ff;">基本信息</strong>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">
-									<span style="color:red;">* </span>中文名
-								</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-form-item required>
-									<el-input size="small" v-model="addForm.name" placeholder="中文名" clearable></el-input>
+
+						<el-row>
+							<el-col :span="7">
+								<el-form-item prop="name" label="中文名">
+									<el-input maxlength="25" size="small" v-model="addForm.name" placeholder="中文名" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp; </el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">英文名</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.englishName" placeholder="英文名" clearable></el-input>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="7">
+								<el-form-item label="英文名">
+									<el-input maxlength="25" size="small" v-model="addForm.englishName" placeholder="英文名" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">别名</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.alias" placeholder="别名" clearable></el-input>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="7">
+								<el-form-item label="别名">
+									<el-input maxlength="25" size="small" v-model="addForm.alias" placeholder="别名" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">同义词</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.thesaurus" placeholder="同义词" clearable></el-input>
+
+						<el-row>
+							<el-col :span="7">
+								<el-form-item label="同义词">
+									<el-input maxlength="250" size="small" v-model="addForm.thesaurus" placeholder="同义词" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">分子式</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.expression" placeholder="分子式" clearable></el-input>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="7">
+								<el-form-item label="分子式">
+									<el-input maxlength="50" size="small" v-model="addForm.expression" placeholder="分子式" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">类型</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-form-item>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="7">
+								<el-form-item label="类型">
 									<el-select size="small" v-model="addForm.type" placeholder="化危品类型" class="searchSelect" clearable>
 										<el-option v-for="item in typeData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
 									</el-select>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">CAS登记号</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.cas" placeholder="CAS登记号" clearable></el-input>
+
+						<el-row>
+							<el-col :span="7">
+								<el-form-item label="CAS登记号">
+									<el-input maxlength="20" size="small" v-model="addForm.cas" placeholder="CAS登记号" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">RTECS号</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.rtecs" placeholder="RTECS号" clearable></el-input>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="7">
+								<el-form-item label="RTECS号">
+									<el-input maxlength="20" size="small" v-model="addForm.rtecs" placeholder="RTECS号" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">UN编号</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.un" placeholder="UN编号" clearable></el-input>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="7">
+								<el-form-item label="UN编号">
+									<el-input maxlength="20" size="small" v-model="addForm.un" placeholder="UN编号" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">国际危险号</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.dangerId" placeholder="国际危险号" clearable></el-input>
+
+						<el-row>
+							<el-col :span="7">
+								<el-form-item label="国际危险号">
+									<el-input maxlength="20" size="small" v-model="addForm.dangerId" placeholder="国际危险号" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">国标号</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.gbId" placeholder="国标号" clearable></el-input>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="7">
+								<el-form-item label="国标号">
+									<el-input maxlength="25" size="small" v-model="addForm.gbId" placeholder="国标号" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">包装标志</el-label>
-							</el-col>
-							<el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.flag" placeholder="包装标志" clearable></el-input>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="7">
+								<el-form-item label="包装标志">
+									<el-input maxlength="8" size="small" v-model="addForm.flag" placeholder="包装标志" clearable></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">主要用途</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.mainApplication" placeholder="主要用途" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="主要用途">
+									<el-input maxlength="250" size="small" v-model="addForm.mainApplication" placeholder="主要用途" type="textarea"
+									 :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">特别警示</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.caution" placeholder="特别警示" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="特别警示">
+									<el-input maxlength="250" size="small" v-model="addForm.caution" placeholder="特别警示" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
+
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<el-col>
 								<strong style="color: #20a0ff;">性质信息</strong>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">性状</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.property" placeholder="性状" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="性状">
+									<el-input maxlength="250" size="small" v-model="addForm.property" placeholder="性状" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">毒性</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.poisionProperty" placeholder="毒性" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="毒性">
+									<el-input maxlength="250" size="small" v-model="addForm.poisionProperty" placeholder="毒性" type="textarea"
+									 :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">禁忌物/禁忌</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.tabu" placeholder="禁忌物/禁忌" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="禁忌物/禁忌">
+									<el-input maxlength="250" size="small" v-model="addForm.tabu" placeholder="禁忌物/禁忌" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">危险性/症状</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.symptom" placeholder="危险性/症状" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="危险性/症状">
+									<el-input maxlength="250" size="small" v-model="addForm.symptom" placeholder="危险性/症状" type="textarea"
+									 :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">燃烧/爆炸性</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.bernProperty" placeholder="燃烧/爆炸特性" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="燃烧/爆炸性">
+									<el-input maxlength="250" size="small" v-model="addForm.bernProperty" placeholder="燃烧/爆炸特性" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">空气中允许极限及测定</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.airDetermine" placeholder="空气中允许极限及测定" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="空气中允许极限及测定">
+									<el-input  maxlength="250" size="small" v-model="addForm.airDetermine" placeholder="空气中允许极限及测定" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">水中允许极限及测定</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.waterDetermine" placeholder="水中允许极限及测定" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="水中允许极限及测定">
+									<el-input  maxlength="250"  size="small" v-model="addForm.waterDetermine" placeholder="水中允许极限及测定" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
+
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<el-col>
 								<strong style="color: #20a0ff;">处置措施</strong>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">储存</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.store" placeholder="储存" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="储存">
+									<el-input  maxlength="250" size="small" v-model="addForm.store" placeholder="储存" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">运输</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.traffic" placeholder="运输" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="运输">
+									<el-input  maxlength="250" size="small" v-model="addForm.traffic" placeholder="运输" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">隔离</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.seprarate" placeholder="隔离" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="隔离">
+									<el-input maxlength="250" size="small" v-model="addForm.seprarate" placeholder="隔离" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">急救/灭火</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.firstaid" placeholder="急救/灭火措施" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="急救/灭火">
+									<el-input maxlength="250" size="small" v-model="addForm.firstaid" placeholder="急救/灭火措施" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">防护措施</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.defendWay" placeholder="防护措施" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="防护措施">
+									<el-input maxlength="250" size="small" v-model="addForm.defendWay" placeholder="防护措施" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">处置措施</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.dispose" placeholder="处置措施" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="处置措施">
+									<el-input maxlength="250" size="small" v-model="addForm.dispose" placeholder="处置措施" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">泄漏处理</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
-									<el-input size="small" v-model="addForm.leakWay" placeholder="泄漏处理" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="泄漏处理">
+									<el-input  maxlength="250" size="small" v-model="addForm.leakWay" placeholder="泄漏处理" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
-								<el-label class="mr5 vbm">公众安全</el-label>
-							</el-col>
-							<el-col :xs="21" :sm="21" :md="21" :lg="21" :xl="21">
-								<el-form-item>
+
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="公众安全">
 									<el-input size="small" v-model="addForm.publicSafety" placeholder="公众安全" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-					</el-form>
-				</div>
+
+					</div>
+				</el-form>
+
 				<el-row class="mt35 mb20">
-					<el-row>
-						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
-						<el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+					<el-row class="editform-button">
+						<el-col>
 							<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
 							<el-button type="success" icon="check" size="small" class="btn_save" @click="save('addForm')">保存</el-button>
 						</el-col>
-						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
 					</el-row>
 				</el-row>
+				
 			</div>
 		</div>
 	</div>
 </body>
 <script src="../../static/js/auxiliarydecision/danger_add.js"></script>
+
 </html>
