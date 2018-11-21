@@ -930,8 +930,8 @@ new Vue({
         },
         handleChange: function (file, fileList) {
             if (fileList.length == 1) {
-                const isZip = file.name.endsWith("zip");
-                const isRAR = file.name.endsWith("rar");
+                const isZip = file.name.toLowerCase().endsWith("zip");
+                const isRAR = file.name.toLowerCase().endsWith("rar");
                 if (isZip) {
                     this.isFile = true;
                 } else {
@@ -944,8 +944,8 @@ new Vue({
             }
         },
         PicChange: function (file, fileList) {
-            const isPng = file.name.endsWith("png");
-            const isJpg = file.name.endsWith("jpg");
+            const isPng = file.name.toLowerCase().endsWith("png");
+            const isJpg = file.name.toLowerCase().endsWith("jpg");
             if (isPng || isJpg) {
                 this.isPic = true;
             } else {
