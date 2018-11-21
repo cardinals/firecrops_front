@@ -157,15 +157,25 @@ treeMenuTemplate.push('</li>');
                     $("#app").html(html);
                     return;
                 }else{
-                    //加载页面
-                    $.ajax({
-                        url: '../../../templates' + urlRewrite(url) + '.html',
-                        cache: true,
-                        async: true,
-                        success: function (html) {
-                            $("#app").html(html);
+                    /**判断用户是否已经登陆，如果用户没有登陆跳转到登陆页 by li.xue 2018/10/15 */
+                    axios.get(baseUrl+'/api/shiro').then(function(res){
+                        if(res.data=="" || res.data==null){
+                            window.location.href = baseUrl + "/templates/login.html";  
+                        }else{
+                            //加载页面
+                            $.ajax({
+                                url: '../../../templates' + urlRewrite(url) + '.html',
+                                cache: true,
+                                async: true,
+                                success: function (html) {
+                                    $("#app").html(html);
+                                }
+                            });
                         }
-                    });
+                    }.bind(this),function(error){
+                        console.log(error);
+                        window.location.href = baseUrl + "/templates/login.html";
+                    }); 
                 }
             }
         }
