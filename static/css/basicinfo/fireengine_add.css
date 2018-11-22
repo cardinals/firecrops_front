@@ -4,35 +4,14 @@ input[type=file] {
 .el-cascader,.el-select{
     width: 100%;
 }
-.main-container {
-    padding: 20px;
-}
-.el-form-item {
-    width: 100%;
-    margin-bottom: 5px;
-}
-.el-form-item__label{
-    width: 30%;
-}
-.el-form--inline .el-form-item__content {
-    width: 70%;
-}
-.el-form-item__content {
-    margin-left: 0 !important; 
-}
-.el-form-item__error {
-    padding-top: 0;
-}
+
 .el-card__header{
-    padding: 0px 20px;
-    /* color: #20a0ff; */
+    padding: 5px 25px;
+    line-height: 30px;
 }
 .el-card__body{
-    padding: 15px;    
+    padding: 10px 0px 10px 0px;    
 }
 .el-message{
     z-index: 10005 !important;
 }
-.el-input-number--small {
-    width: 100%;
-    }

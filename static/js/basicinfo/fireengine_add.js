@@ -71,29 +71,7 @@ new Vue({
             ZHCS_data: [],
             HZWXX_data: [],
             DJFALX_data: [],
-            // 校验规则
-            clFormRules: {
-                clmc: [
-                    { required: true, message: '请输入车辆名称', trigger: 'blur' }
-                ],
-
-                cllx: [
-                    { required: true, message: '请选择车辆类型', trigger: 'change' }
-                ],
-
-                cphm: [
-                    { required: true, message: '请输入车牌号码', trigger: 'blur' }
-                ],
-
-                ssdz: [
-                    { required: true, message: '请选择所属队站', trigger: 'change' }
-                ],
-
-                clbm: [
-                    { required: true, message: '请输入车辆编码', trigger: 'blur' },
-                    { pattern: /^[A-Za-z0-9 ]+$/, message: '车辆编码应为数字和字母', trigger: 'blur' }
-                ],
-            },
+           
             //级联选择器匹配结果集字段
             props: {
                 value: 'codeValue',
@@ -123,9 +101,36 @@ new Vue({
             //新建页面是否显示
             addFormVisible: false,
             addLoading: false,
+
             addFormRules: {
-                permissionname: [{ required: true, message: "请输入权限名称", trigger: "blur" }]
+
+                permissionname: [{ required: true, message: "请输入权限名称", trigger: "blur" }],
+                clmc: [
+                    { required: true, message: '请输入车辆名称', trigger: 'blur' }
+                ],
+
+                cllx: [
+                    { required: true, message: '请选择车辆类型', trigger: 'change' }
+                ],
+
+                cphm: [
+                    { required: true, message: '请输入车牌号码', trigger: 'blur' }
+                ],
+
+                ssdz: [
+                    { required: true, message: '请选择所属队站', trigger: 'change' }
+                ],
+
+                clbm: [
+                    { required: true, message: '请输入车辆编码', trigger: 'blur' },
+                    { pattern: /^[A-Za-z0-9 ]+$/, message: '车辆编码应为数字和字母', trigger: 'blur' }
+                ],
+                xzqh: [
+                    { required: true, message: '请选择行政区划', trigger: 'change' }
+                ]
+
             },
+
             //详情页显示flag
             detailVisible: false,
             //选中的值显示
@@ -396,10 +401,11 @@ new Vue({
 
 
         //点击保存事件
-        save: function (addForm) {
-            this.$refs[addForm].validate((valid) => {
+        save: function (formName) {
+            debugger;
+            this.$refs[formName].validate((valid) => {
                 if (valid) {
-
+                   
                     if (this.status == 0) {//新增
                         this.addForm.cjrid = this.role_data.userid;
                         this.addForm.cjrmc = this.role_data.realName;

@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="../../static/css/basicinfo/fireengine_add.css">
 	<title>新增重点单位预案</title>
 </head>
@@ -13,24 +13,26 @@
 			<div class="main-container" v-loading="loading1" element-loading-text="加载中">
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
-				<div id="inforView" class="pt15">
-					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-						<el-col>
-							<strong style="color: #20a0ff;">基本信息</strong>
-						</el-col>
-					</el-row>
-					<el-form  label-width="120px" :inline="true" class="el-form demo-form-inline" ref="addForm" :model="addForm" label-position="right"   :rules="clFormRules">
+				<el-form label-width="120px" class="el-form demo-form-inline" ref="addForm" :model="addForm"
+				 label-position="right" :rules="addFormRules">
+					<div id="inforView" class="pt15">
+						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+							<el-col>
+								<strong style="color: #20a0ff;">基本信息</strong>
+							</el-col>
+						</el-row>
+
 						<el-row>
 							<el-col :span="11">
 								<el-form-item prop="clmc" label="车辆名称">
-									<el-input  maxlength="50" size="small" v-model="addForm.clmc" placeholder="车辆名称" clearable></el-input>
+									<el-input maxlength="50" size="small" v-model="addForm.clmc" placeholder="车辆名称" clearable></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item prop="cllx" label="车辆类型">
-									<el-cascader :options="allTypesData" :props="props" size="small" v-model="addForm.cllx" placeholder="请选择" class="searchSelect"
-									clearable change-on-select :show-all-levels="false"></el-cascader>
+									<el-cascader :options="allTypesData" :props="props" size="small" v-model="addForm.cllx" placeholder="请选择"
+									 class="searchSelect" clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -39,14 +41,14 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item prop="cphm" label="车牌号码">
-									<el-input  maxlength="10" size="small" v-model="addForm.cphm" placeholder="车牌号码" clearable></el-input>
+									<el-input maxlength="10" size="small" v-model="addForm.cphm" placeholder="车牌号码" clearable></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item prop="ssdz" label="所属队站">
-									<el-cascader :options="allTeamsData" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="请选择" class="searchSelect"
-									clearable change-on-select :show-all-levels="true"></el-cascader>
+									<el-cascader :options="allTeamsData" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="请选择"
+									 class="searchSelect" clearable change-on-select :show-all-levels="true"></el-cascader>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -63,8 +65,8 @@
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
-								<el-form-item  prop="clbm" label="车辆编码">
-									<el-input  maxlength="25" size="small" v-model="addForm.clbm" placeholder="车辆编码" clearable></el-input>
+								<el-form-item prop="clbm" label="车辆编码">
+									<el-input maxlength="25" size="small" v-model="addForm.clbm" placeholder="车辆编码" clearable></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -86,9 +88,9 @@
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
-								<el-form-item  prop="clbm" label="行政区划">
-									<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="请选择" class="searchSelect"
-									clearable change-on-select :show-all-levels="false"></el-cascader>
+								<el-form-item prop="xzqh" label="行政区划">
+									<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="请选择"
+									 class="searchSelect" clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -98,13 +100,15 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item label="经度">
-									<el-input-number :min="0" :max="99999.9999999999" size="small" v-model="addForm.gisX" :precision="2" placeholder="经度" clearable></el-input-number>
+									<el-input-number :min="0" :max="99999.9999999999" size="small" v-model="addForm.gisX" :precision="2"
+									 placeholder="经度" clearable></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="纬度">
-									<el-input-number :min="0" :max="99999.9999999999" size="small" v-model="addForm.gisY" :precision="2" placeholder="纬度" clearable></el-input-number>
+									<el-input-number :min="0" :max="99999.9999999999" size="small" v-model="addForm.gisY" :precision="2"
+									 placeholder="纬度" clearable></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -125,21 +129,17 @@
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-
-					</el-form>
-				</div>
-				<div id="inforView" class="pt15">
-					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-						<el-col>
-							<strong style="color: #20a0ff;">属性信息</strong>
-						</el-col>
-					</el-row>
-					<el-form label-width="120px"  :inline="true" class="el-form demo-form-inline" ref="addForm" :model="addForm" label-position="right">
+				
+						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+							<el-col>
+								<strong style="color: #20a0ff;">属性信息</strong>
+							</el-col>
+						</el-row>
 						<el-row>
 
 							<el-col :span="11">
 								<el-form-item label="水泵流量(L/s)">
-									<el-input-number :min="0" :max="99999999.99" size="small" v-model="addForm.sbll" placeholder="水泵流量"  clearable></el-input-number>
+									<el-input-number :min="0" :max="99999999.99" size="small" v-model="addForm.sbll" placeholder="水泵流量" clearable></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -155,13 +155,15 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item label="消防炮流量(L/s)">
-									<el-input-number  :min="0" :max="99999999.99" size="small" v-model="addForm.xfpll" placeholder="消防炮流量" :min="0" clearable></el-input-number>
+									<el-input-number :min="0" :max="99999999.99" size="small" v-model="addForm.xfpll" placeholder="消防炮流量" :min="0"
+									 clearable></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="水泵额定压力(Mpa)">
-									<el-input-number  :min="0" :max="99999999.99" size="small" v-model="addForm.sbedyl" placeholder="水泵额定压力(Mpa)" :min="0" clearable></el-input-number>
+									<el-input-number :min="0" :max="99999999.99" size="small" v-model="addForm.sbedyl" placeholder="水泵额定压力(Mpa)"
+									 :min="0" clearable></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -171,7 +173,8 @@
 
 							<el-col :span="11">
 								<el-form-item label="车载灭火剂量(t)">
-									<el-input-number  :min="0" :max="99999999.99" size="small" v-model="addForm.czmhjl" placeholder="车载灭火剂量(t)" clearable></el-input-number>
+									<el-input-number :min="0" :max="99999999.99" size="small" v-model="addForm.czmhjl" placeholder="车载灭火剂量(t)"
+									 clearable></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -188,37 +191,37 @@
 
 							<el-col :span="11">
 								<el-form-item label="灭火剂混合比">
-									<el-input  maxlength="10" size="small" v-model="addForm.mhjhhb" placeholder="灭火剂混合比" clearable></el-input>
+									<el-input maxlength="10" size="small" v-model="addForm.mhjhhb" placeholder="灭火剂混合比" clearable></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="举高类车辆高度(m)">
-									<el-input-number :min="0" :max="99.99"  size="small" v-model="addForm.jglgd" placeholder="举高类车辆高度(m)" clearable></el-input-number>
+									<el-input-number :min="0" :max="99.99" size="small" v-model="addForm.jglgd" placeholder="举高类车辆高度(m)" clearable></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 
 						</el-row>
 
-					</el-form>
-					<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
-					<el-col>
-						<strong style="color: #20a0ff;">备注</strong>
-					</el-col>
-					</el-row>
+						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
+							<el-col>
+								<strong style="color: #20a0ff;">备注</strong>
+							</el-col>
+						</el-row>
 
-					<el-row>
-						<el-col :span="23">
-							<el-form-item label="备注">
-								<el-input maxlength="200" size="small" v-model="addForm.bz" type="textarea" placeholder="备注" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :span="1">&nbsp;</el-col>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="备注">
+									<el-input maxlength="200" size="small" v-model="addForm.bz" type="textarea" placeholder="备注" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+						</el-row>
 
-					</el-row>
+					</div>
+				</el-form>
 
-				</div>
 				<el-row class="mt35 mb20">
 					<el-form :inline="true" class="el-form demo-form-inline">
 						<el-row>
@@ -229,11 +232,12 @@
 						</el-row>
 					</el-form>
 				</el-row>
-					
+
 			</div>
 		</div>
 	</div>
 </body>
 <script src="../../static/js/common/config.js"></script>
 <script src="../../static/js/basicinfo/fireengine_add.js"></script>
+
 </html>
