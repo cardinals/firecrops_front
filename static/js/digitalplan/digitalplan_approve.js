@@ -75,8 +75,6 @@ var vue = new Vue({
             },
             radio: "",
             data_index: "",
-            //未通过flag
-            isReject: false,
             //登录用户
             shiroData: [],
         }
@@ -291,16 +289,10 @@ var vue = new Vue({
             var row = this.tableData[this.data_index];
             this.uuid = row.uuid;
             //获取当前登录用户realname和userid
-            axios.get('/api/shiro').then(function (res) {
-                this.shrmc = res.data.realName;
-                this.shrid = res.data.userid;
-            }.bind(this), function (error) {
-                console.log(error)
-            });
+            this.shrmc = this.shiroData.realName;
+            this.shrid = this.shiroData.userid;
             this.approveForm = Object.assign({}, row);
             //如果是未通过审核意见显示*代表必填
-            if (this.approveForm.shzt == '02')
-                this.isReject = true;
             this.approveFormVisible = true;
         },
         //保存点击事件
@@ -311,15 +303,15 @@ var vue = new Vue({
                     type: "error",
                     showClose: true
                 });
-            } else if (this.isReject == true && val.reserve1 == null) {
+            } else if (val.reserve1==null || val.reserve1=="") {
                 this.$message({
                     message: "请填写审核意见",
                     type: "error",
                     showClose: true
                 });
-            } else if (validateBytes(val.reserve1, 36)) {
+            } else if (validateBytes(val.reserve1, 400)) {
                 this.$message({
-                    message: "字段超长，请重新输入",
+                    message: "最多能输入200汉字",
                     type: "error",
                     showClose: true
                 });
@@ -362,18 +354,11 @@ var vue = new Vue({
                 if (!shyj.hasClass('is-required')) {
                     shyj.addClass('is-required');
                 }
-                this.isReject = true;
             } else {
                 if (shyj.hasClass('is-required')) {
                     shyj.removeClass('is-required');
                 }
-                this.isReject = false;
             }
-
-            // if (this.approveForm.shzt == '02')
-            //     this.isReject = true;
-            // else
-            //     this.isReject = false;
         },
     },
 
