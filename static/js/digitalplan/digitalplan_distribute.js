@@ -223,25 +223,7 @@ var vue = new Vue({
             loadDivParam("digitalplan/digitalplan_detail", params);
             //window.location.href = "digitalplan_detail.html?ID=" + val.uuid + "&index=" + this.activeIndex + "&type=YAFF";
         },
-        /** 
-        planDetails: function (val) {
-            var _self = this;
-            _self.planDetailVisible = true;
-            var shortURL = top.location.href.substr(0, top.location.href.indexOf("?")) + "?pkid=" + val.uuid;
-            history.pushState(null, null, shortURL)
-            //异步加载详情页
-            $(function () {
-                $.ajax({
-                    url: '../../../templates/digitalplan/digitalplan_detail.html',
-                    cache: true,
-                    async: true,
-                    success: function (html) {
-                        $("#detailDialog").html(html);
-                    }
-                });
-            })
-        },
-        */
+        
         //表格重新加载数据
         loadingData: function () {
             var _self = this;
@@ -331,29 +313,37 @@ var vue = new Vue({
         distributeSubmit: function(ffdz) {
             //审核状态改变才调用后台approveByVO方法
             var ffdz = this.$refs.tree.getCheckedNodes();
-            var params = [];
-            for(var i in ffdz){
-                if(ffdz[i].dzid != this.defaultCheckKeys[0]){
-                    params.push({
-                        jgid: ffdz[i].dzid,
-                        yaid: this.uuid,
-                        jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
-                        datasource: this.shiroData.organizationVO.jgid
-                    });
-                }
-            }
-            axios.post('/dpapi/distribute/distribute', params).then(function (res) {
-                this.distributeFormVisible = false;
+            if(ffdz.length == 0 || (ffdz.length==this.defaultCheckKeys.length&&this.defaultCheckKeys[0]!="")){
                 this.$message({
-                    message: "分发成功!",
-                    type: "success",
+                    message: "请选择需要分发的队站",
+                    type: "warning",
                     showClose: true
                 });
-            }.bind(this), function (error) {
-                console.log(error)
-            })
-            this.Visible = false;
-            this.loadingData();
-            }
-        },
+            }else{
+                var params = [];
+                for(var i in ffdz){
+                    if(ffdz[i].dzid != this.defaultCheckKeys[0]){
+                        params.push({
+                            jgid: ffdz[i].dzid,
+                            yaid: this.uuid,
+                            jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                            datasource: this.shiroData.organizationVO.jgid
+                        });
+                    }
+                }
+                axios.post('/dpapi/distribute/distribute', params).then(function (res) {
+                    this.distributeFormVisible = false;
+                    this.$message({
+                        message: "分发成功!",
+                        type: "success",
+                        showClose: true
+                    });
+                }.bind(this), function (error) {
+                    console.log(error)
+                })
+                this.Visible = false;
+                this.loadingData();
+            }  
+        }
+    },
 })
