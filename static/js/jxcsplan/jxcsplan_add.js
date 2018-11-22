@@ -264,7 +264,6 @@ new Vue({
 
         //获取建筑信息列表
         getJzxxList: function(type, index){
-            debugger;
             if (type == 'page') {
                 this.tableData_building = [];
             } else {
@@ -456,7 +455,6 @@ new Vue({
             } else {  //修改
                 //基本信息查询
                 axios.get('/dpapi/jxcsjbxx/' + this.status).then(function (res) {
-                    debugger;
                     var result = res.data.result;
                     this.addForm = res.data.result;
                     this.searchXfss();
