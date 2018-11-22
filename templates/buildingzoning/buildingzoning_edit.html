@@ -13,7 +13,7 @@
 			<div class="main-container" v-loading="loading" element-loading-text="加载中">
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
-				<el-form label-width="120px" ref="editForm" :model="editForm"  :rules="editFormRules">
+				<el-form label-width="140px" ref="editForm" :model="editForm"  :rules="editFormRules">
 					<div id="inforView" class="pt15">
 
 						<el-row class="mb5 row-edit-subtitle">
@@ -51,14 +51,14 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item label="经度">
-									<el-input-number type="number" size="small" :precision="2" v-model="editForm.lon" placeholder="经度" :min="0"
+									<el-input-number type="number" size="small" :precision="2" v-model="editForm.lon" placeholder="经度" :min="-99999.9999999999"
 									 :max="99999.9999999999"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="纬度">
-									<el-input-number type="number" size="small" :precision="2" v-model="editForm.lat" placeholder="纬度" :min="0"
+									<el-input-number type="number" size="small" :precision="2" v-model="editForm.lat" placeholder="纬度" :min="-99999.9999999999"
 									 :max="99999.9999999999"></el-input-number>
 								</el-form-item>
 							</el-col>
@@ -474,7 +474,7 @@
 								<el-row>
 									<el-col :span="23">
 										<el-form-item label="备注">
-											<el-input maxlength="9" size="small" v-model="domain.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
+											<el-input maxlength="200" size="small" v-model="domain.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 1, maxRows: 4}"></el-input>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
@@ -494,7 +494,7 @@
 						<el-row>
 							<el-col :span="23">
 								<el-form-item label="备注">
-									<el-input maxlength="9" size="small" v-model="editForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+									<el-input maxlength="200" size="small" v-model="editForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
 
