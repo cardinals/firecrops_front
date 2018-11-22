@@ -13,7 +13,7 @@
 			<div class="main-container" v-loading="loading1" element-loading-text="加载中">
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
-				<el-form label-width="120px" class="el-form demo-form-inline" ref="addForm" :model="addForm"
+				<el-form label-width="140px" class="el-form demo-form-inline" ref="addForm" :model="addForm"
 				 label-position="right" :rules="addFormRules">
 					<div id="inforView" class="pt15">
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
@@ -101,14 +101,14 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item label="经度">
-									<el-input-number :min="0" :max="99999.9999999999" size="small" v-model="addForm.gisX" :precision="2"
+									<el-input-number :min="-99999.9999999999" :max="99999.9999999999" size="small" v-model="addForm.gisX" :precision="2"
 									 placeholder="经度" clearable></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="纬度">
-									<el-input-number :min="0" :max="99999.9999999999" size="small" v-model="addForm.gisY" :precision="2"
+									<el-input-number :min="-99999.9999999999" :max="99999.9999999999" size="small" v-model="addForm.gisY" :precision="2"
 									 placeholder="纬度" clearable></el-input-number>
 								</el-form-item>
 							</el-col>
