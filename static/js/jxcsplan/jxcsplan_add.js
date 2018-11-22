@@ -18,8 +18,10 @@ new Vue({
             //建筑选择页面
             buildingListVisible: false,
             loading_building: false,
+            //登录用户为九小用户flag
+            isJxcsUser:false,
             //0新增
-            status: '',
+            status: 0,
             //当前页
             currentPage_building: 1,
             //分页大小
@@ -157,7 +159,6 @@ new Vue({
             picList: [],
             deletePics: [],
             isPic: false,
-
             upLoadData: {
                 dwid: "",
                 cjrid:"",
@@ -169,13 +170,6 @@ new Vue({
     },
     
     created: function () {
-        var type = getQueryString("type");
-        if (type == "XZ") {
-            loadBreadcrumb("九小场所管理", "九小场所新增");
-        } else if (type == "BJ") {
-            loadBreadcrumb("九小场所管理", "九小场所编辑");
-        }
-        this.shiroData = shiroGlobal;
         this.XFSSLX();//消防设施类型
         this.getAllXzqhDataTree();//行政区划
         //this.XFGX();//消防管辖级联选择
@@ -185,8 +179,22 @@ new Vue({
         this.JZFL();//建筑分类
     },
     mounted: function () {
-        this.status = getQueryString("ID");
-        //this.searchClick();
+        this.shiroData = shiroGlobal;
+        if(this.shiroData.username == 'jxcs'){
+            this.isJxcsUser = true;
+            if(this.shiroData.dwid!= null){
+                this.status = this.shiroData.dwid;
+            }
+        }else{
+            this.status = getQueryString("ID");
+            var type = getQueryString("type");
+            if (type == "XZ") {
+                loadBreadcrumb("九小场所管理", "九小场所新增");
+            } else if (type == "BJ") {
+                loadBreadcrumb("九小场所管理", "九小场所编辑");
+            }
+        }
+        
     },
     methods: {
         //行政区划级联选择数据
@@ -582,7 +590,6 @@ new Vue({
 
         //保存/提交前校验
         checkedBefore: function () {
-            debugger;
             if(this.addForm.jzfl == '1' && this.addForm.jzxxList.length >1){
                 this.$message.warning({
                     message: "单体建筑只能添加一条单位建筑信息！请更改建筑类型或删除多余建筑信息！",
