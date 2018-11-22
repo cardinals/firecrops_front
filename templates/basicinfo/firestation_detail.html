@@ -38,8 +38,8 @@
                 <el-col :span="24">
                     <div>
                         <strong class="dtdlStyle">队站地址：</strong>
-                        <a href="#" @click="this.tz"><div class="inform-address"></div></a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<v-text v-text="detailData.dzdz||'无'"></v-text>
+                        <v-text v-text="detailData.dzdz||'无'"></v-text>
+                        &nbsp;&nbsp;<a href="#" @click="this.tz"><div class="inform-address"></div></a>
                     </div>
                 </el-col>
             </el-row>
