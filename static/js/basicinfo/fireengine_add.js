@@ -109,25 +109,48 @@ new Vue({
                     { required: true, message: '请输入车辆名称', trigger: 'blur' }
                 ],
 
-                cllx: [
-                    { required: true, message: '请选择车辆类型', trigger: 'change' }
-                ],
+                cllx: [{
+                    validator: (rule, value, callback) => {
+                        if (value.length == 0) {
+                            callback(new Error("请选择车辆类型"));
+                        } else {
+                            callback();
+                        }
+
+                    }, trigger: 'change'
+                }],
 
                 cphm: [
                     { required: true, message: '请输入车牌号码', trigger: 'blur' }
                 ],
 
-                ssdz: [
-                    { required: true, message: '请选择所属队站', trigger: 'change' }
-                ],
+                ssdz: [{
+                    validator: (rule, value, callback) => {
+                        if (value.length == 0) {
+                            callback(new Error("请选择所属队站"));
+                        } else {
+                            callback();
+                        }
+
+                    }, trigger: 'change'
+                }],
 
                 clbm: [
                     { required: true, message: '请输入车辆编码', trigger: 'blur' },
                     { pattern: /^[A-Za-z0-9 ]+$/, message: '车辆编码应为数字和字母', trigger: 'blur' }
                 ],
-                xzqh: [
-                    { required: true, message: '请选择行政区划', trigger: 'change' }
-                ]
+               
+                xzqh: [{
+                    validator: (rule, value, callback) => {
+                        if (value.length == 0) {
+                            callback(new Error("请选择行政区划"));
+                        } else {
+                            callback();
+                        }
+
+                    }, trigger: 'change'
+                }],
+                
 
             },
 
@@ -402,7 +425,6 @@ new Vue({
 
         //点击保存事件
         save: function (formName) {
-            debugger;
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                    

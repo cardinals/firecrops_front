@@ -30,9 +30,10 @@
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
-								<el-form-item prop="cllx" label="车辆类型">
+								<el-form-item prop="cllx" label="车辆类型" class="is-required">
 									<el-cascader :options="allTypesData" :props="props" size="small" v-model="addForm.cllx" placeholder="请选择"
 									 class="searchSelect" clearable change-on-select :show-all-levels="false"></el-cascader>
+									 
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -46,7 +47,7 @@
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
-								<el-form-item prop="ssdz" label="所属队站">
+								<el-form-item prop="ssdz" label="所属队站"  class="is-required">
 									<el-cascader :options="allTeamsData" :props="ssdzProps" size="small" v-model="addForm.ssdz" placeholder="请选择"
 									 class="searchSelect" clearable change-on-select :show-all-levels="true"></el-cascader>
 								</el-form-item>
@@ -88,7 +89,7 @@
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
-								<el-form-item prop="xzqh" label="行政区划">
+								<el-form-item prop="xzqh" label="行政区划"  class="is-required">
 									<el-cascader :options="allXzqhDataTree" :props="defaultProps" size="small" v-model="addForm.xzqh" placeholder="请选择"
 									 class="searchSelect" clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-form-item>
