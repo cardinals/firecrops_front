@@ -59,13 +59,6 @@ new Vue({
         }
     },
     created: function () {
-        /**菜单选中 by li.xue 20180628*/
-        /**
-        var index = getQueryString("index");
-        $("#activeIndex").val(index);
-        this.activeIndex = index;
-         */
-        
         /**面包屑 by li.xue 20180628*/
         var type = getQueryString("type");
         if (type == "XZ") {
@@ -76,7 +69,6 @@ new Vue({
         /**当前登陆用户 by li.xue 20180808 */
         this.shiroData = shiroGlobal;
         this.getTypeData();
-        this.roleData();
     },
     mounted: function () {
         this.status = getQueryString("ID");

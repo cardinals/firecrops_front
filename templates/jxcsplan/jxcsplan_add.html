@@ -14,6 +14,8 @@
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
 				<el-form ref="addForm" :model="addForm" label-width="120px" :rules="addFormRules">
+					<!--判断统一社会信用代码是否改变-->
+					<div v-show="false" v-once v-model="unscidOld"></div>
 					<!--基本信息-->
 					<div id="inforView" class="pt15">
 						<el-row style="border-bottom:1px solid #20a0ff;line-height: 29px;">
@@ -332,8 +334,8 @@
 				<el-row class="mt10 mb20">
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="editform-button">
 						<el-button id="hidden_btn" type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
-						<el-button type="primary" icon="document" size="small" class="btn_save" @click="save('addForm')">暂存</el-button>
-						<el-button type="success" icon="check" size="small" class="btn_submit" @click="submit('addForm')">提交</el-button>
+						<el-button type="primary" icon="document" size="small" class="btn_save" @click="beforeSave('addForm')">暂存</el-button>
+						<el-button type="success" icon="check" size="small" class="btn_submit" @click="beforeSubmit('addForm')">提交</el-button>
 					</el-col>	
 				</el-row>
 				<!--选择所属建筑界面-->

@@ -262,3 +262,9 @@ body{height:100%;overflow:hidden;}
 .editform-button {
     text-align: center;
 }
+.el-checkbox+.el-checkbox{
+    margin-left: 0px;
+}
+.el-checkbox{
+    margin-right: 30px;
+}

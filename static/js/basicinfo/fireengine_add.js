@@ -121,7 +121,8 @@ new Vue({
                 }],
 
                 cphm: [
-                    { required: true, message: '请输入车牌号码', trigger: 'blur' }
+                    { required: true, message: '请输入车牌号码', trigger: 'blur' },
+                    { pattern: /^[A-Za-z0-9 ]+$/, message: '车牌号码应为数字和字母', trigger: 'blur' }
                 ],
 
                 ssdz: [{
@@ -371,57 +372,12 @@ new Vue({
                 console.log(error);
             })
         },
-        //对数据进行校验
-
-        // jglgdChange: function (value) {
-        //     if (!(/(^\d+$)/.test(value.replace(".", "")))) {
-        //         this.$message.warning({
-        //             message: "请输入数字或小数！",
-        //             showClose: true
-        //         });
-        //         this.addForm.jglgd = '';
-        //     } 
-        // },
-
-
+        
         pickerOptions0: {
             disabledDate(time) {
                 return time.getTime() < Date.now() - 8.64e7;
             }
         },
-
-        //保存前校验
-        validateSave: function () {
-            if (this.addForm.ssdz == null || this.addForm.ssdz == "") {
-                this.$message.warning({
-                    message: "请选择所属队站！",
-                    showClose: true
-                });
-                return false;
-            } else if (this.addForm.cllx == null || this.addForm.cllx == "") {
-                this.$message.warning({
-                    message: "请选择车辆类型！",
-                    showClose: true
-                });
-                return false;
-            }
-            else if (this.addForm.clmc == null || this.addForm.clmc == "") {
-                this.$message.warning({
-                    message: "请填写车辆名称！",
-                    showClose: true
-                });
-                return false;
-            }
-            else if (this.addForm.cphm == null || this.addForm.cphm == "") {
-                this.$message.warning({
-                    message: "请填写车牌号码！",
-                    showClose: true
-                });
-                return false;
-            }
-            return true;
-        },
-
 
         //点击保存事件
         save: function (formName) {
