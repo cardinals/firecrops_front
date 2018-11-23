@@ -68,7 +68,7 @@
 								</el-table-column>
 								<el-table-column label="操作" width="65" align="center" v-if="hasPermission('system/user:edit')">
 									<template slot-scope="scope">
-										<el-button type="text" @click="editClick(scope.row,scope.$index)">编辑</el-button>
+										<el-button type="text" @click="editClick(scope.row, scope.$index)">编辑</el-button>
 									</template>
 								</el-table-column>
 							</el-table>

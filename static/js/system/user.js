@@ -413,6 +413,13 @@ var vue = new Vue({
         
         //删除所选，批量删除
         removeSelection: function () {
+            if (this.multipleSelection.length < 1) {
+                this.$message({
+                    message: "请至少选中一条记录",
+                    type: "warning"
+                });
+                return;
+            }
             this.$confirm('确认删除选中信息?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
