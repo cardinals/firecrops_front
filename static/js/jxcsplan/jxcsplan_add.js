@@ -166,6 +166,7 @@ new Vue({
                 xgrid:"",
                 xgrmc:""
             },
+            unscidOld:""
         }
     },
     
@@ -451,6 +452,9 @@ new Vue({
             this.loading1 = true;
             if (this.status == 0) {  //新增
             //    this.addForm.yazt = '01';
+                if(this.isJxcsUser == true){
+                    this.addForm.unscid = this.shiroData.unscid;
+                }
                 this.loading1 = false;
             } else {  //修改
                 //基本信息查询
@@ -459,6 +463,7 @@ new Vue({
                     this.addForm = res.data.result;
                     this.searchXfss();
                     this.searchJzxx();
+                    this.unscidOld = this.addForm.unscid;
                     //行政区划
                     var xzqhArray = [];
                     if (result.xzqh != null && result.xzqh != "" && result.xzqh.substr(2, 4) != "0000") {
@@ -617,12 +622,87 @@ new Vue({
             }
             return true;
         },
+        //保存前判断统一社会信用代码是否改变
+        beforeSave:function(formName){
+            //管理员
+            if(this.isJxcsUser==false){
+                if(this.status == 0){//新增
+                    axios.get('/dpapi/jxcsdlyz/doFindCountByUnscid/'+this.addForm.unscid).then(function (res) {
+                        if(res.data.result>0){
+                            this.$message({
+                                message: '您填写的统一社会信用代码已存在数据，请更改统一社会信用代码',
+                                type: 'error'
+                            });
+                            return false;
+                        }else{
+                            this.save(formName);
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error)
+                    })
+                }else{//修改
+                    if(this.addForm.unscid == this.unscidOld){
+                        this.save(formName);
+                    }else{
+                        axios.get('/dpapi/jxcsdlyz/doFindCountByUnscid/'+this.addForm.unscid).then(function (res) {
+                            if(res.data.result>0){
+                                this.$message({
+                                    message: '您填写的统一社会信用代码已存在数据，请更改统一社会信用代码',
+                                    type: 'error'
+                                });
+                                return false;
+                            }else{
+                                this.save(formName);
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error)
+                        })
+                    }
+                }
+            }else{//用户
+                //信用代码与登录用户信用代码相同
+                if(this.addForm.unscid == this.shiroData.unscid){
+                    this.save(formName);
+                }else{
+                //信用代码与登录用户信用代码不同
+                    axios.get('/dpapi/jxcsdlyz/doFindCountByUnscid/'+this.addForm.unscid).then(function (res) {
+                        if(res.data.result>0){
+                            this.$message({
+                                message: '您填写的统一社会信用代码已存在数据，请直接登录或更改统一社会信用代码',
+                                type: 'error'
+                            });
+                            return false;
+                        }else{
+                            if(this.addForm.unscid != this.shiroData.unscid){
+                                this.$confirm('您填写的统一社会信用代码与您的登录账号不符，保存成功后会自动登出系统，请用修改后的统一社会信用代码重新登录系统。是否继续保存？', '提示', {
+                                    confirmButtonText: '确定',
+                                    cancelButtonText: '取消',
+                                    type: 'warning'
+                                }).then(() => {
+                                    this.save(formName);
+                                    $('#login-out-form')[0].submit();
+                                }).catch(() => {
+                                    this.$message({
+                                    type: 'info',
+                                    message: '已取消'
+                                    });          
+                                });
+                            }else{
+                                this.save(formName);
+                            }
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error)
+                    })
+                }
+            }
+        },
         //点击保存事件
         save: function (formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     if (this.checkedBefore() == true) {
-                        this.getXfsslx();
+                        this.changeXfsslx();
                         if (this.status == 0) {//新增
                             var params = {
                             //  dxid: this.addForm.dxid,
@@ -668,14 +748,13 @@ new Vue({
                                 if (this.isPic) {
                                     this.$refs.uploadPics.submit();//图片上传
                                 } 
-                                    this.$alert('成功保存九小场所信息', '提示', {
-                                        type: 'success',
-                                        confirmButtonText: '确定',
-                                        callback: action => {
-                                            loadDiv("jxcsplan/jxcsplan_list");
-                                        }
-                                    });
-                                
+                                this.$message({
+                                    message: '成功保存九小场所信息',
+                                    type: 'success'
+                                });
+                                if(this.isJxcsUser == false){
+                                    loadDiv("jxcsplan/jxcsplan_list");
+                                }
                             }.bind(this), function (error) {
                                 console.log(error);
                             })
@@ -733,14 +812,13 @@ new Vue({
                                 if (this.isPic) {
                                     this.$refs.uploadPics.submit();
                                 }
-                                this.$alert('成功保存九小场所信息', '提示', {
-                                    type: 'success',
-                                    confirmButtonText: '确定',
-                                    callback: action => {
-                                        loadDiv("jxcsplan/jxcsplan_list");
-                                    }
+                                this.$message({
+                                    message: '成功保存九小场所信息',
+                                    type: 'success'
                                 });
-                                
+                                if(this.isJxcsUser == false){
+                                    loadDiv("jxcsplan/jxcsplan_list");
+                                }
                             }.bind(this), function (error) {
                                 console.log(error);
                             })
@@ -758,12 +836,87 @@ new Vue({
 
             });
         },
+        //提交前判断统一社会信用代码是否改变
+        beforeSubmit: function(formName){
+             //管理员
+             if(this.isJxcsUser==false){
+                if(this.status == 0){//新增
+                    axios.get('/dpapi/jxcsdlyz/doFindCountByUnscid/'+this.addForm.unscid).then(function (res) {
+                        if(res.data.result>0){
+                            this.$message({
+                                message: '您填写的统一社会信用代码已存在数据，请更改统一社会信用代码',
+                                type: 'error'
+                            });
+                            return false;
+                        }else{
+                            this.submit(formName);
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error)
+                    })
+                }else{//修改
+                    if(this.addForm.unscid == this.unscidOld){
+                        this.submit(formName);
+                    }else{
+                        axios.get('/dpapi/jxcsdlyz/doFindCountByUnscid/'+this.addForm.unscid).then(function (res) {
+                            if(res.data.result>0){
+                                this.$message({
+                                    message: '您填写的统一社会信用代码已存在数据，请更改统一社会信用代码',
+                                    type: 'error'
+                                });
+                                return false;
+                            }else{
+                                this.submit(formName);
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error)
+                        })
+                    }
+                }
+            }else{//用户
+                //信用代码与登录用户信用代码相同
+                if(this.addForm.unscid == this.shiroData.unscid){
+                    this.submit(formName);
+                }else{
+                //信用代码与登录用户信用代码不同
+                    axios.get('/dpapi/jxcsdlyz/doFindCountByUnscid/'+this.addForm.unscid).then(function (res) {
+                        if(res.data.result>0){
+                            this.$message({
+                                message: '您填写的统一社会信用代码已存在数据，请直接登录或更改统一社会信用代码',
+                                type: 'error'
+                            });
+                            return false;
+                        }else{
+                            if(this.addForm.unscid != this.shiroData.unscid){
+                                this.$confirm('您填写的统一社会信用代码与您的登录账号不符，保存成功后会自动登出系统，请用修改后的统一社会信用代码重新登录系统。是否继续保存？', '提示', {
+                                    confirmButtonText: '确定',
+                                    cancelButtonText: '取消',
+                                    type: 'warning'
+                                }).then(() => {
+                                    this.submit(formName);
+                                    $('#login-out-form')[0].submit();
+                                }).catch(() => {
+                                    this.$message({
+                                    type: 'info',
+                                    message: '已取消'
+                                    });          
+                                });
+                            }else{
+                                this.submit(formName);
+                            }
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error)
+                    })
+                }
+            }
+        },
         //提交点击事件
         submit: function (formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     if (this.checkedBefore() == true) {
-                        this.getXfsslx();
+                        this.changeXfsslx();
                         if (this.status == 0) { //新增
                             var params = {
                               //  dxid: this.addForm.dxid,
@@ -810,12 +963,13 @@ new Vue({
                                 if (this.isPic) {
                                     this.$refs.uploadPics.submit();
                                 } 
-                                    this.$message({
-                                        message: "成功保存并提交九小场所信息",
-                                        showClose: true
-                                    });
+                                this.$message({
+                                    message: "成功保存并提交九小场所信息",
+                                    showClose: true
+                                });
+                                if(this.isJxcsUser == false){
                                     loadDiv("jxcsplan/jxcsplan_list");
-                                
+                                }
                             }.bind(this), function (error) {
                                 console.log(error);
                             })
@@ -874,13 +1028,13 @@ new Vue({
                                 if (this.isPic) {
                                     this.$refs.uploadPics.submit();
                                 } 
-                                    this.$alert('成功保存九小场所信息', '提示', {
-                                        type: 'success',
-                                        confirmButtonText: '确定',
-                                        callback: action => {
-                                            loadDiv("jxcsplan/jxcsplan_list");
-                                        }
-                                    });
+                                this.$message({
+                                    message: "成功保存并提交九小场所信息",
+                                    showClose: true
+                                });
+                                if(this.isJxcsUser == false){
+                                    loadDiv("jxcsplan/jxcsplan_list");
+                                }
                                 
                             }.bind(this), function (error) {
                                 console.log(error);
@@ -898,9 +1052,6 @@ new Vue({
                 }
 
             });
-
-
-            
         },
         cancel: function () {
             loadDiv("jxcsplan/jxcsplan_list");
@@ -1005,7 +1156,7 @@ new Vue({
             });
         },
         //消防设施类型转换
-        getXfsslx: function(){
+        changeXfsslx: function(){
             for(var i in this.addForm.xfssList){
                 var length = this.addForm.xfssList[i].xfsslx.length;
                 this.addForm.xfssList[i].xfsslx = this.addForm.xfssList[i].xfsslx[length - 1];
