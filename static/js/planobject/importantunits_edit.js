@@ -12,7 +12,7 @@ new Vue({
             loading: false,
             uuid: "",
             //编辑表单
-            editForm:{
+            editForm: {
                 dwmc: '',
                 dwxz: '',
                 dwdz: '',
@@ -41,7 +41,7 @@ new Vue({
                 zdmj: '',
                 jzmj: '',
                 jzxxList: [],
-                zdbwList:[],
+                zdbwList: [],
                 bz: "",
                 jdh: "",
                 //创建人、修改人
@@ -61,7 +61,7 @@ new Vue({
             //建筑分类下拉框Data
             jzflData: [],
             //单位消防队伍类型下拉框
-            xfdwlxData: [{codeName:'企业专职消防队',codeValue:'0A01'},{codeName:'微型消防站',codeValue:'0A03'}],
+            xfdwlxData: [{ codeName: '企业专职消防队', codeValue: '0A01' }, { codeName: '微型消防站', codeValue: '0A03' }],
             //重点部位类型下拉框
             zdbwlxData: [],
             //使用性质下拉框
@@ -100,6 +100,16 @@ new Vue({
                 label: 'dzjc',
                 value: 'dzid'
             },
+            //信息校验规则
+            inforRules: {
+                dwmc: [{ required: true, message: '请输入单位名称', trigger: 'blur' }],
+                dwxz: [{ required: true, message: '请选择单位性质', trigger: 'change' }],
+                fhdj: [{ required: true, message: '请选择防火等级', trigger: 'change' }],
+                fhdzid: [{ required: true, message: '请选择单位防火管辖大队', trigger: 'change' }],
+                mhdzid: [{ required: true, message: '请选择单位灭火责任队站', trigger: 'change' }],
+                zdbwmc: [{ required: true, message: '请输入重点部位名称', trigger: 'blur' }],
+                zdbwlx: [{ required: true, message: '请选择重点部位类型', trigger: 'change' }],
+            },
             //当前登陆用户
             shiroData: [],
         }
@@ -130,30 +140,30 @@ new Vue({
                 this.editForm = result;
                 //行政区划
                 var xzqhArray = [];
-                if(result.xzqh!=null && result.xzqh!=""){
-                    if(result.xzqh.substr(2,4)!="0000"){
-                        xzqhArray.push(result.xzqh.substr(0,2) + "0000");
-                        if(result.xzqh.substr(4,2)!="00"){
-                            xzqhArray.push(result.xzqh.substr(0,4) + "00");
+                if (result.xzqh != null && result.xzqh != "") {
+                    if (result.xzqh.substr(2, 4) != "0000") {
+                        xzqhArray.push(result.xzqh.substr(0, 2) + "0000");
+                        if (result.xzqh.substr(4, 2) != "00") {
+                            xzqhArray.push(result.xzqh.substr(0, 4) + "00");
                         }
                     }
-                    xzqhArray.push(this.editForm.xzqh); 
+                    xzqhArray.push(this.editForm.xzqh);
                 }
                 this.editForm.xzqh = xzqhArray;
                 //防火队站
                 this.editForm.fhdzid = this.getXfdzArray(result.fhdzid);
                 //灭火队站
                 this.editForm.mhdzid = this.getXfdzArray(result.mhdzid);
-                
+
                 //根据重点单位ID获取消防队伍信息
                 this.getXfllListByZddwId(this.status);
 
                 //根据重点单位ID获取单位建筑信息
                 this.getJzxxListByZddwId(this.status);
-                
+
                 //根据重点单位ID获取重点部位信息
                 this.getZdbwListByZddwId(this.status);
-                
+
                 this.loading = false;
             }.bind(this), function (error) {
                 console.log(error)
@@ -161,23 +171,23 @@ new Vue({
         },
 
         //获取消防队站级联下拉框数组Array
-        getXfdzArray: function(temp){
+        getXfdzArray: function (temp) {
             var xfdzArray = [];
-            if(temp!=null && temp!=""){
-                for(var i in this.xfdzData){
-                    if(temp == this.xfdzData[i].dzid){
+            if (temp != null && temp != "") {
+                for (var i in this.xfdzData) {
+                    if (temp == this.xfdzData[i].dzid) {
                         xfdzArray.push(this.xfdzData[i].dzid);
-                    }else{
-                        for(var j in this.xfdzData[i].children){
-                            if(temp == this.xfdzData[i].children[j].dzid){
+                    } else {
+                        for (var j in this.xfdzData[i].children) {
+                            if (temp == this.xfdzData[i].children[j].dzid) {
                                 xfdzArray.push(this.xfdzData[i].dzid, this.xfdzData[i].children[j].dzid);
-                            }else{
-                                for(var k in this.xfdzData[i].children[j].children){
-                                    if(temp == this.xfdzData[i].children[j].children[k].dzid){
+                            } else {
+                                for (var k in this.xfdzData[i].children[j].children) {
+                                    if (temp == this.xfdzData[i].children[j].children[k].dzid) {
                                         xfdzArray.push(this.xfdzData[i].dzid, this.xfdzData[i].children[j].dzid, this.xfdzData[i].children[j].children[k].dzid);
-                                    }else{
-                                        for(var n in this.xfdzData[i].children[j].children[k].children){
-                                            if(temp == this.xfdzData[i].children[j].children[k].children[n].dzid){
+                                    } else {
+                                        for (var n in this.xfdzData[i].children[j].children[k].children) {
+                                            if (temp == this.xfdzData[i].children[j].children[k].children[n].dzid) {
                                                 xfdzArray.push(this.xfdzData[i].dzid, this.xfdzData[i].children[j].dzid, this.xfdzData[i].children[j].children[k].dzid, this.xfdzData[i].children[j].children[k].children[n].dzid);
                                             }
                                         }
@@ -186,13 +196,13 @@ new Vue({
                             }
                         }
                     }
-                }  
+                }
             }
             return xfdzArray;
         },
 
         //根据重点单位ID获取消防队伍信息
-        getXfllListByZddwId: function(zddwid) {
+        getXfllListByZddwId: function (zddwid) {
             axios.get('/dpapi/importantunits/doFindXfllListByZddwId/' + zddwid).then(function (res) {
                 this.editForm.xfllList = res.data.result;
             }.bind(this), function (error) {
@@ -201,18 +211,18 @@ new Vue({
         },
 
         //根据重点单位ID获取重点单位建筑信息
-        getJzxxListByZddwId: function(zddwId){
+        getJzxxListByZddwId: function (zddwId) {
             axios.get('/dpapi/importantunits/doFindJzxxListByZddwId/' + zddwId).then(function (res) {
                 this.editForm.jzxxList = res.data.result;
             }.bind(this), function (error) {
                 console.log(error)
             })
         },
-        
+
         //根据重点单位ID获取重点部位信息
-        getZdbwListByZddwId: function(zddwId){
+        getZdbwListByZddwId: function (zddwId) {
             axios.get('/dpapi/importantparts/doFindZdbwListByZddwId/' + zddwId).then(function (res) {
-                if(res.data.result.length > 0){
+                if (res.data.result.length > 0) {
                     //重点部位类型
                     this.getZdbwlxData();
                     //使用性质
@@ -224,27 +234,27 @@ new Vue({
                 }
                 this.editForm.zdbwList = res.data.result;
                 //重点部位类型不能修改
-                for(var i in this.editForm.zdbwList){
+                for (var i in this.editForm.zdbwList) {
                     this.editForm.zdbwList[i].zdbwlxDisabled = false;
-                    switch(this.editForm.zdbwList[i].zdbwlx){
+                    switch (this.editForm.zdbwList[i].zdbwlx) {
                         case "10":
                             this.editForm.zdbwList[i].zzl = [];
                             this.editForm.zdbwList[i].cgl = [];
-                            if(this.editForm.zdbwList[i].jzl == null){
+                            if (this.editForm.zdbwList[i].jzl == null) {
                                 this.editForm.zdbwList[i].jzl = [];
                             }
                             break;
                         case "20":
                             this.editForm.zdbwList[i].jzl = [];
                             this.editForm.zdbwList[i].cgl = [];
-                            if(this.editForm.zdbwList[i].zzl == null){
+                            if (this.editForm.zdbwList[i].zzl == null) {
                                 this.editForm.zdbwList[i].zzl = [];
                             }
                             break;
                         case "30":
                             this.editForm.zdbwList[i].jzl = [];
                             this.editForm.zdbwList[i].zzl = [];
-                            if(this.editForm.zdbwList[i].cgl == null){
+                            if (this.editForm.zdbwList[i].cgl == null) {
                                 this.editForm.zdbwList[i].cgl = [];
                             }
                             break;
@@ -279,10 +289,10 @@ new Vue({
         },
 
         //行政区划下拉框
-        getXzqhData: function(){
-            axios.get('/api/codelist/getXzqhTreeByUser').then(function(res){
+        getXzqhData: function () {
+            axios.get('/api/codelist/getXzqhTreeByUser').then(function (res) {
                 this.xzqhData = res.data.result;
-            }.bind(this),function(error){
+            }.bind(this), function (error) {
                 console.log(error);
             })
         },
@@ -297,7 +307,7 @@ new Vue({
             }
             axios.post('/dpapi/xfdz/findSjdzByUserAll', params).then(function (res) {
                 this.xfdzData = res.data.result;
-                if(this.status != 0){
+                if (this.status != 0) {
                     //根据重点单位id获取重点单位详情
                     this.getDetails();
                 }
@@ -307,16 +317,16 @@ new Vue({
         },
 
         //重点部位类型下拉框
-        getZdbwlxData: function(){
+        getZdbwlxData: function () {
             axios.get('/api/codelist/getCodetype/ZDBWLX').then(function (res) {
                 this.zdbwlxData = res.data.result;
-            }.bind(this),function(error){
+            }.bind(this), function (error) {
                 console.log(error);
             })
         },
 
         //使用性质下拉框
-        getSyxzData: function(){
+        getSyxzData: function () {
             axios.get('/api/codelist/getDzlxTree/JZSYXZ').then(function (res) {
                 this.syxzData = res.data.result;
             }.bind(this), function (error) {
@@ -325,19 +335,19 @@ new Vue({
         },
 
         //建筑结构下拉框
-        getJzjgData: function(){
+        getJzjgData: function () {
             axios.get('/api/codelist/getCodetype/JZJG').then(function (res) {
                 this.jzjgData = res.data.result;
-            }.bind(this),function(error){
+            }.bind(this), function (error) {
                 console.log(error);
             })
         },
 
         //储罐类型下拉框
-        getCglxData: function(){
+        getCglxData: function () {
             axios.get('/api/codelist/getCodetype/CGLX').then(function (res) {
                 this.cglxData = res.data.result;
-            }.bind(this),function(error){
+            }.bind(this), function (error) {
                 console.log(error);
             })
         },
@@ -352,7 +362,7 @@ new Vue({
         },
 
         //单位消防力量新增
-        addDomainXfll: function(){
+        addDomainXfll: function () {
             this.editForm.xfllList.push({
                 xfdwlx: '',
                 xfdwrs: '',
@@ -364,7 +374,7 @@ new Vue({
         },
 
         //单位消防力量移除
-        removeDomainXfll: function(item){
+        removeDomainXfll: function (item) {
             var index = this.editForm.xfllList.indexOf(item);
             if (index !== -1) {
                 this.editForm.xfllList.splice(index, 1);
@@ -372,7 +382,7 @@ new Vue({
         },
 
         //建筑信息新增
-        addDomainJzxx: function(){
+        addDomainJzxx: function () {
             this.editForm.jzxxList.push({
                 jzid: '',
                 jzmc: '',
@@ -381,16 +391,16 @@ new Vue({
         },
 
         //建筑信息移除
-        removeDomainJzxx: function(item){
+        removeDomainJzxx: function (item) {
             var index = this.editForm.jzxxList.indexOf(item);
             if (index !== -1) {
                 this.editForm.jzxxList.splice(index, 1);
             }
-            
+
         },
 
         //获取建筑信息列表
-        getJzxxList: function(type, index){
+        getJzxxList: function (type, index) {
             if (type == 'page') {
                 this.tableData_building = [];
             } else {
@@ -404,7 +414,7 @@ new Vue({
             this.loading_building = true;
             var params = {
                 jzmc: this.searchForm_building.jzmc,
-                jdh: this.shiroData.organizationVO.jgid.substr(0,2) + '000000',
+                jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
                 pageSize: this.pageSize_building,
                 pageNum: this.currentPage_building,
                 orgUuid: this.shiroData.organizationVO.uuid,
@@ -442,8 +452,8 @@ new Vue({
         },
 
         //重点部位新增
-        addDomainZdbw: function(){
-            if(this.zdbwlxData.length == 0){
+        addDomainZdbw: function () {
+            if (this.zdbwlxData.length == 0) {
                 this.getZdbwlxData();
             }
             this.editForm.zdbwList.push({
@@ -466,7 +476,7 @@ new Vue({
         },
 
         //重点部位移除
-        removeDomainZdbw: function(item){
+        removeDomainZdbw: function (item) {
             var index = this.editForm.zdbwList.indexOf(item);
             if (index !== -1) {
                 this.editForm.zdbwList.splice(index, 1);
@@ -474,7 +484,7 @@ new Vue({
         },
 
         //危险介质新增
-        addDomainWxjz: function(index){ 
+        addDomainWxjz: function (index) {
             this.editForm.zdbwList[index].jzl.wxjzList.push({
                 jzmc: '',
                 jzsjcl: '',
@@ -485,7 +495,7 @@ new Vue({
         },
 
         //危险介质移除
-        removeDomainWxjz: function(index,item){
+        removeDomainWxjz: function (index, item) {
             var temp = this.editForm.zdbwList[index].jzl.wxjzList.indexOf(item);
             if (temp !== -1) {
                 this.editForm.zdbwList[index].jzl.wxjzList.splice(temp, 1);
@@ -493,8 +503,8 @@ new Vue({
         },
 
         //储罐新增
-        addDomainCg: function(index){
-            if(this.cglxData.length == 0){
+        addDomainCg: function (index) {
+            if (this.cglxData.length == 0) {
                 this.getCglxData();
             }
             this.editForm.zdbwList[index].cgl.cgList.push({
@@ -518,7 +528,7 @@ new Vue({
         },
 
         //储罐移除
-        removeDomainCg: function(index,item){
+        removeDomainCg: function (index, item) {
             var temp = this.editForm.zdbwList[index].cgl.cgList.indexOf(item);
             if (temp !== -1) {
                 this.editForm.zdbwList[index].cgl.cgList.splice(temp, 1);
@@ -526,13 +536,13 @@ new Vue({
         },
 
         //重点部位类型Change
-        zdbwlxChange: function(index){
+        zdbwlxChange: function (index) {
             var zdbwlx = this.editForm.zdbwList[index].zdbwlx;
-            if(zdbwlx == "10"){
-                if(this.syxzData.length == 0){
+            if (zdbwlx == "10") {
+                if (this.syxzData.length == 0) {
                     this.getSyxzData();
                 }
-                if(this.jzjgData.length == 0){
+                if (this.jzjgData.length == 0) {
                     this.getJzjgData();
                 }
                 this.editForm.zdbwList[index].jzl = {
@@ -542,8 +552,8 @@ new Vue({
                     gnms: '',
                     wxjzList: [],
                 }
-            }else if(zdbwlx == "20"){
-                if(this.jzjgData.length == 0){
+            } else if (zdbwlx == "20") {
+                if (this.jzjgData.length == 0) {
                     this.getJzjgData();
                 }
                 this.editForm.zdbwList[index].zzl = {
@@ -557,7 +567,7 @@ new Vue({
                     cwxx: '',
                     gylc: '',
                 }
-            }else if(zdbwlx == "30"){
+            } else if (zdbwlx == "30") {
                 this.editForm.zdbwList[index].cgl = {
                     cgsl: '',
                     cgjg: '',
@@ -574,47 +584,48 @@ new Vue({
             }
         },
 
+        //作废
         //保存前校验
         validateForm: function () {
-            if (this.editForm.dwmc=='' || this.editForm.dwmc==null) {
+            if (this.editForm.dwmc == '' || this.editForm.dwmc == null) {
                 this.$message.warning({
                     message: '请输入单位名称',
                     showClose: true
                 });
                 return false;
-            }else if(this.editForm.dwxz=='' || this.editForm.dwxz==null){
+            } else if (this.editForm.dwxz == '' || this.editForm.dwxz == null) {
                 this.$message.warning({
                     message: '请选择单位性质',
                     showClose: true
                 });
                 return false;
-            }else if(this.editForm.fhdj=='' || this.editForm.fhdj==null){
+            } else if (this.editForm.fhdj == '' || this.editForm.fhdj == null) {
                 this.$message.warning({
                     message: '请选择防火等级',
                     showClose: true
                 });
                 return false;
-            }else if(this.editForm.fhdzid=='' || this.editForm.fhdzid==null){
+            } else if (this.editForm.fhdzid == '' || this.editForm.fhdzid == null) {
                 this.$message.warning({
                     message: '请选择单位防火队站',
                     showClose: true
                 });
                 return false;
-            }else if(this.editForm.mhdzid=='' || this.editForm.mhdzid==null){
+            } else if (this.editForm.mhdzid == '' || this.editForm.mhdzid == null) {
                 this.$message.warning({
                     message: '请选择单位灭火队站',
                     showClose: true
                 });
                 return false;
-            }else if(this.editForm.zdbwList.length > 0){
-                for(var i in this.editForm.zdbwList){
-                    if(this.editForm.zdbwList[i].zdbwmc=='' || this.editForm.zdbwList[i].zdbwmc==null){
+            } else if (this.editForm.zdbwList.length > 0) {
+                for (var i in this.editForm.zdbwList) {
+                    if (this.editForm.zdbwList[i].zdbwmc == '' || this.editForm.zdbwList[i].zdbwmc == null) {
                         this.$message.warning({
                             message: '请输入重点部位名称',
                             showClose: true
                         });
                         return false;
-                    }else if(this.editForm.zdbwList[i].zdbwlx=='' || this.editForm.zdbwList[i].zdbwlx==null){
+                    } else if (this.editForm.zdbwList[i].zdbwlx == '' || this.editForm.zdbwList[i].zdbwlx == null) {
                         this.$message.warning({
                             message: '请选择重点部位类型',
                             showClose: true
@@ -622,169 +633,175 @@ new Vue({
                         return false;
                     }
                 }
-                
             }
             return true;
         },
 
         //保存
-        save: function () {
-            if(this.validateForm() == true) {
-                var jgid = this.shiroData.organizationVO.jgid;
-                //行政区划
-                var xzqhString = "";
-                if(this.editForm.xzqh!="" && this.editForm.xzqh.length>0){
-                    xzqhString = this.editForm.xzqh[this.editForm.xzqh.length-1];
-                }
-                //防火队站ID
-                var fhdzidString = this.editForm.fhdzid[this.editForm.fhdzid.length-1];
-                //灭火队站ID
-                var mhdzidString = this.editForm.mhdzid[this.editForm.mhdzid.length-1];
-                var params = {
-                    dwmc: this.editForm.dwmc,
-                    dwxz: this.editForm.dwxz,
-                    dwdz: this.editForm.dwdz,
-                    xzqh: xzqhString,
-                    fhdj: this.editForm.fhdj,
-                    zbdh: this.editForm.zbdh,
-                    dwgk: this.editForm.dwgk,
-                    gisX: this.editForm.gisX,
-                    gisY: this.editForm.gisY,
-                    lon: this.editForm.lon,
-                    lat: this.editForm.lat,
-                    plqkd: this.editForm.plqkd,
-                    plqkn: this.editForm.plqkn,
-                    plqkx: this.editForm.plqkx,
-                    plqkb: this.editForm.plqkb,
-                    fhdzid: fhdzidString,
-                    mhdzid: mhdzidString,
-                    xfzrr: this.editForm.xfzrr,
-                    xfzrrdh: this.editForm.xfzrrdh,
-                    xfglr: this.editForm.xfglr,
-                    xfglrdh: this.editForm.xfglrdh,
-                    xfllList: this.editForm.xfllList,
-                    xfsssl: this.editForm.xfsssl,
-                    jzfl: this.editForm.jzfl,
-                    jzsl: this.editForm.jzsl,
-                    zdmj: this.editForm.zdmj,
-                    jzmj: this.editForm.jzmj,
-                    jzxxList: this.editForm.jzxxList,
-                    zdbwList: this.editForm.zdbwList,
-                    bz: this.editForm.bz,
-                    jdh: jgid.substr(0,2)+'000000',
-                    datasource: jgid,
-                    cjrid: "",
-                    cjrmc: "",
-                    xgrid: "",
-                    xgrmc: "",
-                };
-                if(this.status == 0) {//新增
-                    axios.get('/dpapi/importantunits/doCheckName/' + this.editForm.dwmc).then(function (res) {
-                        if(res.data.result > 0) {
-                            this.$message.warning({
-                                message: '中文名已存在，请重新命名',
-                                showClose: true
-                            });
-                        }else{
-                            params.cjrid = this.shiroData.userid;
-                            params.cjrmc = this.shiroData.realName;
-
-                            //重点部位中创建人信息
-                            for(var i in params.zdbwList){
-                                params.zdbwList[i].cjrid = this.shiroData.userid;
-                                params.zdbwList[i].cjrmc = this.shiroData.realName;
-                            }
-
-                            axios.post('/dpapi/importantunits/doInsertByVO', params).then(function (res) {
-                                if(res.data.result != null) {
-                                    this.$alert('保存成功', '提示', {
-                                        type: 'success',
-                                        confirmButtonText: '确定',
-                                        callback: action => {
-                                            loadDiv("planobject/importantunits_list");
-                                        }
-                                    });
-                                }else {
-                                    this.$alert('保存失败', '提示', {
-                                        type: 'error',
-                                        confirmButtonText: '确定',
-                                        callback: action => {
-                                            loadDiv("planobject/importantunits_list");
-                                        }
-                                    });
-                                }
-                            }.bind(this), function (error) {
-                                console.log(error);
-                            })
-                        }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
-                    
-                    
-                }else{//修改
-                    params.xgrid = this.shiroData.userid;
-                    params.xgrmc = this.shiroData.realName;
-                    params.uuid = this.editForm.uuid;
-
-                    //重点部位中修改人信息
-                    for(var i in params.zdbwList){
-                        params.zdbwList[i].xgrid = this.shiroData.userid;
-                        params.zdbwList[i].xgrmc = this.shiroData.realName;
-                        //对重点部位建筑类、装置类、储罐类对象进行处理
-                        switch(params.zdbwList[i].zdbwlx){
-                            case "10":
-                                params.zdbwList[i].zzl = null;
-                                params.zdbwList[i].cgl = null;
-                                if(params.zdbwList[i].jzl.length == 0){
-                                    params.zdbwList[i].jzl = null;
-                                }
-                                break;
-                            case "20":
-                                params.zdbwList[i].jzl = null;
-                                params.zdbwList[i].cgl = null;
-                                if(params.zdbwList[i].zzl.length == 0){
-                                    params.zdbwList[i].zzl = null;
-                                }
-                                break;
-                            case "30":
-                                params.zdbwList[i].jzl = null;
-                                params.zdbwList[i].zzl = null;
-                                if(params.zdbwList[i].cgl.length == 0){
-                                    params.zdbwList[i].cgl = null;
-                                }
-                                break;
-                            default:
-                                params.zdbwList[i].jzl = null;
-                                params.zdbwList[i].zzl = null;
-                                params.zdbwList[i].cgl = null;
-                                break;
-                        }   
+        save: function (editForm) {
+            this.$refs[editForm].validate((valid) => {
+                if (valid) {
+                    var jgid = this.shiroData.organizationVO.jgid;
+                    //行政区划
+                    var xzqhString = "";
+                    if (this.editForm.xzqh != "" && this.editForm.xzqh.length > 0) {
+                        xzqhString = this.editForm.xzqh[this.editForm.xzqh.length - 1];
                     }
+                    //防火队站ID
+                    var fhdzidString = this.editForm.fhdzid[this.editForm.fhdzid.length - 1];
+                    //灭火队站ID
+                    var mhdzidString = this.editForm.mhdzid[this.editForm.mhdzid.length - 1];
+                    var params = {
+                        dwmc: this.editForm.dwmc,
+                        dwxz: this.editForm.dwxz,
+                        dwdz: this.editForm.dwdz,
+                        xzqh: xzqhString,
+                        fhdj: this.editForm.fhdj,
+                        zbdh: this.editForm.zbdh,
+                        dwgk: this.editForm.dwgk,
+                        gisX: this.editForm.gisX,
+                        gisY: this.editForm.gisY,
+                        lon: this.editForm.lon,
+                        lat: this.editForm.lat,
+                        plqkd: this.editForm.plqkd,
+                        plqkn: this.editForm.plqkn,
+                        plqkx: this.editForm.plqkx,
+                        plqkb: this.editForm.plqkb,
+                        fhdzid: fhdzidString,
+                        mhdzid: mhdzidString,
+                        xfzrr: this.editForm.xfzrr,
+                        xfzrrdh: this.editForm.xfzrrdh,
+                        xfglr: this.editForm.xfglr,
+                        xfglrdh: this.editForm.xfglrdh,
+                        xfllList: this.editForm.xfllList,
+                        xfsssl: this.editForm.xfsssl,
+                        jzfl: this.editForm.jzfl,
+                        jzsl: this.editForm.jzsl,
+                        zdmj: this.editForm.zdmj,
+                        jzmj: this.editForm.jzmj,
+                        jzxxList: this.editForm.jzxxList,
+                        zdbwList: this.editForm.zdbwList,
+                        bz: this.editForm.bz,
+                        jdh: jgid.substr(0, 2) + '000000',
+                        datasource: jgid,
+                        cjrid: "",
+                        cjrmc: "",
+                        xgrid: "",
+                        xgrmc: "",
+                    };
+                    if (this.status == 0) {//新增
+                        axios.get('/dpapi/importantunits/doCheckName/' + this.editForm.dwmc).then(function (res) {
+                            if (res.data.result > 0) {
+                                this.$message.warning({
+                                    message: '中文名已存在，请重新命名',
+                                    showClose: true
+                                });
+                            } else {
+                                params.cjrid = this.shiroData.userid;
+                                params.cjrmc = this.shiroData.realName;
 
-                    axios.post('/dpapi/importantunits/doUpdateByVO', params).then(function (res) {
-                        if(res.data.result != null) {
-                            this.$alert('保存成功', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("planobject/importantunits_list");
+                                //重点部位中创建人信息
+                                for (var i in params.zdbwList) {
+                                    params.zdbwList[i].cjrid = this.shiroData.userid;
+                                    params.zdbwList[i].cjrmc = this.shiroData.realName;
                                 }
-                            });
-                        }else {
-                            this.$alert('保存失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("planobject/importantunits_list");
-                                }
-                            });
+
+                                axios.post('/dpapi/importantunits/doInsertByVO', params).then(function (res) {
+                                    if (res.data.result != null) {
+                                        this.$alert('保存成功', '提示', {
+                                            type: 'success',
+                                            confirmButtonText: '确定',
+                                            callback: action => {
+                                                loadDiv("planobject/importantunits_list");
+                                            }
+                                        });
+                                    } else {
+                                        this.$alert('保存失败', '提示', {
+                                            type: 'error',
+                                            confirmButtonText: '确定',
+                                            callback: action => {
+                                                loadDiv("planobject/importantunits_list");
+                                            }
+                                        });
+                                    }
+                                }.bind(this), function (error) {
+                                    console.log(error);
+                                })
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+
+
+                    } else {//修改
+                        params.xgrid = this.shiroData.userid;
+                        params.xgrmc = this.shiroData.realName;
+                        params.uuid = this.editForm.uuid;
+
+                        //重点部位中修改人信息
+                        for (var i in params.zdbwList) {
+                            params.zdbwList[i].xgrid = this.shiroData.userid;
+                            params.zdbwList[i].xgrmc = this.shiroData.realName;
+                            //对重点部位建筑类、装置类、储罐类对象进行处理
+                            switch (params.zdbwList[i].zdbwlx) {
+                                case "10":
+                                    params.zdbwList[i].zzl = null;
+                                    params.zdbwList[i].cgl = null;
+                                    if (params.zdbwList[i].jzl.length == 0) {
+                                        params.zdbwList[i].jzl = null;
+                                    }
+                                    break;
+                                case "20":
+                                    params.zdbwList[i].jzl = null;
+                                    params.zdbwList[i].cgl = null;
+                                    if (params.zdbwList[i].zzl.length == 0) {
+                                        params.zdbwList[i].zzl = null;
+                                    }
+                                    break;
+                                case "30":
+                                    params.zdbwList[i].jzl = null;
+                                    params.zdbwList[i].zzl = null;
+                                    if (params.zdbwList[i].cgl.length == 0) {
+                                        params.zdbwList[i].cgl = null;
+                                    }
+                                    break;
+                                default:
+                                    params.zdbwList[i].jzl = null;
+                                    params.zdbwList[i].zzl = null;
+                                    params.zdbwList[i].cgl = null;
+                                    break;
+                            }
                         }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
+
+                        axios.post('/dpapi/importantunits/doUpdateByVO', params).then(function (res) {
+                            if (res.data.result != null) {
+                                this.$alert('保存成功', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("planobject/importantunits_list");
+                                    }
+                                });
+                            } else {
+                                this.$alert('保存失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("planobject/importantunits_list");
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    }
+                } else {
+                    console.log('error save!!');
+                    //返回顶部
+                    $("#app").animate({ scrollTop: 0 }, scrollSpeed);
+                    return false;
                 }
-            }
+            });
         },
 
         //取消按钮
@@ -793,8 +810,8 @@ new Vue({
         },
 
         //判断对象{}为空对象
-        validateIsEmptyObject: function(obj){
-            for(var key in obj){
+        validateIsEmptyObject: function (obj) {
+            for (var key in obj) {
                 return false;
             }
             return true;

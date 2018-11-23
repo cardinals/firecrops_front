@@ -369,7 +369,7 @@
 							<el-card v-for="(domain, index) in editForm.chuguanList" :key="domain.key" class="card_style">
 								<div slot="header" class="clearfix">
 									<strong class="card_title_font">罐体信息{{index+1}}</strong>
-									<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomain(domain)" class="r" style="margin:5px 0 0"></el-button>
+									<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomain(domain)" class="r" style="margin:0px -25px 0"></el-button>
 								</div>
 								<el-row>
 									<el-col :span="7">
