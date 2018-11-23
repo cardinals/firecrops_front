@@ -180,8 +180,12 @@
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
+								<!-- <el-form-item label="车载灭火剂类别">
+									<el-input maxlength="30" size="small" v-model="addForm.czmhjlb" placeholder="请选择" clearable></el-input>
+								</el-form-item> -->
 								<el-form-item label="车载灭火剂类别">
-									<el-input maxlength="2" size="small" v-model="addForm.czmhjlb" placeholder="请选择" clearable></el-input>
+									<el-cascader :options="YJLX_data" :props="defaultProps" size="small" v-model="addForm.czmhjlb" placeholder="请选择" class="searchSelect"
+									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>

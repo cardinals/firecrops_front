@@ -71,6 +71,7 @@ new Vue({
             ZHCS_data: [],
             HZWXX_data: [],
             DJFALX_data: [],
+            YJLX_data: [],
            
             //级联选择器匹配结果集字段
             props: {
@@ -189,6 +190,7 @@ new Vue({
         this.getAllTypesData();
         this.getAllStatesData();
         this.getAllXzqhDataTree();
+        this.getAllYjlxDataTree();
         // this.getAllTeamsData();
         this.roleData();
     },
@@ -220,6 +222,18 @@ new Vue({
                 axios.get('/dpapi/fireengine/' + this.status).then(function (res) {
                     //修改存在问题
                     this.addForm = res.data.result;
+                    //车载灭火器类别格式化
+                    //药剂类型格式化
+                    var czmhjlbArray = [];
+                    if (this.addForm.czmhjlb != null && this.addForm.czmhjlb != "" && !this.addForm.czmhjlb.endsWith("000000")) {
+                        czmhjlbArray.push(this.addForm.czmhjlb.substr(0, 2) + '000000');
+                        if (!this.addForm.czmhjlb.endsWith("0000")) {
+                            czmhjlbArray.push(this.addForm.czmhjlb.substr(0, 4) + '0000');
+                        }
+                    }
+                    czmhjlbArray.push(this.addForm.czmhjlb);
+                    this.addForm.czmhjlb = czmhjlbArray;
+
                     //车辆类型格式化
                     if (this.addForm.cllx != '' && this.addForm.cllx != null) {
                         if (this.addForm.cllx.endsWith("000000")) {
@@ -372,6 +386,14 @@ new Vue({
                 console.log(error);
             })
         },
+        //药剂类型级联选择器数据
+        getAllYjlxDataTree: function () {
+            axios.post('/api/codelist/getYjlxTree/YJLX').then(function (res) {
+                this.YJLX_data = res.data.result;
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
         
         pickerOptions0: {
             disabledDate(time) {
@@ -403,6 +425,11 @@ new Vue({
                             this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
                         } else {
                             this.addForm.ssdz = '';
+                        }
+                        if (this.addForm.czmhjlb.length > 0) {
+                            this.addForm.czmhjlb = this.addForm.czmhjlb[this.addForm.czmhjlb.length - 1];
+                        } else {
+                            this.addForm.czmhjlb = '';
                         }
                         axios.post('/dpapi/fireengine/insertByVO', this.addForm).then(function (res) {
                             if (res.data.result >= 1) {
@@ -445,6 +472,11 @@ new Vue({
                             this.addForm.ssdz = this.addForm.ssdz[this.addForm.ssdz.length - 1];
                         } else {
                             this.addForm.ssdz = '';
+                        }
+                        if (this.addForm.czmhjlb.length > 0) {
+                            this.addForm.czmhjlb = this.addForm.czmhjlb[this.addForm.czmhjlb.length - 1];
+                        } else {
+                            this.addForm.czmhjlb = '';
                         }
                         axios.post('/dpapi/fireengine/doUpdateFireengine', this.addForm).then(function (res) {
                             if (res.data.result >= 1) {
