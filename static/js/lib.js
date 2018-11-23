@@ -3,6 +3,7 @@ document.write('<scr' + 'ipt type="text/javascript" src="' + '../../static/js/zz
 document.write('<scr' + 'ipt type="text/javascript" src="' + '../../static/js/zzzlib/elementUI.js' + '"></scr' + 'ipt>');
 document.write('<scr' + 'ipt type="text/javascript" src="' + '../../static/js/zzzlib/axios.min.js' + '"></scr' + 'ipt>');
 document.write('<scr' + 'ipt type="text/javascript" src="' + '../../static/js/zzzlib/vue-resource.min.js' + '"></scr' + 'ipt>');
+document.write('<scr' + 'ipt type="text/javascript" src="' + '../../static/js/common/parameters.js'+'"></scr' + 'ipt>');
 
 
 
