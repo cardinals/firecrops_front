@@ -680,7 +680,7 @@ new Vue({
             this.loading_trsy = true;
 
             var params = {
-                trsy_trsymc: this.searchForm.trsy_trsymc,
+                trsy_trsymc: this.searchForm.trsy_trsymc.replace(/%/g,"\\%"),
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 // orgUuid: this.shiroData.organizationVO.uuid,
