@@ -84,13 +84,13 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item label="GIS_X">
-									<el-input-number type="number" size="small" v-model="editForm.gisX" :min="-99999.9999999999" :max="99999.9999999999" placeholder="GIS_X"></el-input-number>
+									<el-input-number type="number" size="small" v-model="editForm.gisX" :precision="10" :min="-99999.9999999999" :max="99999.9999999999" placeholder="GIS_X"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="GIS_Y">
-									<el-input-number type="number" size="small" v-model="editForm.gisY" :min="-99999.9999999999" :max="99999.9999999999" placeholder="GIS_Y"></el-input-number>
+									<el-input-number type="number" size="small" v-model="editForm.gisY" precision="10" :min="-99999.9999999999" :max="99999.9999999999" placeholder="GIS_Y"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -99,13 +99,13 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item label="经度">
-									<el-input-number type="number" size="small" v-model="editForm.lon" :min="-180" :max="180" placeholder="经度"></el-input-number>
+									<el-input-number type="number" size="small" v-model="editForm.lon" precision="10" :min="-99999.9999999999" :max="99999.9999999999" placeholder="经度"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="纬度">
-									<el-input-number type="number" size="small" v-model="editForm.lat" :min="-90" :max="90" placeholder="纬度"></el-input-number>
+									<el-input-number type="number" size="small" v-model="editForm.lat" precision="10" :min="-99999.9999999999" :max="99999.9999999999" placeholder="纬度"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -205,7 +205,7 @@
 							</el-col>
 						</el-row>
 						<el-card v-for="(xfll,index) in editForm.xfllList" :key="xfll.key" class="card_style">
-							<div slot="header" class="clearfix">
+							<div slot="header">
 								<strong class="card_title_font">单位消防队伍{{index+1}}</strong>
 								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainXfll(xfll)" class="r" style="margin:-1px 0px 1px"></el-button>
 							</div>
@@ -222,14 +222,14 @@
 							<el-row>
 								<el-col :span="11">
 									<el-form-item label="消防队伍人数">
-										<el-input-number v-model="xfll.xfdwrs" size="small" :min="0" :max="9999999999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"
+										<el-input-number v-model="xfll.xfdwrs" size="small" :precision="0" :min="0" :max="9999999999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"
 										 class="searchSelect"></el-input-number>
 									</el-form-item>
 								</el-col>
 								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
 									<el-form-item label="消防队伍车辆数">
-										<el-input-number v-model="xfll.xfdwcls" size="small" :min="0" :max="99999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"
+										<el-input-number v-model="xfll.xfdwcls" size="small" :precision="0" :min="0" :max="99999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"
 										 class="searchSelect"></el-input-number>
 									</el-form-item>
 								</el-col>
@@ -267,7 +267,7 @@
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="建筑数量">
-									<el-input-number v-model="editForm.jzsl" size="small" :min="0" :max="9999999999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"></el-input-number>
+									<el-input-number v-model="editForm.jzsl" size="small" :precision="0":min="0" :max="9999999999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -275,13 +275,13 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item label="占地面积(㎡)">
-									<el-input-number v-model="editForm.zdmj" size="small" :min="0" :max="999999999999.99" class="searchSelect"></el-input-number>
+									<el-input-number v-model="editForm.zdmj" size="small" :precision="2" :min="0" :max="999999999999.99" class="searchSelect"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="建筑面积(㎡)">
-									<el-input-number v-model="editForm.jzmj" size="small" :min="0" :max="999999999999.99" class="searchSelect"></el-input-number>
+									<el-input-number v-model="editForm.jzmj" size="small" :precision="2" :min="0" :max="999999999999.99" class="searchSelect"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -317,19 +317,19 @@
 							</el-col>
 						</el-row>
 						<el-card v-for="(zdbw,index) in editForm.zdbwList" :key="zdbw.key" class="card_style">
-							<div slot="header" class="clearfix">
-								<strong class="card_title_font" style="line-height: 30px;">重点部位{{index+1}}</strong>
+							<div slot="header">
+								<strong class="card_title_font">重点部位{{index+1}}</strong>
 								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainZdbw(zdbw)" class="r" style="margin:-1px 0px 1px"></el-button>
 							</div>
 							<el-row>
 								<el-col :span="11">
-									<el-form-item label="重点部位名称" prop="zdbwmc">
+									<el-form-item label="重点部位名称" :rules="inforRules.zdbwmc">
 										<el-input size="small" v-model="zdbw.zdbwmc" maxlength="50" placeholder="重点部位名称" class="searchSelect"></el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
-									<el-form-item label="重点部位类型" prop="zdbwlx">
+									<el-form-item label="重点部位类型" :rules="inforRules.zdbwlx">
 										<el-select size="small" v-model="zdbw.zdbwlx" placeholder="请选择" class="searchSelect" clearable @change="zdbwlxChange(index)"
 										 :disabled="zdbw.zdbwlxDisabled">
 											<el-option v-for="item in zdbwlxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
@@ -396,7 +396,7 @@
 									<el-col :span="11">
 										<el-form-item label="区域面积(㎡)">
 											<el-input-number v-model="zdbw.jzl.qymj" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
-											 :min="0" :max="99999999.99"></el-input-number>
+											:precision="2" :min="0" :max="99999999.99"></el-input-number>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
@@ -428,7 +428,7 @@
 										<el-col :span="1">&nbsp;</el-col>
 										<el-col :span="11">
 											<el-form-item :label="'介质'+(index1+1)+'实际储量'">
-												<el-input-number v-model="wxjz.jzsjcl" size="small" :min="0" :max="999.99"></el-input-number>
+												<el-input-number v-model="wxjz.jzsjcl" size="small" :precision="2" :min="0" :max="999.99"></el-input-number>
 											</el-form-item>
 										</el-col>
 										<el-col :span="1">
@@ -477,13 +477,13 @@
 								<el-row>
 									<el-col :span="11">
 										<el-form-item label="占地面积(㎡)">
-											<el-input-number v-model="zdbw.zzl.zdmj" size="small" :min="0" :max="99999999.99"></el-input-number>
+											<el-input-number v-model="zdbw.zzl.zdmj" size="small" :precision="2" :min="0" :max="99999999.99"></el-input-number>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
 									<el-col :span="11">
 										<el-form-item label="装置高度(m)">
-											<el-input-number v-model="zdbw.zzl.zzgd" size="small" :min="0" :max="99999999.99"></el-input-number>
+											<el-input-number v-model="zdbw.zzl.zzgd" size="small" :precision="2" :min="0" :max="99999999.99"></el-input-number>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
@@ -533,13 +533,13 @@
 								<el-row>
 									<el-col :span="11">
 										<el-form-item label="储罐数量">
-											<el-input-number v-model="zdbw.cgl.cgsl" size="small" :min="0" :max="9999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"></el-input-number>
+											<el-input-number v-model="zdbw.cgl.cgsl" size="small" :precision="0" :min="0" :max="9999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"></el-input-number>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
 									<el-col :span="11">
 										<el-form-item label="储罐间隔(m)">
-											<el-input-number v-model="zdbw.cgl.cgjg" size="small" :min="0" :max="99999999.99"></el-input-number>
+											<el-input-number v-model="zdbw.cgl.cgjg" size="small" :precision="2" :min="0" :max="99999999.99"></el-input-number>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
@@ -547,7 +547,7 @@
 								<el-row>
 									<el-col :span="11">
 										<el-form-item label="总容积(m³)">
-											<el-input-number v-model="zdbw.cgl.zrj" size="small" :min="0" :max="99999999.99" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"></el-input-number>
+											<el-input-number v-model="zdbw.cgl.zrj" size="small" :precision="2" :min="0" :max="99999999.99" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"></el-input-number>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
@@ -635,7 +635,7 @@
 										<el-col :span="1">&nbsp;</el-col>
 										<el-col :span="11">
 											<el-form-item :label="'储罐'+(index1+1)+'容量(m³)'">
-												<el-input-number v-model="cg.cgrl" size="small" :min="0" :max="99999999.99"></el-input-number>
+												<el-input-number v-model="cg.cgrl" size="small" :precision="2" :min="0" :max="99999999.99"></el-input-number>
 											</el-form-item>
 										</el-col>
 										<el-col :span="1">&nbsp;</el-col>
@@ -643,13 +643,13 @@
 									<el-row>
 										<el-col :span="11">
 											<el-form-item :label="'储罐'+(index1+1)+'直径(m)'">
-												<el-input-number v-model="cg.cgzj" size="small" :min="0" :max="99999999.99"></el-input-number>
+												<el-input-number v-model="cg.cgzj" size="small" :precision="2" :min="0" :max="99999999.99"></el-input-number>
 											</el-form-item>
 										</el-col>
 										<el-col :span="1">&nbsp;</el-col>
 										<el-col :span="11">
 											<el-form-item :label="'储罐'+(index1+1)+'高度(m)'">
-												<el-input-number v-model="cg.cggd" size="small" :min="0" :max="99999999.99"></el-input-number>
+												<el-input-number v-model="cg.cggd" size="small" :precision="2" :min="0" :max="99999999.99"></el-input-number>
 											</el-form-item>
 										</el-col>
 										<el-col :span="1">&nbsp;</el-col>
@@ -657,13 +657,13 @@
 									<el-row>
 										<el-col :span="11">
 											<el-form-item :label="'储罐'+(index1+1)+'周长(m)'">
-												<el-input-number v-model="cg.cgzc" size="small" :min="0" :max="99999999.99"></el-input-number>
+												<el-input-number v-model="cg.cgzc" size="small" :precision="2" :min="0" :max="99999999.99"></el-input-number>
 											</el-form-item>
 										</el-col>
 										<el-col :span="1">&nbsp;</el-col>
 										<el-col :span="11">
 											<el-form-item :label="'罐顶'+(index1+1)+'面积(㎡)'">
-												<el-input-number v-model="cg.gdmj" size="small" :min="0" :max="99999999.99"></el-input-number>
+												<el-input-number v-model="cg.gdmj" size="small" :precision="2" :min="0" :max="99999999.99"></el-input-number>
 											</el-form-item>
 										</el-col>
 										<el-col :span="1">&nbsp;</el-col>
@@ -700,13 +700,13 @@
 									<el-row>
 										<el-col :span="11">
 											<el-form-item label="介质实际储量(m³)">
-												<el-input-number v-model="cg.ccjzsjcl" size="small" :min="0" :max="99999999.99"></el-input-number>
+												<el-input-number v-model="cg.ccjzsjcl" size="small" :precision="2" :min="0" :max="99999999.99"></el-input-number>
 											</el-form-item>
 										</el-col>
 										<el-col :span="1">&nbsp;</el-col>
 										<el-col :span="11">
 											<el-form-item label="介质液位高度(m)">
-												<el-input-number v-model="cg.ccjzywgd" size="small" :min="0" :max="999.99"></el-input-number>
+												<el-input-number v-model="cg.ccjzywgd" size="small" :precision="2" :min="0" :max="999.99"></el-input-number>
 											</el-form-item>
 										</el-col>
 										<el-col :span="1">&nbsp;</el-col>
