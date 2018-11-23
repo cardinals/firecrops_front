@@ -3,7 +3,6 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="../../static/css/basicinfo/equipment_add.css">
 	<title>消防水源信息编辑</title>
 </head>
 
@@ -13,431 +12,384 @@
 			<div class="main-container" v-loading="loading" element-loading-text="加载中">
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
-				<div id="inforView" class="pt15">
-					<el-form label-width="75px" :inline="true" class="el-form demo-form-inline" ref="editForm" :model="editForm" label-position="right">
+					<el-form label-width="120px" ref="editForm" :model="editForm" :rules="editFormRules">
 						<el-row class="mb5 row-edit-subtitle">
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<el-col :span="24">
 								<strong class="col-edit-subtitle">基本信息</strong>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm"><span style="color:red;">* </span>水源名称</el-label>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="symc" label="水源名称">
+									<el-input size="small" maxlength="50" v-model="editForm.symc" placeholder="水源名称"></el-input>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.symc" placeholder="水源名称"></el-input>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="sybm" label="水源编码">
+									<el-input size="small" maxlength="25" v-model="editForm.sybm" placeholder="水源编码"></el-input>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">水源编码</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.sybm" placeholder="水源编码"></el-input>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">
-									<span style="color:red;">* </span>水源类型</el-label>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="sylx" label="水源类型">
+									<el-select size="small" v-model="editForm.sylx" placeholder="请选择" class="searchSelect" clearable @change="sylxChange">
+										<el-option v-for="item in sylxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-select size="small" v-model="editForm.sylx" placeholder="请选择" class="searchSelect" clearable @change="sylxChange">
-									<el-option v-for="item in sylxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-								</el-select>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="sydz" label="水源地址">
+									<el-input size="small" v-model="editForm.sydz" maxlength="100" placeholder="水源地址"></el-input>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">水源地址</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.sydz" placeholder="水源地址"></el-input>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">可用状态</el-label>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="kyzt" label="可用状态">
+									<el-select size="small" v-model="editForm.kyzt" placeholder="请选择" class="searchSelect" clearable>
+										<el-option v-for="item in kyztData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-select size="small" v-model="editForm.kyzt" placeholder="请选择" class="searchSelect" clearable>
-									<el-option v-for="item in kyztData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-								</el-select>
-							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
 						<el-row class="mb5 row-edit-subtitle">
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<el-col :span="24">
 								<strong class="col-edit-subtitle">位置及管辖信息</strong>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm"><span style="color:red;">* </span>管辖队站</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-cascader :options="sjdzData" :props="sjdzprops" size="small" v-model="editForm.gxdz" placeholder="请选择" class="searchSelect"
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="gxdz" label="管辖队站">
+									<el-cascader :options="sjdzData" :props="sjdzprops" size="small" v-model="editForm.gxdz" placeholder="请选择" class="searchSelect"
 								 clearable change-on-select :show-all-levels="true"></el-cascader>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">行政区划</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-cascader :options="xzqhData" :props="props" size="small" v-model="editForm.xzqh" placeholder="请选择" class="searchSelect"
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="xzqh" label="行政区划">
+									<el-cascader :options="xzqhData" :props="props" size="small" v-model="editForm.xzqh" placeholder="请选择" class="searchSelect"
 								 clearable change-on-select :show-all-levels="true"></el-cascader>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">水源归属</el-label>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="sygs" label="水源归属">
+									<el-select size="small" v-model="editForm.sygs" @change="sygsChange" placeholder="请选择" class="searchSelect" clearable>
+										<el-option v-for="item in sygsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-select size="small" v-model="editForm.sygs" @change="sygsChange" placeholder="请选择" class="searchSelect" clearable>
-									<el-option v-for="item in sygsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-								</el-select>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="ssdw" label="所属单位(小区)">
+									<el-input v-if="editForm.sygs==='20'" size="small" v-model="editForm.ssdw" maxlength="50" placeholder="所属单位(小区)"></el-input>
+									<el-input v-else size="small" v-model="editForm.ssdw" placeholder="所属单位(小区)" disabled></el-input>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">所属单位(小区)</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input v-if="editForm.sygs==='20'" size="small" v-model="editForm.ssdw" placeholder="所属单位(小区)"></el-input>
-								<el-input v-else size="small" v-model="editForm.ssdw" placeholder="所属单位(小区)" disabled></el-input>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">经度</el-label>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="lon" label="经度">
+									<el-input-number size="small" :precision="2" v-model="editForm.lon" placeholder="经度" :min="-99999.9999999999" :max="99999.9999999999"></el-input-number>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="editForm.lon" size="small"></el-input-number>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="lat" label="纬度">
+									<el-input-number size="small" :precision="2" v-model="editForm.lat" placeholder="纬度" :min="-99999.9999999999" :max="99999.9999999999"></el-input-number>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">纬度</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="editForm.lat" size="small"></el-input-number>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">GIS_X</el-label>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="gisX" label="GIS_X">
+									<el-input-number size="small" :precision="2" v-model="editForm.gisX" placeholder="GIS_X" :min="-99999.9999999999" :max="99999.9999999999"></el-input-number>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="editForm.gisX" size="small"></el-input-number>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="gisY" label="GIS_Y">
+									<el-input-number size="small" :precision="2" v-model="editForm.gisY" placeholder="GIS_Y" :min="-99999.9999999999" :max="99999.9999999999"></el-input-number>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">GIS_Y</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="editForm.gisY" size="small"></el-input-number>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">GIS_H</el-label>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="gisH" label="GIS_H">
+									<el-input-number size="small" :precision="2" v-model="editForm.gisH" placeholder="GIS_H" :min="-99999.9999999999" :max="99999.9999999999"></el-input-number>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input-number v-model="editForm.gisH" size="small"></el-input-number>
-							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
 						<el-row class="mb5 row-edit-subtitle">
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<el-col :span="24">
 								<strong class="col-edit-subtitle">联系信息</strong>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">供水单位</el-label>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item prop="gsdw" label="供水单位">
+									<el-input size="small" v-model="editForm.gsdw" maxlength="50" placeholder="供水单位"></el-input>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.gsdw" placeholder="供水单位"></el-input>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item prop="gsdwlxfs" label="供水单位联系方式">
+									<el-input size="small" v-model="editForm.gsdwlxfs" maxlength="25" placeholder="供水单位联系方式"></el-input>
+								</el-form-item>
 							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">供水单位联系方式</el-label>
-							</el-col>
-							<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-								<el-input size="small" v-model="editForm.gsdwlxfs" placeholder="供水单位联系方式"></el-input>
-							</el-col>
-							<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+							<el-col :span="1">&nbsp;</el-col>
 						</el-row>
 
 						<!-- 消火栓 -->
 						<div v-show="isXHS">
 							<el-row class="mb5 row-edit-subtitle">
-								<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+								<el-col :span="24">
 									<strong class="col-edit-subtitle">消火栓属性信息</strong>
 								</el-col>
 							</el-row>
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">设置形式</el-label>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="xhs_szxs" label="设置形式">
+										<el-select size="small" v-model="editForm.xhs_szxs" placeholder="请选择" class="searchSelect" clearable>
+											<el-option v-for="item in szxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+										</el-select>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-select size="small" v-model="editForm.xhs_szxs" placeholder="请选择" class="searchSelect" clearable>
-										<el-option v-for="item in szxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-									</el-select>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="xhs_gwylfw" label="管网压力范围">
+										<el-input size="small" v-model="editForm.xhs_gwylfw" maxlength="30" placeholder="管网压力范围(MPa)"></el-input>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">管网压力范围</el-label>
-								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.xhs_gwylfw" placeholder="管网压力范围(MPa)"></el-input>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">管网形式</el-label>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="xhs_gwxs" label="管网形式">
+										<el-select size="small" v-model="editForm.xhs_gwxs" placeholder="请选择" class="searchSelect" clearable>
+											<el-option v-for="item in gwxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+										</el-select>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-select size="small" v-model="editForm.xhs_gwxs" placeholder="请选择" class="searchSelect" clearable>
-										<el-option v-for="item in gwxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-									</el-select>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="xhs_gwzj" label="管网直径(mm)">
+										<el-input-number v-model="editForm.xhs_gwzj" size="small" :min="0" :max="99999999.9999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">管网直径(mm)</el-label>
-								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.xhs_gwzj" size="small" :min="0"></el-input-number>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">管网压力类型</el-label>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="xhs_gwyllx" label="管网压力类型">
+										<el-select size="small" v-model="editForm.xhs_gwyllx" placeholder="请选择" class="searchSelect" clearable>
+											<el-option v-for="item in gwyllxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+										</el-select>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-select size="small" v-model="editForm.xhs_gwyllx" placeholder="请选择" class="searchSelect" clearable>
-										<el-option v-for="item in gwyllxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-									</el-select>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="xhs_jkkj" label="接口口径(mm)">
+										<el-input-number v-model="editForm.xhs_jkkj" size="small" :min="0" :max="99999999.9999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">接口口径(mm)</el-label>
-								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.xhs_jkkj" size="small" :min="0"></el-input-number>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">接口形式</el-label>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="xhs_jkxs" label="接口形式">
+										<el-select size="small" v-model="editForm.xhs_jkxs" placeholder="请选择" class="searchSelect" clearable>
+											<el-option v-for="item in jkxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+										</el-select>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-select size="small" v-model="editForm.xhs_jkxs" placeholder="请选择" class="searchSelect" clearable>
-										<el-option v-for="item in jkxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-									</el-select>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="xhs_zdll" label="最大流量(L/s)">
+										<el-input-number v-model="editForm.xhs_zdll" size="small" :min="0" :max="99999999.9999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">最大流量(L/s)</el-label>
-								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.xhs_zdll" size="small" :min="0"></el-input-number>
-								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
 						</div>
-
 						<!-- 消防水鹤 -->
 						<div v-show="isXFSH">
 							<el-row class="mb5 row-edit-subtitle">
-								<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+								<el-col :span="24">
 									<strong class="col-edit-subtitle">消防水鹤属性信息</strong>
 								</el-col>
 							</el-row>
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">管网直径(mm)</el-label>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="xfsh_gwzj" label="管网直径(mm)">
+										<el-input-number v-model="editForm.xfsh_gwzj" size="small" :min="0" :max="99999999.9999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.xfsh_gwzj" size="small" :min="0"></el-input-number>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="xfsh_gwyl" label="管网压力(MPa)">
+										<el-input-number v-model="editForm.xfsh_gwyl" size="small" :min="0" :max="99999999.9999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">管网压力(MPa)</el-label>
-								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.xfsh_gwyl" size="small" :min="0"></el-input-number>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">出水口高度(m)</el-label>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="xfsh_cskgd" label="出水口高度(m)">
+										<el-input-number v-model="editForm.xfsh_cskgd" size="small" :min="0" :max="99999999.9999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.xfsh_cskgd" size="small" :min="0"></el-input-number>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="xfsh_zdll" label="最大流量(L/s)">
+										<el-input-number v-model="editForm.xfsh_zdll" size="small" :min="0" :max="99999999.9999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">最大流量(L/s)</el-label>
-								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.xfsh_zdll" size="small" :min="0"></el-input-number>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
 						</div>
-
 						<!-- 消防水池 -->
 						<div v-show="isXFSC">
 							<el-row class="mb5 row-edit-subtitle">
-								<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+								<el-col :span="24">
 									<strong class="col-edit-subtitle">消防水池属性信息</strong>
 								</el-col>
 							</el-row>
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">管网形式</el-label>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="xfsc_gwxs" label="管网形式">
+										<el-select size="small" v-model="editForm.xfsc_gwxs" placeholder="请选择" class="searchSelect" clearable>
+											<el-option v-for="item in gwxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+										</el-select>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-select size="small" v-model="editForm.xfsc_gwxs" placeholder="请选择" class="searchSelect" clearable>
-										<el-option v-for="item in gwxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-									</el-select>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="xfsc_tcwz" label="停车位置">
+										<el-input size="small" v-model="editForm.xfsc_tcwz" maxlength="50" placeholder="停车位置"></el-input>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">停车位置</el-label>
-								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.xfsc_tcwz" placeholder="停车位置"></el-input>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">水源标高差(m)</el-label>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="xfsc_sybgc" label="水源标高差(m)">
+										<el-input-number v-model="editForm.xfsc_sybgc" size="small" :min="0" :max="99999999.9999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.xfsc_sybgc" size="small" :min="0"></el-input-number>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="xfsc_csl" label="储水量(m³)">
+										<el-input-number v-model="editForm.xfsc_csl" size="small" :min="0" :max="99999999.9999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">储水量(m³)</el-label>
-								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.xfsc_csl" size="small" :min="0"></el-input-number>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">进水流量(L/s)</el-label>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="xfsc_jsll" label="进水流量(L/s)">
+										<el-input-number v-model="editForm.xfsc_jsll" size="small" :min="0" :max="99999999.9999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.xfsc_jsll" size="small" :min="0"></el-input-number>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="xfsc_qszdll" label="取水最大流量(L/s)">
+										<el-input-number v-model="editForm.xfsc_qszdll" size="small" :min="0" :max="99999999.9999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">取水最大流量(L/s)</el-label>
-								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.xfsc_qszdll" size="small" :min="0"></el-input-number>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">同时取水车辆数</el-label>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="xfsc_tsqscls" label="同时取水车辆数">
+										<el-input-number v-model="editForm.xfsc_tsqscls" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
+									 :min="0" :max="9999999999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.xfsc_tsqscls" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
-									 :min="0"></el-input-number>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="xfsc_bssj" label="补水时间(h)">
+										<el-input-number v-model="editForm.xfsc_bssj" size="small" :min="0" :max="999.99"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">补水时间(h)</el-label>
-								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.xfsc_bssj" size="small" :min="0"></el-input-number>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
 						</div>
 
 						<!-- 天然水源取水点 -->
 						<div v-show="isTRSYQSD">
 							<el-row class="mb5 row-edit-subtitle">
-								<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+								<el-col :span="24">
 									<strong class="col-edit-subtitle">天然水源取水点属性信息</strong>
 								</el-col>
 							</el-row>
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">所属天然水源</el-label>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="trsy_trsymc" label="所属天然水源">
+										<el-input size="small" v-model="editForm.trsy_trsymc" placeholder="天然水源名称" disabled></el-input>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.trsy_trsymc" placeholder="天然水源名称" disabled></el-input>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">
+								<el-col :span="1">
 									<el-button icon="search" size="small" style="border: none;background-color: #FFFFFF;" @click="trsyList('init')" class="l"></el-button>
 								</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">取水形式</el-label>
+								<el-col :span="11">
+									<el-form-item prop="trsyqsd_qsxs" label="取水形式">
+										<el-select size="small" v-model="editForm.trsyqsd_qsxs" placeholder="请选择" class="searchSelect" clearable>
+											<el-option v-for="item in qsxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+										</el-select>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-select size="small" v-model="editForm.trsyqsd_qsxs" placeholder="请选择" class="searchSelect" clearable>
-										<el-option v-for="item in qsxsData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-									</el-select>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
-
-
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">停车位置</el-label>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="trsyqsd_tcwz" label="停车位置">
+										<el-input size="small" v-model="editForm.trsyqsd_tcwz" maxlength="50" placeholder="停车位置"></el-input>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input size="small" v-model="editForm.trsyqsd_tcwz" placeholder="停车位置"></el-input>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item prop="trsyqsd_tsqscls" label="同时取水车辆数">
+										<el-input-number v-model="editForm.trsyqsd_tsqscls" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"
+									 size="small" :min="0" :max="9999999999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">同时取水车辆数</el-label>
-								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.trsyqsd_tsqscls" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"
-									 size="small" :min="0"></el-input-number>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
-							<el-row class="tr mb5">
-								<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-									<el-label class="mr5 vbm">水源标高差(m)</el-label>
+							<el-row>
+								<el-col :span="11">
+									<el-form-item prop="trsyqsd_sybgc" label="水源标高差(m)">
+										<el-input-number v-model="editForm.trsyqsd_sybgc" size="small" :min="0" :max="99999999.9999"></el-input-number>
+									</el-form-item>
 								</el-col>
-								<el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-									<el-input-number v-model="editForm.trsyqsd_sybgc" size="small" :min="0"></el-input-number>
-								</el-col>
-								<el-col :xs="13" :sm="13" :md="13" :lg="13" :xl="13">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
 						</div>
-
 						<el-row class="mb5 row-edit-subtitle">
-							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+							<el-col :span="24">
 								<strong class="col-edit-subtitle">备注</strong>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
-							<el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-								<el-label class="mr5 vbm">备注</el-label>
-							</el-col>
-							<el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-								<el-input size="small" v-model="editForm.bz" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+						<el-row>
+							<el-col :span="24">
+								<el-form-item prop="bz" label="备注">
+									<el-input size="small" v-model="editForm.bz" maxlength="200" placeholder="备注" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+								</el-form-item>
 							</el-col>
 						</el-row>
 					</el-form>
-				</div>
 				<el-row class="mt35 mb20">
 					<el-row>
 						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>
@@ -506,7 +458,7 @@
 							</el-col>
 							<el-col :span="2">&nbsp;</el-col>
 						</el-row>
-						<el-row class="tr mb5">
+						<el-row >
 							<el-col :span="5">
 								<el-label class="mr5 vbm">天然水源类型</el-label>
 							</el-col>
@@ -516,7 +468,7 @@
 								</el-select>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
+						<el-row >
 							<el-col :span="5">
 								<el-label class="mr5 vbm">水质</el-label>
 							</el-col>
@@ -526,7 +478,7 @@
 								</el-select>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
+						<el-row >
 							<el-col :span="5">
 								<el-label class="mr5 vbm">水质描述</el-label>
 							</el-col>
@@ -534,7 +486,7 @@
 								<el-input type="textarea" v-model="trsyAddForm.trsy_szms" placeholder="水质描述" :autosize="{ minRows: 1, maxRows: 4}" size="small"></el-input>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
+						<el-row >
 							<el-col :span="5">
 								<el-label class="mr5 vbm">有无取水点</el-label>
 							</el-col>
@@ -544,7 +496,7 @@
 								</el-select>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
+						<el-row >
 							<el-col :span="5">
 								<el-label class="mr5 vbm">有无枯水期</el-label>
 							</el-col>
@@ -554,7 +506,7 @@
 								</el-select>
 							</el-col>
 						</el-row>
-						<el-row class="tr mb5">
+						<el-row >
 							<el-col :span="5">
 								<el-label class="mr5 vbm">枯水期时间</el-label>
 							</el-col>
