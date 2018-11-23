@@ -105,8 +105,26 @@ new Vue({
                 dwmc: [{ required: true, message: '请输入单位名称', trigger: 'blur' }],
                 dwxz: [{ required: true, message: '请选择单位性质', trigger: 'change' }],
                 fhdj: [{ required: true, message: '请选择防火等级', trigger: 'change' }],
-                fhdzid: [{ required: true, message: '请选择单位防火管辖大队', trigger: 'change' }],
-                mhdzid: [{ required: true, message: '请选择单位灭火责任队站', trigger: 'change' }],
+                fhdzid: [{
+                    validator: (rule, value, callback) => {
+                        if (value.length == 0) {
+                            callback(new Error("请选择单位防火管辖大队"));
+                        } else {
+                            callback();
+                        }
+
+                    }, trigger: 'change'
+                }],
+                mhdzid: [{
+                    validator: (rule, value, callback) => {
+                        if (value.length == 0) {
+                            callback(new Error("请选择单位灭火责任队站"));
+                        } else {
+                            callback();
+                        }
+
+                    }, trigger: 'change'
+                }],
                 zdbwmc: [{ required: true, message: '请输入重点部位名称', trigger: 'blur' }],
                 zdbwlx: [{ required: true, message: '请选择重点部位类型', trigger: 'change' }],
             },
