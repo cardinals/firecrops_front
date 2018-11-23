@@ -437,7 +437,7 @@ new Vue({
             this.buildingListVisible = true;
             this.loading_building = true;
             var params = {
-                jzmc: this.searchForm_building.jzmc,
+                jzmc: this.searchForm_building.jzmc.replace(/%/g,"\\%"),
                 jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
                 pageSize: this.pageSize_building,
                 pageNum: this.currentPage_building,

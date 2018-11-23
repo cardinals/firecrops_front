@@ -439,7 +439,7 @@ new Vue({
             this.unitsListVisible = true;
             this.loading_units = true;
             var params = {
-                dwmc: this.searchForm_units.dwmc,
+                dwmc: this.searchForm_units.dwmc.replace(/%/g,"\\%"),
                 mhdzid: this.shiroData.organizationVO.uuid,
                 jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
                 pageSize: this.pageSize_units,
@@ -563,7 +563,7 @@ new Vue({
                 this.loading_building = true;
                 var params = {
                     zddwid: this.addForm.dxid,
-                    jzmc: this.searchForm_building.jzmc,
+                    jzmc: this.searchForm_building.jzmc.replace(/%/g,"\\%"),
                     pageSize: this.pageSize_building,
                     pageNum: this.currentPage_building
                 };
@@ -633,7 +633,7 @@ new Vue({
                 var params = {
                     xzqh: xzqh,
                     dzid: dzid,
-                    dzmc: this.searchForm_fireSta.dzmc,
+                    dzmc: this.searchForm_fireSta.dzmc.replace(/%/g,"\\%"),
                     pageSize: this.pageSize_fireSta,
                     pageNum: this.currentPage_fireSta
                 };
