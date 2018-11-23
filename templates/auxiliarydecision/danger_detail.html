@@ -12,10 +12,10 @@
             <div class="main-container">
                 <div id="danger_detail"></div>
                 <!-- 面包屑 -->
-				<div id="breadcrumb_box"></div>
+                <div id="breadcrumb_box"></div>
                 <div id="tableView">
                     <div class="nameBox">
-                        <div id="informContainer" style="display: inline-flex;">
+                        <div id="informContainer">
                             <div id="basic-Inform-Picture">
                                 <img id="photo" class="detail_picture_size">
                             </div>
@@ -25,56 +25,67 @@
                                     <span class="companyStatus dib" title="类型" v-text="detailData.dmz||'无'"></span>
                                 </div>
                                 <dl>
-                                    <div class="inform-div">
-                                        <div style="float:left;width: 50%;">
-                                            <img class="danger_icon" src="../../static/images/name.png">
-                                            <dt class="dib inform-small-title">中文名：</dt>
-                                            <dd class="dtdlStyle" v-text="detailData.name||'无'"></dd>
-                                            <br>
-                                            <img class="danger_icon" src="../../static/images/englishName.png">
-                                            <dt class="dib inform-small-title detail_margin">英文名：</dt>
-                                            <dd class="dtdlStyle" v-text="detailData.englishName||'无'"></dd>
-                                            <br>
-                                            <img class="danger_icon" src="../../static/images/expression.png">
-                                            <dt class="dib inform-small-title detail_margin">分子式：</dt>
-                                            <dd class="dtdlStyle" v-text="detailData.expression||'无'"></dd>
-                                            <br>
-                                            <img class="danger_icon" src="../../static/images/thesaurus.png">
-                                            <dt class="dib inform-small-title detail_margin">同义词：</dt>
-                                            <dd class="dtdlStyle" v-text="detailData.thesaurus||'无'"></dd>
-                                            <br>
-                                            <img class="danger_icon" src="../../static/images/alias.png">
-                                            <dt class="dib inform-small-title detail_margin">别名: </dt>
-                                            <dd class="dtdlStyle" v-text="detailData.alias||'无'"></dd>
-                                        </div>
-                                        &nbsp;&nbsp;&nbsp;
-                                        <div style="float:right;width: 50%;">
-                                            <img class="danger_icon" src="../../static/images/danger.png">
-                                            <dt class="dib inform-small-title">国际危险号：</dt>
-                                            <dd class="dtdlStyle" v-text="detailData.dangerId||'无'"></dd>
-                                            <br>
-                                            <img class="danger_icon" src="../../static/images/cas.png">
-                                            <dt class="dib inform-small-title detail_margin">CAS：</dt>
-                                            <dd class="dtdlStyle" v-text="detailData.cas||'无'"></dd>
-                                            <br>
-                                            <img class="danger_icon" src="../../static/images/gbId.png">
-                                            <dt class="dib inform-small-title detail_margin">国标号：</dt>
-                                            <dd class="dtdlStyle" v-text="detailData.gbId||'无'"></dd>
-                                            <br>
-                                            <img class="danger_icon" src="../../static/images/caution.png">
-                                            <dt class="dib inform-small-title detail_margin">特别警示：</dt>
-                                            <dd class="dtdlStyle" v-text="detailData.caution||'无'"></dd>
-                                            <br>
-                                            <img class="danger_icon" src="../../static/images/hwplx.png">
-                                            <dt class="dib inform-small-title detail_margin">类型：</dt>
-                                            <dd class="dtdlStyle" v-text="detailData.dmz||'无'"></dd>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <br>
-                                    <img class="danger_icon" src="../../static/images/mainApplication.png">
-                                    <dt class="dib inform-small-title detail_margin">主要用途：</dt>
-                                    <dd class="dtdlStyle" v-text="detailData.mainApplication||'无'"></dd>
+                                    <table style="width:100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td class="whiteborder" style="width:50%;">
+                                                    <img class="danger_icon" src="../../static/images/name.png">
+                                                    <dt class="dib inform-small-title">中文名：</dt>
+                                                    <dd class="dtdlStyle" v-text="detailData.name||'无'"></dd>
+                                                    <br>
+                                                    <img class="danger_icon" src="../../static/images/englishName.png">
+                                                    <dt class="dib inform-small-title detail_margin">英文名：</dt>
+                                                    <dd class="dtdlStyle" v-text="detailData.englishName||'无'"></dd>
+                                                    <br>
+                                                    <img class="danger_icon" src="../../static/images/expression.png">
+                                                    <dt class="dib inform-small-title detail_margin">分子式：</dt>
+                                                    <dd class="dtdlStyle" v-text="detailData.expression||'无'"></dd>
+                                                    <br>
+                                                    <img class="danger_icon" src="../../static/images/thesaurus.png">
+                                                    <dt class="dib inform-small-title detail_margin">同义词：</dt>
+                                                    <dd class="dtdlStyle" v-text="detailData.thesaurus||'无'"></dd>
+                                                    <br>
+                                                    <img class="danger_icon" src="../../static/images/alias.png">
+                                                    <dt class="dib inform-small-title detail_margin">别名: </dt>
+                                                    <dd class="dtdlStyle" v-text="detailData.alias||'无'"></dd>
+                                                </td>
+                                                <td class="whiteborder" style="width:50%;">
+
+                                                    <img class="danger_icon" src="../../static/images/danger.png">
+                                                    <dt class="dib inform-small-title">国际危险号：</dt>
+                                                    <dd class="dtdlStyle" v-text="detailData.dangerId||'无'"></dd>
+                                                    <br>
+                                                    <img class="danger_icon" src="../../static/images/cas.png">
+                                                    <dt class="dib inform-small-title detail_margin">CAS：</dt>
+                                                    <dd class="dtdlStyle" v-text="detailData.cas||'无'"></dd>
+                                                    <br>
+                                                    <img class="danger_icon" src="../../static/images/gbId.png">
+                                                    <dt class="dib inform-small-title detail_margin">国标号：</dt>
+                                                    <dd class="dtdlStyle" v-text="detailData.gbId||'无'"></dd>
+                                                    <br>
+                                                    <img class="danger_icon" src="../../static/images/caution.png">
+                                                    <dt class="dib inform-small-title detail_margin">特别警示：</dt>
+                                                    <dd class="dtdlStyle" v-text="detailData.caution||'无'"></dd>
+                                                    <br>
+                                                    <img class="danger_icon" src="../../static/images/hwplx.png">
+                                                    <dt class="dib inform-small-title detail_margin">类型：</dt>
+                                                    <dd class="dtdlStyle" v-text="detailData.dmz||'无'"></dd>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="whiteborder" colspan=2>
+
+                                                    <img class="danger_icon" src="../../static/images/mainApplication.png">
+                                                    <dt class="dib inform-small-title detail_margin">主要用途：</dt>
+                                                    <dd class="dtdlStyle" v-text="detailData.mainApplication||'无'"></dd>
+
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
                                 </dl>
                             </div>
                         </div>
@@ -235,4 +246,5 @@
     </div>
 </body>
 <script src="../../static/js/auxiliarydecision/danger_detail.js"></script>
+
 </html>
