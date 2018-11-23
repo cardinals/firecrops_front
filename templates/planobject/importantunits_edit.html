@@ -207,7 +207,7 @@
 						<el-card v-for="(xfll,index) in editForm.xfllList" :key="xfll.key" class="card_style">
 							<div slot="header">
 								<strong class="card_title_font">单位消防队伍{{index+1}}</strong>
-								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainXfll(xfll)" class="r" style="margin:-1px 0px 1px"></el-button>
+								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainXfll(xfll)" class="r" style="margin:-4px 15px 1px"></el-button>
 							</div>
 							<el-row>
 								<el-col :span="23">
@@ -319,7 +319,7 @@
 						<el-card v-for="(zdbw,index) in editForm.zdbwList" :key="zdbw.key" class="card_style">
 							<div slot="header">
 								<strong class="card_title_font">重点部位{{index+1}}</strong>
-								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainZdbw(zdbw)" class="r" style="margin:-1px 0px 1px"></el-button>
+								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainZdbw(zdbw)" class="r" style="margin:-4px 15px 1px"></el-button>
 							</div>
 							<el-row>
 								<el-col :span="11">
