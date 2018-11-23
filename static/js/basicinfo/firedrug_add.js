@@ -39,6 +39,7 @@ new Vue({
             //信息校验规则
             inforRules: {
                 yjmc: [{ required: true, message: '请输入药剂名称', trigger: 'blur' }],
+                yjbm: [{ pattern: /^[A-Za-z0-9 ]+$/, message: '药剂编码应为数字或字母',trigger: 'blur'}],
                 ssdz: [{
                     validator: (rule, value, callback) => {
                         if (value.length == 0) {
