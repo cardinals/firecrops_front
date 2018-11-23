@@ -51,7 +51,7 @@ new Vue({
                 //建筑类
                 jzl_jzid: "",
                 jzl_jzqk: "",
-                jzl_jzsyxz: [],
+                jzl_jzsyxz: "",
                 jzl_jzjg: "",
                 jzl_gnms: "",
                 jzl_zdmj: "",
@@ -306,6 +306,7 @@ new Vue({
             this.$refs[editForm].validate((valid) => {
                 if (valid) {
                     if (this.status == 0) {//新增
+                        debugger;
                         this.editForm.cjrid = this.shiroData.userid;
                         this.editForm.cjrmc = this.shiroData.realName;
                         this.editForm.jdh = this.shiroData.organizationVO.jgid.substr(0, 2) + '000000';
