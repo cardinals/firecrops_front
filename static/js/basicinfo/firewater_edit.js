@@ -180,7 +180,12 @@ new Vue({
                     { required: false, message: '请填写水源编码', trigger: 'blur' },
                     { pattern: /^[A-Za-z0-9]+$/, message: '只能输入数字和字母',trigger: 'blur' },
                 ],
-            }
+            },
+            trsyFormRules:{
+                trsy_trsymc: [
+                    { required: true, message: '请输入天然水源名称', trigger: 'blur' }
+                ],
+            },
         }
     },
     created: function () {
@@ -787,64 +792,66 @@ new Vue({
             this.dialogTitle = "选择天然水源";
             this.clearTrsyList();
         },
-        saveTrsy: function () {
-            if (this.trsyAddForm.trsy_trsymc == '' || this.trsyAddForm.trsy_trsymc == null) {
-                this.$message.warning({
-                    message: '请输入天然水源名称',
-                    showClose: true
-                });
-            } else {
-                if (this.statusTrsy == 0) {//新增
-                    this.trsyAddForm.trsy_cjrid = this.shiroData.userid;
-                    this.trsyAddForm.trsy_cjrmc = this.shiroData.realName;
-                    this.trsyAddForm.trsy_jdh = datasource;
-                    axios.post('/dpapi/xfsy/insertTrsyByXfsyVO', this.trsyAddForm).then(function (res) {
-                        if (res.data.result != null) {
-                            this.$alert('成功保存天然水源信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    this.cancelTrsy();
-                                }
-                            });
-                        } else {
-                            this.$alert('保存失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    this.cancelTrsy();
-                                }
-                            });
-                        }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
-                } else {//修改
-                    this.trsyAddForm.trsy_xgrid = this.shiroData.userid;
-                    this.trsyAddForm.trsy_xgrmc = this.shiroData.realName;
-                    axios.post('/dpapi/xfsy/doUpdateTrsyByVO', this.trsyAddForm).then(function (res) {
-                        if (res.data.result != null) {
-                            this.$alert('成功修改天然水源信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    this.cancelTrsy();
-                                }
-                            });
-                        } else {
-                            this.$alert('修改失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    this.cancelTrsy();
-                                }
-                            });
-                        }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
+        saveTrsy: function (formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    if (this.statusTrsy == 0) {//新增
+                        this.trsyAddForm.trsy_cjrid = this.shiroData.userid;
+                        this.trsyAddForm.trsy_cjrmc = this.shiroData.realName;
+                        //this.trsyAddForm.trsy_jdh = datasource;
+                        this.trsyAddForm.trsy_jdh = this.shiroData.organizationVO.jgid;
+                        axios.post('/dpapi/xfsy/insertTrsyByXfsyVO', this.trsyAddForm).then(function (res) {
+                            if (res.data.result != null) {
+                                this.$alert('成功保存天然水源信息', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        this.cancelTrsy();
+                                    }
+                                });
+                            } else {
+                                this.$alert('保存失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        this.cancelTrsy();
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    } else {//修改
+                        this.trsyAddForm.trsy_xgrid = this.shiroData.userid;
+                        this.trsyAddForm.trsy_xgrmc = this.shiroData.realName;
+                        axios.post('/dpapi/xfsy/doUpdateTrsyByVO', this.trsyAddForm).then(function (res) {
+                            if (res.data.result != null) {
+                                this.$alert('成功修改天然水源信息', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        this.cancelTrsy();
+                                    }
+                                });
+                            } else {
+                                this.$alert('修改失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        this.cancelTrsy();
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    }
+                }else {
+                    console.log('error submit!!');
+                    this.loading = false;
+                    return false;
                 }
-            }
+            });
         }
     },
 

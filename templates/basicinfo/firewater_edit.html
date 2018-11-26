@@ -449,78 +449,89 @@
 						</div>
 					</div>
 					<div v-loading="loading_trsyAdd" element-loading-text="加载中" v-show="trsyAdd">
-						<el-row class="tr mb5 mt10">
-							<el-col :span="5">
-								<el-label class="mr5 vbm">天然水源名称</el-label>
-							</el-col>
-							<el-col :span="17">
-								<el-input size="small" v-model="trsyAddForm.trsy_trsymc" placeholder="天然水源名称"></el-input>
-							</el-col>
-							<el-col :span="2">&nbsp;</el-col>
-						</el-row>
-						<el-row >
-							<el-col :span="5">
-								<el-label class="mr5 vbm">天然水源类型</el-label>
-							</el-col>
-							<el-col :span="17">
-								<el-select size="small" v-model="trsyAddForm.trsy_trsylx" placeholder="请选择" class="searchSelect" clearable>
-									<el-option v-for="item in trsylxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-								</el-select>
-							</el-col>
-						</el-row>
-						<el-row >
-							<el-col :span="5">
-								<el-label class="mr5 vbm">水质</el-label>
-							</el-col>
-							<el-col :span="17">
-								<el-select size="small" v-model="trsyAddForm.trsy_sz" placeholder="请选择" class="searchSelect" clearable>
-									<el-option v-for="item in szData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-								</el-select>
-							</el-col>
-						</el-row>
-						<el-row >
-							<el-col :span="5">
-								<el-label class="mr5 vbm">水质描述</el-label>
-							</el-col>
-							<el-col :span="17">
-								<el-input type="textarea" v-model="trsyAddForm.trsy_szms" placeholder="水质描述" :autosize="{ minRows: 1, maxRows: 4}" size="small"></el-input>
-							</el-col>
-						</el-row>
-						<el-row >
-							<el-col :span="5">
-								<el-label class="mr5 vbm">有无取水点</el-label>
-							</el-col>
-							<el-col :span="17">
-								<el-select size="small" v-model="trsyAddForm.trsy_ywqsd" placeholder="请选择" class="searchSelect" clearable>
-									<el-option v-for="item in ywqsdData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-								</el-select>
-							</el-col>
-						</el-row>
-						<el-row >
-							<el-col :span="5">
-								<el-label class="mr5 vbm">有无枯水期</el-label>
-							</el-col>
-							<el-col :span="17">
-								<el-select size="small" v-model="trsyAddForm.trsy_ywksq" placeholder="请选择" class="searchSelect" clearable>
-									<el-option v-for="item in ywqsdData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-								</el-select>
-							</el-col>
-						</el-row>
-						<el-row >
-							<el-col :span="5">
-								<el-label class="mr5 vbm">枯水期时间</el-label>
-							</el-col>
-							<el-col :span="17">
-								<el-input v-if="trsyAddForm.trsy_ywksq==='0'" type="textarea" v-model="trsyAddForm.trsy_ksqsj" placeholder="枯水期时间" :autosize="{ minRows: 1, maxRows: 4}"
-								 size="small" disabled></el-input>
-								<el-input v-else type="textarea" v-model="trsyAddForm.trsy_ksqsj" placeholder="枯水期时间" :autosize="{ minRows: 1, maxRows: 4}"
-								 size="small"></el-input>
-							</el-col>
-						</el-row>
-						<el-row class="mt35 mb20 editform-button">
-							<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancelTrsy"> 返回</el-button>
-							<el-button type="success" icon="check" size="small" class="btn_save" @click="saveTrsy">保存</el-button>
-						</el-row>
+						<el-form label-width="120px" ref="trsyAddForm" :model="trsyAddForm" :rules="trsyFormRules">
+							<el-row>
+								<el-col :span="23">
+									<el-form-item prop="trsy_trsymc" label="天然水源名称">
+										<el-input size="small" v-model="trsyAddForm.trsy_trsymc" maxlength="50" placeholder="天然水源名称"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="23">
+									<el-form-item prop="trsy_trsylx" label="天然水源类型">
+										<el-select size="small" v-model="trsyAddForm.trsy_trsylx" placeholder="请选择" class="searchSelect" clearable>
+											<el-option v-for="item in trsylxData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="23">
+									<el-form-item prop="trsy_sz" label="水质">
+										<el-select size="small" v-model="trsyAddForm.trsy_sz" placeholder="请选择" class="searchSelect" clearable>
+											<el-option v-for="item in szData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-row>
+									<el-col :span="23">
+										<el-form-item prop="trsy_szms" label="水质描述">
+											<el-input type="textarea" v-model="trsyAddForm.trsy_szms" maxlength="100" placeholder="水质描述" :autosize="{ minRows: 1, maxRows: 4}" size="small"></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+								</el-row>
+							</el-row>
+							<el-row>
+								<el-col :span="23">
+									<el-form-item prop="trsy_ywqsd" label="有无取水点">
+										<el-select size="small" v-model="trsyAddForm.trsy_ywqsd" placeholder="请选择" class="searchSelect" clearable>
+											<el-option v-for="item in ywqsdData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="23">
+									<el-form-item prop="trsy_ywksq" label="有无枯水期">
+										<el-select size="small" v-model="trsyAddForm.trsy_ywksq" placeholder="请选择" class="searchSelect" clearable>
+											<el-option v-for="item in ywqsdData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+							</el-row>
+							<el-row>
+								<el-col :span="23">
+									<el-form-item prop="trsy_ksqsj" label="枯水期时间">
+										<el-input v-if="trsyAddForm.trsy_ywksq==='0'" type="textarea" v-model="trsyAddForm.trsy_ksqsj" placeholder="枯水期时间" :autosize="{ minRows: 1, maxRows: 4}"
+											size="small" disabled></el-input>
+										<el-input v-else type="textarea" v-model="trsyAddForm.trsy_ksqsj" maxlength="50" placeholder="枯水期时间" :autosize="{ minRows: 1, maxRows: 4}"
+											size="small"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="5">
+									<el-label class="mr5 vbm"></el-label>
+								</el-col>
+								<el-col :span="17">
+									
+								</el-col>
+							</el-row>
+							<el-row class="mt35 mb20 editform-button">
+								<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancelTrsy"> 返回</el-button>
+								<el-button type="success" icon="check" size="small" class="btn_save" @click="saveTrsy('trsyAddForm')">保存</el-button>
+							</el-row>
+
+
+						</el-form>
 					</div>
 				</el-dialog>
 			</div>
