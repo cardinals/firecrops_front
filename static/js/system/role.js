@@ -279,7 +279,7 @@ var vue = new Vue({
             }).then(() => {
                 axios.post('/api/role/deleteByIds', this.multipleSelection).then(function (res) {
                     this.$message({
-                        message: "成功删除" + res.data.result + "条用户信息",
+                        message: "成功删除" + res.data.result + "条角色信息",
                         showClose: true,
                         onClose: this.searchClick('delete')
                     });
