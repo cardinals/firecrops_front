@@ -253,29 +253,31 @@
                             </el-tab-pane>
                             <el-tab-pane name="second" label="参数信息">
                                 <el-button style="margin-bottom: 5px;float: right;" size="small" type="success" @click="editDomain">新增参数</el-button>
-                                <el-table class="dialog-table" border id="table" :data="editParamForm.domains" @selection-change="selectionChange">
-                                    <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
-                                    <el-table-column prop="csmc" show-overflow-tooltip label="参数名称" min-width="40%" align="center">
-                                        <template slot-scope="scope">  
-                                            <el-input  maxlength="50"  size="small" v-model="scope.row.csmc" ></el-input>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column prop="jldwdm" show-overflow-tooltip label="计量单位" min-width="26%" align="center">
-                                        <template slot-scope="scope">  
-                                            <el-input   maxlength="10"  size="small" v-model="scope.row.jldwdm" ></el-input>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column prop="mrz" show-overflow-tooltip label="默认值" min-width="26%" align="center">
-                                        <template slot-scope="scope">  
-                                            <el-input   maxlength="100"  size="small" v-model="scope.row.mrz" ></el-input>
-                                        </template>
-                                    </el-table-column>
-                                    <el-table-column show-overflow-tooltip label="操作" width="100" align="center">
-                                        <template slot-scope="scope">
-                                            <el-button type="danger" size="mini" icon="delete" @click.prevent="removeEditDomain(scope.row)" class="is-circle"></el-button>
-                                        </template>
-                                    </el-table-column>
-                                </el-table>
+                                
+                                    <el-table style="overflow: auto;" class="dialog-table" border id="table" :data="editParamForm.domains" @selection-change="selectionChange">
+                                        <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
+                                        <el-table-column prop="csmc" show-overflow-tooltip label="参数名称" min-width="40%" align="center">
+                                            <template slot-scope="scope">  
+                                                <el-input  maxlength="50"  size="small" v-model="scope.row.csmc" ></el-input>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column prop="jldwdm" show-overflow-tooltip label="计量单位" min-width="26%" align="center">
+                                            <template slot-scope="scope">  
+                                                <el-input  maxlength="10"  size="small" v-model="scope.row.jldwdm" ></el-input>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column prop="mrz" show-overflow-tooltip label="默认值" min-width="26%" align="center">
+                                            <template slot-scope="scope">  
+                                                <el-input  maxlength="100"  size="small" v-model="scope.row.mrz" ></el-input>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column show-overflow-tooltip label="操作" width="100" align="center">
+                                            <template slot-scope="scope">
+                                                <el-button type="danger" size="mini" icon="delete" @click.prevent="removeEditDomain(scope.row)" class="is-circle"></el-button>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                               
                             </el-tab-pane>
                         </el-tabs>
                         <div slot="footer" class="dialog-footer">
