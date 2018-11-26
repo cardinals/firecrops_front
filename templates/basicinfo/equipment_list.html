@@ -17,32 +17,32 @@
 					<el-row>
 						<el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
 							<el-row>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="9" class="searchInline">
 									<label class="el-form-item__label searchLabel">装备名称</label>
 									<el-input size="small" v-model="searchForm.zbmc" placeholder="装备名称" class="searchSelect" clearable></el-input>
 								</el-col>
-								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
-								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+								<el-col :span="2">&nbsp;</el-col>
+								<el-col :span="9" class="searchInline">
 									<label class="el-form-item__label searchLabel">装备编码</label>
 									<el-input size="small" v-model="searchForm.zbbm" placeholder="装备编码" class="searchSelect" clearable></el-input>
 								</el-col>
-								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+								<el-col :span="2">&nbsp;</el-col>
 							</el-row>
 							<el-row>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="9" class="searchInline">
 									<label class="el-form-item__label searchLabel">装备类型</label>
 									<el-cascader :options="allTypesDataTree" :props="defaultProps" size="small" v-model="searchForm.zblx" placeholder="全部" class="searchSelect"
 									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-col>
-								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
-								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+								<el-col :span="2">&nbsp;</el-col>
+								<el-col :span="9" class="searchInline">
 									<label class="el-form-item__label searchLabel">所属队站</label>
 									<el-cascader v-model="searchForm.ssdz" :options="allSsdzData" :props="ssdzProps" size="small" placeholder="所属队站" class="searchSelect"
 									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-col>
-								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+								<el-col :span="2">&nbsp;</el-col>
 							</el-row>
 							<div>
 								<el-form>
@@ -52,7 +52,6 @@
 											<el-button v-if="hasPermission('basicinfo/equipment:delete')" type="danger" icon="delete2" size="small" @click="deleteClick">删除</el-button>
 										</el-form-item>
 									</el-col>
-									<el-col :span="12"></el-col>
 									<el-col :span="12" class="btnSearchPlus">
 										<el-form-item>
 											<el-button type="primary" icon="search" size="small" @click="searchClick">查询</el-button>
@@ -69,21 +68,17 @@
 						 class="tableStyle" :height="tableheight">
 							<el-table-column type="selection" width="45px"></el-table-column>
 							<el-table-column type="index" label="序号" width="65px" align="center"></el-table-column>
-							<el-table-column prop="zbmc" label="装备名称" show-overflow-tooltip min-width="12%" align="center">
-
+							<el-table-column prop="zbmc" label="装备名称" show-overflow-tooltip min-width="14%" align="center">
 								<template slot-scope="scope">
-
 									<a @click="engineDatail(scope.row)" type="text">{{scope.row.zbmc}}</a>
-
 								</template>
-
 							</el-table-column>
 							<el-table-column prop="zbbm" label="装备编码" show-overflow-tooltip min-width="12%" align="center"></el-table-column>
-							<el-table-column prop="zblxmc" label="装备类型" show-overflow-tooltip min-width="12%" align="center"></el-table-column>
+							<el-table-column prop="zblxmc" label="装备类型" show-overflow-tooltip min-width="14%" align="center"></el-table-column>
 							<el-table-column prop="dzmc" label="所属队站" show-overflow-tooltip min-width="12%" align="center"></el-table-column>
-							<el-table-column prop="xzqhmc" label="行政区划" show-overflow-tooltip min-width="12%" align="center"></el-table-column>
+							<el-table-column prop="xzqhmc" label="行政区划" show-overflow-tooltip min-width="10%" align="center"></el-table-column>
 							<el-table-column prop="sccj" label="生产厂家" show-overflow-tooltip min-width="12%" align="center"></el-table-column>
-							<el-table-column prop="zcbl" label="总储备量" show-overflow-tooltip min-width="12%" align="center">
+							<el-table-column prop="zcbl" label="总储备量" show-overflow-tooltip min-width="10%" align="center">
 								<template slot-scope="scope">
 									<el-popover placement="bottom" width="100" trigger="click" ref="popover2">
 										<div :data="scope.row">

@@ -42,6 +42,21 @@ new Vue({
                 clzzs: ''
             }],
             clIndex: '',
+            //信息校验规则
+            inforRules: {
+                zbmc: [{ required: true, message: '请输入装备名称', trigger: 'blur' }],
+                zbbm: [{ pattern: /^[A-Za-z0-9 ]+$/, message: '装备编码应为数字或字母', trigger: 'blur' }],
+                ssdz: [{
+                    validator: (rule, value, callback) => {
+                        if (value.length == 0) {
+                            callback(new Error("请选择所属队站"));
+                        } else {
+                            callback();
+                        }
+
+                    }, trigger: 'change'
+                }]
+            },
             //树结构配置
             defaultProps: {
                 children: 'children',
@@ -120,14 +135,14 @@ new Vue({
             this.loading_engine = true;
             //所属队站
             var ssdz = "";
-            if(this.shiroData.organizationVO.jgid.substr(2,6)!='000000'){
+            if (this.shiroData.organizationVO.jgid.substr(2, 6) != '000000') {
                 ssdz = this.shiroData.organizationVO.uuid;
             }
             var params = {
                 clmc: this.searchForm.clmc,
                 cphm: this.searchForm.cphm,
                 ssdz: ssdz,
-                jdh: this.shiroData.organizationVO.jgid.substr(0,2) + '000000',
+                jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 orgUuid: this.shiroData.organizationVO.uuid,
@@ -288,7 +303,7 @@ new Vue({
                     showClose: true
                 });
                 return false;
-            } else if(this.addForm.ssdz.length == 0){
+            } else if (this.addForm.ssdz.length == 0) {
                 this.$message.warning({
                     message: '请选择所属队站!',
                     showClose: true
@@ -310,104 +325,109 @@ new Vue({
             return true;
         },
         //保存
-        save: function () {
-            if (this.checkForm() == true) {
-                if (this.status == 0) {//新增
-                    for (var i in this.engineForm) {
-                        this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.engineForm[i].clzzs);
-                    }
-                    this.addForm.zcbl = parseInt(this.addForm.kysl) + parseInt(this.addForm.shsl) + parseInt(this.addForm.zzsl);
-                    var params = {
-                        zbmc: this.addForm.zbmc,
-                        zbbm: this.addForm.zbbm,
-                        ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
-                        ssdzmc: this.addForm.zbbssdzmcm,
-                        xzqh: this.addForm.xzqh[this.addForm.xzqh.length - 1],
-                        zblx: this.addForm.zblx[this.addForm.zblx.length - 1],
-                        sccj: this.addForm.sccj,
-                        zcbl: this.addForm.zcbl,
-                        kysl: this.addForm.kysl,
-                        shsl: this.addForm.shsl,
-                        zzsl: this.addForm.zzsl,
-                        bz: this.addForm.bz,
-                        cjrid: this.shiroData.userid,
-                        cjrmc: this.shiroData.realName,
-                        bz: this.addForm.bz,
-                        jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
-                        datasource: this.shiroData.organizationVO.jgid,
-                        equipengineVOList: this.engineForm
-                    }
-                    axios.post('/dpapi/equipmentsource/insertByVO', params).then(function (res) {
-                        if (res.data.result.uuid != null && res.data.result.uuid != '') {
-                            this.$alert('保存成功', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/equipment_list");
-                                }
-                            });
-                        } else {
-                            this.$alert('保存失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/equipment_list");
-                                }
-                            });
+        save: function (formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    if (this.status == 0) {//新增
+                        for (var i in this.engineForm) {
+                            this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.engineForm[i].clzzs);
                         }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
-                } else {//修改
-                    this.addForm.zzsl = 0;
-                    for (var i in this.engineForm) {
-                        this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.engineForm[i].clzzs);
-                    }
-                    this.addForm.zcbl = parseInt(this.addForm.kysl) + parseInt(this.addForm.shsl) + parseInt(this.addForm.zzsl);
-                    var params = {
-                        uuid: this.addForm.uuid,
-                        zbmc: this.addForm.zbmc,
-                        zbbm: this.addForm.zbbm,
-                        ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
-                        ssdzmc: this.addForm.zbbssdzmcm,
-                        xzqh: this.addForm.xzqh[this.addForm.xzqh.length - 1],
-                        zblx: this.addForm.zblx[this.addForm.zblx.length - 1],
-                        sccj: this.addForm.sccj,
-                        zcbl: this.addForm.zcbl,
-                        kysl: this.addForm.kysl,
-                        shsl: this.addForm.shsl,
-                        zzsl: this.addForm.zzsl,
-                        bz: this.addForm.bz,
-                        xgrid: this.shiroData.userid,
-                        xgrmc: this.shiroData.realName,
-                        bz: this.addForm.bz,
-                        // jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
-                        datasource: this.shiroData.organizationVO.jgid,
-                        equipengineVOList: this.engineForm
-                    }
-                    axios.post('/dpapi/equipmentsource/doUpdateEquipment', params).then(function (res) {
-                        if (res.data.result != null && res.data.result != '') {
-                            this.$alert('修改成功', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/equipment_list");
-                                }
-                            });
-                        } else {
-                            this.$alert('修改失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/equipment_list");
-                                }
-                            });
+                        this.addForm.zcbl = parseInt(this.addForm.kysl) + parseInt(this.addForm.shsl) + parseInt(this.addForm.zzsl);
+                        var params = {
+                            zbmc: this.addForm.zbmc,
+                            zbbm: this.addForm.zbbm,
+                            ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
+                            ssdzmc: this.addForm.zbbssdzmcm,
+                            xzqh: this.addForm.xzqh[this.addForm.xzqh.length - 1],
+                            zblx: this.addForm.zblx[this.addForm.zblx.length - 1],
+                            sccj: this.addForm.sccj,
+                            zcbl: this.addForm.zcbl,
+                            kysl: this.addForm.kysl,
+                            shsl: this.addForm.shsl,
+                            zzsl: this.addForm.zzsl,
+                            bz: this.addForm.bz,
+                            cjrid: this.shiroData.userid,
+                            cjrmc: this.shiroData.realName,
+                            bz: this.addForm.bz,
+                            jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
+                            datasource: this.shiroData.organizationVO.jgid,
+                            equipengineVOList: this.engineForm
                         }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
+                        axios.post('/dpapi/equipmentsource/insertByVO', params).then(function (res) {
+                            if (res.data.result.uuid != null && res.data.result.uuid != '') {
+                                this.$alert('保存成功', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("basicinfo/equipment_list");
+                                    }
+                                });
+                            } else {
+                                this.$alert('保存失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("basicinfo/equipment_list");
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    } else {//修改
+                        this.addForm.zzsl = 0;
+                        for (var i in this.engineForm) {
+                            this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.engineForm[i].clzzs);
+                        }
+                        this.addForm.zcbl = parseInt(this.addForm.kysl) + parseInt(this.addForm.shsl) + parseInt(this.addForm.zzsl);
+                        var params = {
+                            uuid: this.addForm.uuid,
+                            zbmc: this.addForm.zbmc,
+                            zbbm: this.addForm.zbbm,
+                            ssdz: this.addForm.ssdz[this.addForm.ssdz.length - 1],
+                            ssdzmc: this.addForm.zbbssdzmcm,
+                            xzqh: this.addForm.xzqh[this.addForm.xzqh.length - 1],
+                            zblx: this.addForm.zblx[this.addForm.zblx.length - 1],
+                            sccj: this.addForm.sccj,
+                            zcbl: this.addForm.zcbl,
+                            kysl: this.addForm.kysl,
+                            shsl: this.addForm.shsl,
+                            zzsl: this.addForm.zzsl,
+                            bz: this.addForm.bz,
+                            xgrid: this.shiroData.userid,
+                            xgrmc: this.shiroData.realName,
+                            bz: this.addForm.bz,
+                            // jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
+                            datasource: this.shiroData.organizationVO.jgid,
+                            equipengineVOList: this.engineForm
+                        }
+                        axios.post('/dpapi/equipmentsource/doUpdateEquipment', params).then(function (res) {
+                            if (res.data.result != null && res.data.result != '') {
+                                this.$alert('修改成功', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("basicinfo/equipment_list");
+                                    }
+                                });
+                            } else {
+                                this.$alert('修改失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("basicinfo/equipment_list");
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    }
+                } else {
+                    console.log('error save!!');
+                    return false;
                 }
-            }
+            });
         },
         //取消
         cancel: function () {
