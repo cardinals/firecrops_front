@@ -69,7 +69,7 @@ var vue = new Vue({
                 label: 'name',
                 children: 'zones'
             },
-            //登陆用户名-旧
+            //角色名称-旧
             rolenameOld: "",
             //Dialog Title
             dialogTitle: "用户编辑",
@@ -155,7 +155,7 @@ var vue = new Vue({
         },
 
          //新建：弹出Dialog
-         addClick: function () {
+        addClick: function () {
             this.dialogTitle = "角色新增";
             this.getAllResources();
             //清空edit表单
@@ -179,7 +179,7 @@ var vue = new Vue({
                 };
                 axios.post('/api/role/findByVO', params).then(function (res) {
                     this.editForm = res.data.result[0];
-                    //保存当前用户名username
+                    //保存当前用户名rolename
                     this.rolenameOld = this.editForm.rolename;
                 }.bind(this), function (error) {
                     console.log(error)
@@ -246,8 +246,6 @@ var vue = new Vue({
                     return false;
                 }
             });
-            
-           
         },
 
         //修改方法-update数据库  by li.xue 2018/11/23 9:39
@@ -281,7 +279,7 @@ var vue = new Vue({
             }).then(() => {
                 axios.post('/api/role/deleteByIds', this.multipleSelection).then(function (res) {
                     this.$message({
-                        message: "成功删除" + res.data.result + "条用户信息",
+                        message: "成功删除" + res.data.result + "条角色信息",
                         showClose: true,
                         onClose: this.searchClick('delete')
                     });
