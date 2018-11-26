@@ -18,17 +18,17 @@
                     <el-row>
                         <el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
                             <el-row>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-                                <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+                                <el-col :span="1">&nbsp;</el-col>
+                                <el-col :span="9" class="searchInline">
                                     <label class="el-form-item__label searchLabel">代码值</label>
                                     <el-input size="small" v-model="searchForm.codeValue" placeholder="请输入代码值" prefix-icon="el-icon-search"></el-input>
                                 </el-col>
-                                <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
-                                <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+                                <el-col :span="2">&nbsp;</el-col>
+                                <el-col :span="9" class="searchInline">
                                     <label class="el-form-item__label searchLabel">代码名称</label>
                                     <el-input size="small" v-model="searchForm.codeName" placeholder="请输入代码名称" prefix-icon="el-icon-search"></el-input>
                                 </el-col>
-                                <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+                                <el-col :span="2">&nbsp;</el-col>
                             </el-row>
                             <div>
                                 <el-form>
@@ -80,92 +80,42 @@
                         </el-row>
                     </div>
 
-                    <!--新建界面-->
-                    <el-dialog title="代码新增" :visible.sync="addFormVisible" @close="closeDialog(addForm)" :close-on-click-modal="false">
-                        <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
-                            <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
-                                    <el-form-item label="代码值" prop="codeValue">
-                                        <el-input v-model="addForm.codeValue" auto-complete="off" placeholder="代码值"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
-                                    <el-form-item label="代码名称" prop="codeName">
-                                        <el-input v-model="addForm.codeName" auto-complete="off" placeholder="代码名称"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
-                                    <el-form-item label="备注" prop="remark">
-                                        <el-input v-model="addForm.remark" auto-complete="off" placeholder="备注"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-                            </el-row>
-                            <el-row class="mt35 mb20">
-                                <el-row>
-                                    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
-                                        <el-button type="primary" icon="close" size="small" class="btn_submit" @click="closeDialog(addForm)"> 取消</el-button>
-                                        <el-button type="success" icon="check" size="small" class="btn_save" @click="addSubmit(addForm)">保存</el-button>
-                                    </el-col>
-                                </el-row>
-                            </el-row>
-                        </el-form>
-                        <!-- <div slot="footer" class="dialog-footer">
-                            <el-button @click.native="closeDialog(addForm)">取消</el-button>
-                            <el-button type="primary" @click.native="addSubmit(addForm)">提交</el-button>
-                        </div> -->
-                    </el-dialog>
-
                     <!--修改界面-->
-                    <el-dialog title="代码编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
-                        <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+                    <el-dialog :title="dialogTitle" :visible.sync="editFormVisible" :close-on-click-modal="false">
+                        <el-form :model="editForm" label-width="120px" :rules="editFormRules" ref="editForm">
+                            <div v-show="false" v-once v-model="codeValueOld"></div>
                             <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
+                                <el-col :span="23">
                                     <el-form-item label="代码值" prop="codeValue">
-                                        <el-input v-model="editForm.codeValue" auto-complete="off" placeholder="代码值"></el-input>
+                                        <el-input v-model="editForm.codeValue" auto-complete="off" placeholder="代码值" maxlength="30"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+                                <el-col :span="1">&nbsp;</el-col>
                             </el-row>
                             <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
+                                <el-col :span="23">
                                     <el-form-item label="代码名称" prop="codeName">
-                                        <el-input v-model="editForm.codeName" auto-complete="off" placeholder="代码名称"></el-input>
+                                        <el-input v-model="editForm.codeName" auto-complete="off" placeholder="代码名称" maxlength="64"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+                                <el-col :span="1">&nbsp;</el-col>
                             </el-row>
                             <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
+                                <el-col :span="23">
                                     <el-form-item label="备注" prop="remark">
-                                        <el-input v-model="editForm.remark" auto-complete="off" placeholder="备注"></el-input>
+                                        <el-input v-model="editForm.remark" auto-complete="off" placeholder="备注" maxlength="128"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+                                <el-col :span="1">&nbsp;</el-col>
                             </el-row>
-                            <el-row class="mt35 mb20">
-                                <el-row>
-                                    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
-                                        <el-button type="clear" icon="close" size="small" class="btn_submit" @click="editFormVisible = false"> 取消</el-button>
-                                        <el-button type="success" icon="check" size="small" class="btn_save" @click="editSubmit(editForm)">保存</el-button>
-                                    </el-col>
-                                </el-row>
+                            <el-row class="mt35 mb20 editform-button">
+                                <el-button type="clear" icon="close" size="small" class="btn_submit" @click="closeDialog"> 取消</el-button>
+                                <el-button type="success" icon="check" size="small" class="btn_save" @click="editSubmit(editForm)">保存</el-button>
                             </el-row>
                         </el-form>
-                        <!-- <div slot="footer" class="dialog-footer">
-                            <el-button @click.native="editFormVisible = false">取消</el-button>
-                            <el-button type="primary" @click.native="editSubmit(editForm)">提交</el-button>
-                        </div> -->
                     </el-dialog>
                 </div>
             </div>
-            <!-- main-container -->
         </div>
     </div>
 </body>
