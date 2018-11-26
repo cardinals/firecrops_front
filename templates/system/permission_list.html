@@ -17,15 +17,15 @@
 					<el-row>
 						<el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
 							<el-row>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
-									<label class="el-form-item__label searchLabel">权限描述</label>
-									<el-select size="small" v-model="searchForm.permissionname" placeholder="全部" class="searchSelect" clearable>
-										<el-option v-for="permission in allPermissions" :label="permission.permissioninfo" :value="permission.permissionname" :key="permission.permissionname"></el-option>
-									</el-select>
+								<el-col :span="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">权限名称</label>
+									<el-input size="small" v-model="searchForm.permissionname" placeholder="权限名称"></el-input>
 								</el-col>
-								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
-								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+								<el-col :span="8" class="searchInline">
+									<label class="el-form-item__label searchLabel">权限描述</label>
+									<el-input size="small" v-model="searchForm.permissioninfo" placeholder="权限描述"></el-input>
+								</el-col>
+								<el-col :span="8" class="searchInline">
 									<label class="el-form-item__label searchLabel">创建时间</label>
 									<el-date-picker
                                         type="daterange"
@@ -41,7 +41,6 @@
                                         class="searchDatePicker">
                                     </el-date-picker>
 								</el-col>
-								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
 							</el-row>
 							<div>
 								<el-form>
@@ -63,8 +62,6 @@
 						</el-form>
 					</el-row>
 
-
-
 					<div class="table_container">
 						<el-table class="tableStyle" border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
 						 @selection-change="selectionChange" :height="tableheight">
@@ -78,7 +75,7 @@
 							<el-table-column prop="alterTime" show-overflow-tooltip label="修改时间" min-width="13%" align="center" :formatter="tableDateFormat"></el-table-column>
 							<el-table-column label="操作" width="65" align="center" v-if="hasPermission('system/permission:edit')">
 								<template slot-scope="scope">
-									<el-button type="text" @click="editClick(scope.row,scope.$index)">编辑</el-button>
+									<el-button type="text" @click="editClick(scope.row, scope.$index)">编辑</el-button>
 								</template>
 							</el-table-column>
 						</el-table>
@@ -92,76 +89,35 @@
 							</el-col>
 						</el-row>
 					</div>
-					<!--新建界面-->
-					<el-dialog title="权限新增" :visible.sync="addFormVisible" @close="closeDialog(addForm)" :close-on-click-modal="false">
-						<el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
-							<el-row>
-								<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
-									<el-form-item label="权限名称" prop="permissionname">
-										<el-input v-model="addForm.permissionname" auto-complete="off" placeholder="权限名称" size="small"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							</el-row>
-							<el-row>
-								<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
-									<el-form-item label="权限描述" prop="permissioninfo">
-										<el-input v-model="addForm.permissioninfo" auto-complete="off" placeholder="权限描述" size="small"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-							</el-row>
-							<el-row class="mt35 mb20">
-								<el-row>
-									<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
-										<el-button type="clear" icon="close" size="small" class="btn_submit" @click="closeDialog(addForm)"> 取消</el-button>
-										<el-button type="success" icon="check" size="small" class="btn_save" @click="addSubmit(addForm)">保存</el-button>
-									</el-col>
-								</el-row>
-							</el-row>
-						</el-form>
-						<!-- <div slot="footer" class="dialog-footer">
-							<el-button @click.native="closeDialog(addForm)">取消</el-button>
-							<el-button type="primary" @click.native="addSubmit(addForm)">提交</el-button>
-						</div> -->
-					</el-dialog>
 
 					<!--修改界面-->
-					<el-dialog title="权限编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
-						<el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+					<el-dialog :title="dialogTitle" :visible.sync="editFormVisible" :close-on-click-modal="false">
+						<el-form :model="editForm" label-width="120px" :rules="editFormRules" ref="editForm">
+							<div v-show="false" v-once v-model="permissionnameOld"></div>
 							<el-row>
-								<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
+								<el-col :span="23">
 									<el-form-item label="权限名称" prop="permissionname">
-										<el-input v-model="editForm.permissionname" auto-complete="off" placeholder="权限名称" size="small"></el-input>
+										<el-input v-model="editForm.permissionname" auto-complete="off" placeholder="权限名称" size="small" maxlength="15"></el-input>
 									</el-form-item>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
 							<el-row>
-								<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
+								<el-col :span="23">
 									<el-form-item label="权限描述" prop="permissioninfo">
-										<el-input v-model="editForm.permissioninfo" auto-complete="off" placeholder="权限描述" size="small"></el-input>
+										<el-input v-model="editForm.permissioninfo" auto-complete="off" placeholder="权限描述" size="small" maxlength="50"></el-input>
 									</el-form-item>
 								</el-col>
-								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
-							<el-row class="mt35 mb20">
-								<el-row>
-									<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
-										<el-button type="clear" icon="close" size="small" class="btn_submit" @click="editFormVisible = false"> 取消</el-button>
-										<el-button type="success" icon="check" size="small" class="btn_save" @click="editSubmit(editForm)">保存</el-button>
-									</el-col>
-								</el-row>
+							<el-row class="mt35 mb20 editform-button">
+								<el-button type="clear" icon="close" size="small" class="btn_submit" @click="closeDialog(editForm)"> 取消</el-button>
+								<el-button type="success" icon="check" size="small" class="btn_save" @click="editSubmit(editForm)">保存</el-button>
 							</el-row>
 						</el-form>
-						<!-- <div slot="footer" class="dialog-footer">
-							<el-button @click.native="editFormVisible = false">取消</el-button>
-							<el-button type="primary" @click.native="editSubmit(editForm)">提交</el-button>
-						</div> -->
 					</el-dialog>
 				</div>
 			</div>
-			<!-- main-container -->
 		</div>
 	</div>
 </body>
