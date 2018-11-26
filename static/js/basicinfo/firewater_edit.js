@@ -158,6 +158,34 @@ new Vue({
             tableData: [],
             //表高度变量
             tableheight: 243,
+            //editForm验证rules
+            editFormRules:{
+                symc: [
+                    { required: true, message: '请输入水源名称', trigger: 'blur' }
+                ],
+                sylx: [
+                    { required: true, message: '请选择水源类型', trigger: 'change' }
+                ],
+                gxdz: [
+                    { validator: (rule,value,callback)=>{
+                        if(value.length == 0){
+                            callback(new Error("请选择管辖队站"));
+                        }else{
+                            callback();
+                        }
+               
+                    }, trigger: 'change' }
+                ],
+                sybm:[
+                    { required: false, message: '请填写水源编码', trigger: 'blur' },
+                    { pattern: /^[A-Za-z0-9]+$/, message: '只能输入数字和字母',trigger: 'blur' },
+                ],
+            },
+            trsyFormRules:{
+                trsy_trsymc: [
+                    { required: true, message: '请输入天然水源名称', trigger: 'blur' }
+                ],
+            },
         }
     },
     created: function () {
@@ -399,8 +427,9 @@ new Vue({
 
         //保存
         save: function (formName) {
-            if (this.validateSave()) {
-                var jdh = this.shiroData.organizationVO.jgid.substr(0,2) + "000000";
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    var jdh = this.shiroData.organizationVO.jgid.substr(0,2) + "000000";
                 var datasource = this.shiroData.organizationVO.jgid;
                 if (this.status == 0) {//新增
                     var params = {
@@ -488,96 +517,101 @@ new Vue({
                     }.bind(this), function (error) {
                         console.log(error);
                     })
-                } else {//修改
-                    var params = {
-                        uuid: this.editForm.uuid,
-                        sysxxxid: this.editForm.sysxxxid,
-                        symc: this.editForm.symc,
-                        sybm: this.editForm.sybm,
-                        sylx: this.editForm.sylx,
-                        sydz: this.editForm.sydz,
-                        kyzt: this.editForm.kyzt,
-                        gxdz: this.editForm.gxdz[this.editForm.gxdz.length - 1],
-                        xzqh: this.editForm.xzqh[this.editForm.xzqh.length - 1],
-                        sygs: this.editForm.sygs,
-                        lon: this.editForm.lon,
-                        lat: this.editForm.lat,
-                        gisX: this.editForm.gisX,
-                        gisY: this.editForm.gisY,
-                        gisH: this.editForm.gisH,
-                        ssdw: this.editForm.ssdw,
-                        gsdw: this.editForm.gsdw,
-                        gsdwlxfs: this.editForm.gsdwlxfs,
-                        bz: this.editForm.bz,
-                        jdh: jdh,
-                        datasource: datasource,
-                        //修改人
-                        xgrid: this.shiroData.userid,
-                        xgrmc: this.shiroData.realName,
-                        //消火栓VO
-                        xhs_szxs: this.editForm.xhs_szxs,
-                        xhs_gwylfw: this.editForm.xhs_gwylfw,
-                        xhs_gwxs: this.editForm.xhs_gwxs,
-                        xhs_gwzj: this.editForm.xhs_gwzj,
-                        xhs_gwyllx: this.editForm.xhs_gwyllx,
-                        xhs_jkxs: this.editForm.xhs_jkxs,
-                        xhs_jkkj: this.editForm.xhs_jkkj,
-                        xhs_zdll: this.editForm.xhs_zdll,
-                        xhs_jdh: jdh,
-                        xhs_datasource: datasource,
-                        //消防水鹤VO
-                        xfsh_gwzj: this.editForm.xfsh_gwzj,
-                        xfsh_gwyl: this.editForm.xfsh_gwyl,
-                        xfsh_cskgd: this.editForm.xfsh_cskgd,
-                        xfsh_zdll: this.editForm.xfsh_zdll,
-                        xfsh_jdh: jdh,
-                        xfsh_datasource: datasource,
-                        //消防水池VO
-                        xfsc_sybgc: this.editForm.xfsc_sybgc,
-                        xfsc_csl: this.editForm.xfsc_csl,
-                        xfsc_jsll: this.editForm.xfsc_jsll,
-                        xfsc_qszdll: this.editForm.xfsc_qszdll,
-                        xfsc_gwxs: this.editForm.xfsc_gwxs,
-                        xfsc_tcwz: this.editForm.xfsc_tcwz,
-                        xfsc_tsqscls: this.editForm.xfsc_tsqscls,
-                        xfsc_tsqscls: this.editForm.xfsc_tsqscls,
-                        xfsc_bssj: this.editForm.xfsc_bssj,
-                        xfsc_jdh: jdh,
-                        xfsc_datasource: datasource,
-                        //天然水源取水点VO
-                        trsyqsd_trsylx: this.editForm.trsyqsd_trsylx,
-                        trsyqsd_trsyid: this.editForm.trsyqsd_trsyid,
-                        trsy_trsymc: this.editForm.trsy_trsymc,
-                        trsyqsd_sybgc: this.editForm.trsyqsd_sybgc,
-                        trsyqsd_tcwz: this.editForm.trsyqsd_tcwz,
-                        trsyqsd_tsqscls: this.editForm.trsyqsd_tsqscls,
-                        trsyqsd_qsxs: this.editForm.trsyqsd_qsxs,
-                        trsyqsd_jdh: jdh,
-                        trsyqsd_datasource: datasource,
-                    }
-                    axios.post('/dpapi/xfsy/updateByXfsyVO', params).then(function (res) {
-                        if (res.data.result != null) {
-                            this.$alert('成功修改消防水源信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/firewater_list");
-                                }
-                            });
-                        } else {
-                            this.$alert('修改失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    loadDiv("basicinfo/firewater_list");
-                                }
-                            });
+                    } else {//修改
+                        var params = {
+                            uuid: this.editForm.uuid,
+                            sysxxxid: this.editForm.sysxxxid,
+                            symc: this.editForm.symc,
+                            sybm: this.editForm.sybm,
+                            sylx: this.editForm.sylx,
+                            sydz: this.editForm.sydz,
+                            kyzt: this.editForm.kyzt,
+                            gxdz: this.editForm.gxdz[this.editForm.gxdz.length - 1],
+                            xzqh: this.editForm.xzqh[this.editForm.xzqh.length - 1],
+                            sygs: this.editForm.sygs,
+                            lon: this.editForm.lon,
+                            lat: this.editForm.lat,
+                            gisX: this.editForm.gisX,
+                            gisY: this.editForm.gisY,
+                            gisH: this.editForm.gisH,
+                            ssdw: this.editForm.ssdw,
+                            gsdw: this.editForm.gsdw,
+                            gsdwlxfs: this.editForm.gsdwlxfs,
+                            bz: this.editForm.bz,
+                            jdh: jdh,
+                            datasource: datasource,
+                            //修改人
+                            xgrid: this.shiroData.userid,
+                            xgrmc: this.shiroData.realName,
+                            //消火栓VO
+                            xhs_szxs: this.editForm.xhs_szxs,
+                            xhs_gwylfw: this.editForm.xhs_gwylfw,
+                            xhs_gwxs: this.editForm.xhs_gwxs,
+                            xhs_gwzj: this.editForm.xhs_gwzj,
+                            xhs_gwyllx: this.editForm.xhs_gwyllx,
+                            xhs_jkxs: this.editForm.xhs_jkxs,
+                            xhs_jkkj: this.editForm.xhs_jkkj,
+                            xhs_zdll: this.editForm.xhs_zdll,
+                            xhs_jdh: jdh,
+                            xhs_datasource: datasource,
+                            //消防水鹤VO
+                            xfsh_gwzj: this.editForm.xfsh_gwzj,
+                            xfsh_gwyl: this.editForm.xfsh_gwyl,
+                            xfsh_cskgd: this.editForm.xfsh_cskgd,
+                            xfsh_zdll: this.editForm.xfsh_zdll,
+                            xfsh_jdh: jdh,
+                            xfsh_datasource: datasource,
+                            //消防水池VO
+                            xfsc_sybgc: this.editForm.xfsc_sybgc,
+                            xfsc_csl: this.editForm.xfsc_csl,
+                            xfsc_jsll: this.editForm.xfsc_jsll,
+                            xfsc_qszdll: this.editForm.xfsc_qszdll,
+                            xfsc_gwxs: this.editForm.xfsc_gwxs,
+                            xfsc_tcwz: this.editForm.xfsc_tcwz,
+                            xfsc_tsqscls: this.editForm.xfsc_tsqscls,
+                            xfsc_tsqscls: this.editForm.xfsc_tsqscls,
+                            xfsc_bssj: this.editForm.xfsc_bssj,
+                            xfsc_jdh: jdh,
+                            xfsc_datasource: datasource,
+                            //天然水源取水点VO
+                            trsyqsd_trsylx: this.editForm.trsyqsd_trsylx,
+                            trsyqsd_trsyid: this.editForm.trsyqsd_trsyid,
+                            trsy_trsymc: this.editForm.trsy_trsymc,
+                            trsyqsd_sybgc: this.editForm.trsyqsd_sybgc,
+                            trsyqsd_tcwz: this.editForm.trsyqsd_tcwz,
+                            trsyqsd_tsqscls: this.editForm.trsyqsd_tsqscls,
+                            trsyqsd_qsxs: this.editForm.trsyqsd_qsxs,
+                            trsyqsd_jdh: jdh,
+                            trsyqsd_datasource: datasource,
                         }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
+                        axios.post('/dpapi/xfsy/updateByXfsyVO', params).then(function (res) {
+                            if (res.data.result != null) {
+                                this.$alert('成功修改消防水源信息', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("basicinfo/firewater_list");
+                                    }
+                                });
+                            } else {
+                                this.$alert('修改失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        loadDiv("basicinfo/firewater_list");
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    }
+                } else {
+                    console.log('error submit!!');
+                    this.loading = false;
+                    return false;
                 }
-            }
+            });
         },
         cancel: function () {
             loadDiv("basicinfo/firewater_list");
@@ -651,7 +685,7 @@ new Vue({
             this.loading_trsy = true;
 
             var params = {
-                trsy_trsymc: this.searchForm.trsy_trsymc,
+                trsy_trsymc: this.searchForm.trsy_trsymc.replace(/%/g,"\\%"),
                 pageSize: this.pageSize,
                 pageNum: this.currentPage,
                 // orgUuid: this.shiroData.organizationVO.uuid,
@@ -758,64 +792,66 @@ new Vue({
             this.dialogTitle = "选择天然水源";
             this.clearTrsyList();
         },
-        saveTrsy: function () {
-            if (this.trsyAddForm.trsy_trsymc == '' || this.trsyAddForm.trsy_trsymc == null) {
-                this.$message.warning({
-                    message: '请输入天然水源名称',
-                    showClose: true
-                });
-            } else {
-                if (this.statusTrsy == 0) {//新增
-                    this.trsyAddForm.trsy_cjrid = this.shiroData.userid;
-                    this.trsyAddForm.trsy_cjrmc = this.shiroData.realName;
-                    this.trsyAddForm.trsy_jdh = datasource;
-                    axios.post('/dpapi/xfsy/insertTrsyByXfsyVO', this.trsyAddForm).then(function (res) {
-                        if (res.data.result != null) {
-                            this.$alert('成功保存天然水源信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    this.cancelTrsy();
-                                }
-                            });
-                        } else {
-                            this.$alert('保存失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    this.cancelTrsy();
-                                }
-                            });
-                        }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
-                } else {//修改
-                    this.trsyAddForm.trsy_xgrid = this.shiroData.userid;
-                    this.trsyAddForm.trsy_xgrmc = this.shiroData.realName;
-                    axios.post('/dpapi/xfsy/doUpdateTrsyByVO', this.trsyAddForm).then(function (res) {
-                        if (res.data.result != null) {
-                            this.$alert('成功修改天然水源信息', '提示', {
-                                type: 'success',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    this.cancelTrsy();
-                                }
-                            });
-                        } else {
-                            this.$alert('修改失败', '提示', {
-                                type: 'error',
-                                confirmButtonText: '确定',
-                                callback: action => {
-                                    this.cancelTrsy();
-                                }
-                            });
-                        }
-                    }.bind(this), function (error) {
-                        console.log(error);
-                    })
+        saveTrsy: function (formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    if (this.statusTrsy == 0) {//新增
+                        this.trsyAddForm.trsy_cjrid = this.shiroData.userid;
+                        this.trsyAddForm.trsy_cjrmc = this.shiroData.realName;
+                        //this.trsyAddForm.trsy_jdh = datasource;
+                        this.trsyAddForm.trsy_jdh = this.shiroData.organizationVO.jgid;
+                        axios.post('/dpapi/xfsy/insertTrsyByXfsyVO', this.trsyAddForm).then(function (res) {
+                            if (res.data.result != null) {
+                                this.$alert('成功保存天然水源信息', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        this.cancelTrsy();
+                                    }
+                                });
+                            } else {
+                                this.$alert('保存失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        this.cancelTrsy();
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    } else {//修改
+                        this.trsyAddForm.trsy_xgrid = this.shiroData.userid;
+                        this.trsyAddForm.trsy_xgrmc = this.shiroData.realName;
+                        axios.post('/dpapi/xfsy/doUpdateTrsyByVO', this.trsyAddForm).then(function (res) {
+                            if (res.data.result != null) {
+                                this.$alert('成功修改天然水源信息', '提示', {
+                                    type: 'success',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        this.cancelTrsy();
+                                    }
+                                });
+                            } else {
+                                this.$alert('修改失败', '提示', {
+                                    type: 'error',
+                                    confirmButtonText: '确定',
+                                    callback: action => {
+                                        this.cancelTrsy();
+                                    }
+                                });
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error);
+                        })
+                    }
+                }else {
+                    console.log('error submit!!');
+                    this.loading = false;
+                    return false;
                 }
-            }
+            });
         }
     },
 

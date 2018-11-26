@@ -502,51 +502,59 @@ new Vue({
                     }
                     this.addForm.xfgx = xfgxArray;
                     //doFindPhoto("JXDWLX", this.jbxxData.jxdwlx);
+                    //图片查询
+                    this.searchPic();
+                    //视频查询
+                    this.searchVideo();
+                    this.upLoadData.dwid = this.status;
+                    this.loading1 = false;
                 }.bind(this), function (error) {
                     console.log(error)
                 })
-                //图片查询
-                var pic = {
-                    dwid: this.status,
-                    kzm: 'pic'
-                }
-                axios.post('/dpapi/jxcsfjxz/doFindByDwid', pic).then(function (res) {
-                    var picData = res.data.result;
-                    if (picData.length > 0) {
-                        for (var i in picData) {
-                            this.picList.push({
-                                uuid: picData[i].uuid,
-                                name: picData[i].wjm,
-                                url: baseUrl + "/upload/" + picData[i].fjlj
-                            });
-                        }
-                    }
-
-                }.bind(this), function (error) {
-                    console.log(error)
-                })
-                //视频查询
-                var video = {
-                    dwid: this.status,
-                    kzm: 'video'
-                }
-                axios.post('/dpapi/jxcsfjxz/doFindByDwid', video).then(function (res) {
-                    var videoData = res.data.result;
-                    if (videoData.length > 0) {
-                        for (var i in videoData) {
-                            this.fileList.push({
-                                uuid: videoData[i].uuid,
-                                name: videoData[i].wjm,
-                                url: baseUrl + "/upload/" + videoData[i].fjlj
-                            });
-                        }
-                    }
-                }.bind(this), function (error) {
-                    console.log(error)
-                })
-                this.upLoadData.dwid = this.status;
-                this.loading1 = false;
             }
+        },
+        //图片查询
+        searchPic: function(){
+            var pic = {
+                dwid: this.status,
+                kzm: 'pic'
+            }
+            axios.post('/dpapi/jxcsfjxz/doFindByDwid', pic).then(function (res) {
+                var picData = res.data.result;
+                if (picData.length > 0) {
+                    for (var i in picData) {
+                        this.picList.push({
+                            uuid: picData[i].uuid,
+                            name: picData[i].wjm,
+                            url: baseUrl + "/upload/" + picData[i].fjlj
+                        });
+                    }
+                }
+
+            }.bind(this), function (error) {
+                console.log(error)
+            })
+        },
+        //视频查询
+        searchVideo: function(){
+            var video = {
+                dwid: this.status,
+                kzm: 'video'
+            }
+            axios.post('/dpapi/jxcsfjxz/doFindByDwid', video).then(function (res) {
+                var videoData = res.data.result;
+                if (videoData.length > 0) {
+                    for (var i in videoData) {
+                        this.fileList.push({
+                            uuid: videoData[i].uuid,
+                            name: videoData[i].wjm,
+                            url: baseUrl + "/upload/" + videoData[i].fjlj
+                        });
+                    }
+                }
+            }.bind(this), function (error) {
+                console.log(error)
+            })
         },
         //消防设施查询
         searchXfss: function(){
@@ -830,7 +838,7 @@ new Vue({
                     // });
                 } else {
                     console.log('error submit!!');
-                    this.loading = false;
+                    this.loading1 = false;
                     return false;
                 }
 
@@ -1047,7 +1055,7 @@ new Vue({
                     // });
                 } else {
                     console.log('error submit!!');
-                    this.loading = false;
+                    this.loading1 = false;
                     return false;
                 }
 

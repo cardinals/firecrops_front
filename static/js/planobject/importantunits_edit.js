@@ -207,6 +207,12 @@ new Vue({
                                         for (var n in this.xfdzData[i].children[j].children[k].children) {
                                             if (temp == this.xfdzData[i].children[j].children[k].children[n].dzid) {
                                                 xfdzArray.push(this.xfdzData[i].dzid, this.xfdzData[i].children[j].dzid, this.xfdzData[i].children[j].children[k].dzid, this.xfdzData[i].children[j].children[k].children[n].dzid);
+                                            }else {
+                                                for (var m in this.xfdzData[i].children[j].children[k].children[n].children) {
+                                                    if (temp == this.xfdzData[i].children[j].children[k].children[n].children[m].dzid) {
+                                                        xfdzArray.push(this.xfdzData[i].dzid, this.xfdzData[i].children[j].dzid, this.xfdzData[i].children[j].children[k].dzid, this.xfdzData[i].children[j].children[k].children[n].dzid, this.xfdzData[i].children[j].children[k].children[n].children[m].dzid);
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -431,7 +437,7 @@ new Vue({
             this.buildingListVisible = true;
             this.loading_building = true;
             var params = {
-                jzmc: this.searchForm_building.jzmc,
+                jzmc: this.searchForm_building.jzmc.replace(/%/g,"\\%"),
                 jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
                 pageSize: this.pageSize_building,
                 pageNum: this.currentPage_building,

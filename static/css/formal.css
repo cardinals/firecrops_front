@@ -268,7 +268,9 @@ body{height:100%;overflow:hidden;}
 .el-checkbox{
     margin-right: 30px;
 }
-
 .whiteborder{
     border: 15px solid #fff;
+}
+#inforView{
+    margin-top: 10px;
 }

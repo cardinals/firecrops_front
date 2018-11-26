@@ -13,7 +13,7 @@
 			<div class="main-container" v-loading="loading" element-loading-text="加载中">
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
-				<div id="inforView" class="pt15">
+				<div id="inforView">
 					<el-form label-width="140px" ref="editForm" :model="editForm" :rules="inforRules">
 						<el-row class="mb5 row-edit-subtitle">
 							<el-col :span="24">
@@ -62,7 +62,7 @@
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="值班电话">
-									<el-input size="small" v-model="editForm.zbdh" maxlength="100" placeholder="值班电话" clearable></el-input>
+									<el-input size="small" v-model="editForm.zbdh" maxlength="25" placeholder="值班电话" clearable></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -207,7 +207,7 @@
 						<el-card v-for="(xfll,index) in editForm.xfllList" :key="xfll.key" class="card_style">
 							<div slot="header">
 								<strong class="card_title_font">单位消防队伍{{index+1}}</strong>
-								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainXfll(xfll)" class="r" style="margin:-1px 0px 1px"></el-button>
+								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainXfll(xfll)" class="r" style="margin:-4px 15px 1px"></el-button>
 							</div>
 							<el-row>
 								<el-col :span="23">
@@ -275,13 +275,13 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item label="占地面积(㎡)">
-									<el-input-number v-model="editForm.zdmj" size="small" :precision="2" :min="0" :max="999999999999.99" class="searchSelect"></el-input-number>
+									<el-input-number v-model="editForm.zdmj" size="small" :precision="2" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="建筑面积(㎡)">
-									<el-input-number v-model="editForm.jzmj" size="small" :precision="2" :min="0" :max="999999999999.99" class="searchSelect"></el-input-number>
+									<el-input-number v-model="editForm.jzmj" size="small" :precision="2" :min="0" :max="99999999.99" class="searchSelect"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -319,7 +319,7 @@
 						<el-card v-for="(zdbw,index) in editForm.zdbwList" :key="zdbw.key" class="card_style">
 							<div slot="header">
 								<strong class="card_title_font">重点部位{{index+1}}</strong>
-								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainZdbw(zdbw)" class="r" style="margin:-1px 0px 1px"></el-button>
+								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainZdbw(zdbw)" class="r" style="margin:-4px 15px 1px"></el-button>
 							</div>
 							<el-row>
 								<el-col :span="11">

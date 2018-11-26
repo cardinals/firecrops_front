@@ -13,7 +13,7 @@
 			<div class="main-container" v-loading="loading" element-loading-text="加载中">
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
-				<div id="inforView" class="pt15">
+				<div id="inforView">
 					<el-form ref="addForm" :model="addForm" label-width="120px" :rules="inforRules">
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
 							<strong style="color: #20a0ff;">基本信息</strong>
@@ -21,13 +21,13 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item label="药剂名称" prop="yjmc">
-									<el-input size="small" v-model="addForm.yjmc" placeholder="药剂名称" clearable></el-input>
+									<el-input size="small" v-model="addForm.yjmc" maxlength="50" placeholder="药剂名称" clearable></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
-								<el-form-item label="药剂编码">
-									<el-input size="small" v-model="addForm.yjbm" placeholder="药剂编码" clearable></el-input>
+								<el-form-item label="药剂编码" prop="yjbm">
+									<el-input size="small" v-model="addForm.yjbm" maxlength="25" placeholder="药剂编码" clearable></el-input>
 								</el-form-item>
 							</el-col>
 						</el-row>
@@ -41,7 +41,7 @@
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="混合比">
-									<el-input size="small" v-model="addForm.hhb" placeholder="混合比" clearable></el-input>
+									<el-input size="small" v-model="addForm.hhb" maxlength="10" placeholder="混合比" clearable></el-input>
 								</el-form-item>
 							</el-col>
 						</el-row>
@@ -66,20 +66,20 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item label="车载量(t)">
-									<el-input-number v-model="addForm.czl" @change="czlChange" size="small" :min="0"></el-input-number>
+									<el-input-number v-model="addForm.czl" @change="czlChange" size="small" :min="0" :max="99999999.99"></el-input-number>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
 								<el-form-item label="总储备量(t)">
-									<el-input-number v-model="addForm.zcbl" size="small" :disabled="true" :min="0"></el-input-number>
+									<el-input-number v-model="addForm.zcbl" size="small" :disabled="true" :min="0" :max="999999999.99"></el-input-number>
 								</el-form-item>
 							</el-col>
 						</el-row>
 						<el-row>
 							<el-col :span="11">
 								<el-form-item label="库存量(t)">
-									<el-input-number v-model="addForm.kcl" @change="kclChange" size="small" :min="0"></el-input-number>
+									<el-input-number v-model="addForm.kcl" @change="kclChange" size="small" :min="0" :max="99999999.99"></el-input-number>
 								</el-form-item>
 							</el-col>
 						</el-row>
@@ -89,7 +89,7 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item label="生产厂家">
-									<el-input size="small" v-model="addForm.sccj" :min="0" :max="1000"></el-input>
+									<el-input size="small" v-model="addForm.sccj" maxlength="100"></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
@@ -103,7 +103,7 @@
 						<el-row>
 							<el-col :span="11">
 								<el-form-item label="生产批次">
-									<el-input size="small" v-model="addForm.pc"></el-input>
+									<el-input size="small" v-model="addForm.pc" maxlength="25"></el-input>
 								</el-form-item>
 							</el-col>
 						</el-row>
@@ -113,7 +113,7 @@
 						<el-row>
 							<el-col :span="23">
 								<el-form-item label="备注">
-									<el-input size="small" v-model="addForm.bz" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+									<el-input size="small" v-model="addForm.bz" maxlength="200" type="textarea" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
 								</el-form-item>
 							</el-col>
 						</el-row>
