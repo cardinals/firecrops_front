@@ -27,11 +27,11 @@
                                 <el-col :span="2">&nbsp;</el-col>
                                 <el-col :span="9" class="searchInline">
                                     <label class="el-form-item__label searchLabel">公式类别</label>
-                                    <el-select size="small" v-model="searchForm.selected_GSLB" placeholder="全部" class="gslbSelect" clearable>
+                                    <el-select size="small" v-model="searchForm.selected_GSLB" placeholder="全部" class="searchSelect" clearable>
                                         <el-option v-for="item in GSLB_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
                                     </el-select>
                                 </el-col>
-
+                               
                                 <!--
                                 <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
                                     <label class="el-form-item__label searchLabel">是否启用</label>
@@ -125,7 +125,7 @@
                                         <el-col :span="2">&nbsp;</el-col>
                                         <el-col :span="20">
                                             <el-form-item class="dialog-form" label="公式类别" prop="gslb">
-                                                <el-select size="small" v-model="addFormulaForm.gslb" placeholder="公式类别" clearable>
+                                                <el-select class="searchSelect" size="small" v-model="addFormulaForm.gslb" placeholder="公式类别" clearable>
                                                     <el-option v-for="item in GSLB_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
                                                 </el-select>
                                             </el-form-item>
@@ -216,7 +216,7 @@
                                         <el-col :span="2">&nbsp;</el-col>
                                         <el-col :span="20">
                                             <el-form-item class="dialog-form" label="公式类别">
-                                                <el-select size="small" v-model="editFormulaForm.gslb" :disabled="true" placeholder="公式类别" clearable>
+                                                <el-select class="searchSelect" size="small" v-model="editFormulaForm.gslb" :disabled="true" placeholder="公式类别" clearable>
                                                     <el-option v-for="item in GSLB_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
                                                 </el-select>
                                             </el-form-item>
