@@ -69,184 +69,13 @@
 								</el-form-item>
 							</el-col>
 						</el-row>
-
-						<!-- 1001安全出口\1002疏散楼梯\1003消防电梯\2010半固定设施\3005半固定泡沫设施 -->
-						<el-row v-if="this.addForm.jbxx_xfsslx[1] === '1001'||
-						  this.addForm.jbxx_xfsslx[1] === '1002'||
-						  this.addForm.jbxx_xfsslx[1] === '1003'||
-						  this.addForm.jbxx_xfsslx[1] === '2010'||
-						  this.addForm.jbxx_xfsslx[1] === '3005'">
-							<el-col :span="11">
-								<el-form-item label="位置">
-									<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-							<el-col :span="11">
-								<el-form-item label="数量">
-									<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
-									 :min="0" :max="99999"></el-input-number>
-								</el-form-item>
-							</el-col>
-						</el-row>
-						<!-- 避难层（间） -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '1004'">
-							<el-col :span="11">
-								<el-form-item label="位置">
-									<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-								</el-form-item>
-							</el-col>
-						</el-row>
-						<!-- 应急广播 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '1005'">
-							<el-col :span="11">
-								<el-form-item label="位置">
-									<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-							<el-col :span="11">
-								<el-form-item label="有无应急广播">
-									<el-select size="small" v-model="detailForm.ywyjgb" placeholder="有无应急广播" class="searchSelect" clearable>
-										<el-option label="有" value="1"></el-option>
-										<el-option label="无" value="0"></el-option>
-									</el-select>
-								</el-form-item>
-							</el-col>
-						</el-row>
-						<!-- 消防泵房 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2001'">
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="位置">
-										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-									</el-form-item>
-								</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="消火栓泵数量">
-										<el-input-number v-model="detailForm.xhssl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
-										 :min="0" :max="9999999999"></el-input-number>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="消火栓最大流量(L/s)">
-										<el-input-number v-model="detailForm.xhszdll" size="small" :min="0" :max="99999999.99"></el-input-number>
-									</el-form-item>
-								</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="喷淋泵数量">
-										<el-input-number v-model="detailForm.plbsl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
-										 :min="0" :max="9999999999"></el-input-number>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="喷淋泵最大流量(L/s)">
-										<el-input-number v-model="detailForm.plbzdll" size="small" :min="0" :max="99999999.99"></el-input-number>
-									</el-form-item>
-								</el-col>
-							</el-row>
-						</el-row>
-						<!-- 消防水箱 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2002'">
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="位置">
-										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-									</el-form-item>
-								</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="水箱容量(m³)">
-										<el-input-number v-model="detailForm.sxrl" size="small" :min="0" :max="99999999.99"></el-input-number>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="补给速度(L/s)">
-										<el-input-number v-model="detailForm.bjsd" size="small" :min="0" :max="999.99"></el-input-number>
-									</el-form-item>
-								</el-col>
-							</el-row>
-						</el-row>
-						<!-- 消防水池 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2003'">
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="位置">
-										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-									</el-form-item>
-								</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="是否有取水口(井)">
-										<el-select size="small" v-model="detailForm.ywqsj" placeholder="是否有取水口(井)" class="searchSelect" clearable>
-											<el-option label="有" value="1"></el-option>
-											<el-option label="无" value="0"></el-option>
-										</el-select>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="补给速度(L/s)">
-										<el-input-number v-model="detailForm.bjsd" size="small" :min="0" :max="999.99"></el-input-number>
-									</el-form-item>
-								</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="取水口(井)位置">
-										<el-input v-if="detailForm.ywqsj==='1'" v-model="detailForm.qsjwz" maxlength="25" size="small" placeholder="取水口(井)位置"></el-input>
-										<el-input v-else size="small" placeholder="取水口(井)位置" disabled></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="水箱容量(m³)">
-										<el-input-number v-model="detailForm.sxrl" size="small" :min="0" :max="99999999.99"></el-input-number>
-									</el-form-item>
-								</el-col>
-							</el-row>
-						</el-row>
-						<!-- 2004室内消火栓\2005室外消火栓\3003固定泡沫炮 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2004'|| 
-						 addForm.jbxx_xfsslx[1] === '2005'|| 
-						 addForm.jbxx_xfsslx[1] === '3003'">
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="位置">
-										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-									</el-form-item>
-								</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="数量">
-										<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
-										 :min="0" :max="9999999999"></el-input-number>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="是否可用">
-										<el-select size="small" v-model="detailForm.sfky" placeholder="是否可用" class="searchSelect" clearable>
-											<el-option label="可用" value="1"></el-option>
-											<el-option label="不可用" value="0"></el-option>
-										</el-select>
-									</el-form-item>
-								</el-col>
-							</el-row>
-						</el-row>
-						<!-- 水泵接合器 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2006'">
-							<el-row>
+						<el-form ref="detailForm" :model="detailForm" label-width="150px" :rules="detailRules">
+							<!-- 1001安全出口\1002疏散楼梯\1003消防电梯\2010半固定设施\3005半固定泡沫设施 -->
+							<el-row v-if="this.addForm.jbxx_xfsslx[1] === '1001'||
+						  		this.addForm.jbxx_xfsslx[1] === '1002'||
+						 		this.addForm.jbxx_xfsslx[1] === '1003'||
+						  		this.addForm.jbxx_xfsslx[1] === '2010'||
+						  		this.addForm.jbxx_xfsslx[1] === '3005'">
 								<el-col :span="11">
 									<el-form-item label="位置">
 										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
@@ -254,86 +83,305 @@
 								</el-col>
 								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
-									<el-form-item label="安装形式">
-										<el-select size="small" v-model="detailForm.azxs" placeholder="安装形式" class="searchSelect" clearable>
-											<el-option v-for="item in azxsDataTree" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
-										</el-select>
-									</el-form-item>
-								</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="型号">
-										<el-input v-model="detailForm.xh" maxlength="25" size="small" placeholder="型号"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="进水口尺寸(mm)">
-										<el-input-number v-model="detailForm.jskcc" size="small" :min="0" :max="999.99"></el-input-number>
-									</el-form-item>
-								</el-col>
-							</el-row>
-						</el-row>
-						<!-- 喷淋系统 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2007'">
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="位置">
-										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="有无喷淋系统">
-										<el-select size="small" v-model="detailForm.ywplxt" placeholder="有无喷淋系统" class="searchSelect" clearable>
-											<el-option label="有" value="1"></el-option>
-											<el-option label="无" value="0"></el-option>
-										</el-select>
-									</el-form-item>
-								</el-col>
-							</el-row>
-						</el-row>
-						<!-- 冷却水系统 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2008'">
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="位置">
-										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-									</el-form-item>
-								</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="有无冷却水系统">
-										<el-select size="small" v-model="detailForm.ywlqsxt" placeholder="有无冷却水系统" class="searchSelect" clearable>
-											<el-option label="有" value="1"></el-option>
-											<el-option label="无" value="0"></el-option>
-										</el-select>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="供水强度(L/min.㎡)">
-										<el-input-number v-model="detailForm.gsqd" size="small" :min="0" :max="999.99"></el-input-number>
-									</el-form-item>
-								</el-col>
-							</el-row>
-						</el-row>
-						<!-- 固定水炮 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2009'">
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="位置">
-										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-									</el-form-item>
-								</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="数量">
+									<el-form-item label="数量" prop="sl">
 										<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
 										 :min="0" :max="99999"></el-input-number>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<!-- 避难层（间） -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '1004'">
+								<el-col :span="11">
+									<el-form-item label="位置">
+										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<!-- 应急广播 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '1005'">
+								<el-col :span="11">
+									<el-form-item label="位置">
+										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+									</el-form-item>
+								</el-col>
+								<el-col :span="1">&nbsp;</el-col>
+								<el-col :span="11">
+									<el-form-item label="有无应急广播">
+										<el-select size="small" v-model="detailForm.ywyjgb" placeholder="有无应急广播" class="searchSelect" clearable>
+											<el-option label="有" value="1"></el-option>
+											<el-option label="无" value="0"></el-option>
+										</el-select>
+									</el-form-item>
+								</el-col>
+							</el-row>
+							<!-- 消防泵房 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2001'">
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="位置">
+											<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="消火栓泵数量" prop="xhssl">
+											<el-input-number v-model="detailForm.xhssl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
+											 :min="0" :max="9999999999"></el-input-number>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="消火栓最大流量(L/s)">
+											<el-input-number v-model="detailForm.xhszdll" size="small" :min="0" :max="99999999.99"></el-input-number>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="喷淋泵数量" prop="plbsl">
+											<el-input-number v-model="detailForm.plbsl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
+											 :min="0" :max="9999999999"></el-input-number>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="喷淋泵最大流量(L/s)">
+											<el-input-number v-model="detailForm.plbzdll" size="small" :min="0" :max="99999999.99"></el-input-number>
+										</el-form-item>
+									</el-col>
+								</el-row>
+							</el-row>
+							<!-- 消防水箱 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2002'">
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="位置">
+											<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="水箱容量(m³)">
+											<el-input-number v-model="detailForm.sxrl" size="small" :min="0" :max="99999999.99"></el-input-number>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="补给速度(L/s)">
+											<el-input-number v-model="detailForm.bjsd" size="small" :min="0" :max="999.99"></el-input-number>
+										</el-form-item>
+									</el-col>
+								</el-row>
+							</el-row>
+							<!-- 消防水池 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2003'">
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="位置">
+											<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="是否有取水口(井)">
+											<el-select size="small" v-model="detailForm.ywqsj" placeholder="是否有取水口(井)" class="searchSelect" clearable>
+												<el-option label="有" value="1"></el-option>
+												<el-option label="无" value="0"></el-option>
+											</el-select>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="补给速度(L/s)">
+											<el-input-number v-model="detailForm.bjsd" size="small" :min="0" :max="999.99"></el-input-number>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="取水口(井)位置">
+											<el-input v-if="detailForm.ywqsj==='1'" v-model="detailForm.qsjwz" maxlength="25" size="small" placeholder="取水口(井)位置"></el-input>
+											<el-input v-else size="small" placeholder="取水口(井)位置" disabled></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="水箱容量(m³)">
+											<el-input-number v-model="detailForm.sxrl" size="small" :min="0" :max="99999999.99"></el-input-number>
+										</el-form-item>
+									</el-col>
+								</el-row>
+							</el-row>
+							<!-- 2004室内消火栓\2005室外消火栓\3003固定泡沫炮 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2004'|| 
+						 		addForm.jbxx_xfsslx[1] === '2005'|| 
+						 		addForm.jbxx_xfsslx[1] === '3003'">
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="位置">
+											<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="数量" prop="sl">
+											<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
+											 :min="0" :max="9999999999"></el-input-number>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="是否可用">
+											<el-select size="small" v-model="detailForm.sfky" placeholder="是否可用" class="searchSelect" clearable>
+												<el-option label="可用" value="1"></el-option>
+												<el-option label="不可用" value="0"></el-option>
+											</el-select>
+										</el-form-item>
+									</el-col>
+								</el-row>
+							</el-row>
+							<!-- 水泵接合器 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2006'">
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="位置">
+											<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="安装形式">
+											<el-select size="small" v-model="detailForm.azxs" placeholder="安装形式" class="searchSelect" clearable>
+												<el-option v-for="item in azxsDataTree" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+											</el-select>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="型号">
+											<el-input v-model="detailForm.xh" maxlength="25" size="small" placeholder="型号"></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="进水口尺寸(mm)">
+											<el-input-number v-model="detailForm.jskcc" size="small" :min="0" :max="999.99"></el-input-number>
+										</el-form-item>
+									</el-col>
+								</el-row>
+							</el-row>
+							<!-- 喷淋系统 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2007'">
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="位置">
+											<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="有无喷淋系统">
+											<el-select size="small" v-model="detailForm.ywplxt" placeholder="有无喷淋系统" class="searchSelect" clearable>
+												<el-option label="有" value="1"></el-option>
+												<el-option label="无" value="0"></el-option>
+											</el-select>
+										</el-form-item>
+									</el-col>
+								</el-row>
+							</el-row>
+							<!-- 冷却水系统 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2008'">
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="位置">
+											<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="有无冷却水系统">
+											<el-select size="small" v-model="detailForm.ywlqsxt" placeholder="有无冷却水系统" class="searchSelect" clearable>
+												<el-option label="有" value="1"></el-option>
+												<el-option label="无" value="0"></el-option>
+											</el-select>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="供水强度(L/min.㎡)">
+											<el-input-number v-model="detailForm.gsqd" size="small" :min="0" :max="999.99"></el-input-number>
+										</el-form-item>
+									</el-col>
+								</el-row>
+							</el-row>
+							<!-- 固定水炮 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '2009'">
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="位置">
+											<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="数量" prop="sl">
+											<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
+											 :min="0" :max="99999"></el-input-number>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="是否可用">
+											<el-select size="small" v-model="detailForm.isky" placeholder="是否可用" class="searchSelect" clearable>
+												<el-option label="可用" value="1"></el-option>
+												<el-option label="不可用" value="0"></el-option>
+											</el-select>
+										</el-form-item>
+									</el-col>
+								</el-row>
+							</el-row>
+							<!-- 泡沫泵房 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '3001'">
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="位置">
+											<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="泡沫液类型">
+											<el-cascader :options="pmylxDataTree" v-model="detailForm.pmylx" :props="defaultProps" size="small" placeholder="泡沫液类型" class="searchSelect"
+											 clearable change-on-select :show-all-levels="false"></el-cascader>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="泡沫液储量(t)">
+											<el-input-number v-model="detailForm.pmycl" size="small" :min="0" :max="99999999.99"></el-input-number>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="泡沫泵最大流量(L/s)">
+											<el-input-number v-model="detailForm.pmbzdll" size="small" :min="0" :max="99999999.99"></el-input-number>
+										</el-form-item>
+									</el-col>
+								</el-row>
+							</el-row>
+							<!-- 泡沫消火栓 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '3002'">
+								<el-col :span="11">
+									<el-form-item label="位置">
+										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :span="1">&nbsp;</el-col>
@@ -346,219 +394,172 @@
 									</el-form-item>
 								</el-col>
 							</el-row>
-						</el-row>
-						<!-- 泡沫泵房 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '3001'">
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="位置">
-										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="泡沫液类型">
-										<el-cascader :options="pmylxDataTree" v-model="detailForm.pmylx" :props="defaultProps" size="small" placeholder="泡沫液类型" class="searchSelect"
-										 clearable change-on-select :show-all-levels="false"></el-cascader>
-									</el-form-item>
-								</el-col>
+							<!-- 泡沫发生器 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '3004'">
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="位置">
+											<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="型号">
+											<el-input v-model="detailForm.xh" maxlength="25" size="small" placeholder="型号"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="数量" prop="sl">
+											<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
+											 :min="0" :max="99999"></el-input-number>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="流量(L/s)">
+											<el-input-number v-model="detailForm.ll" size="small" :min="0" :max="999.99"></el-input-number>
+										</el-form-item>
+									</el-col>
+								</el-row>
 							</el-row>
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="泡沫液储量(t)">
-										<el-input-number v-model="detailForm.pmycl" size="small" :min="0" :max="99999999.99"></el-input-number>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="泡沫泵最大流量(L/s)">
-										<el-input-number v-model="detailForm.pmbzdll" size="small" :min="0" :max="99999999.99"></el-input-number>
-									</el-form-item>
-								</el-col>
+							<!-- 固定式蒸汽系统\半固定式蒸汽系统 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '4001'||addForm.jbxx_xfsslx[1] === '4002'">
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="位置">
+											<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="数量" prop="sl">
+											<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
+											 :min="0" :max="99999"></el-input-number>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="额定压力(Mpa)">
+											<el-input-number v-model="detailForm.edyl" size="small" :min="0" :max="999.99"></el-input-number>
+										</el-form-item>
+									</el-col>
+								</el-row>
 							</el-row>
-						</el-row>
-						<!-- 泡沫消火栓 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '3002'">
-							<el-col :span="11">
-								<el-form-item label="位置">
-									<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-							<el-col :span="11">
-								<el-form-item label="是否可用">
-									<el-select size="small" v-model="detailForm.isky" placeholder="是否可用" class="searchSelect" clearable>
-										<el-option label="可用" value="1"></el-option>
-										<el-option label="不可用" value="0"></el-option>
-									</el-select>
-								</el-form-item>
-							</el-col>
-						</el-row>
-						<!-- 泡沫发生器 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '3004'">
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="位置">
-										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="型号">
-										<el-input v-model="detailForm.xh" maxlength="25" size="small" placeholder="型号"></el-input>
-									</el-form-item>
-								</el-col>
+							<!-- 消防控制室 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[0] === '5000'">
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="位置">
+											<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="自动报警是否可用">
+											<el-select size="small" v-model="detailForm.iszdbj" placeholder="自动报警是否可用" class="searchSelect" clearable>
+												<el-option label="可用" value="1"></el-option>
+												<el-option label="不可用" value="0"></el-option>
+											</el-select>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="联动控制是否可用">
+											<el-select size="small" v-model="detailForm.isldkz" placeholder="联动控制是否可用" class="searchSelect" clearable>
+												<el-option label="可用" value="1"></el-option>
+												<el-option label="不可用" value="0"></el-option>
+											</el-select>
+										</el-form-item>
+									</el-col>
+								</el-row>
 							</el-row>
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="数量">
-										<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
-										 :min="0" :max="99999"></el-input-number>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="流量(L/s)">
-										<el-input-number v-model="detailForm.ll" size="small" :min="0" :max="999.99"></el-input-number>
-									</el-form-item>
-								</el-col>
-							</el-row>
-						</el-row>
-						<!-- 固定式蒸汽系统\半固定式蒸汽系统 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '4001'||addForm.jbxx_xfsslx[1] === '4002'">
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="位置">
-										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-									</el-form-item>
-								</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="11">
-									<el-form-item label="数量">
-										<el-input-number v-model="detailForm.sl" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
-										 :min="0" :max="99999"></el-input-number>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="11">
-									<el-form-item label="额定压力(Mpa)">
-										<el-input-number v-model="detailForm.edyl" size="small" :min="0" :max="999.99"></el-input-number>
-									</el-form-item>
-								</el-col>
-							</el-row>
-						</el-row>
-						<!-- 消防控制室 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[0] === '5000'">
-							<el-row>
+							<!-- 排烟口/出烟口 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '6001'">
 								<el-col :span="11">
 									<el-form-item label="位置">
 										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
 									</el-form-item>
 								</el-col>
 							</el-row>
-							<el-row>
+							<!-- 防排烟系统 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '6002'">
 								<el-col :span="11">
-									<el-form-item label="自动报警是否可用">
-										<el-select size="small" v-model="detailForm.iszdbj" placeholder="自动报警是否可用" class="searchSelect" clearable>
-											<el-option label="可用" value="1"></el-option>
-											<el-option label="不可用" value="0"></el-option>
-										</el-select>
+									<el-form-item label="系统启闭位置">
+										<el-input v-model="detailForm.qbwz" maxlength="50" size="small" placeholder="系统启闭位置"></el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
-									<el-form-item label="联动控制是否可用">
-										<el-select size="small" v-model="detailForm.isldkz" placeholder="联动控制是否可用" class="searchSelect" clearable>
+									<el-form-item label="是否可用">
+										<el-select size="small" v-model="detailForm.isky" placeholder="是否可用" class="searchSelect" clearable>
 											<el-option label="可用" value="1"></el-option>
 											<el-option label="不可用" value="0"></el-option>
 										</el-select>
 									</el-form-item>
 								</el-col>
 							</el-row>
-						</el-row>
-						<!-- 排烟口/出烟口 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '6001'">
-							<el-col :span="11">
-								<el-form-item label="位置">
-									<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-								</el-form-item>
-							</el-col>
-						</el-row>
-						<!-- 防排烟系统 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '6002'">
-							<el-col :span="11">
-								<el-form-item label="系统启闭位置">
-									<el-input v-model="detailForm.qbwz" maxlength="50" size="small" placeholder="系统启闭位置"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-							<el-col :span="11">
-								<el-form-item label="是否可用">
-									<el-select size="small" v-model="detailForm.isky" placeholder="是否可用" class="searchSelect" clearable>
-										<el-option label="可用" value="1"></el-option>
-										<el-option label="不可用" value="0"></el-option>
-									</el-select>
-								</el-form-item>
-							</el-col>
-						</el-row>
-						<!-- 防火分区 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[0] === '7000'">
-							<el-row>
+							<!-- 防火分区 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[0] === '7000'">
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="区域面积(㎡)">
+											<el-input-number v-model="detailForm.qymj" size="small" :min="0" :max="99999999.99"></el-input-number>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="区域位置">
+											<el-input v-model="detailForm.qywz" maxlength="50" size="small" placeholder="区域位置"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="分隔设施">
+											<el-input v-model="detailForm.fgss" maxlength="50" size="small" placeholder="分隔设施"></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="分隔位置">
+											<el-input v-model="detailForm.fgwz" maxlength="50" size="small" placeholder="分隔位置"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
+							</el-row>
+							<!-- 气体灭火系统\干粉灭火系统 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[1] === '8001'||addForm.jbxx_xfsslx[1] === '8002'">
 								<el-col :span="11">
-									<el-form-item label="区域面积(㎡)">
-										<el-input-number v-model="detailForm.qymj" size="small" :min="0" :max="99999999.99"></el-input-number>
+									<el-form-item label="启闭位置">
+										<el-input v-model="detailForm.qbwz" maxlength="50" size="small" placeholder="起闭位置"></el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
-									<el-form-item label="区域位置">
-										<el-input v-model="detailForm.qywz" maxlength="50" size="small" placeholder="区域位置"></el-input>
+									<el-form-item label="作用范围">
+										<el-input v-model="detailForm.zyfw" maxlength="50" size="small" placeholder="作用范围"></el-input>
 									</el-form-item>
 								</el-col>
 							</el-row>
-							<el-row>
+							<!-- 其他消防设施 -->
+							<el-row v-else-if="addForm.jbxx_xfsslx[0] === '9000'">
 								<el-col :span="11">
-									<el-form-item label="分隔设施">
-										<el-input v-model="detailForm.fgss" maxlength="50" size="small" placeholder="分隔设施"></el-input>
+									<el-form-item label="位置">
+										<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
-									<el-form-item label="分隔位置">
-										<el-input v-model="detailForm.fgwz" maxlength="50" size="small" placeholder="分隔位置"></el-input>
+									<el-form-item label="描述">
+										<el-input v-model="detailForm.ms" maxlength="200" size="small" placeholder="描述"></el-input>
 									</el-form-item>
 								</el-col>
 							</el-row>
-						</el-row>
-						<!-- 气体灭火系统\干粉灭火系统 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[1] === '8001'||addForm.jbxx_xfsslx[1] === '8002'">
-							<el-col :span="11">
-								<el-form-item label="启闭位置">
-									<el-input v-model="detailForm.qbwz" maxlength="50" size="small" placeholder="起闭位置"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-							<el-col :span="11">
-								<el-form-item label="作用范围">
-									<el-input v-model="detailForm.zyfw" maxlength="50" size="small" placeholder="作用范围"></el-input>
-								</el-form-item>
-							</el-col>
-						</el-row>
-						<!-- 其他消防设施 -->
-						<el-row v-else-if="addForm.jbxx_xfsslx[0] === '9000'">
-							<el-col :span="11">
-								<el-form-item label="位置">
-									<el-input v-model="detailForm.wz" maxlength="50" size="small" placeholder="位置"></el-input>
-								</el-form-item>
-							</el-col>
-							<el-col :span="1">&nbsp;</el-col>
-							<el-col :span="11">
-								<el-form-item label="描述">
-									<el-input v-model="detailForm.ms" maxlength="200" size="small" placeholder="描述"></el-input>
-								</el-form-item>
-							</el-col>
-						</el-row>
+						</el-form>
 
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
 							<strong style="color: #20a0ff;">备注</strong>
@@ -575,7 +576,7 @@
 				<el-row class="mt35 mb20">
 					<el-row class="editform-button">
 						<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
-						<el-button type="success" icon="check" size="small" class="btn_save" @click="save('addForm')">保存</el-button>
+						<el-button type="success" icon="check" size="small" class="btn_save" @click="save('addForm','detailForm')">保存</el-button>
 					</el-row>
 				</el-row>
 				<!--选择所属建筑界面-->

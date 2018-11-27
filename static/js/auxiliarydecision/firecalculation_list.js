@@ -351,49 +351,54 @@ var vue = new Vue({
         },
         //新建：提交
         addSubmit: function (val1,val2) {
-            var _self = this;
-            axios.get('/dpapi/firecalculationlist/getNum/' + this.addFormulaForm.gsmc).then(function (res) {
-                if (res.data.result != 0) {
-                    _self.$message({
-                        message: "角色名已存在!",
-                        type: "error"
-                    });
-                } else {
-                    var params = {
-                        gsmc: this.addFormulaForm.gsmc,
-                        gslb: this.addFormulaForm.gslb,
-                        gssm: this.addFormulaForm.gssm,
-                        jsgs: this.addFormulaForm.jsgs,
-                        jsgsdw: this.addFormulaForm.jsgsdw,
-                        sfqy: "1",
-                        firecalculationparams: this.addParamForm.domains,
-                        cjrid: this.shiroData.userid,
-                        cjrmc: this.shiroData.realName,
-                        jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
-                        datasource: this.shiroData.organizationVO.jgid
-                    }
-                    axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
-                        if(res.data.msg=="算式内参数与输入参数个数不符!请重新输入。"){
+
+                    var _self = this;
+                    axios.get('/dpapi/firecalculationlist/getNum/' + this.addFormulaForm.gsmc).then(function (res) {
+
+                       if (res.data.result > 0) {
                             _self.$message({
-                                message: res.data.msg,
-                                type: "error"
+                                message: "角色名已存在!",
+                                showClose: true
                             });
-                        }
-                        else{
-                            this.addIndex = 0;
-                            this.searchClick('click');
-                            this.addFormVisible = false;
+                        } else {
+                            var params = {
+                                gsmc: this.addFormulaForm.gsmc,
+                                gslb: this.addFormulaForm.gslb,
+                                gssm: this.addFormulaForm.gssm,
+                                jsgs: this.addFormulaForm.jsgs,
+                                jsgsdw: this.addFormulaForm.jsgsdw,
+                                sfqy: "1",
+                                firecalculationparams: this.addParamForm.domains,
+                                cjrid: this.shiroData.userid,
+                                cjrmc: this.shiroData.realName,
+                                jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
+                                datasource: this.shiroData.organizationVO.jgid
+                            }
+                            axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
+                                
+                                if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
+                                    
+                                    _self.$message({
+                                        message: res.data.msg,
+                                        showClose: true
+                                    });
+                                }
+                                else {
+                                    this.addIndex = 0;
+                                    this.searchClick('click');
+                                    this.addFormVisible = false;
+                                }
+                            }.bind(this), function (error) {
+                                console.log(error)
+                            })
+
+                            _self.total = _self.tableData.length;
+                            _self.loadingData();//重新加载数据
                         }
                     }.bind(this), function (error) {
                         console.log(error)
                     })
 
-                    _self.total = _self.tableData.length;
-                    _self.loadingData();//重新加载数据
-                }
-            }.bind(this), function (error) {
-                console.log(error)
-            })
         },
 
         //删除：批量删除
