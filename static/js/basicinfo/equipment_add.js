@@ -34,13 +34,17 @@ new Vue({
                 xgrmc: '',
                 bz: '',
                 jdh: '',
-                equipengineVOList: []
+                equipengineVOList: [{
+                    clid: '',
+                    clmc: '',
+                    clzzs: ''
+                }]
             },
-            engineForm: [{
-                clid: '',
-                clmc: '',
-                clzzs: ''
-            }],
+            // engineForm: [{
+            //     clid: '',
+            //     clmc: '',
+            //     clzzs: ''
+            // }],
             clIndex: '',
             //信息校验规则
             inforRules: {
@@ -56,8 +60,9 @@ new Vue({
 
                     }, trigger: 'change'
                 }],
-                kysl: [{ pattern: /^[1-9]\d*$/, message: '库存数量(可用) 应为正整数', trigger: 'blur' }],
-                shsl: [{ pattern: /^[1-9]\d*$/, message: '库存数量(损坏) 应为正整数', trigger: 'blur' }],
+                kysl: [{ pattern: /^[1-9]\d*|0$/, message: '库存数量(可用) 应为正整数', trigger: 'blur' }],
+                shsl: [{ pattern: /^[1-9]\d*|0$/, message: '库存数量(损坏) 应为正整数', trigger: 'blur' }],
+                clzzs:[{ pattern: /^[1-9]\d*|0$/, message: '装载数量 应为正整数', trigger: 'blur' }]
             },
             //树结构配置
             defaultProps: {
@@ -108,7 +113,7 @@ new Vue({
     methods: {
         //车辆+
         addDomain: function () {
-            this.engineForm.push({
+            this.addForm.equipengineVOList.push({
                 clid: '',
                 clmc: '',
                 clzzs: ''
@@ -116,9 +121,9 @@ new Vue({
         },
         //车辆-
         removeDomain: function (item) {
-            var index = this.engineForm.indexOf(item)
+            var index = this.addForm.equipengineVOList.indexOf(item)
             if (index !== -1) {
-                this.engineForm.splice(index, 1)
+                this.addForm.equipengineVOList.splice(index, 1)
             }
         },
         //消防车辆弹出页---------------------------------------------------------------
@@ -170,8 +175,8 @@ new Vue({
         //选择车辆，返回车辆名称和id
         selectRow: function (val) {
             var index = this.clIndex;
-            this.engineForm[index].clid = val.uuid
-            this.engineForm[index].clmc = val.clmc
+            this.addForm.equipengineVOList[index].clid = val.uuid
+            this.addForm.equipengineVOList[index].clmc = val.clmc
             this.engineListVisible = false;
         },
         //车辆查询条件清空
@@ -249,8 +254,8 @@ new Vue({
                         zbid: this.addForm.uuid
                     };
                     axios.post('/dpapi/equipengine/list', params).then(function (res) {
-                        this.engineForm = res.data.result;
-                        if (this.engineForm == '' || this.engineForm == null) {
+                        this.addForm.equipengineVOList = res.data.result;
+                        if (this.addForm.equipengineVOList == '' || this.addForm.equipengineVOList == null) {
                             this.addDomain();
                         }
                     }.bind(this), function (error) {
@@ -312,11 +317,11 @@ new Vue({
                 });
                 return false;
             }
-            for (var i in this.engineForm) {
-                if (this.engineForm[i].clid == '' && this.engineForm[i].clzzs == 0) {
-                    this.removeDomain(this.engineForm[i]);
+            for (var i in this.addForm.equipengineVOList) {
+                if (this.addForm.equipengineVOList[i].clid == '' && this.addForm.equipengineVOList[i].clzzs == 0) {
+                    this.removeDomain(this.addForm.equipengineVOList[i]);
                     return true;
-                } else if (this.engineForm[i].clid == '' && this.engineForm[i].clzzs > 0) {
+                } else if (this.addForm.equipengineVOList[i].clid == '' && this.addForm.equipengineVOList[i].clzzs > 0) {
                     this.$message.warning({
                         message: '请选择消防车辆!',
                         showClose: true
@@ -331,8 +336,8 @@ new Vue({
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     if (this.status == 0) {//新增
-                        for (var i in this.engineForm) {
-                            this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.engineForm[i].clzzs);
+                        for (var i in this.addForm.equipengineVOList) {
+                            this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.addForm.equipengineVOList[i].clzzs);
                         }
                         this.addForm.zcbl = parseInt(this.addForm.kysl) + parseInt(this.addForm.shsl) + parseInt(this.addForm.zzsl);
                         var params = {
@@ -353,7 +358,7 @@ new Vue({
                             bz: this.addForm.bz,
                             jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
                             datasource: this.shiroData.organizationVO.jgid,
-                            equipengineVOList: this.engineForm
+                            equipengineVOList: this.addForm.equipengineVOList
                         }
                         axios.post('/dpapi/equipmentsource/insertByVO', params).then(function (res) {
                             if (res.data.result.uuid != null && res.data.result.uuid != '') {
@@ -378,8 +383,8 @@ new Vue({
                         })
                     } else {//修改
                         this.addForm.zzsl = 0;
-                        for (var i in this.engineForm) {
-                            this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.engineForm[i].clzzs);
+                        for (var i in this.addForm.equipengineVOList) {
+                            this.addForm.zzsl = parseInt(this.addForm.zzsl) + parseInt(this.addForm.equipengineVOList[i].clzzs);
                         }
                         this.addForm.zcbl = parseInt(this.addForm.kysl) + parseInt(this.addForm.shsl) + parseInt(this.addForm.zzsl);
                         var params = {
@@ -401,7 +406,7 @@ new Vue({
                             bz: this.addForm.bz,
                             // jdh: this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                             datasource: this.shiroData.organizationVO.jgid,
-                            equipengineVOList: this.engineForm
+                            equipengineVOList: this.addForm.equipengineVOList
                         }
                         axios.post('/dpapi/equipmentsource/doUpdateEquipment', params).then(function (res) {
                             if (res.data.result != null && res.data.result != '') {
