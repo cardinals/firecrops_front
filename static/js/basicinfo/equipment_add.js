@@ -55,7 +55,9 @@ new Vue({
                         }
 
                     }, trigger: 'change'
-                }]
+                }],
+                kysl: [{ pattern: /^[1-9]\d*$/, message: '库存数量(可用) 应为正整数', trigger: 'blur' }],
+                shsl: [{ pattern: /^[1-9]\d*$/, message: '库存数量(损坏) 应为正整数', trigger: 'blur' }],
             },
             //树结构配置
             defaultProps: {
