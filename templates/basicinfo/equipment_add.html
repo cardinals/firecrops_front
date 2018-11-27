@@ -90,7 +90,7 @@
 								<el-button type="primary" icon="plus" size="small" class="r" @click="addDomain"></el-button>
 							</el-col>
 						</el-row>
-						<el-row v-for="(domain, index) in engineForm" :key="domain.key" :prop="'engineForm.' + index + '.value'">
+						<el-row v-for="(domain, index) in addForm.equipengineVOList" :key="index">
 							<el-col :span="11">
 								<el-form-item label="车辆名称" prop="clmc">
 									<el-input v-model="domain.clmc" maxlength="50" size="small" placeholder="车辆名称" disabled></el-input>
@@ -100,7 +100,7 @@
 								<el-button icon="search" size="small" style="border: none;background-color: #FFFFFF;" @click="engineList('init',index)" class="l"></el-button>
 							</el-col>
 							<el-col :span="11">
-								<el-form-item label="装载数量" prop="clzzs">
+								<el-form-item label="装载数量" :prop="'equipengineVOList.' + index + '.clzzs'" :rules="inforRules.clzzs">
 									<el-input-number v-model="domain.clzzs" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))" size="small"
 									 placeholder="装载数量" :min="0" :max="99999"></el-input-number>
 								</el-form-item>
