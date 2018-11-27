@@ -173,7 +173,11 @@ window.loadDiv = function (loadUrl) {
 //LOAD DIV PARAM
 window.loadDivParam = function (loadUrl, params) {
     var shortURL = [];
+    var jump = jumpDetail();
     shortURL.push(jumpDetail());
+    if(jump.indexOf("?") == -1){
+        shortURL.push("?1=1");
+    }
     $.each(params, function (i) {
         shortURL.push("&" + i + "=" + params[i]);
     })
