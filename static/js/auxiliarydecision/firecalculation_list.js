@@ -352,12 +352,9 @@ var vue = new Vue({
         //新建：提交
         addSubmit: function (val1,val2) {
 
-            // this.$refs[val1,val2].validate((valid) => {
-            //     if (valid) {
-
                     var _self = this;
                     axios.get('/dpapi/firecalculationlist/getNum/' + this.addFormulaForm.gsmc).then(function (res) {
-                        if (res.data.result != 0) {
+                       if (res.data.result > 0) {
                             _self.$message({
                                 message: "角色名已存在!",
                                 type: "error"
@@ -377,6 +374,7 @@ var vue = new Vue({
                                 datasource: this.shiroData.organizationVO.jgid
                             }
                             axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
+                                
                                 if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
                                     _self.$message({
                                         message: res.data.msg,
@@ -398,9 +396,6 @@ var vue = new Vue({
                     }.bind(this), function (error) {
                         console.log(error)
                     })
-
-            //     }
-            // })
 
         },
 
