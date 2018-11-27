@@ -16,21 +16,22 @@
 				<div id="breadcrumb_box"></div>
                 <div id="tableView">
                     <el-row>
-                        <el-form label-width="70px" :inline="true" class="el-form demo-form-inline" v-model="searchForm">
+                        <el-form label-width="75px" :inline="true" class="el-form demo-form-inline" v-model="searchForm">
                             <el-row>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-                                <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+
+                                <el-col :span="1">&nbsp;</el-col>
+                                <el-col :span="9" class="searchInline">
                                     <label class="el-form-item__label searchLabel">公式名称</label>
-                                    <el-input size="small" v-model="searchForm.GSMC" placeholder="公式名称"></el-input>
+                                    <el-input  maxlength="50" size="small" v-model="searchForm.GSMC" placeholder="公式名称"></el-input>
                                 </el-col>
-                                <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
-                                <el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
+                                <el-col :span="2">&nbsp;</el-col>
+                                <el-col :span="9" class="searchInline">
                                     <label class="el-form-item__label searchLabel">公式类别</label>
                                     <el-select size="small" v-model="searchForm.selected_GSLB" placeholder="全部" class="gslbSelect" clearable>
                                         <el-option v-for="item in GSLB_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
                                     </el-select>
                                 </el-col>
-                                <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
+
                                 <!--
                                 <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
                                     <label class="el-form-item__label searchLabel">是否启用</label>
@@ -191,7 +192,7 @@
                                 </el-table>
                             </el-tab-pane>
                         </el-tabs>
-                        <div slot="footer" class="dialog-footer">
+                        <div slot="footer" class="dialog-footer" align="center">
                             <el-button type="clear" icon="close" size="small" @click.native="closeDialog(addFormulaForm,addParamForm)">取消</el-button>
                             <el-button type="success" icon="check" size="small" @click.native="addSubmit(addFormulaForm,addParamForm)">保存</el-button>
                         </div>
