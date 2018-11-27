@@ -7,10 +7,9 @@
 <body class="fw f14 main-index-body">
     <!--水源详情页-->
     <div id="detailDisplay" v-loading="loading" element-loading-text="加载中">
-       
         <div>
             <el-row>
-                <el-col :span="18">
+                <el-col :span="24">
                     <div>
                         <strong class="dtdlStyle">水源名称：</strong>
                         <v-text v-text="detailData.symc||'无'"></v-text>
@@ -18,7 +17,7 @@
                 </el-col>
             </el-row>
             <el-row class="inform-margin" >
-                <el-col :span="18">
+                <el-col :span="24">
                     <div>
                         <strong class="dtdlStyle">水源类型：</strong>
                         <v-text v-text="detailData.sylxmc||'无'"></v-text>
@@ -26,11 +25,11 @@
                 </el-col>
             </el-row>
             <el-row class="inform-margin">
-                <el-col :span="18">
+                <el-col :span="24">
                     <div>
                         <strong class="dtdlStyle">水源地址：</strong>
                         <v-text v-text="detailData.sydz||'无'"></v-text>
-                        &nbsp<a href="#" @click="this.tz"><div class="inform-address"></div></a>
+                        &nbsp<a href="#" @click="this.tz"><div class="inform-address" style="position: relative;"></div></a>
                     </div>
                 </el-col>
             </el-row>
