@@ -26,141 +26,147 @@
 					<!-- 面包屑 -->
 					<div id="breadcrumb_box"></div>
 					<div class="frame" >
-			<div class="frame_left" style="background-color:#F5FAFC;">
-								<div><h5 class="src_name">资源树 
-										<el-button type="text" @click="appendParent">+</el-button>
-									</h5>
-								</div>
-			<div scroll="no" class="src_slt">			
-									<el-tree
-											:data="tableData"
-											node-key="resourceid"
-											:props="defaultProps"
-											:render-content="renderContent"
-											@node-click="handleNodeClick"
-											:highlight-current = true
-											style="background-color:#F5FAFC; font-weight:bold; width:100%; font-weight:100px; border:none;"
-										>
-									</el-tree>
-								</div>
+						<div class="frame_left" style="background-color:#F5FAFC;">
+							<h4 class="src_name">资源树&nbsp;<el-button type="text" icon="plus" size="small" @click="appendParent"></el-button></h4>
+							<div scroll="no" class="src_slt">			
+								<el-tree
+										:data="tableData"
+										node-key="resourceid"
+										:props="defaultProps"
+										:render-content="renderContent"
+										@node-click="handleNodeClick"
+										:highlight-current = true
+										style="background-color:#F5FAFC; font-weight:bold; width:100%; font-weight:100px; border:none;"
+									>
+								</el-tree>
 							</div>
-			<div class="frame_right" scroll="no" style="background-color:#F5FAFC;">
-									<h5 class="src_name">资源树详情</h5>
-								<el-from>
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
-										<label class="el-form-item__label searchLabel">资源名称</label>
-										<el-input size="small"  placeholder="请输入内容" v-model="resourceForm.resourcename" clearable>
-										</el-input> 
-									</el-col>
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
-										<label class="el-form-item__label searchLabel">资源描述</label>
-										<el-input size="small"  placeholder="请输入内容" v-model="resourceForm.resourceinfo" clearable></el-input>
-									</el-col>
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
-										<label class="el-form-item__label searchLabel">父资源</label>
-										<el-input size="small"  placeholder="请输入内容" v-model="resourceForm.parentid" clearable></el-input>
-									</el-col>
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
-										<label class="el-form-item__label searchLabel">顺序</label>
-										<el-input size="small"  placeholder="请输入内容" v-model="resourceForm.seqno" clearable></el-input>
-									</el-col>
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
-										<label class="el-form-item__label searchLabel">图标地址</label>
-										<el-input size="small"  placeholder="请输入内容" v-model="resourceForm.icon" clearable></el-input>
-									</el-col>
-									<!--
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
-										<label class="el-form-item__label searchLabel">资源类型</label>
-										<el-input size="small" placeholder="请输入内容" v-model="resourceForm.type" clearable></el-input>
-									</el-col>
-									-->
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
-										<label class="el-form-item__label searchLabel" style="width: 124px;">权限列表</label>
-										<el-checkbox-group v-model="permissionDetailSelect" :max="1">
-											<el-checkbox v-for="permission in allPermissionList" :label="permission.permissionid" :key="permission.permissionid">{{permission.permissioninfo}}</el-checkbox>
-										</el-checkbox-group>
-									</el-col>
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
-										<label class="el-form-item__label searchLabel">创建人</label>
-										<el-input size="small"  placeholder="请输入内容" v-model="resourceForm.createName" :disabled="true"></el-input>
-									</el-col>
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
-										<label class="el-form-item__label searchLabel">创建时间</label>
-										<el-input size="small"  placeholder="请输入内容" v-model="resourceForm.createTime" :disabled="true"></el-input>
-									</el-col>
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
-										<label class="el-form-item__label searchLabel">修改人</label>
-										<el-input size="small"  placeholder="请输入内容" v-model="resourceForm.alterName" :disabled="true"></el-input>
-									</el-col>
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
-										<label class="el-form-item__label searchLabel">修改时间</label>
-										<el-input size="small"  placeholder="请输入内容" v-model="resourceForm.alterTime" :disabled="true"></el-input>
-									</el-col>
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">&nbsp;</el-col>
-								</el-from>
-								<el-from style="float: right;margin-right: 45%;">
-									<el-button type="clear" icon="close" size="small" @click="cancel">取消</el-button>
-									<el-button type="success" icon="check" size="small" @click="update">保存</el-button>
-								</el-from>
-							</div>
-								<!--新建界面-->
-							<el-dialog title="资源新增" :visible.sync="addVisible" @close="closeDialog()" :close-on-click-modal="false">
-								<el-form :model="addForm" label-width="80px" ref="addForm" :rules="addFormRules">
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
+						</div>
+					<div class="frame_right" scroll="no" style="background-color:#F5FAFC;">
+						<h4 class="src_name">
+							资源树详情&nbsp;
+							<el-button v-if="editVisible" type="text" plain icon="edit" size="small" @click="editClick" style="color: #FF4949"></el-button>
+						</h4>
+						<div style="margin-top: 20px;">
+							<el-form :model="editForm" label-width="120px" :rules="editFormRules" ref="editForm">
+								<el-row>
+									<el-col :span="23">
 										<el-form-item label="资源名称" prop="resourcename">
-											<el-input size="small" v-model="addForm.resourcename" placeholder="资源名称" auto-complete="off"></el-input>
+											<el-input v-model="editForm.resourcename" auto-complete="off" placeholder="资源名称" size="small" clearable :disabled="editFlag"></el-input>
 										</el-form-item>
 									</el-col>
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
+								</el-row>
+								<el-row>
+									<el-col :span="23">
 										<el-form-item label="资源描述" prop="resourceinfo">
-											<el-input size="small" v-model="addForm.resourceinfo" placeholder="资源描述" auto-complete="off"></el-input>
+											<el-input v-model="editForm.resourceinfo" auto-complete="off" placeholder="资源描述" size="small" clearable :disabled="editFlag"></el-input>
 										</el-form-item>
 									</el-col>
-									<!--
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
+								</el-row>
+								<el-row>
+									<el-col :span="23">
+										<el-form-item label="父资源" prop="parentid">
+											<el-input v-model="editForm.parentid" auto-complete="off" placeholder="父资源" size="small" clearable :disabled="editFlag"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
+								<el-row>
+									<el-col :span="23">
 										<el-form-item label="顺序" prop="seqno">
-											<el-input size="small" v-model="addForm.seqno" placeholder="顺序" auto-complete="off"></el-input>
+											<el-input v-model="editForm.seqno" auto-complete="off" placeholder="顺序" size="small" clearable :disabled="editFlag"></el-input>
 										</el-form-item>
 									</el-col>
-									-->
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
+								</el-row>
+								<el-row>
+									<el-col :span="23">
 										<el-form-item label="图标地址" prop="icon">
-											<el-input size="small" v-model="addForm.icon" placeholder="图标地址" auto-complete="off"></el-input>
+											<el-input v-model="editForm.icon" auto-complete="off" placeholder="图标地址" size="small" clearable :disabled="editFlag"></el-input>
 										</el-form-item>
 									</el-col>
-									<!--
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
-										<el-form-item label="资源类型" prop="type">
-											<el-input size="small" v-model="addForm.type" placeholder="资源类型" auto-complete="off"></el-input>
+								</el-row>
+								<el-row>
+									<el-col :span="23">
+										<el-form-item label="资源类型" prop="type" class="is-required">
+											<el-select size="small" v-model="editForm.type" placeholder="请选择" class="searchSelect" clearable :disabled="editFlag">
+												<el-option v-for="item in typeData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+											</el-select>
 										</el-form-item>
 									</el-col>
-									-->
-									<el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="searchInline">
-										<el-form-item label="权限列表" prop="permission">
-											<el-checkbox-group v-model="addForm.permissions" :max="1">
-												<el-checkbox v-for="permission in allPermissionList" :label="permission.permissionid" :key="permission.permissionid">{{permission.permissioninfo}}</el-checkbox>
+								</el-row>
+								<el-row>
+									<el-col :span="23">
+										<el-form-item label="权限列表" prop="permissions">
+											<el-checkbox-group v-model="editForm.permissions" :max="1">
+												<el-checkbox v-for="permission in allPermissionList" :label="permission.permissionid" :key="permission.permissionid" clearable :disabled="editFlag">{{permission.permissioninfo}}</el-checkbox>
 											</el-checkbox-group>
 										</el-form-item>
 									</el-col>
-									<el-col class="mt35 mb20">
-										<el-row>
-											<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
-												<el-button type="clear" icon="close" size="small" class="btn_submit" @click="closeDialog(addForm)"> 取消</el-button>
-												<el-button type="success" icon="check" size="small" class="btn_save" @click="checkAdd(addForm)">保存</el-button>
-											</el-col>
-										</el-row>
-									</el-col>
-								</el-form>
-								<!-- <div slot="footer" class="dialog-footer">
-									<el-button size="small" @click.native="closeDialog(addForm)">取消</el-button>
-									<el-button size="small" type="primary" @click.native="checkAdd(addForm)">提交</el-button>
-								</div> -->
-							</el-dialog>
-						</div>
+								</el-row>
+								<el-row class="mt35 mb20 editform-button" v-show="!editFlag">
+									<el-button type="clear" icon="close" size="small" @click="cancel">取消</el-button>
+									<el-button type="success" icon="check" size="small" @click="update">保存</el-button>
+								</el-row>
+							</el-form>
+						</div>	
+					</div>
+				</div>
+				<!--新建界面-->
+				<el-dialog title="资源新增" :visible.sync="addVisible" @close="closeDialog()" :close-on-click-modal="false">
+					<el-form :model="addForm" label-width="120px" ref="addForm" :rules="addFormRules">
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="资源名称" prop="resourcename">
+									<el-input v-model="addForm.resourcename" auto-complete="off" placeholder="资源名称" size="small" clearable></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="资源描述" prop="resourceinfo">
+									<el-input v-model="addForm.resourceinfo" auto-complete="off" placeholder="资源描述" size="small" clearable></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<!-- <el-row>
+							<el-col :span="23">
+								<el-form-item label="父资源" prop="parentid">
+									<el-input v-model="addForm.parentid" auto-complete="off" placeholder="父资源" size="small" clearable></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row> -->
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="图标地址" prop="icon">
+									<el-input v-model="addForm.icon" auto-complete="off" placeholder="图标地址" size="small" clearable></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="资源类型" prop="type" class="is-required">
+									<el-select size="small" v-model="addForm.type" placeholder="请选择" class="searchSelect" clearable>
+										<el-option v-for="item in typeData" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
+									</el-select>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="权限列表" prop="permissions">
+									<el-checkbox-group v-model="addForm.permissions" :max="1">
+										<el-checkbox v-for="permission in allPermissionList" :label="permission.permissionid" :key="permission.permissionid" clearable>{{permission.permissioninfo}}</el-checkbox>
+									</el-checkbox-group>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row class="mt35 mb20 editform-button">
+							<el-button type="clear" icon="close" size="small" class="btn_submit" @click="closeDialog(addForm)"> 取消</el-button>
+							<el-button type="success" icon="check" size="small" class="btn_save" @click="addSubmit(addForm)">保存</el-button>
+						</el-row>
+					</el-form>
+				</el-dialog>
 			</div>
 		</div>
-		</div>
-</body>
+	</body>
 <script src="../../static/js/common/config.js"></script>
 <script src="../../static/js/system/resource.js"></script>
 </html>
