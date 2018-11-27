@@ -354,10 +354,11 @@ var vue = new Vue({
 
                     var _self = this;
                     axios.get('/dpapi/firecalculationlist/getNum/' + this.addFormulaForm.gsmc).then(function (res) {
+
                        if (res.data.result > 0) {
                             _self.$message({
                                 message: "角色名已存在!",
-                                type: "error"
+                                showClose: true
                             });
                         } else {
                             var params = {
@@ -376,9 +377,10 @@ var vue = new Vue({
                             axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
                                 
                                 if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
+                                    
                                     _self.$message({
                                         message: res.data.msg,
-                                        type: "error"
+                                        showClose: true
                                     });
                                 }
                                 else {
