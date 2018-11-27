@@ -12,7 +12,8 @@
 			<div class="main-container" v-loading="loading" element-loading-text="加载中">
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
-					<el-form label-width="120px" ref="editForm" :model="editForm" :rules="editFormRules">
+				<div id="inforView">
+					<el-form label-width="140px" ref="editForm" :model="editForm" :rules="editFormRules">
 						<el-row class="mb5 row-edit-subtitle">
 							<el-col :span="24">
 								<strong class="col-edit-subtitle">基本信息</strong>
@@ -390,6 +391,7 @@
 							</el-col>
 						</el-row>
 					</el-form>
+				</div>
 				<el-row class="mt35 mb20">
 					<el-row>
 						<el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">&nbsp;</el-col>

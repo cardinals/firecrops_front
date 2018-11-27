@@ -18,15 +18,15 @@
                     <el-row>
                         <el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
                             <el-row>
-                                <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-                                    <label class="el-form-item__label searchLabel">代码类型</label>
-                                    <el-input size="small" v-model="searchForm.codetype" placeholder="请输入代码类型名称" prefix-icon="el-icon-search"></el-input>
+                                <el-col :span="8" class="searchInline">
+                                    <label class="el-form-item__label searchLabel">代码集类型</label>
+                                    <el-input size="small" v-model="searchForm.codetype" placeholder="代码类型" prefix-icon="el-icon-search"></el-input>
                                 </el-col>
-                                <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
-                                    <label class="el-form-item__label searchLabel">类型名称</label>
-                                    <el-input size="small" v-model="searchForm.codetypeName" placeholder="请输入代码类型名称" prefix-icon="el-icon-search"></el-input>
+                                <el-col :span="8" class="searchInline">
+                                    <label class="el-form-item__label searchLabel">代码集名称</label>
+                                    <el-input size="small" v-model="searchForm.codetypeName" placeholder="代码类型名称" prefix-icon="el-icon-search"></el-input>
                                 </el-col>
-                                <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+                                <el-col :span="8" class="searchInline">
                                     <label class="el-form-item__label searchLabel">创建时间</label>
                                     <el-date-picker
                                         type="daterange"
@@ -68,12 +68,12 @@
                             @selection-change="selectionChange" :height="tableheight" tooltip-effect="dark">
                             <el-table-column type="selection" width="45"></el-table-column>
                             <el-table-column type="index" show-overflow-tooltip label="序号" align="center" width="65"></el-table-column>
-                            <el-table-column prop="codetype" show-overflow-tooltip label="代码类型" min-width="10%" align="center">
+                            <el-table-column prop="codetype" show-overflow-tooltip label="代码集类型" min-width="10%" align="center">
                                 <template slot-scope="scope">
                                     <el-button @click="codetypeCilck(scope.row)" type="text" v-text="scope.row.codetype"></el-button>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="codetypeName" show-overflow-tooltip label="代码类型名称" min-width="15%" show-overflow-tooltip align="center"></el-table-column>
+                            <el-table-column prop="codetypeName" show-overflow-tooltip label="代码集名称" min-width="15%" show-overflow-tooltip align="center"></el-table-column>
                             <!-- <el-table-column prop="language" label="国际化信息" min-width="12%" align="center"></el-table-column> -->
                             <el-table-column prop="createName" show-overflow-tooltip label="创建人" min-width="11%" align="center"></el-table-column>
                             <el-table-column prop="createTime" show-overflow-tooltip label="创建时间" min-width="13%" align="center" :formatter="tableDateFormat"></el-table-column>
@@ -98,108 +98,50 @@
                         </el-row>
                     </div>
 
-                    <!--新建界面-->
-                    <el-dialog title="代码集新增" :visible.sync="addFormVisible" @close="closeDialog('addForm')" :close-on-click-modal="false">
-                        <el-form :model="addForm" label-width="120px" :rules="addFormRules" ref="addForm">
-                            <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
-                                    <el-form-item label="代码类型" prop="codetype">
-                                        <el-input v-model="addForm.codetype" auto-complete="off" placeholder="代码类型" size="small"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
-                                    <el-form-item label="代码类型名称" prop="codetypeName">
-                                        <el-input v-model="addForm.codetypeName" auto-complete="off" placeholder="代码类型名称" size="small"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
-                                    <el-form-item label="国际化信息" prop="language" value="zh_CN">
-                                        <el-input v-model="addForm.language" auto-complete="off" placeholder="国际化信息" size="small"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
-                                    <el-form-item label="备注" prop="remark">
-                                        <el-input v-model="addForm.remark" auto-complete="off" placeholder="备注" size="small"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
-                            </el-row>
-                            <el-row class="mt35 mb20">
-                                <el-row>
-                                    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
-                                        <el-button type="clear" icon="close" size="small" class="btn_submit" @click="closeDialog('addForm')"> 取消</el-button>
-                                        <el-button type="success" icon="check" size="small" class="btn_save" @click="addSubmit(addForm)">保存</el-button>
-                                    </el-col>
-                                </el-row>
-                            </el-row>
-                        </el-form>
-                        <!-- <div slot="footer" class="dialog-footer">
-                            <el-button @click.native="closeDialog('addForm')">取消</el-button>
-                            <el-button type="primary" @click.native="addSubmit(addForm)">提交</el-button>
-                        </div> -->
-                    </el-dialog>
-
-                    <!--修改界面 -->
-                    <el-dialog title="代码集编辑" :visible.sync="editFormVisible" @close="closeDialog('editForm')" :close-on-click-modal="false">
+                    <!--编辑界面 -->
+                    <el-dialog :title="dialogTitle" :visible.sync="editFormVisible" @close="closeDialog('editForm')" :close-on-click-modal="false">
                         <el-form :model="editForm" label-width="120px" :rules="editFormRules" ref="editForm">
+                            <div v-show="false" v-once v-model="codetypeOld"></div>
                             <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
-                                    <el-form-item label="代码类型" prop="codetype">
-                                        <el-input v-model="editForm.codetype" auto-complete="off" placeholder="代码类型" size="small"></el-input>
+                                <el-col :span="23">
+                                    <el-form-item label="代码集类型" prop="codetype">
+                                        <el-input v-model="editForm.codetype" auto-complete="off" placeholder="代码类型" size="small" maxlength="30"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+                                <el-col :span="1">&nbsp;</el-col>
                             </el-row>
                             <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
-                                    <el-form-item label="代码类型名称" prop="codetypeName">
-                                        <el-input v-model="editForm.codetypeName" auto-complete="off" placeholder="代码类型名称" size="small"></el-input>
+                                <el-col :span="23">
+                                    <el-form-item label="代码集名称" prop="codetypeName">
+                                        <el-input v-model="editForm.codetypeName" auto-complete="off" placeholder="代码类型名称" size="small" maxlength="64"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+                                <el-col :span="1">&nbsp;</el-col>
                             </el-row>
                             <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
+                                <el-col :span="23">
                                     <el-form-item label="国际化信息" prop="language" value="zh_CN">
-                                        <el-input v-model="editForm.language" auto-complete="off" placeholder="国际化信息" size="small"></el-input>
+                                        <el-input v-model="editForm.language" auto-complete="off" placeholder="国际化信息" size="small" maxlength="8"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+                                <el-col :span="1">&nbsp;</el-col>
                             </el-row>
                             <el-row>
-                                <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23">
+                                <el-col :span="23">
                                     <el-form-item label="备注" prop="remark">
-                                        <el-input v-model="editForm.remark" auto-complete="off" placeholder="备注" size="small"></el-input>
+                                        <el-input v-model="editForm.remark" auto-complete="off" placeholder="备注" size="small" maxlength="128"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
+                                <el-col :span="1">&nbsp;</el-col>
                             </el-row>
-                            <el-row class="mt35 mb20">
-                                <el-row>
-                                    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
-                                        <el-button type="clear" icon="close" size="small" class="btn_submit" @click="closeDialog('editForm')"> 取消</el-button>
-                                        <el-button type="success" icon="check" size="small" class="btn_save" @click="editSubmit(editForm)">保存</el-button>
-                                    </el-col>
-                                </el-row>
+                            <el-row class="mt35 mb20 editform-button">
+                                <el-button type="clear" icon="close" size="small" class="btn_submit" @click="closeDialog(editForm)"> 取消</el-button>
+                                <el-button type="success" icon="check" size="small" class="btn_save" @click="editSubmit(editForm)">保存</el-button>
                             </el-row>
                         </el-form>
-                        <!-- <div slot="footer" class="dialog-footer">
-                            <el-button @click.native="closeDialog('editForm')">取消</el-button>
-                            <el-button type="primary" @click.native="editSubmit(editForm)">提交</el-button>
-                        </div> -->
                     </el-dialog>
                 </div>
             </div>
-            <!-- main-container -->
         </div>
     </div>
 </body>
