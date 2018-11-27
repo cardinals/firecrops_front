@@ -66,7 +66,7 @@
 						</el-row>
 						<el-row>
 							<el-col :span="11">
-								<el-form-item prop="gxdz" label="管辖队站">
+								<el-form-item prop="gxdz" label="管辖队站" class="is-required">
 									<el-cascader :options="sjdzData" :props="sjdzprops" size="small" v-model="editForm.gxdz" placeholder="请选择" class="searchSelect"
 								 clearable change-on-select :show-all-levels="true"></el-cascader>
 								</el-form-item>
