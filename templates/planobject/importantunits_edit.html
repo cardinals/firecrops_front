@@ -204,10 +204,10 @@
 								<el-button type="primary" icon="plus" size="small" style="float: right;" @click="addDomainXfll"></el-button>
 							</el-col>
 						</el-row>
-						<el-card v-for="(xfll,index) in editForm.xfllList" :key="xfll.key" class="card_style">
+						<el-card v-for="(xfll,index) in editForm.xfllList" :key="index" class="card_style">
 							<div slot="header">
 								<strong class="card_title_font">单位消防队伍{{index+1}}</strong>
-								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainXfll(xfll)" class="r" style="margin:-4px 15px 1px"></el-button>
+								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainXfll(xfll)" class="r" style="margin:-4px -15px 1px"></el-button>
 							</div>
 							<el-row>
 								<el-col :span="23">
@@ -221,14 +221,14 @@
 							</el-row>
 							<el-row>
 								<el-col :span="11">
-									<el-form-item label="消防队伍人数">
+									<el-form-item label="消防队伍人数" :prop="'xfllList.' + index + '.xfdwrs'" :rules="inforRules.xfdwrs">
 										<el-input-number v-model="xfll.xfdwrs" size="small" :precision="0" :min="0" :max="9999999999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"
 										 class="searchSelect"></el-input-number>
 									</el-form-item>
 								</el-col>
 								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="11">
-									<el-form-item label="消防队伍车辆数">
+									<el-form-item label="消防队伍车辆数" :prop="'xfllList.' + index + '.xfdwcls'" :rules="inforRules.xfdwcls">
 										<el-input-number v-model="xfll.xfdwcls" size="small" :precision="0" :min="0" :max="99999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"
 										 class="searchSelect"></el-input-number>
 									</el-form-item>
@@ -266,7 +266,7 @@
 							</el-col>
 							<el-col :span="1">&nbsp;</el-col>
 							<el-col :span="11">
-								<el-form-item label="建筑数量">
+								<el-form-item label="建筑数量" prop="jzsl">
 									<el-input-number v-model="editForm.jzsl" size="small" :precision="0":min="0" :max="9999999999" onkeypress="return( /[\d]/.test(String.fromCharCode(event.keyCode)))"></el-input-number>
 								</el-form-item>
 							</el-col>
@@ -319,7 +319,7 @@
 						<el-card v-for="(zdbw,index) in editForm.zdbwList" :key="zdbw.key" class="card_style">
 							<div slot="header">
 								<strong class="card_title_font">重点部位{{index+1}}</strong>
-								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainZdbw(zdbw)" class="r" style="margin:-4px 15px 1px"></el-button>
+								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDomainZdbw(zdbw)" class="r" style="margin:-4px -15px 1px"></el-button>
 							</div>
 							<el-row>
 								<el-col :span="11">

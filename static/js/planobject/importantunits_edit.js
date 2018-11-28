@@ -127,6 +127,9 @@ new Vue({
                 }],
                 zdbwmc: [{ required: true, message: '请输入重点部位名称', trigger: 'blur' }],
                 zdbwlx: [{ required: true, message: '请选择重点部位类型', trigger: 'change' }],
+                xfdwrs: [{ pattern: /^[1-9]\d*|0$/, message: '消防队伍人数应为正整数', trigger: 'blur' }],
+                xfdwcls: [{ pattern: /^[1-9]\d*|0$/, message: '消防队伍车辆数应为正整数', trigger: 'blur' }],
+                jzsl: [{ pattern: /^[1-9]\d*|0$/, message: '建筑数量应为正整数', trigger: 'blur' }],
             },
             //当前登陆用户
             shiroData: [],
