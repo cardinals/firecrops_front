@@ -169,17 +169,8 @@ new Vue({
             unscidOld:""
         }
     },
-    
+   
     created: function () {
-        this.XFSSLX();//消防设施类型
-        this.getAllXzqhDataTree();//行政区划
-        //this.XFGX();//消防管辖级联选择
-        this.JXDWLX();//九小单位类型
-        this.JZSYXZ();//建筑使用性质
-        this.JZJG();//建筑结构
-        this.JZFL();//建筑分类
-    },
-    mounted: function () {
         this.shiroData = shiroGlobal;
         if(this.shiroData.username == 'jxcs'){
             this.isJxcsUser = true;
@@ -195,7 +186,15 @@ new Vue({
                 loadBreadcrumb("九小场所管理", "九小场所编辑");
             }
         }
-        
+    },
+    mounted: function () {
+        this.XFSSLX();//消防设施类型
+        this.getAllXzqhDataTree();//行政区划
+        this.XFGX();//消防管辖级联选择
+        this.JXDWLX();//九小单位类型
+        this.JZSYXZ();//建筑使用性质
+        this.JZJG();//建筑结构
+        this.JZFL();//建筑分类
     },
     methods: {
         //行政区划级联选择数据
@@ -257,7 +256,6 @@ new Vue({
         XFSSLX: function(){
             axios.get('/api/codelist/getDzlxTree/XFSSLX').then(function (res) {
                 this.XfsslxDataTree = res.data.result;
-                this.XFGX();//消防管辖级联选择
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -459,54 +457,75 @@ new Vue({
             } else {  //修改
                 //基本信息查询
                 axios.get('/dpapi/jxcsjbxx/' + this.status).then(function (res) {
-                    var result = res.data.result;
-                    this.addForm = res.data.result;
-                    this.searchXfss();
-                    this.searchJzxx();
-                    this.unscidOld = this.addForm.unscid;
-                    //行政区划
-                    var xzqhArray = [];
-                    if (result.xzqh != null && result.xzqh != "" && result.xzqh.substr(2, 4) != "0000") {
-                        xzqhArray.push(result.xzqh.substr(0, 2) + "0000");
-                        if (result.xzqh.substr(4, 2) != "00") {
-                            xzqhArray.push(result.xzqh.substr(0, 4) + "00");
-                        }
-                    }
-                    xzqhArray.push(result.xzqh);
-                    this.addForm.xzqh = xzqhArray;
-                    //消防管辖
-                    var xfgxArray = [];
-                    var temp = this.addForm.xfgx;
-                    for (var i in this.XFGX_dataTree) {
-                        if (temp == this.XFGX_dataTree[i].dzid) {
-                            xfgxArray.push(this.XFGX_dataTree[i].dzid);
-                        } else {
-                            for (var j in this.XFGX_dataTree[i].children) {
-                                if (temp == this.XFGX_dataTree[i].children[j].dzid) {
-                                    xfgxArray.push(this.XFGX_dataTree[i].dzid, this.XFGX_dataTree[i].children[j].dzid);
+                    if(res.data.result != ""){
+                        ////已提交，已审核 直接跳转到确认页
+                        if(res.data.result.sjzt == '03' || res.data.result.sjzt == '05'){
+                            var params = {
+                                ID: res.data.result.uuid
+                            }
+                            loadDivParam("jxcsplan/jxcsplan_detail", params);
+                        }else{
+                            var result = res.data.result;
+                            this.addForm = res.data.result;
+                            this.searchXfss();
+                            this.searchJzxx();
+                            this.unscidOld = this.addForm.unscid;
+                            //行政区划
+                            var xzqhArray = [];
+                            if (result.xzqh != null && result.xzqh != "" && result.xzqh.substr(2, 4) != "0000") {
+                                xzqhArray.push(result.xzqh.substr(0, 2) + "0000");
+                                if (result.xzqh.substr(4, 2) != "00") {
+                                    xzqhArray.push(result.xzqh.substr(0, 4) + "00");
+                                }
+                            }
+                            xzqhArray.push(result.xzqh);
+                            this.addForm.xzqh = xzqhArray;
+                            //消防管辖
+                            var xfgxArray = [];
+                            var temp = this.addForm.xfgx;
+                            for (var i in this.XFGX_dataTree) {
+                                if (temp == this.XFGX_dataTree[i].dzid) {
+                                    xfgxArray.push(this.XFGX_dataTree[i].dzid);
                                 } else {
-                                    for (var k in this.XFGX_dataTree[i].children[j].children) {
-                                        if (temp == this.XFGX_dataTree[i].children[j].children[k].dzid) {
-                                            xfgxArray.push(this.XFGX_dataTree[i].dzid, this.XFGX_dataTree[i].children[j].dzid, this.XFGX_dataTree[i].children[j].children[k].dzid);
+                                    for (var j in this.XFGX_dataTree[i].children) {
+                                        if (temp == this.XFGX_dataTree[i].children[j].dzid) {
+                                            xfgxArray.push(this.XFGX_dataTree[i].dzid, this.XFGX_dataTree[i].children[j].dzid);
                                         } else {
-                                            for (var n in this.XFGX_dataTree[i].children[j].children[k].children) {
-                                                if (temp == this.XFGX_dataTree[i].children[j].children[k].children[n].dzid) {
-                                                    xfgxArray.push(this.XFGX_dataTree[i].dzid, this.XFGX_dataTree[i].children[j].dzid, this.XFGX_dataTree[i].children[j].children[k].dzid, this.XFGX_dataTree[i].children[j].children[k].children[n].dzid);
+                                            for (var k in this.XFGX_dataTree[i].children[j].children) {
+                                                if (temp == this.XFGX_dataTree[i].children[j].children[k].dzid) {
+                                                    xfgxArray.push(this.XFGX_dataTree[i].dzid, this.XFGX_dataTree[i].children[j].dzid, this.XFGX_dataTree[i].children[j].children[k].dzid);
+                                                } else {
+                                                    for (var n in this.XFGX_dataTree[i].children[j].children[k].children) {
+                                                        if (temp == this.XFGX_dataTree[i].children[j].children[k].children[n].dzid) {
+                                                            xfgxArray.push(this.XFGX_dataTree[i].dzid, this.XFGX_dataTree[i].children[j].dzid, this.XFGX_dataTree[i].children[j].children[k].dzid, this.XFGX_dataTree[i].children[j].children[k].children[n].dzid);
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
+                            this.addForm.xfgx = xfgxArray;
+                            //doFindPhoto("JXDWLX", this.jbxxData.jxdwlx);
+                            //图片查询
+                            this.searchPic();
+                            //视频查询
+                            this.searchVideo();
+                            this.upLoadData.dwid = this.status;
                         }
+                    }else{
+                        //基本信息主表中删除了数据，从表中没删除的情况 add by yushch 20181126
+                        this.status = '0';
+                        //删除登录验证从表信息 add by yushch 20181127
+                        axios.get('/dpapi/jxcsdlyz/doDeleteByUnscid/'+this.shiroData.dwid).then(function (res) {
+                            if(this.isJxcsUser == true){
+                                this.addForm.unscid = this.shiroData.unscid;
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error)
+                        })
                     }
-                    this.addForm.xfgx = xfgxArray;
-                    //doFindPhoto("JXDWLX", this.jbxxData.jxdwlx);
-                    //图片查询
-                    this.searchPic();
-                    //视频查询
-                    this.searchVideo();
-                    this.upLoadData.dwid = this.status;
                     this.loading1 = false;
                 }.bind(this), function (error) {
                     console.log(error)
