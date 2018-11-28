@@ -13,7 +13,7 @@
 			<div class="main-container" v-loading="loading1" element-loading-text="加载中">
 				<!-- 面包屑 -->
 				<div id="breadcrumb_box"></div>
-				<el-form id="planadd" ref="addForm" :model="addForm" label-width="90px" :rules="inforRules">
+				<el-form id="planadd" ref="addForm" :model="addForm" label-width="100px" :rules="inforRules">
 					<div id="inforView">
 						<el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
 							<el-col :span="24">
@@ -74,7 +74,7 @@
 						<el-card v-for="(domain, index) in addForm.disasterList" :key="index" class="card_style">
 							<div slot="header" class="clearfix">
 								<strong class="card_title_font">灾情{{index+1}}</strong>
-								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDisaster(domain)" class="r" style="margin:3px -20px 0"></el-button>
+								<el-button type="danger" icon="minus" size="small" @click.prevent="removeDisaster(domain)" class="r" style="margin:1px -25px 0"></el-button>
 							</div>
 							<el-row>
 								<el-col :span="7">
@@ -118,11 +118,11 @@
 								</el-col>
 								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="7">
-									<el-form-item label="燃烧面积">
+									<el-form-item label="燃烧面积(㎡)">
 										<el-input-number v-model="domain.rsmj" size="small" :min="0" :max="999999.99"></el-input-number>
 									</el-form-item>
 								</el-col>
-								<el-col :span="1" style="line-height: 36px;">(㎡)</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
 							<el-row>
 								<el-col :span="7">
@@ -142,11 +142,11 @@
 								</el-col>
 								<el-col :span="1">&nbsp;</el-col>
 								<el-col :span="7">
-									<el-form-item label="起火高度">
+									<el-form-item label="起火高度(m)">
 										<el-input-number v-model="domain.qhbwgd" size="small" :min="0" :max="999999.99"></el-input-number>
 									</el-form-item>
 								</el-col>
-								<el-col :span="1" style="line-height: 36px;">(m)</el-col>
+								<el-col :span="1">&nbsp;</el-col>
 							</el-row>
 							<el-row>
 								<el-col :span="23">
