@@ -21,7 +21,10 @@ new Vue({
         }
     },
     created: function () {
-        loadBreadcrumb("九小场所管理", "九小场所详情");
+        if(shiroGlobal.username != 'jxcs'){
+            loadBreadcrumb("九小场所管理", "九小场所详情");
+        }
+        
         this.loading = true;
         this.pkid = getQueryString("ID");
         this.jbxxDetails(this.pkid);
