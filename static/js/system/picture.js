@@ -9,6 +9,7 @@ var vue = new Vue({
                 id: "",
                 pic_type: "",
                 pic_name: "",
+                selectedImage: null,
             },
             //表数据
             tableData: [],
@@ -37,6 +38,8 @@ var vue = new Vue({
             total: 0,
             //序号
             indexData: 0,
+            //图片预览
+            previewImg: '', 
             //新建页面是否显示
             addFormVisible: false,
             addFormRules: {
@@ -237,9 +240,11 @@ var vue = new Vue({
                 picName: this.searchForm.pic_name.replace(/%/g,"\\%"),
                 picType: this.searchForm.pic_type,
                 pageSize: this.pageSize,
-                pageNum: this.currentPage
+                pageNum: this.currentPage,
+                picPhoto:this.searchForm.selectedImage
             }
             axios.post('/api/picture/findByVO', params).then(function (res) {
+                debugger;
                 var tableTemp = new Array((this.currentPage-1)*this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
@@ -271,6 +276,7 @@ var vue = new Vue({
             var _self = this;
             var pkid = val.pkid;
             axios.get('/api/picture/doFindById/' + pkid).then(function (res) {
+                
                 this.imgPreviewData = res.data.result;
                 var photo = document.getElementById("flag");
                 this.photo64 =  this.imgPreviewData.photo64;
@@ -278,8 +284,16 @@ var vue = new Vue({
             }.bind(this), function (error) {
                 console.log(error)
             })
+            _self.previewImg = this.photo64;
             _self.imgViewVisible = true;
         },
+
+        //图片加载 
+        // imgPreview: function (val) {
+        //     this.previewImg = val;
+        //     this.showPicVisible = true;
+        // },
+
         //获取所有的类型
         getAllTypes: function () {
             axios.get('/api/picture/getAll').then(function (res) {
