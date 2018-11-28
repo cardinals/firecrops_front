@@ -234,12 +234,12 @@ var vue = new Vue({
             var _self = this;
             _self.loading = true;//表格重新加载
             var params = {
-                picName: this.searchForm.pic_name,
+                picName: this.searchForm.pic_name.replace(/%/g,"\\%"),
                 picType: this.searchForm.pic_type,
                 pageSize: this.pageSize,
                 pageNum: this.currentPage
             }
-            axios.post('/api/imgupload/findByVO', params).then(function (res) {
+            axios.post('/api/picture/findByVO', params).then(function (res) {
                 var tableTemp = new Array((this.currentPage-1)*this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
                 this.total = res.data.result.total;
@@ -270,7 +270,7 @@ var vue = new Vue({
         imgPreview: function(val){
             var _self = this;
             var pkid = val.pkid;
-            axios.get('/api/imgupload/doFindById/' + pkid).then(function (res) {
+            axios.get('/api/picture/doFindById/' + pkid).then(function (res) {
                 this.imgPreviewData = res.data.result;
                 var photo = document.getElementById("flag");
                 this.photo64 =  this.imgPreviewData.photo64;
@@ -282,7 +282,7 @@ var vue = new Vue({
         },
         //获取所有的类型
         getAllTypes: function () {
-            axios.get('/api/imgupload/getAll').then(function (res) {
+            axios.get('/api/picture/getAll').then(function (res) {
                 this.allTypes = res.data.result;
             }.bind(this), function (error) {
                 console.log(error)
@@ -290,7 +290,7 @@ var vue = new Vue({
         },
         //获取已有图片类型
         getSavedImgTypes: function () {
-            axios.get('/api/imgupload/getSaved').then(function (res) {
+            axios.get('/api/picture/getSaved').then(function (res) {
                 this.allSavedTypes = res.data.result;
             }.bind(this), function (error) {
                 console.log(error)
@@ -333,10 +333,10 @@ var vue = new Vue({
             if(this.selectDisabled == false){  
                 if(val.picName!=null && val.picName!="" && val.picType!="" && val.picType!=null)
                 {
-                    axios.get('/api/imgupload/getNum/' + this.addForm.picName).then(function(res){
+                    axios.get('/api/picture/getNum/' + this.addForm.picName).then(function(res){
                         var sameNameOccured = false;
                         var picNameList= res.data.result;
-                        axios.get('/api/imgupload/getInputNum/' + val.picType).then(function (res) {
+                        axios.get('/api/picture/getInputNum/' + val.picType).then(function (res) {
                             var sameTypeNames = res.data.result;
                             for(var k=0;k<sameTypeNames.length;k++){
                                 if(sameTypeNames[k].picName == val.picName){
@@ -369,7 +369,7 @@ var vue = new Vue({
                                 }
                                 this.picName = val.picName;
                                 this.picType = val.picType;
-                                axios.post('/api/imgupload/detail/insertByVO', params).then(function(res){
+                                axios.post('/api/picture/detail/insertByVO', params).then(function(res){
                                     _self.total = _self.tableData.length;
                                     this.submitUpload();
                                     this.searchClick('insert');
@@ -395,10 +395,10 @@ var vue = new Vue({
                 if(val.inputPicName!=null && val.inputPicName!="" && val.inputPicType!="" && val.inputPicType!=null
                 && val.inputPicTypeName!="" && val.inputPicTypeName!=null && val.inputPicValue!="" && val.inputPicValue!=null)
                 {
-                    axios.get('/api/imgupload/getNum/' + this.addForm.inputPicName).then(function(res){
+                    axios.get('/api/picture/getNum/' + this.addForm.inputPicName).then(function(res){
                         var sameNameOccured = false;
                         var picNameList= res.data.result;
-                        axios.get('/api/imgupload/getInputNum/' + val.inputPicType).then(function (res) {
+                        axios.get('/api/picture/getInputNum/' + val.inputPicType).then(function (res) {
                             var sameTypeNames = res.data.result;
                             for(var k=0;k<sameTypeNames.length;k++){
                                 if(sameTypeNames[k].picName == val.inputPicName){
@@ -411,7 +411,7 @@ var vue = new Vue({
                                     type: "error"
                                 });
                             }else{
-                                axios.get('/api/imgupload/getInputNum/' + val.inputPicType).then(function(res){
+                                axios.get('/api/picture/getInputNum/' + val.inputPicType).then(function(res){
                                     var picSaved= res.data.result;
                                     var picValueOccured = false;
                                     var picNameInCodelist= false;
@@ -441,7 +441,7 @@ var vue = new Vue({
                                             }
                                             this.picName = val.inputPicName;
                                             this.picType = val.inputPicType;
-                                            axios.post('/api/imgupload/detail/insertByVO', params).then(function(res){
+                                            axios.post('/api/picture/detail/insertByVO', params).then(function(res){
                                                 _self.total = _self.tableData.length;
                                                 this.submitUpload();
                                                 this.searchClick('update');
@@ -495,7 +495,7 @@ var vue = new Vue({
         editClick: function (val) {
             var _self = this;
             var pkid = val.pkid;
-            axios.get('/api/imgupload/doFindById/' + pkid).then(function (res) {
+            axios.get('/api/picture/doFindById/' + pkid).then(function (res) {
                 this.editForm = res.data.result;
                 var inCodeTypes = false;
                 var ispicTypename =[];
@@ -544,10 +544,10 @@ var vue = new Vue({
             if(this.selectEditDisabled == false){  
                 if(val.picName!=null && val.picName!="" && val.picType!="" && val.picType!=null)
                 {
-                    axios.get('/api/imgupload/getNum/' + val.picName).then(function(res){
+                    axios.get('/api/picture/getNum/' + val.picName).then(function(res){
                         var sameNameOccured = false;
                         var picNameList= res.data.result;
-                        axios.get('/api/imgupload/getInputNum/' + val.picType).then(function (res) {
+                        axios.get('/api/picture/getInputNum/' + val.picType).then(function (res) {
                             var sameTypeNames = res.data.result;
                             for(var k=0;k<sameTypeNames.length;k++){
                                 if(sameTypeNames[k].picName == val.picName){
@@ -581,7 +581,7 @@ var vue = new Vue({
                                 };
                                 this.picName = val.picName;
                                 this.picType = val.picType;
-                                axios.post('/api/imgupload/detail/updateByVO', params).then(function (res) {
+                                axios.post('/api/picture/detail/updateByVO', params).then(function (res) {
                                     this.submitUpload();
                                     this.searchClick('update');
                                     this.editFormVisible = false;
@@ -608,10 +608,10 @@ var vue = new Vue({
                 if(val.inputPicName!=null && val.inputPicName!="" && val.inputPicType!="" && val.inputPicType!=null
                 && val.inputPicTypeName!="" && val.inputPicTypeName!=null && val.inputPicValue!="" && val.inputPicValue!=null)
                 {
-                    axios.get('/api/imgupload/getNum/' + val.inputPicName).then(function(res){
+                    axios.get('/api/picture/getNum/' + val.inputPicName).then(function(res){
                         var sameNameOccured = false;
                         var picNameList= res.data.result;
-                        axios.get('/api/imgupload/getInputNum/' + val.inputPicType).then(function (res) {
+                        axios.get('/api/picture/getInputNum/' + val.inputPicType).then(function (res) {
                             var sameTypeNames = res.data.result;
                             for(var k=0;k<sameTypeNames.length;k++){
                                 if(sameTypeNames[k].picName == val.inputPicName){
@@ -624,7 +624,7 @@ var vue = new Vue({
                                     type: "error"
                                 });
                             }else{
-                                axios.get('/api/imgupload/getInputNum/' + val.inputPicType).then(function(res){
+                                axios.get('/api/picture/getInputNum/' + val.inputPicType).then(function(res){
                                     var picSaved= res.data.result;
                                     var picValueOccured = false;
                                     var picNameInCodelist= false;
@@ -655,7 +655,7 @@ var vue = new Vue({
                                             };
                                             this.picName = val.inputPicName;
                                             this.picType = val.inputPicType;
-                                            axios.post('/api/imgupload/detail/updateByVO', params).then(function (res) {
+                                            axios.post('/api/picture/detail/updateByVO', params).then(function (res) {
                                                 this.submitUpload();
                                                 this.searchClick('update');
                                                 this.editFormVisible = false;
@@ -726,7 +726,7 @@ var vue = new Vue({
                     var params = {
                         ids: ids
                     }
-                    axios.post('/api/imgupload/detail/deleteByIds', params).then(function (res) {
+                    axios.post('/api/picture/detail/deleteByIds', params).then(function (res) {
                         for (var d = 0; d < ids.length; d++) {
                             for (var k = 0; k < _self.tableData.length; k++) {
                                 if (_self.tableData[k].pkid == ids[d]) {
