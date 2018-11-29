@@ -996,6 +996,11 @@ new Vue({
                                 });
                                 if(this.isJxcsUser == false){
                                     loadDiv("jxcsplan/jxcsplan_list");
+                                }else{
+                                    var params = {
+                                        ID: res.data.result.uuid
+                                    }
+                                    loadDivParam("jxcsplan/jxcsplan_detail", params);//跳转确认页
                                 }
                             }.bind(this), function (error) {
                                 console.log(error);
@@ -1061,6 +1066,11 @@ new Vue({
                                 });
                                 if(this.isJxcsUser == false){
                                     loadDiv("jxcsplan/jxcsplan_list");
+                                }else{
+                                    var params = {
+                                        ID: res.data.result.uuid
+                                    }
+                                    loadDivParam("jxcsplan/jxcsplan_detail", params);//跳转确认页
                                 }
                                 
                             }.bind(this), function (error) {
