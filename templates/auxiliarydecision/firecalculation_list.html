@@ -227,25 +227,28 @@
                                     </el-form-item>
                                 </el-col>
                             </el-row>
+
                             <el-row>
                                 <el-col>
                                     <el-form-item
                                     v-for="(domain, index) in calculateForm.domains"
                                     :label="domain.csmc"
                                     :key="domain.key"
-                                    :prop="'domains.' + index + '.csmc'"
+                                    :prop="'domains.' + index + '.mrz'"
                                     :rules="{
-                                        required: true, message: '域名不能为空', trigger: 'blur'
+                                        required: true, message: '不能为空', trigger: 'blur'
                                     }"
                                     class="calculateForm"
                                     >
-                                        <div style="display: inline-flex;">
-                                            <el-input  maxlength="100"  size="small" v-model="domain.mrz" auto-complete="off"></el-input>
-                                            &nbsp;&nbsp;<span style="width: 100px" v-text="domain.jldwdm"></span>
-                                        </div>    
+                                    <div style="display: inline-flex;">
+                                        <el-input  maxlength="100"  size="small" v-model="domain.mrz" auto-complete="off"></el-input>
+                                        &nbsp;&nbsp;<span style="width: 100px" v-text="domain.jldwdm"></span>
+                                    </div>    
+
                                     </el-form-item>   
                                 </el-col>
                             </el-row>
+                            
                             <el-row>
                                 <el-form-item class="calculateForm" label="计算结果" prop="jsjg">
                                     <div style="display: inline-flex;">

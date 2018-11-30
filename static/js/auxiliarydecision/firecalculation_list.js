@@ -73,7 +73,12 @@ var vue = new Vue({
             },
             //计算数据
             calculateMrzData: [],
+            //火场计算校验
             calculateFormRules:{
+
+                // gsmc: [{ required: true, message: "请输入公式名称", trigger: "blur" }],
+                // gssm: [{ required: true, message: "请输入公式说明", trigger: "blur" }],
+                // jsgs: [{ required: true, message: "请输入计算公式", trigger: "blur" }]
 
             },
             //删除的弹出框
@@ -113,6 +118,7 @@ var vue = new Vue({
                 jsgs: [{ required: true, message: "请输入计算公式", trigger: "blur" }],
                 jsgsdw: [{ required: true, message: "请输入计算公式单位", trigger: "blur" }]
             },
+            
             //修改界面数据
             editFormulaForm: {
                 gsmc: "",
@@ -276,21 +282,7 @@ var vue = new Vue({
             })
 
         },
-        //火场计算
-        calculate:function(val){
-            var params = {
-                gsmc: this.calculateForm.gsmc,
-                gssm: this.calculateForm.gssm,
-                jsgs: this.calculateForm.jsgs,
-                firecalculationparams:this.calculateForm.domains
-            }
-            axios.post('/dpapi/firecalculationlist/doCalculate', params).then(function (res) {
-                this.jsjg = res.data;
-                //alert(res.data);
-            }.bind(this), function (error) {
-                console.log(error)
-            })
-        },
+
         resetDialog:function(val){
             for(var i = 0; i<this.calculateForm.domains.length; i++){
                 if(this.calculateMrzData[i] == '' || this.calculateMrzData[i] == null)
@@ -336,6 +328,31 @@ var vue = new Vue({
                 console.info("加载数据成功");
                 _self.loading = false;
             }, 300);
+        },
+
+        //火场计算
+        calculate: function (val) {
+            debugger;
+
+            this.$refs["calculateForm"].validate((valid) => {
+                if (valid) {
+                    var params = {
+                        gsmc: this.calculateForm.gsmc,
+                        gssm: this.calculateForm.gssm,
+                        jsgs: this.calculateForm.jsgs,
+                        firecalculationparams: this.calculateForm.domains
+                    }
+                    axios.post('/dpapi/firecalculationlist/doCalculate', params).then(function (res) {
+                        this.jsjg = res.data;
+                        //alert(res.data);
+                    }.bind(this), function (error) {
+                        console.log(error)
+                    })
+                } else {
+                    console.log('error save!!');
+                    return false;
+                }
+            });
         },
 
         //新建：提交
