@@ -240,15 +240,16 @@ var vue = new Vue({
                 picName: this.searchForm.pic_name.replace(/%/g,"\\%"),
                 picType: this.searchForm.pic_type,
                 pageSize: this.pageSize,
-                pageNum: this.currentPage,
-                picPhoto:this.searchForm.selectedImage
+                pageNum: this.currentPage
             }
             axios.post('/api/picture/findByVO', params).then(function (res) {
-                debugger;
                 var tableTemp = new Array((this.currentPage-1)*this.pageSize);
                 this.tableData = tableTemp.concat(res.data.result.list);
+
                 this.total = res.data.result.total;
                 _self.loading = false;
+
+
             }.bind(this), function (error) {
                 console.log(error)
             })
@@ -273,26 +274,23 @@ var vue = new Vue({
         },
         //图片预览
         imgPreview: function(val){
-            var _self = this;
-            var pkid = val.pkid;
-            axios.get('/api/picture/doFindById/' + pkid).then(function (res) {
-                
-                this.imgPreviewData = res.data.result;
-                var photo = document.getElementById("flag");
-                this.photo64 =  this.imgPreviewData.photo64;
-                photo.src = "data:image/png;base64,"+this.photo64;
-            }.bind(this), function (error) {
-                console.log(error)
-            })
-            _self.previewImg = this.photo64;
-            _self.imgViewVisible = true;
-        },
+            // var _self = this;
+            // var pkid = val.pkid;
+            // axios.get('/api/picture/doFindById/' + pkid).then(function (res) {
+            //     this.imgPreviewData = res.data.result;
+            //     var photo = document.getElementById("flag");
+            //     this.photo64 =  this.imgPreviewData.photo64;
+            //     photo.src = this.photo64;
+            // }.bind(this), function (error) {
+            //     console.log(error)
+            // })
+            // _self.previewImg = this.photo64;
+            // _self.imgViewVisible = true;
+                      
+            this.previewImg = val;
+            this.imgViewVisible = true;
 
-        //图片加载 
-        // imgPreview: function (val) {
-        //     this.previewImg = val;
-        //     this.showPicVisible = true;
-        // },
+        },
 
         //获取所有的类型
         getAllTypes: function () {

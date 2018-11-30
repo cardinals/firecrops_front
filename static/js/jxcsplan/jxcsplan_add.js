@@ -55,6 +55,7 @@ new Vue({
                 xfssList:[],
                 unscid:"",
             },
+            xfssList_temp:[],
             //搜索表单
             searchForm_building: {
                 jzmc: ''
@@ -629,24 +630,6 @@ new Vue({
                 });
                 return false;
             }
-            for (var i = 0; i < this.addForm.jzxxList.length; i++) {
-                if (this.addForm.jzxxList[i].jzmc == "") {
-                    this.$message.warning({
-                        message: "请选择/填写单位建筑情况" + (i + 1) + "的单位名称! 或删除空白单位建筑情况！",
-                        showClose: true
-                    });
-                    return false;
-                }
-            }
-            for (var i = 0; i < this.addForm.xfssList.length; i++) {
-                if (this.addForm.xfssList[i].xfssmc == "") {
-                    this.$message.warning({
-                        message: "请填写消防设施" + (i + 1) + "的消防设施名称! 或删除空白消防设施！",
-                        showClose: true
-                    });
-                    return false;
-                }
-            }
             return true;
         },
         //保存前判断统一社会信用代码是否改变
@@ -723,6 +706,8 @@ new Vue({
                     })
                 }
             }
+            //清空消防设施temp，防止多次点击多次保存
+            this.xfssList_temp=[];
         },
         //点击保存事件
         save: function (formName) {
@@ -759,7 +744,7 @@ new Vue({
                                 cjrid: this.shiroData.userid,
                                 cjrmc: this.shiroData.realName,
                                 jzxxList: this.addForm.jzxxList,//建筑信息
-                                xfssList: this.addForm.xfssList,//消防设施
+                                xfssList: this.xfssList_temp,//消防设施
                                 datasource: this.shiroData.organizationVO.jgid,
                                 jdh:this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                                 sjzt: '01',     //数据状态（01编辑中，03待审批，04已驳回，05已审批）
@@ -814,7 +799,7 @@ new Vue({
                                 datasource: this.shiroData.organizationVO.jgid,
                                 jdh:this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                                 jzxxList: this.addForm.jzxxList,//建筑信息
-                                xfssList: this.addForm.xfssList,//消防设施
+                                xfssList: this.xfssList_temp,//消防设施
                                 xgrid: this.shiroData.userid,
                                 xgrmc: this.shiroData.realName,
                                 sjzt: '01',     //数据状态（01编辑中，03待审批，04已驳回，05已审批）
@@ -937,6 +922,8 @@ new Vue({
                     })
                 }
             }
+            //清空消防设施temp，防止多次点击多次保存
+            this.xfssList_temp=[];
         },
         //提交点击事件
         submit: function (formName) {
@@ -973,7 +960,7 @@ new Vue({
                                 cjrid: this.shiroData.userid,
                                 cjrmc: this.shiroData.realName,
                                 jzxxList: this.addForm.jzxxList,//建筑信息
-                                xfssList: this.addForm.xfssList,//消防设施
+                                xfssList: this.xfssList_temp,//消防设施
                                 datasource: this.shiroData.organizationVO.jgid,
                                 jdh:this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                                 sjzt: '03',     //数据状态（01编辑中，03待审批，04已驳回，05已审批）
@@ -996,6 +983,11 @@ new Vue({
                                 });
                                 if(this.isJxcsUser == false){
                                     loadDiv("jxcsplan/jxcsplan_list");
+                                }else{
+                                    var params = {
+                                        ID: res.data.result.uuid
+                                    }
+                                    loadDivParam("jxcsplan/jxcsplan_detail", params);//跳转确认页
                                 }
                             }.bind(this), function (error) {
                                 console.log(error);
@@ -1029,7 +1021,7 @@ new Vue({
                                 datasource: this.shiroData.organizationVO.jgid,
                                 jdh:this.shiroData.organizationVO.jgid.substr(0,2)+'000000',
                                 jzxxList: this.addForm.jzxxList,//建筑信息
-                                xfssList: this.addForm.xfssList,//消防设施
+                                xfssList: this.xfssList_temp,//消防设施
                                 xgrid: this.shiroData.userid,
                                 xgrmc: this.shiroData.realName,
                                 sjzt: '03',     //数据状态（01编辑中，03待审批，04已驳回，05已审批）
@@ -1061,6 +1053,11 @@ new Vue({
                                 });
                                 if(this.isJxcsUser == false){
                                     loadDiv("jxcsplan/jxcsplan_list");
+                                }else{
+                                    var params = {
+                                        ID: res.data.result.uuid
+                                    }
+                                    loadDivParam("jxcsplan/jxcsplan_detail", params);//跳转确认页
                                 }
                                 
                             }.bind(this), function (error) {
@@ -1185,8 +1182,24 @@ new Vue({
         //消防设施类型转换
         changeXfsslx: function(){
             for(var i in this.addForm.xfssList){
-                var length = this.addForm.xfssList[i].xfsslx.length;
-                this.addForm.xfssList[i].xfsslx = this.addForm.xfssList[i].xfsslx[length - 1];
+                this.xfssList_temp.push({
+                    xfssid:this.addForm.xfssList[i].xfssid,
+                    xfssmc:this.addForm.xfssList[i].xfssmc,
+                    xfsslx:this.addForm.xfssList[i].xfsslx[this.addForm.xfssList[i].xfsslx.length -1],
+                    wz:this.addForm.xfssList[i].wz,
+                    sl:this.addForm.xfssList[i].sl,
+                    bz:this.addForm.xfssList[i].bz,
+                    cjrid:this.addForm.xfssList[i].cjrid,
+                    cjrmc:this.addForm.xfssList[i].cjrmc,
+                    cjsj:this.addForm.xfssList[i].cjsj,
+                    xgrid:this.addForm.xfssList[i].xgrid,
+                    xgrmc:this.addForm.xfssList[i].xgrmc,
+                    xgsj:this.addForm.xfssList[i].xgsj,
+                    datasource:this.addForm.xfssList[i].datasource,
+                    jdh:this.addForm.xfssList[i].jdh,
+                    deleteFlag:this.addForm.xfssList[i].deleteFlag,
+                });
+                
             }
         },
 

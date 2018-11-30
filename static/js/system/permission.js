@@ -97,26 +97,33 @@ var vue = new Vue({
 
         //表格勾选事件
         selectionChange: function (val) {
+
             this.multipleSelection = val;
+            
         },
 
         //新建：弹出Dialog
         addClick: function () {
+
             this.dialogTitle = "权限新增";
             //清空edit表单
             if (this.$refs["editForm"] !== undefined) {
                 this.$refs["editForm"].resetFields();
             }
             this.editFormVisible = true;
+
         },
 
         //修改：弹出Dialog
         editClick: function(val, index) {
+
             this.editIndex = index;
             this.dialogTitle = "权限编辑";
             var params = {
                 permissionid: val.permissionid
             };
+
+
             axios.post('/api/permission/findByVO', params).then(function (res) {
                 this.editForm = res.data.result.list[0];
                 //保存当前用户名permissionname
@@ -125,12 +132,15 @@ var vue = new Vue({
                 console.log(error)
             })
             this.editFormVisible = true;
+
         },
 
         //新增/修改：保存
         editSubmit: function (val) {
+
             this.$refs["editForm"].validate((valid) => {
                 if (valid) {
+
                     var params = {
                         permissionid: val.permissionid,
                         permissionname: val.permissionname,
@@ -229,10 +239,12 @@ var vue = new Vue({
             });
         },
         closeDialog: function (val) {
+
             this.editFormVisible = false;
             val.permissionname = "";
             val.permissioninfo = "";
             this.$refs["editForm"].resetFields();
+
         },
         //清空查询条件
         clearClick: function () {
