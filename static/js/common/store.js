@@ -36,7 +36,7 @@ axios.interceptors.request.use(
             if(config.url == '/api/shiro'){
                 localStorage.setItem("time", new Date().getTime());
             }else{
-                if(localStorage.getItem("isLogin") && (new Date().getTime()-localStorage.getItem("time")<1*60*1000)){
+                if(localStorage.getItem("isLogin") && (new Date().getTime()-localStorage.getItem("time")<30*60*1000)){
                     localStorage.setItem("time", new Date().getTime());
                 }else{
                     alert("用户超时，请重新登陆");
