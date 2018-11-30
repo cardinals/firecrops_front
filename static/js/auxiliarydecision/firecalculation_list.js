@@ -367,6 +367,10 @@ var vue = new Vue({
                                     showClose: true
                                 });
                             } else {
+
+
+
+
                                 var params = {
 
                                     gsmc: this.addFormulaForm.gsmc,
@@ -382,6 +386,7 @@ var vue = new Vue({
                                     datasource: this.shiroData.organizationVO.jgid
                                     
                                 }
+
                                 axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
 
                                     if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
