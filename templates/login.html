@@ -90,6 +90,9 @@
                                                 width="50" height="20">
                                         </a>
                                     </li>
+                                    <li style="height: 20px;">
+                                        <p id="messages" v-text="messages" style="color: red;"></p>
+                                    </li>
                                 </ul>
                                 <ul id="fromb" style="display:none;">
                                     <li class="I1" >
@@ -107,11 +110,15 @@
                                                 width="50" height="20">
                                         </a>
                                     </li>
+                                    <li style="height: 20px;"></li>
                                 </ul>
+                                
+                                <!--
                                 <p>
                                     <input type="checkbox" name="rememberMe" id="rememberMe" />&nbsp;&nbsp;
                                     <a>记住我</a>
                                 </p>
+                                -->
                                 <div class="LoginBtn">
                                     <a @click="login()" id="lg" style="display:block;">登录</a>
                                     <a @click="nlogin()" id="nlg" style="display:none;">登录</a>
@@ -134,8 +141,11 @@
 </body>
 
 <script src="../static/js/zzzlib/vue.min.js"></script>
+<script src="../static/js/zzzlib/vuex.js"></script>
 <script src="../static/js/zzzlib/jquery-3.2.1.min.js"></script>
 <script src="../static/js/zzzlib/axios.min.js"></script>
+<script src="../static/js/common/store.js"></script>
+
 <script>
         $(document).ready(function () {
             $("#loginType").val("MyShiro");
@@ -202,6 +212,7 @@
             validateCode: "",
             messages: "",
             unscid: "",
+            loginType: "",
             src: "/api/imageCode"
         },
         created: function () {
@@ -215,9 +226,11 @@
         },
         methods: {
             login: function () {
+                this.messages = "";
                 this.username = $('#username').val();
                 this.password = $('#password').val();
                 this.validateCode = $('#validateCode').val();
+                this.loginType = $("#loginType").val();
                 if (this.username == null || this.username == '') {
                     alert("用户名不能为空！")
                 } else if (this.password == null || this.password == '') {
@@ -225,24 +238,66 @@
                 } else if (this.validateCode == null || this.validateCode == '') {
                     alert("验证码不能为空！")
                 } else {
-                    $('#login-form').submit(); 
+                    var params = {
+                        username: this.username,
+                        password: this.password,
+                        validateCode: this.validateCode,
+                        loginType: this.loginType
+                    }
+                    axios.post('/api/login', params).then(function(res) {
+                        if(res.data == "success"){
+                            localStorage.setItem("username", this.username);
+                            localStorage.setItem("isLogin", true);
+                            localStorage.setItem("time", new Date().getTime());
+                            window.location.href = "../templates/bigscreen/big_screen_all.html"; 
+                        }else if(res.data == "unknown"){
+                            this.messages = "账号不存在";
+                            this.username = "";
+                            this.password = "";
+                        }else if(res.data == "incorrect"){
+                            this.messages = "密码不正确";
+                            this.password = "";
+                        }else if(res.data == "excessive"){
+                            this.messages = "密码输入错误次数超过5次";
+                            this.password = "";
+                        }else if(res.data == "kaptcha"){
+                            this.messages = "验证码错误";
+                            this.validateCode = "";
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error);
+                        // window.location.href = "../templates/login.html";
+                    });
+                    /**采用Shiro自带的登陆方式登陆，Shiro验证登陆  by li.xue 2018/11/29 14:08*/
+                    // $('#login-form').submit(); 
                 } 
             },
             //九小场所信用代码
             nlogin: function () {
                 this.unscid = $('#unscid').val();
+                this.loginType = $("#loginType").val();
                 var reg = /^[0-9a-zA-Z]{18}$/;
                 if (this.unscid == null || this.unscid == '') {
                     alert("统一社会信用代码不能为空!")
-                } 
-                // else if(!reg.test(this.unscid)){
-                //     alert("统一社会信用代码为18位字母或数字！")
-                // }
-                else {
-                    $('#login-form').submit();
-                    // window.location.href = "jxcsplan/jxcsplan_all.html?unscid=" + this.unscid;
+                } else if(!reg.test(this.unscid)){
+                    alert("统一社会信用代码为18位字母或数字！")
+                }else {
+                    var params = {
+                        unscid: this.unscid,
+                        loginType: this.loginType
+                    }
+                    axios.post('/api/login', params).then(function(res) {
+                        if(res.data == "success"){
+                            localStorage.setItem("username", "jxcs");
+                            localStorage.setItem("isLogin", true);
+                            localStorage.setItem("time", new Date().getTime());
+                            window.location.href = "../templates/jxcsplan/jxcsplan_all.html"; 
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    });
+                    // $('#login-form').submit();
                 }
-
             },
             reset: function () {
                 this.username = "";

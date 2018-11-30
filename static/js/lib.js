@@ -1,10 +1,11 @@
 document.write('<scr' + 'ipt type="text/javascript" src="' + '../../static/js/zzzlib/jquery-3.2.1.min.js' + '"></scr' + 'ipt>');
 document.write('<scr' + 'ipt type="text/javascript" src="' + '../../static/js/zzzlib/vue.min.js' + '"></scr' + 'ipt>');
+document.write('<scr' + 'ipt type="text/javascript" src="' + '../../static/js/zzzlib/vuex.js' + '"></scr' + 'ipt>');
 document.write('<scr' + 'ipt type="text/javascript" src="' + '../../static/js/zzzlib/elementUI.js' + '"></scr' + 'ipt>');
 document.write('<scr' + 'ipt type="text/javascript" src="' + '../../static/js/zzzlib/axios.min.js' + '"></scr' + 'ipt>');
 document.write('<scr' + 'ipt type="text/javascript" src="' + '../../static/js/zzzlib/vue-resource.min.js' + '"></scr' + 'ipt>');
 document.write('<scr' + 'ipt type="text/javascript" src="' + '../../static/js/common/parameters.js'+'"></scr' + 'ipt>');
-
+document.write('<scr' + 'ipt type="text/javascript" src="' + '../../static/js/common/store.js'+'"></scr' + 'ipt>');
 
 
 //公共方法-地址栏取参方法
