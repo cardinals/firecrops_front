@@ -17,6 +17,7 @@ axios.get('/api/shiro').then(function (res) {
         }
     }
     shiroGlobal = res.data;
+    localStorage.setItem("user", shiroGlobal);
     //用户权限
     for(var i in res.data.permissions){
         permissions.push(res.data.permissions[i]);

@@ -14,6 +14,7 @@ $('#oscar-nav-btn').click(function () {
 
 //退出登录
 function logOut(){
+    sessionStorage.clear();
     $('#login-out-form')[0].submit();
 }
 //axios默认设置cookie
