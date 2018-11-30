@@ -102,7 +102,8 @@ var vue = new Vue({
                     jldwdm:'',
                     mrz:'',
                     sxh:0
-                }]
+                }],
+
             },
             //选中的序号
             selectIndex: -1,
@@ -368,9 +369,6 @@ var vue = new Vue({
                                 });
                             } else {
 
-
-
-
                                 var params = {
 
                                     gsmc: this.addFormulaForm.gsmc,
@@ -388,7 +386,6 @@ var vue = new Vue({
                                 }
 
                                 axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
-
                                     if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
 
                                         _self.$message({

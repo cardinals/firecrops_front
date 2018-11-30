@@ -171,15 +171,13 @@
                                 <el-col :span="2">&nbsp;</el-col>
                             </el-row>
                     
-                        </el-form>
-                    
                         <el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
                             <el-col>
                                 <strong style="color: #20a0ff;">参数信息</strong>
                             </el-col>
                         </el-row>
                         <el-button style="margin-bottom: 5px;float: right;" size="small" type="success" @click="addDomain">新增参数</el-button>
-                        <el-table class="dialog-table" border id="table" :data="addParamForm.domains" @selection-change="selectionChange">
+                        <el-table class="dialog-table"  border id="table" :data="addParamForm.domains" @selection-change="selectionChange">
                             <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
                             <el-table-column prop="csmc" show-overflow-tooltip label="参数名称" min-width="40%" align="center">
                                 <template slot-scope="scope">
@@ -202,6 +200,8 @@
                                 </template>
                             </el-table-column>
                         </el-table>
+                        
+                        </el-form>
                     
                         <div slot="footer" class="dialog-footer" align="center">
                             <el-button type="clear" icon="close" size="small" @click.native="closeDialog(addFormulaForm,addParamForm)">取消</el-button>
