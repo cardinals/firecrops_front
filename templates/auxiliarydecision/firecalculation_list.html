@@ -293,10 +293,10 @@
                     </el-dialog> -->
 
 
-
+                    
                     <!--计算界面-->
 					<el-dialog title="火场计算" :visible.sync="calculateVisible" @close="closeCalculate(calculateForm)" :close-on-click-modal="false">
-                        <el-form :model="calculateForm" label-width="300px" :rules="calculateFormRules" ref="calculateForm">
+                        <el-form :model="calculateForm" label-width="240px" :rules="calculateFormRules" ref="calculateForm">
                             <el-row>
                                 <el-col :span="24">
                                     <el-form-item class="calculateForm" label="公式名称" prop="gsmc">
@@ -347,9 +347,9 @@
                             </el-row>
                         </el-form>
                         <div slot="footer" class="dialog-footer" align="center">
-                            <el-button size="small" type="primary" icon="edit" @click.native="calculate(calculateForm)">计算</el-button>
+                            <el-button size="small" type="success" icon="edit" @click.native="calculate(calculateForm)">计算</el-button>
                             <el-button size="small" type="clear" icon="delete" @click.native="resetDialog(calculateForm)">重置</el-button>
-                            <el-button size="small" type="clear" icon="close" @click.native="closeCalculate(calculateForm)">关闭</el-button>
+                            <el-button size="small" type="clear" icon="close" @click.native="closeCalculate(calculateForm)">取消</el-button>
                         </div>
                     </el-dialog>
                 </div>

@@ -339,54 +339,101 @@ var vue = new Vue({
         },
 
         //新建：提交
-        addSubmit: function (val1,val2) {
+        addSubmit: function (val1, val2) {
 
-                    var _self = this;
-                    axios.get('/dpapi/firecalculationlist/getNum/' + this.addFormulaForm.gsmc).then(function (res) {
+            this.$refs["addFormulaForm"].validate((valid) => {
+                if (valid) {
+                    if (this.dialogTitle == "火场计算新增") {
+                      
+                        var _self = this;
+                        axios.get('/dpapi/firecalculationlist/getNum/' + this.addFormulaForm.gsmc).then(function (res) {
 
-                       if (res.data.result > 0) {
-                            _self.$message({
-                                message: "角色名已存在!",
-                                showClose: true
-                            });
-                        } else {
-                            var params = {
-                                gsmc: this.addFormulaForm.gsmc,
-                                gslb: this.addFormulaForm.gslb,
-                                gssm: this.addFormulaForm.gssm,
-                                jsgs: this.addFormulaForm.jsgs,
-                                jsgsdw: this.addFormulaForm.jsgsdw,
-                                sfqy: "1",
-                                firecalculationparams: this.addParamForm.domains,
-                                cjrid: this.shiroData.userid,
-                                cjrmc: this.shiroData.realName,
-                                jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
-                                datasource: this.shiroData.organizationVO.jgid
+                            if (res.data.result > 0) {
+                                _self.$message({
+                                    message: "角色名已存在!",
+                                    showClose: true
+                                });
+                            } else {
+                                var params = {
+                                    gsmc: this.addFormulaForm.gsmc,
+                                    gslb: this.addFormulaForm.gslb,
+                                    gssm: this.addFormulaForm.gssm,
+                                    jsgs: this.addFormulaForm.jsgs,
+                                    jsgsdw: this.addFormulaForm.jsgsdw,
+                                    sfqy: "1",
+                                    firecalculationparams: this.addParamForm.domains,
+                                    cjrid: this.shiroData.userid,
+                                    cjrmc: this.shiroData.realName,
+                                    jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
+                                    datasource: this.shiroData.organizationVO.jgid
+                                }
+                                axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
+
+                                    if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
+
+                                        _self.$message({
+                                            message: res.data.msg,
+                                            showClose: true
+                                        });
+                                    }
+                                    else {
+                                        this.addIndex = 0;
+                                        this.searchClick('click');
+                                        this.addFormVisible = false;
+                                    }
+                                }.bind(this), function (error) {
+                                    console.log(error)
+                                })
+
+                                _self.total = _self.tableData.length;
+                                _self.loadingData();//重新加载数据
                             }
-                            axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
-                                
-                                if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
-                                    
-                                    _self.$message({
-                                        message: res.data.msg,
-                                        showClose: true
-                                    });
-                                }
-                                else {
-                                    this.addIndex = 0;
-                                    this.searchClick('click');
-                                    this.addFormVisible = false;
-                                }
-                            }.bind(this), function (error) {
-                                console.log(error)
-                            })
+                        }.bind(this), function (error) {
+                            console.log(error)
+                        })
 
-                            _self.total = _self.tableData.length;
-                            _self.loadingData();//重新加载数据
-                        }
-                    }.bind(this), function (error) {
-                        console.log(error)
-                    })
+                    } else if (this.dialogTitle == "权限编辑") {
+
+                        var params = {
+                            uuid: this.addFormulaForm.uuid,
+                            gsmc: this.addFormulaForm.gsmc,
+                            gslb: this.addFormulaForm.gslb,
+                            gssm: this.addFormulaForm.gssm,
+                            jsgs: this.addFormulaForm.jsgs,
+                            jsgsdw: this.addFormulaForm.jsgsdw,
+                            sfqy: this.addFormulaForm.sfqy,
+                            firecalculationparams: this.addParamForm.domains,
+                            xgrid: this.shiroData.userid,
+                            xgrmc: this.shiroData.realName,
+                        };
+
+                        axios.post('/dpapi/firecalculationlist/updateByVO', params).then(function (res) {
+                            if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
+                                _self.$message({
+                                    message: res.data.msg,
+                                    type: "error"
+                                });
+                            }
+                            else {
+                                this.addFormVisible = false;
+                                this.editIndex = 0;
+                                this.searchClick('click');
+                            }
+                        }.bind(this), function (error) {
+                            console.log(error)
+                        })
+                        //存在疑问暂不影响系统功能
+                        _self.total = _self.tableData.length;
+                        _self.loadingData();//重新加载数据
+
+                    }
+
+                } else {
+                    console.log('error save!!');
+                    return false;
+                }
+
+            });
 
         },
 
@@ -506,89 +553,6 @@ var vue = new Vue({
             // this.editFormVisible = true;
 
         },
-
-
-
-        //修改：保存按钮
-        editSubmit: function (val1, val2) {
-
-            // this.$refs["editForm"].validate((valid) => {
-            //     if (valid) {
-
-            var _self = this;
-            var params = {
-                uuid: this.editFormulaForm.uuid,
-                gsmc: this.editFormulaForm.gsmc,
-                gslb: this.editFormulaForm.gslb,
-                gssm: this.editFormulaForm.gssm,
-                jsgs: this.editFormulaForm.jsgs,
-                jsgsdw: this.editFormulaForm.jsgsdw,
-                sfqy: this.editFormulaForm.sfqy,
-                firecalculationparams: this.editParamForm.domains,
-                xgrid: this.shiroData.userid,
-                xgrmc: this.shiroData.realName,
-            };
-
-            // if(this.dialogTitle == "火场计算新增"){
-
-            axios.post('/dpapi/firecalculationlist/updateByVO', params).then(function (res) {
-                if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
-                    _self.$message({
-                        message: res.data.msg,
-                        type: "error"
-                    });
-                }
-                else {
-                    this.editFormVisible = false;
-                    this.editIndex = 0;
-                    this.searchClick('click');
-                }
-            }.bind(this), function (error) {
-                console.log(error)
-            })
-            _self.total = _self.tableData.length;
-            _self.loadingData();//重新加载数据
-
-            //    }else if(this.dialogTitle == "权限编辑"){
-            // var _self = this;
-            // var uuid = val.uuid;
-            // var editData = {
-            //     uuid:"",
-            //     gsmc: "",
-            //     gssm: "",
-            //     jsgs: "",
-            //     jsgsdw: "",
-            //     gslb:"",
-            //     sfqy:""
-            // };
-            // axios.get('/dpapi/firecalculationlist/doFindById/' + uuid).then(function (res) {
-            //     this.editParamForm.domains = res.data.result;
-            //     this.editIndex = this.editParamForm.domains.length-1;
-            //     editData.uuid = val.uuid;
-            //     editData.gsmc = val.gsmc;
-            //     editData.gssm = val.gssm;
-            //     editData.jsgs = val.jsgs;
-            //     editData.jsgsdw = val.jsgsdw;
-            //     editData.gslb = val.gslb;
-            //     editData.sfqy = (val.sfqy?"1":"0");
-            //     this.editFormulaForm = editData;
-            // }.bind(this), function (error) {
-            //     console.log(error)
-            // })
-
-            //    }
-
-
-            //     } else {
-            //         console.log('error save!!');
-            //         return false;
-            //     }
-
-            // });
-
-        },
-
-
 
 
         submitIfUse:function($event,val){
