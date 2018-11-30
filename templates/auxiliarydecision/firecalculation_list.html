@@ -171,34 +171,50 @@
                                 <el-col :span="2">&nbsp;</el-col>
                             </el-row>
                     
+                        </el-form>
+
+                        <el-form status-icon  :model="addParamForm" label-width="107px" :rules="addParamForm.rules" ref="addParamForm"> 
                         <el-row class="mb5" style="border-bottom:1px solid #20a0ff;line-height: 29px;">
                             <el-col>
                                 <strong style="color: #20a0ff;">参数信息</strong>
                             </el-col>
                         </el-row>
+
                         <el-button style="margin-bottom: 5px;float: right;" size="small" type="success" @click="addDomain">新增参数</el-button>
                         <el-table class="dialog-table"  border id="table" :data="addParamForm.domains" @selection-change="selectionChange">
+                          
                             <el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
-                            <el-table-column prop="csmc" show-overflow-tooltip label="参数名称" min-width="40%" align="center">
+                           
+                                <el-table-column prop="csmc" show-overflow-tooltip label="参数名称" min-width="5%" align="center">
+                                    <template slot-scope="scope" >
+                                        <el-form-item class="inputstyle" :prop="'domains.' + scope.$index + '.csmc'" :rules='addParamForm.rules.csmc'>
+                                            <el-input  v-if="scope.$index < addParamForm.domains.length" maxlength="50" size="small" v-model="scope.row.csmc"></el-input>
+                                        </el-form-item>
+                                    </template>
+                                </el-table-column>
+                            
+                            <el-table-column prop="jldwdm" show-overflow-tooltip label="计量单位" min-width="5%" align="center">
                                 <template slot-scope="scope">
-                                    <el-input maxlength="50" size="small" v-model="scope.row.csmc"></el-input>
+                                    <el-form-item  class="inputstyle" >
+                                        <el-input maxlength="10" size="small" v-model="scope.row.jldwdm"></el-input>
+                                    </el-form-item>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="jldwdm" show-overflow-tooltip label="计量单位" min-width="26%" align="center">
+                            <el-table-column prop="mrz" show-overflow-tooltip label="默认值" min-width="5%" align="center">
                                 <template slot-scope="scope">
-                                    <el-input maxlength="10" size="small" v-model="scope.row.jldwdm"></el-input>
+                                    <el-form-item  class="inputstyle" >
+                                        <el-input maxlength="100" size="small" v-model="scope.row.mrz"></el-input>
+                                    </el-form-item>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="mrz" show-overflow-tooltip label="默认值" min-width="26%" align="center">
+                            <el-table-column show-overflow-tooltip label="操作" width="100" align="center"  min-width="25%" >
                                 <template slot-scope="scope">
-                                    <el-input maxlength="100" size="small" v-model="scope.row.mrz"></el-input>
+                                    
+                                        <el-button type="danger" size="mini" icon="delete" @click.prevent="removeAddDomain(scope.row)" class="is-circle"></el-button>
+                                    
                                 </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip label="操作" width="100" align="center">
-                                <template slot-scope="scope">
-                                    <el-button type="danger" size="mini" icon="delete" @click.prevent="removeAddDomain(scope.row)" class="is-circle"></el-button>
-                                </template>
-                            </el-table-column>
+
                         </el-table>
                         
                         </el-form>

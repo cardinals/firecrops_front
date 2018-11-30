@@ -97,14 +97,18 @@ var vue = new Vue({
                 jsgsdw: "",
                 gslb:""
             },
-            addParamForm: {
 
+            addParamForm: {
                 domains: [{
                     csmc: '',
                     jldwdm:'',
                     mrz:'',
                     sxh:0
                 }],
+
+                rules: {
+                    csmc: [{ required: true, message: "参数不能为空", trigger: "blur" }]
+                },
 
             },
             //选中的序号

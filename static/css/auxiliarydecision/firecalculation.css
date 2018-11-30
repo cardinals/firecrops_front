@@ -36,3 +36,15 @@
     padding-right: 4px !important;
 }
  */
+
+ .inputstyle{
+    margin-left: -107px !important;
+ }
+
+ .el-tooltip{
+    height: 45px;
+ }
+
+ .el-form-item__error{
+    padding-top: 1.2px;
+ }
