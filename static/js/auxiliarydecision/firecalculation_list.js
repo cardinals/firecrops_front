@@ -84,8 +84,10 @@ var vue = new Vue({
             addFormRules: {
                 gsmc: [{ required: true, message: "请输入公式名称", trigger: "blur" }],
                 gssm: [{ required: true, message: "请输入公式说明", trigger: "blur" }],
-                jsgs: [{ required: true, message: "请输入计算公式", trigger: "blur" }],
-                jsgsdw: [{ required: true, message: "请输入计算公式单位", trigger: "blur" }]
+                jsgs: [{ required: true, message: "请输入计算公式(参数应为中文且为两个以上)", trigger: "blur" }],
+                jsgsdw: [{ required: true, message: "请输入计算公式单位", trigger: "blur" }],
+                csmc: [{ required: true, message: "请输入计算公式单位", trigger: "blur" }]
+
             },
             //新建数据
             addFormulaForm: {
@@ -112,7 +114,7 @@ var vue = new Vue({
             editFormRules: {
                 gsmc: [{ required: true, message: "请输入公式名称", trigger: "blur" }],
                 gssm: [{ required: true, message: "请输入公式说明", trigger: "blur" }],
-                jsgs: [{ required: true, message: "请输入计算公式", trigger: "blur" }],
+                jsgs: [{ required: true, message: "请输入计算公式(参数应为中文且为两个以上)", trigger: "blur" }],
                 jsgsdw: [{ required: true, message: "请输入计算公式单位", trigger: "blur" }]
             },
             
@@ -329,7 +331,6 @@ var vue = new Vue({
 
         //火场计算
         calculate: function (val) {
-            debugger;
 
             this.$refs["calculateForm"].validate((valid) => {
                 if (valid) {
@@ -386,7 +387,9 @@ var vue = new Vue({
                                 }
 
                                 axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
-                                    if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
+                                    debugger;
+
+                                    if (res.data.msg == "计算公式中参数与参数信息中参数个数不符!请重新输入。") {
 
                                         _self.$message({
                                             message: res.data.msg,
@@ -425,7 +428,7 @@ var vue = new Vue({
                         };
 
                         axios.post('/dpapi/firecalculationlist/updateByVO', params).then(function (res) {
-                            if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
+                            if (res.data.msg == "计算公式中参数与参数信息中参数个数不符!请重新输入。") {
                                 _self.$message({
                                     message: res.data.msg,
                                     type: "error"
