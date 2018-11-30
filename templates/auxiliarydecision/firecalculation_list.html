@@ -106,7 +106,8 @@
                     </div>
 
                     <!--新建界面-->
-                    <el-dialog title="火场计算新增" :visible.sync="addFormVisible" @close="closeDialog(addFormulaForm,addParamForm)" :close-on-click-modal="false">
+                    
+                    <el-dialog :title="dialogTitle" :visible.sync="addFormVisible" @close="closeDialog(addFormulaForm,addParamForm)" :close-on-click-modal="false">
                         <el-tabs v-model="activeName">
                             <el-tab-pane name="first" label="公式信息">
                                 <el-form :model="addFormulaForm" label-width="107px" :rules="addFormRules" ref="addFormulaForm">
@@ -165,6 +166,7 @@
 
                                 </el-form>
                             </el-tab-pane>
+
                             <el-tab-pane name="second" label="参数信息">
                                 <el-button style="margin-bottom: 5px;float: right;" size="small" type="success" @click="addDomain">新增参数</el-button>
                                 <el-table class="dialog-table" border id="table" :data="addParamForm.domains" @selection-change="selectionChange">
@@ -191,15 +193,18 @@
                                     </el-table-column>
                                 </el-table>
                             </el-tab-pane>
+
                         </el-tabs>
+
                         <div slot="footer" class="dialog-footer" align="center">
                             <el-button type="clear" icon="close" size="small" @click.native="closeDialog(addFormulaForm,addParamForm)">取消</el-button>
                             <el-button type="success" icon="check" size="small" @click.native="addSubmit(addFormulaForm,addParamForm)">保存</el-button>
                         </div>
+
                     </el-dialog>
 
                     <!--修改界面-->
-                    <el-dialog title="火场计算编辑" :visible.sync="editFormVisible" @close="closeEditDialog(editFormulaForm,editParamForm)" :close-on-click-modal="false">
+                    <!-- <el-dialog title="火场计算编辑" :visible.sync="editFormVisible" @close="closeEditDialog(editFormulaForm,editParamForm)" :close-on-click-modal="false">
                         <el-tabs v-model="activeName">
                             <el-tab-pane name="first" label="公式信息">
                                 <el-form :model="editFormulaForm" label-width="107px" :rules="editFormRules" ref="editFormulaForm">
@@ -285,7 +290,10 @@
                             <el-button type="clear" icon="close" size="small"  @click.native="closeEditDialog(editFormulaForm,editParamForm)">取消</el-button>
                             <el-button  type="primary" icon="check" size="small" @click.native="editSubmit(editFormulaForm,editParamForm)">提交</el-button>
                         </div>
-                    </el-dialog>
+                    </el-dialog> -->
+
+
+
                     <!--计算界面-->
 					<el-dialog title="火场计算" :visible.sync="calculateVisible" @close="closeCalculate(calculateForm)" :close-on-click-modal="false">
                         <el-form :model="calculateForm" label-width="300px" :rules="calculateFormRules" ref="calculateForm">

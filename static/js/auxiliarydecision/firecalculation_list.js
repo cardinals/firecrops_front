@@ -40,7 +40,8 @@ var vue = new Vue({
             CSLX_data:[],
             //后台返回全部资源列表
             defaultKeys: ['17'],
-
+            //Dialog Title
+            dialogTitle: "权限编辑",
             //删除成功后台返回数据
             delStatus: "success",
             //显示加载中样
@@ -337,18 +338,6 @@ var vue = new Vue({
             }, 300);
         },
 
-        //新建：弹出Dialog
-        addClick: function () {
-            var _self = this;
-            this.addFormulaForm.gsmc = "";
-            this.addFormulaForm.gslb = "";
-            this.addFormulaForm.gssm = "";
-            this.addFormulaForm.jsgs = "";
-            this.addFormulaForm.jsgsdw = "";
-            this.addParamForm.domains = [{csmc: '',jldwdm:'',mrz:'',sxh:0}];
-            this.activeName = 'first';
-            _self.addFormVisible = true;
-        },
         //新建：提交
         addSubmit: function (val1,val2) {
 
@@ -446,9 +435,47 @@ var vue = new Vue({
                 });
         },
 
+        //新建：弹出Dialog
+        addClick: function () {
+
+            this.dialogTitle = "火场计算新增";
+            // //清空edit表单
+            // if (this.$refs["addFormulaForm"] !== undefined) {
+            //     this.$refs["addFormulaForm"].resetFields();
+            // }
+            // this.addFormVisible = true;
+
+            this.addFormulaForm.gsmc = "";
+            this.addFormulaForm.gslb = "";
+            this.addFormulaForm.gssm = "";
+            this.addFormulaForm.jsgs = "";
+            this.addFormulaForm.jsgsdw = "";
+            this.addParamForm.domains = [{csmc: '',jldwdm:'',mrz:'',sxh:0}];
+            this.activeName = 'first';
+            this.addFormVisible = true;
+
+        },
+
         //修改：弹出Dialog
-        editClick: function (val) {
-            var _self = this;
+        editClick: function (val, index) {
+
+            // 编辑页的弹出框
+            this.editIndex = index;
+            this.dialogTitle = "权限编辑";
+            var params = {
+                permissionid: val.permissionid
+            };
+
+
+            axios.post('/api/permission/findByVO', params).then(function (res) {
+                this.editForm = res.data.result.list[0];
+                //保存当前用户名permissionname
+                this.permissionnameOld = this.editForm.permissionname;
+            }.bind(this), function (error) {
+                console.log(error)
+            })
+
+            //原有的js方法内容
             var uuid = val.uuid;
             var editData = {
                 uuid:"",
@@ -460,8 +487,8 @@ var vue = new Vue({
                 sfqy:""
             };
             axios.get('/dpapi/firecalculationlist/doFindById/' + uuid).then(function (res) {
-                this.editParamForm.domains = res.data.result;
-                this.editIndex = this.editParamForm.domains.length-1;
+                this.addParamForm.domains = res.data.result;
+                this.editIndex = this.addParamForm.domains.length-1;
                 editData.uuid = val.uuid;
                 editData.gsmc = val.gsmc;
                 editData.gssm = val.gssm;
@@ -469,15 +496,25 @@ var vue = new Vue({
                 editData.jsgsdw = val.jsgsdw;
                 editData.gslb = val.gslb;
                 editData.sfqy = (val.sfqy?"1":"0");
-                this.editFormulaForm = editData;
+                this.addFormulaForm = editData;
             }.bind(this), function (error) {
                 console.log(error)
             })
-            this.editFormVisible = true;
+
+            this.addFormVisible = true;
+
+            // this.editFormVisible = true;
+
         },
 
+
+
         //修改：保存按钮
-        editSubmit: function (val1,val2) {
+        editSubmit: function (val1, val2) {
+
+            // this.$refs["editForm"].validate((valid) => {
+            //     if (valid) {
+
             var _self = this;
             var params = {
                 uuid: this.editFormulaForm.uuid,
@@ -487,18 +524,21 @@ var vue = new Vue({
                 jsgs: this.editFormulaForm.jsgs,
                 jsgsdw: this.editFormulaForm.jsgsdw,
                 sfqy: this.editFormulaForm.sfqy,
-                firecalculationparams:this.editParamForm.domains,
+                firecalculationparams: this.editParamForm.domains,
                 xgrid: this.shiroData.userid,
                 xgrmc: this.shiroData.realName,
             };
+
+            // if(this.dialogTitle == "火场计算新增"){
+
             axios.post('/dpapi/firecalculationlist/updateByVO', params).then(function (res) {
-                if(res.data.msg=="算式内参数与输入参数个数不符!请重新输入。"){
+                if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
                     _self.$message({
                         message: res.data.msg,
                         type: "error"
                     });
                 }
-                else{
+                else {
                     this.editFormVisible = false;
                     this.editIndex = 0;
                     this.searchClick('click');
@@ -508,7 +548,49 @@ var vue = new Vue({
             })
             _self.total = _self.tableData.length;
             _self.loadingData();//重新加载数据
+
+            //    }else if(this.dialogTitle == "权限编辑"){
+            // var _self = this;
+            // var uuid = val.uuid;
+            // var editData = {
+            //     uuid:"",
+            //     gsmc: "",
+            //     gssm: "",
+            //     jsgs: "",
+            //     jsgsdw: "",
+            //     gslb:"",
+            //     sfqy:""
+            // };
+            // axios.get('/dpapi/firecalculationlist/doFindById/' + uuid).then(function (res) {
+            //     this.editParamForm.domains = res.data.result;
+            //     this.editIndex = this.editParamForm.domains.length-1;
+            //     editData.uuid = val.uuid;
+            //     editData.gsmc = val.gsmc;
+            //     editData.gssm = val.gssm;
+            //     editData.jsgs = val.jsgs;
+            //     editData.jsgsdw = val.jsgsdw;
+            //     editData.gslb = val.gslb;
+            //     editData.sfqy = (val.sfqy?"1":"0");
+            //     this.editFormulaForm = editData;
+            // }.bind(this), function (error) {
+            //     console.log(error)
+            // })
+
+            //    }
+
+
+            //     } else {
+            //         console.log('error save!!');
+            //         return false;
+            //     }
+
+            // });
+
         },
+
+
+
+
         submitIfUse:function($event,val){
             var _self = this;
             var params = {
@@ -532,6 +614,8 @@ var vue = new Vue({
             this.addFormulaForm.jsgsdw = "";
             this.addParamForm.domains = [{csmc: '',jldwdm:'',mrz:'',sxh:0}];
             this.activeName = 'first';
+            // // 重新修改
+            // this.$refs["addParamForm"].resetFields();
         },
         //关闭修改Dialog
         closeEditDialog: function (val1,val2) {
