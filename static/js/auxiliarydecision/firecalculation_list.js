@@ -76,10 +76,6 @@ var vue = new Vue({
             //火场计算校验
             calculateFormRules:{
 
-                // gsmc: [{ required: true, message: "请输入公式名称", trigger: "blur" }],
-                // gssm: [{ required: true, message: "请输入公式说明", trigger: "blur" }],
-                // jsgs: [{ required: true, message: "请输入计算公式", trigger: "blur" }]
-
             },
             //删除的弹出框
             deleteVisible: false,
@@ -372,6 +368,7 @@ var vue = new Vue({
                                 });
                             } else {
                                 var params = {
+
                                     gsmc: this.addFormulaForm.gsmc,
                                     gslb: this.addFormulaForm.gslb,
                                     gssm: this.addFormulaForm.gssm,
@@ -383,6 +380,7 @@ var vue = new Vue({
                                     cjrmc: this.shiroData.realName,
                                     jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
                                     datasource: this.shiroData.organizationVO.jgid
+                                    
                                 }
                                 axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
 
