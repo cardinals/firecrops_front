@@ -363,7 +363,7 @@ var vue = new Vue({
             this.$refs["addFormulaForm"].validate((valid) => {
                 if (valid) {
                     if (this.dialogTitle == "火场计算新增") {
-                      
+
                         var _self = this;
                         axios.get('/dpapi/firecalculationlist/getNum/' + this.addFormulaForm.gsmc).then(function (res) {
 
@@ -391,7 +391,7 @@ var vue = new Vue({
                                 }
 
                                 axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
-                                    debugger;
+                                   
 
                                     if (res.data.msg == "计算公式中参数与参数信息中参数个数不符!请重新输入。") {
 
@@ -405,6 +405,7 @@ var vue = new Vue({
                                         this.searchClick('click');
                                         this.addFormVisible = false;
                                     }
+
                                 }.bind(this), function (error) {
                                     console.log(error)
                                 })
@@ -415,6 +416,7 @@ var vue = new Vue({
                         }.bind(this), function (error) {
                             console.log(error)
                         })
+
 
                     } else if (this.dialogTitle == "权限编辑") {
 
@@ -602,8 +604,9 @@ var vue = new Vue({
             this.addFormulaForm.jsgsdw = "";
             this.addParamForm.domains = [{csmc: '',jldwdm:'',mrz:'',sxh:0}];
             this.activeName = 'first';
-            // // 重新修改
-            // this.$refs["addParamForm"].resetFields();
+            // 取消
+            this.$refs["addParamForm"].resetFields();
+            this.$refs["addFormulaForm"].resetFields();
         },
         //关闭修改Dialog
         closeEditDialog: function (val1,val2) {
