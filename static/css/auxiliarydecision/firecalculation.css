@@ -36,3 +36,22 @@
     padding-right: 4px !important;
 }
  */
+
+ .inputstyle{
+    margin-left: -107px !important;
+ }
+
+ .el-form-item__error{
+    padding-top: 1.2px;
+ }
+
+ .cardstyle{
+
+    display: none; 
+    font-weight:bold;
+    float:right;
+    margin-top:-250px;
+    margin-right: -342px;
+    height: 280px;
+
+ }

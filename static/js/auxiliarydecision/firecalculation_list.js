@@ -84,8 +84,10 @@ var vue = new Vue({
             addFormRules: {
                 gsmc: [{ required: true, message: "请输入公式名称", trigger: "blur" }],
                 gssm: [{ required: true, message: "请输入公式说明", trigger: "blur" }],
-                jsgs: [{ required: true, message: "请输入计算公式", trigger: "blur" }],
-                jsgsdw: [{ required: true, message: "请输入计算公式单位", trigger: "blur" }]
+                jsgs: [{ required: true, message: "请输入计算公式(参数应为中文且为两个以上)", trigger: "blur" }],
+                jsgsdw: [{ required: true, message: "请输入计算公式单位", trigger: "blur" }],
+                csmc: [{ required: true, message: "请输入计算公式单位", trigger: "blur" }]
+
             },
             //新建数据
             addFormulaForm: {
@@ -95,14 +97,18 @@ var vue = new Vue({
                 jsgsdw: "",
                 gslb:""
             },
-            addParamForm: {
 
+            addParamForm: {
                 domains: [{
                     csmc: '',
                     jldwdm:'',
                     mrz:'',
                     sxh:0
                 }],
+
+                rules: {
+                    csmc: [{ required: true, message: "参数不能为空", trigger: "blur" }]
+                },
 
             },
             //选中的序号
@@ -112,7 +118,7 @@ var vue = new Vue({
             editFormRules: {
                 gsmc: [{ required: true, message: "请输入公式名称", trigger: "blur" }],
                 gssm: [{ required: true, message: "请输入公式说明", trigger: "blur" }],
-                jsgs: [{ required: true, message: "请输入计算公式", trigger: "blur" }],
+                jsgs: [{ required: true, message: "请输入计算公式(参数应为中文且为两个以上)", trigger: "blur" }],
                 jsgsdw: [{ required: true, message: "请输入计算公式单位", trigger: "blur" }]
             },
             
@@ -329,7 +335,6 @@ var vue = new Vue({
 
         //火场计算
         calculate: function (val) {
-            debugger;
 
             this.$refs["calculateForm"].validate((valid) => {
                 if (valid) {
@@ -352,13 +357,22 @@ var vue = new Vue({
             });
         },
 
+        //计算公式格式说明
+        myFunction: function(){
+            var p=document.getElementById('jsgsCard');
+            p.style.display='block';
+        },
+        closeCard: function(){
+            var p=document.getElementById('jsgsCard');
+            p.style.display='none';
+        },
         //新建：提交
         addSubmit: function (val1, val2) {
 
             this.$refs["addFormulaForm"].validate((valid) => {
                 if (valid) {
                     if (this.dialogTitle == "火场计算新增") {
-                      
+
                         var _self = this;
                         axios.get('/dpapi/firecalculationlist/getNum/' + this.addFormulaForm.gsmc).then(function (res) {
 
@@ -386,7 +400,9 @@ var vue = new Vue({
                                 }
 
                                 axios.post('/dpapi/firecalculationlist/insertByVO', params).then(function (res) {
-                                    if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
+                                   
+
+                                    if (res.data.msg == "计算公式中参数与参数信息中参数个数不符!请重新输入。") {
 
                                         _self.$message({
                                             message: res.data.msg,
@@ -398,6 +414,7 @@ var vue = new Vue({
                                         this.searchClick('click');
                                         this.addFormVisible = false;
                                     }
+
                                 }.bind(this), function (error) {
                                     console.log(error)
                                 })
@@ -408,6 +425,7 @@ var vue = new Vue({
                         }.bind(this), function (error) {
                             console.log(error)
                         })
+
 
                     } else if (this.dialogTitle == "权限编辑") {
 
@@ -425,7 +443,7 @@ var vue = new Vue({
                         };
 
                         axios.post('/dpapi/firecalculationlist/updateByVO', params).then(function (res) {
-                            if (res.data.msg == "算式内参数与输入参数个数不符!请重新输入。") {
+                            if (res.data.msg == "计算公式中参数与参数信息中参数个数不符!请重新输入。") {
                                 _self.$message({
                                     message: res.data.msg,
                                     type: "error"
@@ -595,8 +613,11 @@ var vue = new Vue({
             this.addFormulaForm.jsgsdw = "";
             this.addParamForm.domains = [{csmc: '',jldwdm:'',mrz:'',sxh:0}];
             this.activeName = 'first';
-            // // 重新修改
-            // this.$refs["addParamForm"].resetFields();
+            // 取消
+            this.$refs["addParamForm"].resetFields();
+            this.$refs["addFormulaForm"].resetFields();
+            var p=document.getElementById('jsgsCard');
+            p.style.display='none';
         },
         //关闭修改Dialog
         closeEditDialog: function (val1,val2) {
