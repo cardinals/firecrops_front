@@ -27,7 +27,7 @@
 					<div id="breadcrumb_box"></div>
 					<div class="frame" >
 						<div class="frame_left" style="background-color:#F5FAFC;">
-							<h4 class="src_name">资源树&nbsp;<el-button type="text" icon="plus" size="small" @click="appendParent"></el-button></h4>
+							<h4 class="src_name">资源树&nbsp;<el-button v-if="hasPermission('system/resource:add')" type="text" icon="plus" size="small" @click="appendParent"></el-button></h4>
 							<div scroll="no" class="src_slt">			
 								<el-tree
 										:data="tableData"
@@ -44,7 +44,7 @@
 					<div class="frame_right" scroll="no" style="background-color:#F5FAFC;">
 						<h4 class="src_name">
 							资源树详情&nbsp;
-							<el-button v-if="editVisible" type="text" plain icon="edit" size="small" @click="editClick" style="color: #FF4949"></el-button>
+							<el-button v-if="hasPermission('system/resource:edit')" v-show="editVisible" type="text" plain icon="edit" size="small" @click="editClick" style="color: #FF4949"></el-button>
 						</h4>
 						<div style="margin-top: 20px;">
 							<el-form :model="editForm" label-width="120px" :rules="editFormRules" ref="editForm">

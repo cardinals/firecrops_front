@@ -219,49 +219,102 @@ var vm = new Vue({
     //左侧树显示的label
     renderContent(createElement, { node, data, store }) {
       if (data.type == '1') {
-        return createElement(
-          'span',
-          {},
-          [
-            createElement('span', {}, [createElement('span', node.label)]),
-            createElement('span', {}, [
-              createElement('el-button', {
-                style: { 'font-size': ' 14px', 'float': 'right', 'margin-right': '10px' },
-                attrs: { 'type': 'text' },
-                on: { click: function () { vm.remove(store, data); } },
-                domProps: { innerHTML: '-' }
-              }),
-              createElement('el-button', {
-                style: { 'font-size': ' 14px', 'float': 'right', 'margin-right': '20px' },
-                attrs: { 'type': 'text' },
-                on: { click: function () { vm.append(store, data); } },
-                domProps: { innerHTML: '+' }
-              })
-            ])
-          ]
-        );
+        if(hasPermission('system/resource:add') && hasPermission('system/resource:delete')){
+          return createElement(
+            'span',
+            {},
+            [
+              createElement('span', {}, [createElement('span', node.label)]),
+              createElement('span', {}, [
+                createElement('el-button', {
+                  style: { 'font-size': ' 14px', 'float': 'right', 'margin-right': '10px' },
+                  attrs: { 'type': 'text' },
+                  on: { click: function () { vm.remove(store, data); } },
+                  domProps: { innerHTML: '-' }
+                }),
+                createElement('el-button', {
+                  style: { 'font-size': ' 14px', 'float': 'right', 'margin-right': '20px' },
+                  attrs: { 'type': 'text' },
+                  on: { click: function () { vm.append(store, data); } },
+                  domProps: { innerHTML: '+' }
+                })
+              ])
+            ]
+          );
+        }else{
+          if(hasPermission('system/resource:add')){
+            return createElement(
+              'span',
+              {},
+              [
+                createElement('span', {}, [createElement('span', node.label)]),
+                createElement('span', {}, [
+                  createElement('el-button', {
+                    style: { 'font-size': ' 14px', 'float': 'right', 'margin-right': '10px' },
+                    attrs: { 'type': 'text' },
+                    on: { click: function () { vm.append(store, data); } },
+                    domProps: { innerHTML: '+' }
+                  })
+                ])
+              ]
+            );
+          }else if(hasPermission('system/resource:delete')){
+            return createElement(
+              'span',
+              {},
+              [
+                createElement('span', {}, [createElement('span', node.label)]),
+                createElement('span', {}, [
+                  createElement('el-button', {
+                    style: { 'font-size': ' 14px', 'float': 'right', 'margin-right': '10px' },
+                    attrs: { 'type': 'text' },
+                    on: { click: function () { vm.append(store, data); } },
+                    domProps: { innerHTML: '-' }
+                  })
+                ])
+              ]
+            );
+          }else{
+            return createElement(
+              'span',
+              {},
+              [
+                createElement('span', {}, [createElement('span', node.label)])
+              ]
+            );
+          }
+        }
       } else {
-        return createElement(
-          'span',
-          {},
-          [
-            createElement('span', {}, [createElement('span', node.label)]),
-            createElement('span', {}, [
-              createElement('el-button', {
-                style: {
-                  'font-size': ' 14px', 'float': 'right',
-                  'margin-right': '10px'
-                }, attrs: { 'type': 'text' }, on: {
-                  click: function () {
-                    vm.remove(store, data);
-                  }
-                }, domProps: { innerHTML: '-' }
-              })
-            ])
-          ]
-        );
+        if(hasPermission('system/resource:delete')){
+          return createElement(
+            'span',
+            {},
+            [
+              createElement('span', {}, [createElement('span', node.label)]),
+              createElement('span', {}, [
+                createElement('el-button', {
+                  style: {
+                    'font-size': ' 14px', 'float': 'right',
+                    'margin-right': '10px'
+                  }, attrs: { 'type': 'text' }, on: {
+                    click: function () {
+                      vm.remove(store, data);
+                    }
+                  }, domProps: { innerHTML: '-' }
+                })
+              ])
+            ]
+          );
+        }else{
+          return createElement(
+            'span',
+            {},
+            [
+              createElement('span', {}, [createElement('span', node.label)])
+            ]
+          );
+        }
       }
-
     },
     //新增事件
     checkAdd: function (val) {
