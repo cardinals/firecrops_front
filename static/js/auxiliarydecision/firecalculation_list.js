@@ -382,7 +382,6 @@ var vue = new Vue({
                                     showClose: true
                                 });
                             } else {
-
                                 var params = {
 
                                     gsmc: this.addFormulaForm.gsmc,
