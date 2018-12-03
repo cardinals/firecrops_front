@@ -357,6 +357,15 @@ var vue = new Vue({
             });
         },
 
+        //计算公式格式说明
+        myFunction: function(){
+            var p=document.getElementById('jsgsCard');
+            p.style.display='block';
+        },
+        closeCard: function(){
+            var p=document.getElementById('jsgsCard');
+            p.style.display='none';
+        },
         //新建：提交
         addSubmit: function (val1, val2) {
 
@@ -607,6 +616,8 @@ var vue = new Vue({
             // 取消
             this.$refs["addParamForm"].resetFields();
             this.$refs["addFormulaForm"].resetFields();
+            var p=document.getElementById('jsgsCard');
+            p.style.display='none';
         },
         //关闭修改Dialog
         closeEditDialog: function (val1,val2) {
