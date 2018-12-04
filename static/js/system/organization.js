@@ -25,12 +25,14 @@ var vm = new Vue({
             editFlag: true,
             //机构详情数据
             detailData: {
+                preparentid: '',
+                jgid: '',
                 jgmc: '',
                 jgjc: '',
-                jgxzmc: '',
+                jgxzdm: [],
                 jgdz: '',
                 jgms: '',
-                xzqhmc: '',
+                xzqh: [],
                 czhm: '',
                 lxr: '',
                 lxdh: '',
@@ -40,6 +42,7 @@ var vm = new Vue({
             editFormRules: {
                 jgmc: [{ required: true, message: '请输入机构名称', trigger: 'blur' }],
                 jgjc: [{ required: true, message: '请输入机构简称', trigger: 'blur' }],
+                jgid: [{ required: true, message: '请输入机构编码', trigger: 'blur' }, { pattern: /^[A-Za-z0-9 ]+$/, message: '机构编码应为数字或字母', trigger: 'blur' }],
                 jgxzdm: [{
                     validator: (rule, value, callback) => {
                         if (value == "" || value == null) {
@@ -49,15 +52,15 @@ var vm = new Vue({
                         }
                     }, trigger: 'change'
                 }],
-                xzqh: [{
-                    validator: (rule, value, callback) => {
-                        if (value == "" || value == null) {
-                            callback(new Error("请选择行政区划"));
-                        } else {
-                            callback();
-                        }
-                    }, trigger: 'change'
-                }],
+                // xzqh: [{
+                //     validator: (rule, value, callback) => {
+                //         if (value == "" || value == null) {
+                //             callback(new Error("请选择行政区划"));
+                //         } else {
+                //             callback();
+                //         }
+                //     }, trigger: 'change'
+                // }],
             },
             jgidprops: {
                 label: 'jgjc',
@@ -154,6 +157,7 @@ var vm = new Vue({
         },
         //组织机构详情
         getJgxqById: function (jgid) {
+            this.editFlag = true;
             axios.get('/api/organization/doFindById/' + jgid).then(function (res) {
                 this.detailData = res.data.result;
                 //机构性质格式化
@@ -175,6 +179,8 @@ var vm = new Vue({
                 }
                 xzqhArray.push(this.detailData.xzqh);
                 this.detailData.xzqh = xzqhArray;
+                this.detailData.preparentid = this.detailData.jgid.substr(0, 2);
+                this.detailData.jgid = this.detailData.jgid.substr(2);
             }.bind(this), function (error) {
                 console.log(error);
             });
@@ -300,6 +306,46 @@ var vm = new Vue({
             this.editFlag = false;
         },
         saveDetail: function () {
+            var params = {
+                uuid: this.detailData.uuid,
+                jgmc: this.detailData.jgmc,
+                jgjc: this.detailData.jgjc,
+                jgxzdm: this.detailData.jgxzdm[this.detailData.jgxzdm.length - 1],
+                jgid: this.detailData.preparentid + this.detailData.jgid,
+                jgdz: this.detailData.jgdz,
+                jgms: this.detailData.jgms,
+                xzqh: this.detailData.xzqh[this.detailData.xzqh.length - 1],
+                czhm: this.detailData.czhm,
+                lxr: this.detailData.lxr,
+                lxdh: this.detailData.lxdh,
+                xqmj: this.detailData.xqmj,
+                xqfw: this.detailData.xqfw,
+                xgrid: this.shiroData.userid,
+                xgrmc: this.shiroData.realName
+            }
+            axios.post('/api/organization/doUpdateByVO', params).then(function (res) {
+                if (res.data.result > 0) {
+                    this.$alert('修改成功', '提示', {
+                        type: 'success',
+                        confirmButtonText: '确定',
+                        callback: action => {
+                            this.editFlag = true;
+                            this.getJgxqById(params.uuid);
+                        }
+                    });
+                } else {
+                    this.$alert('修改失败', '提示', {
+                        type: 'error',
+                        confirmButtonText: '确定',
+                        callback: action => {
+                            this.editFlag = true;
+                            this.getJgxqById(params.uuid);
+                        }
+                    });
+                }
+            }.bind(this), function (error) {
+                console.log(error);
+            })
             this.editFlag = true;
         },
         addUsers: function () {
@@ -310,7 +356,6 @@ var vm = new Vue({
         addSubmit: function (formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    debugger
                     var params = {
                         sjjgid: this.addForm.sjjgid,
                         jgid: this.addForm.preparentid + this.addForm.jgid,

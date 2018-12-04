@@ -55,17 +55,17 @@
 									<el-button v-if="editFlag==false" type="success" icon="check" size="small" class="r" @click="saveDetail">保存</el-button>
 								</div>
 								<div>
-									<el-form :model="detailData" label-width="85px" :rules="editFormRules" ref="editForm">
+									<el-form :model="detailData" label-width="90px" :rules="editFormRules" ref="editForm">
 										<el-row>
 											<el-col :span="11">
 												<el-form-item label="机构名称" prop="jgmc">
-													<el-input v-model="detailData.jgmc" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+													<el-input v-model="detailData.jgmc" maxlength="50" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
 												</el-form-item>
 											</el-col>
 											<el-col :span="1">&nbsp;</el-col>
 											<el-col :span="11">
 												<el-form-item label="机构简称" prop="jgjc">
-													<el-input v-model="detailData.jgjc" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+													<el-input v-model="detailData.jgjc" maxlength="25" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
 												</el-form-item>
 											</el-col>
 										</el-row>
@@ -77,22 +77,34 @@
 												</el-form-item>
 											</el-col>
 											<el-col :span="1">&nbsp;</el-col>
-											<el-col :span="11">
+											<el-col :span="5">
+												<el-form-item label="机构编码" class="is-required">
+													<el-input v-model="detailData.preparentid" size="small" clearable disabled></el-input>
+												</el-form-item>
+											</el-col>
+											<el-col :span="6">
+												<el-form-item prop="jgid" class="jgidAdd">
+													<el-input v-model="detailData.jgid" maxlength="6" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+												</el-form-item>
+											</el-col>
+										</el-row>
+										<el-row class="card-inform-margin">
+											<el-col :span="23">
 												<el-form-item label="机构地址" prop="jgdz">
-													<el-input v-model="detailData.jgdz" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+													<el-input v-model="detailData.jgdz" maxlength="100" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
 												</el-form-item>
 											</el-col>
 										</el-row>
 										<el-row class="card-inform-margin">
 											<el-col :span="23">
 												<el-form-item label="机构描述" prop="jgms">
-													<el-input v-model="detailData.jgms" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+													<el-input v-model="detailData.jgms" maxlength="500" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
 												</el-form-item>
 											</el-col>
 										</el-row>
 										<el-row class="card-inform-margin">
 											<el-col :span="11">
-												<el-form-item label="行政区划" prop="xzqh" class="is-required">
+												<el-form-item label="行政区划" prop="xzqh">
 													<el-cascader v-model="detailData.xzqh" :options="XZQH_data" :props="defaultProps" size="small" clearable change-on-select
 													 :disabled="editFlag"></el-cascader>
 												</el-form-item>
@@ -100,40 +112,39 @@
 											<el-col :span="1">&nbsp;</el-col>
 											<el-col :span="11">
 												<el-form-item label="传真号码" prop="czhm">
-													<el-input v-model="detailData.czhm" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+													<el-input v-model="detailData.czhm" maxlength="15" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
 												</el-form-item>
 											</el-col>
 										</el-row>
 										<el-row class="card-inform-margin">
 											<el-col :span="11">
 												<el-form-item label="联系人" prop="lxr">
-													<el-input v-model="detailData.lxr" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+													<el-input v-model="detailData.lxr" maxlength="50" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
 												</el-form-item>
 											</el-col>
 											<el-col :span="1">&nbsp;</el-col>
 											<el-col :span="11">
 												<el-form-item label="联系电话" prop="lxdh">
-													<el-input v-model="detailData.lxdh" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+													<el-input v-model="detailData.lxdh" maxlength="15" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
 												</el-form-item>
 											</el-col>
 										</el-row>
 										<el-row class="card-inform-margin">
 											<el-col :span="11">
 												<el-form-item label="辖区面积" prop="xqmj">
-													<el-input-number v-model="detailData.xqmj" :min="0" size="small" :disabled="editFlag"></el-input-number>
+													<el-input-number v-model="detailData.xqmj" :min="0" :max="999999999999999.99999" size="small" :disabled="editFlag"></el-input-number>
 												</el-form-item>
 											</el-col>
 											<el-col :span="1" style="line-height:30px;">&nbsp;(㎡)</el-col>
 											<el-col :span="11">
 												<el-form-item label="辖区范围" prop="xqfw">
-													<el-input v-model="detailData.xqfw" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+													<el-input v-model="detailData.xqfw" maxlength="100" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
 												</el-form-item>
 											</el-col>
 										</el-row>
 									</el-form>
 								</div>
 							</el-card>
-
 						</div>
 						<div class="frame_right_bottom" scroll="no">
 							<el-card class="card_style m0">
