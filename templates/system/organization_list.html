@@ -8,12 +8,12 @@
 </head>
 <style>
 	.custom-tree-node {
-	  flex: 1;
-	  display: flex;
-	  align-items: center;
-	  justify-content: space-between;
-	  font-size: 14px;
-	  padding-right: 8px;
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 14px;
+		padding-right: 8px;
 	}
 </style>
 
@@ -21,169 +21,248 @@
 	<div id="app">
 		<div class="main-box">
 			<div class="main-container">
-			<div id="lib :: main_container_header('组织机构','组织机构')"></div>
-			<!-- 面包屑 -->
-			<div id="breadcrumb_box"></div>
-			<div class="frame">
-				<div class="frame_left_card">
-					<el-card class="card_style">
-						<div slot="header" class="clearfix">
-							<div>
-								<strong class="card_title_font">组织机构树</strong>
-								<el-input placeholder="查询" size="small" style="float:right; padding:3px 0; width:70%; margin-top:-8px;"  v-model="filterText"></el-input>
-							</div>
-						</div>
-						<div scroll="no" class="src_slt">
-							<el-tree
-									class="filter-tree"
-									:data="tableData"
-									:props="jgidprops"
-									accordion
-									:filter-node-method="filterNode"
-									node-key="uuid"
-									ref="tree2"
-									@current-change="currentNodeChange"
-									style=" font-weight:bold;
-											width:100%;
-											font-weight:100px;
-											border:none;
-											">
-							</el-tree>
-						</div>
-					</el-card>		
-				</div>
-				<div class="frame_right_card" scroll="no">
-					<div class="frame_right_top" scroll="no">
-						<el-card class="card_style m0">
-							<div slot="header" class="clearfix" style="padding-bottom: 8px;">
+				<div id="lib :: main_container_header('组织机构','组织机构')"></div>
+				<!-- 面包屑 -->
+				<div id="breadcrumb_box"></div>
+				<div class="frame">
+					<div class="frame_left_card">
+						<el-card class="card_style">
+							<div slot="header" class="clearfix">
 								<div>
+									<strong class="card_title_font">组织机构树</strong>
+									<el-input placeholder="查询" size="small" style="float:right; padding:3px 0; width:70%; margin-top:-8px;" v-model="filterText"></el-input>
+								</div>
+							</div>
+							<div scroll="no" class="src_slt">
+								<el-tree :data="tableData" 
+										 :props="jgidprops" 
+										 :filter-node-method="filterNode" 
+										 :render-content="renderContent" 
+										 node-key="uuid"
+										 ref="tree2" 
+										 @node-click="currentNodeChange" 
+										 style="font-weight:bold; width:100%; font-weight:100px; border:none;">
+								</el-tree>
+							</div>
+						</el-card>
+					</div>
+					<div class="frame_right_card" scroll="no">
+						<div class="frame_right_top" scroll="no">
+							<el-card class="card_style m0">
+								<div slot="header" class="clearfix">
 									<strong class="card_title_font">组织机构详情</strong>
+									<el-button v-if="editFlag==true" type="primary" icon="edit" size="small" class="r" @click="editDetail"> 编辑</el-button>
+									<el-button v-if="editFlag==false" type="success" icon="check" size="small" class="r" @click="saveDetail">保存</el-button>
 								</div>
-							</div>
-							<div>
-								<el-row class=" -bottom">
-									<el-col :span="12">
-										<div>
-											<span class="dtdlStyle">机构名称：</span>
-											<v-text v-text="detailData.jgmc||'无'"></v-text>
-										</div>
-									</el-col>
-									<el-col :span="12">
-										<div>
-											<span class="dtdlStyle">机构简称：</span>
-											<v-text v-text="detailData.jgjc||'无'"></v-text>
-										</div>
-									</el-col>
-								</el-row>
-								<el-row class="card-inform-margin">
-									<el-col :span="12">
-										<div>
-											<span class="dtdlStyle">机构性质：</span>
-											<v-text v-text="detailData.jgxzmc||'无'"></v-text>
-										</div>
-									</el-col>
-									<el-col :span="12">
-										<div>
-											<span class="dtdlStyle">机构地址：</span>
-											<v-text v-text="detailData.jgdz||'无'"></v-text>
-										</div>
-									</el-col>
-								</el-row>
-								<el-row class="card-inform-margin">
-									<el-col :span="24">
-										<div>
-											<span class="dtdlStyle">机构描述：</span>
-											<v-text v-text="detailData.jgms||'无'"></v-text>
-										</div>
-									</el-col>
-								</el-row>
-								<el-row class="card-inform-margin">
-									<el-col :span="12">
-										<div>
-											<span class="dtdlStyle">行政区划：</span>
-											<v-text v-text="detailData.xzqhmc||'无'"></v-text>
-										</div>
-									</el-col>
-									<el-col :span="12">
-										<div>
-											<span class="dtdlStyle">传真号码：</span>
-											<v-text v-text="detailData.czhm||'无'"></v-text>
-										</div>
-									</el-col>
-								</el-row>
-								<el-row class="card-inform-margin">
-									<el-col :span="12">
-										<div>
-											<span class="dtdlStyle">联系人：</span>
-											<v-text v-text="detailData.lxr||'无'"></v-text>
-										</div>
-									</el-col>
-									<el-col :span="12">
-										<div>
-											<span class="dtdlStyle">联系电话：</span>
-											<v-text v-text="detailData.lxdh||'无'"></v-text>
-										</div>
-									</el-col>
-								</el-row>
-								<el-row class="card-inform-margin">
-									<el-col :span="12">
-										<div>
-											<span class="dtdlStyle">辖区面积(㎡)：</span>
-											<v-text v-text="detailData.xqmj||'无'"></v-text>
-										</div>
-									</el-col>
-									<el-col :span="12">
-										<div>
-											<span class="dtdlStyle">辖区范围：</span>
-											<v-text v-text="detailData.xqfw||'无'"></v-text>
-										</div>
-									</el-col>
-								</el-row>
-							</div>
-						</el-card>
-						
-					</div>
-					<div class="frame_right_bottom" scroll="no">
-						<el-card class="card_style m0">
-							<div slot="header" class="clearfix" style="padding-bottom: 8px;">
 								<div>
-									<strong class="card_title_font">用户列表</strong>
+									<el-form :model="detailData" label-width="85px" :rules="editFormRules" ref="editForm">
+										<el-row>
+											<el-col :span="11">
+												<el-form-item label="机构名称" prop="jgmc">
+													<el-input v-model="detailData.jgmc" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+												</el-form-item>
+											</el-col>
+											<el-col :span="1">&nbsp;</el-col>
+											<el-col :span="11">
+												<el-form-item label="机构简称" prop="jgjc">
+													<el-input v-model="detailData.jgjc" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+												</el-form-item>
+											</el-col>
+										</el-row>
+										<el-row class="card-inform-margin">
+											<el-col :span="11">
+												<el-form-item label="机构性质" prop="jgxzdm" class="is-required">
+													<el-cascader v-model="detailData.jgxzdm" :options="JGXZ_data" :props="defaultProps" size="small" clearable change-on-select
+													 :disabled="editFlag"></el-cascader>
+												</el-form-item>
+											</el-col>
+											<el-col :span="1">&nbsp;</el-col>
+											<el-col :span="11">
+												<el-form-item label="机构地址" prop="jgdz">
+													<el-input v-model="detailData.jgdz" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+												</el-form-item>
+											</el-col>
+										</el-row>
+										<el-row class="card-inform-margin">
+											<el-col :span="23">
+												<el-form-item label="机构描述" prop="jgms">
+													<el-input v-model="detailData.jgms" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+												</el-form-item>
+											</el-col>
+										</el-row>
+										<el-row class="card-inform-margin">
+											<el-col :span="11">
+												<el-form-item label="行政区划" prop="xzqh" class="is-required">
+													<el-cascader v-model="detailData.xzqh" :options="XZQH_data" :props="defaultProps" size="small" clearable change-on-select
+													 :disabled="editFlag"></el-cascader>
+												</el-form-item>
+											</el-col>
+											<el-col :span="1">&nbsp;</el-col>
+											<el-col :span="11">
+												<el-form-item label="传真号码" prop="czhm">
+													<el-input v-model="detailData.czhm" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+												</el-form-item>
+											</el-col>
+										</el-row>
+										<el-row class="card-inform-margin">
+											<el-col :span="11">
+												<el-form-item label="联系人" prop="lxr">
+													<el-input v-model="detailData.lxr" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+												</el-form-item>
+											</el-col>
+											<el-col :span="1">&nbsp;</el-col>
+											<el-col :span="11">
+												<el-form-item label="联系电话" prop="lxdh">
+													<el-input v-model="detailData.lxdh" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+												</el-form-item>
+											</el-col>
+										</el-row>
+										<el-row class="card-inform-margin">
+											<el-col :span="11">
+												<el-form-item label="辖区面积" prop="xqmj">
+													<el-input-number v-model="detailData.xqmj" :min="0" size="small" :disabled="editFlag"></el-input-number>
+												</el-form-item>
+											</el-col>
+											<el-col :span="1" style="line-height:30px;">&nbsp;(㎡)</el-col>
+											<el-col :span="11">
+												<el-form-item label="辖区范围" prop="xqfw">
+													<el-input v-model="detailData.xqfw" auto-complete="off" size="small" clearable :disabled="editFlag"></el-input>
+												</el-form-item>
+											</el-col>
+										</el-row>
+									</el-form>
 								</div>
-								
-							</div>
-							<div class="table_container">
-								<el-table border id="table" :data="userData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-								class="detailTable" :height="tableheight">
-									<el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
-									<el-table-column prop="username" show-overflow-tooltip label="用户名" min-width="30%" align="center"></el-table-column>
-									<el-table-column prop="realname" show-overflow-tooltip label="真实姓名" min-width="20%" align="center"></el-table-column>
-									<el-table-column prop="mobile" show-overflow-tooltip label="手机号" min-width="25%" align="center"></el-table-column>
-									<el-table-column prop="email" show-overflow-tooltip label="邮箱" min-width="25%" align="center"></el-table-column>
-								</el-table>
-		
-								<!--列表底部工具条和分页符-->
-								<el-row type="flex" justify="end">
-									<el-col :span="18">
-										<el-pagination 
-											@size-change="pageSizeChange" 
-											@current-change="currentPageChange" 
-											:current-page="currentPage"
-												:page-sizes="[10, 20, 30, 50]" 
-												:page-size="pageSize" 
-												layout="total, prev, pager, next, jumper" 
-												:total=parseInt(total)>
-										</el-pagination>
-									</el-col>
-								</el-row>
-							</div>
-						</el-card>
+							</el-card>
+
+						</div>
+						<div class="frame_right_bottom" scroll="no">
+							<el-card class="card_style m0">
+								<div slot="header" class="clearfix">
+									<strong class="card_title_font">用户列表</strong>
+									<el-button type="primary" icon="plus" size="small" class="r" @click="addUsers"> 添加</el-button>
+								</div>
+								<div class="table_container">
+									<el-table border id="table" :data="userData.slice((currentPage-1)*pageSize,currentPage*pageSize)" class="detailTable" :height="tableheight">
+										<el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
+										<el-table-column prop="username" show-overflow-tooltip label="用户名" min-width="30%" align="center"></el-table-column>
+										<el-table-column prop="realname" show-overflow-tooltip label="真实姓名" min-width="20%" align="center"></el-table-column>
+										<el-table-column prop="mobile" show-overflow-tooltip label="手机号" min-width="25%" align="center"></el-table-column>
+										<el-table-column prop="email" show-overflow-tooltip label="邮箱" min-width="25%" align="center"></el-table-column>
+									</el-table>
+
+									<!--列表底部工具条和分页符-->
+									<el-row type="flex" justify="end">
+										<el-col :span="18">
+											<el-pagination @size-change="pageSizeChange" @current-change="currentPageChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 50]"
+											 :page-size="pageSize" layout="total, prev, pager, next, jumper" :total=parseInt(total)>
+											</el-pagination>
+										</el-col>
+									</el-row>
+								</div>
+							</el-card>
+						</div>
 					</div>
 				</div>
+				<!--新建界面-->
+				<el-dialog title="组织机构新增" :visible.sync="addVisible" :close-on-click-modal="false">
+					<el-form :model="addForm" label-width="85px" ref="addForm" :rules="addFormRules">
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="机构名称" prop="jgmc">
+									<el-input v-model="addForm.jgmc" maxlength="50" auto-complete="off" placeholder="机构名称" size="small" clearable></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item label="机构简称" prop="jgjc">
+									<el-input v-model="addForm.jgjc" maxlength="25" auto-complete="off" placeholder="机构简称" size="small" clearable></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="机构性质" prop="jgxzdm" class="is-required">
+									<el-cascader v-model="addForm.jgxzdm" :options="JGXZ_data" :props="defaultProps" size="small" clearable change-on-select></el-cascader>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="5">
+								<el-form-item label="机构编码" class="is-required">
+									<el-input v-model="addForm.preparentid" size="small" disabled></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="6">
+								<el-form-item prop="jgid" class="jgidAdd">
+									<el-input v-model="addForm.jgid" maxlength="6" auto-complete="off" placeholder="机构编码" size="small" clearable></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="机构地址" prop="jgdz">
+									<el-input v-model="addForm.jgdz" maxlength="100" auto-complete="off" placeholder="机构地址" size="small" clearable></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="机构描述" prop="jgms">
+									<el-input v-model="addForm.jgms" maxlength="500" auto-complete="off" placeholder="机构描述" size="small" clearable></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="行政区划" prop="xzqh">
+									<el-cascader v-model="addForm.xzqh" :options="XZQH_data" :props="defaultProps" size="small" clearable change-on-select></el-cascader>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="联系人" prop="lxr">
+									<el-input v-model="addForm.lxr" maxlength="50" auto-complete="off" placeholder="联系人" size="small" clearable></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item label="联系电话" prop="lxdh">
+									<el-input v-model="addForm.lxdh" maxlength="15" auto-complete="off" placeholder="联系电话" size="small" clearable></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="11">
+								<el-form-item label="传真号码" prop="czhm">
+									<el-input v-model="addForm.czhm" maxlength="15" auto-complete="off" placeholder="传真号码" size="small" clearable></el-input>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1">&nbsp;</el-col>
+							<el-col :span="11">
+								<el-form-item label="辖区面积" prop="xqmj">
+									<el-input-number v-model="addForm.xqmj" size="small" :min="0" :max="999999999999999.99999"></el-input-number>
+								</el-form-item>
+							</el-col>
+							<el-col :span="1" style="line-height:30px;">(㎡)</el-col>
+						</el-row>
+						<el-row>
+							<el-col :span="23">
+								<el-form-item label="辖区范围" prop="xqfw">
+									<el-input v-model="addForm.xqfw" maxlength="100" auto-complete="off" placeholder="辖区范围" size="small" clearable></el-input>
+								</el-form-item>
+							</el-col>
+						</el-row>
+						<el-row class="mt15 editform-button">
+							<el-button type="clear" icon="close" size="small" class="btn_submit" @click="closeDialog()"> 取消</el-button>
+							<el-button type="success" icon="check" size="small" class="btn_save" @click="addSubmit('addForm')">保存</el-button>
+						</el-row>
+					</el-form>
+				</el-dialog>
 			</div>
 		</div>
 	</div>
-</div>
-		
+
 </body>
 <script src="../../static/js/system/organization.js"></script>
+
 </html>
