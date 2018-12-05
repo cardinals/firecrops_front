@@ -238,6 +238,7 @@
                 } else if (this.validateCode == null || this.validateCode == '') {
                     alert("验证码不能为空！")
                 } else {
+                    /** 采用Controller方式登陆  by li.xue 2018/12/5
                     var params = {
                         username: this.username,
                         password: this.password,
@@ -268,8 +269,10 @@
                         console.log(error);
                         // window.location.href = "../templates/login.html";
                     });
+
+                    */
                     /**采用Shiro自带的登陆方式登陆，Shiro验证登陆  by li.xue 2018/11/29 14:08*/
-                    // $('#login-form').submit(); 
+                    $('#login-form').submit(); 
                 } 
             },
             //九小场所信用代码
@@ -282,6 +285,7 @@
                 } else if(!reg.test(this.unscid)){
                     alert("统一社会信用代码为18位字母或数字！")
                 }else {
+                    /** 采用Controller方式登陆  by li.xue 2018/12/5
                     var params = {
                         unscid: this.unscid,
                         loginType: this.loginType
@@ -296,7 +300,8 @@
                     }.bind(this), function (error) {
                         console.log(error);
                     });
-                    // $('#login-form').submit();
+                    */
+                    $('#login-form').submit();
                 }
             },
             reset: function () {

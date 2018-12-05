@@ -1,3 +1,4 @@
+/**
 const key = "user";
 const isLogin = "isLogin";
 const store = new Vuex.Store({
@@ -29,10 +30,19 @@ const store = new Vuex.Store({
         }
     }
 });
-
+*/
 axios.interceptors.request.use(
     config => {
-        if(config.url != '/api/login'){
+        if(config.url != '/api/login' && config.url != '/api/getSession' && config.url != "/api/shiro"){
+            axios.get('/api/getSession').then(function (res) {
+                if(res.data == '0'){
+                    alert("用户超时，请重新登陆");
+                    window.location.href = "/templates/login.html"; 
+                }
+            }.bind(this), function (error) {
+                console.log(error)
+            })
+            /**
             if(config.url == '/api/shiro'){
                 localStorage.setItem("time", new Date().getTime());
             }else{
@@ -51,6 +61,7 @@ axios.interceptors.request.use(
             }
             // 判断是否存在token，如果存在的话，则每个http header都加上token
             // config.headers.Authorization = `token ${store.state.token}`;
+            */
         }
         return config;
     },
