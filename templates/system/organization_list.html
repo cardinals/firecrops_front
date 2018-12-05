@@ -34,7 +34,7 @@
 								</div>
 							</div>
 							<div scroll="no" class="src_slt">
-								<el-tree :data="tableData" :props="jgidprops" :filter-node-method="filterNode" :render-content="renderContent" node-key="uuid"
+								<el-tree :data="tableData" :expand-on-click-node="false" :props="jgidprops" :filter-node-method="filterNode" :render-content="renderContent" node-key="uuid"
 								 ref="tree2" @node-click="currentNodeChange" style="font-weight:bold; width:100%; font-weight:100px; border:none;">
 								</el-tree>
 							</div>
