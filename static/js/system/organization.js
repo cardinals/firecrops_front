@@ -18,6 +18,8 @@ var vm = new Vue({
             },
             //机构树数据
             tableData: [],
+            //的当前选中节点uuid
+            currentUuid: '',
             //用户列表数据：
             userData: [],
             JGXZ_data: [],
@@ -75,11 +77,11 @@ var vm = new Vue({
             //当前页
             currentPage: 1,
             //分页大小
-            pageSize: 10,
+            pageSize: 5,
             //总记录数
             total: 0,
             //表高度变量
-            tableheight: 185,
+            tableheight: 206,
             addVisible: false,
             addForm: {
                 sjjgid: '',
@@ -120,6 +122,18 @@ var vm = new Vue({
                 //     }, trigger: 'change'
                 // }],
             },
+            loading_user: false,
+            userVisible: false,
+            userEditFlag: false,
+            userForm: {
+                username: '',
+                realname: ''
+            },
+            userList: [],
+            currentPage_user: 1,
+            pageSize_user: 5,
+            tableheight_user: 243,
+            total_user: 0
         };
     },
 
@@ -158,6 +172,7 @@ var vm = new Vue({
         //组织机构详情
         getJgxqById: function (jgid) {
             this.editFlag = true;
+            this.userEditFlag = false;
             axios.get('/api/organization/doFindById/' + jgid).then(function (res) {
                 this.detailData = res.data.result;
                 //机构性质格式化
@@ -196,6 +211,7 @@ var vm = new Vue({
         },
         //获取节点
         currentNodeChange: function (val) {
+            this.currentUuid = val.uuid;
             //获取节点详情
             this.getJgxqById(val.uuid);
             //获取组织机构下的用户列表
@@ -222,12 +238,6 @@ var vm = new Vue({
             }.bind(this), function (error) {
                 console.log(error);
             })
-        },
-        //分页大小修改事件
-        pageSizeChange: function (val) {
-            this.pageSize = val;
-            var _self = this;
-            _self.loadingData(); //重新加载数据
         },
         //当前页修改事件
         currentPageChange: function (val) {
@@ -349,8 +359,10 @@ var vm = new Vue({
             this.editFlag = true;
         },
         addUsers: function () {
+            this.userVisible = true;
+            this.userSearch('init');
         },
-        closeDialog: function () {
+        closeAddDialog: function () {
             this.addVisible = false;
             this.addFormClear();
         },
@@ -419,7 +431,90 @@ var vm = new Vue({
             this.addForm.lxdh = '';
             this.addForm.xqmj = '';
             this.addForm.xqfw = '';
-        }
+        },
+        removeUser: function (val) {
+            var params = {
+                pkid: val.pkid,
+                organizationId: '',
+                alterId: this.shiroData.userid,
+                alterName: this.shiroData.realName
+            }
+            axios.post('/api/user/updateJbxxByVO', params).then(function (res) {
+                if (res.data.result > 0) {
+                    this.$message.success('移除用户' + val.username + '成功');
+                    this.getUserlistByJgid(this.currentUuid);
+                } else {
+                    this.$message.error('移除用户' + val.username + '失败');
+                    this.getUserlistByJgid(this.currentUuid);
+                }
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
+        userSearch: function (type) {
+            //按钮事件的选择
+            if (type == 'page') {
+                this.userList = [];
+            } else {
+                if (type == 'init') {
+                    this.userForm.username = '';
+                    this.userForm.realname = '';
+                }
+                this.currentPage_user = 1;
+            }
+            this.loading_user = true;//表格重新加载
+            var params = {
+                username: this.userForm.username.replace(/%/g, "\\%"),
+                realname: this.userForm.realname.replace(/%/g, "\\%"),
+                pageSize: this.pageSize_user,
+                pageNum: this.currentPage_user
+            }
+            axios.post('/api/user/findUsersNoOrg', params).then(function (res) {
+                var tableTemp = new Array((this.currentPage_user - 1) * this.pageSize_user);
+                this.userList = tableTemp.concat(res.data.result.list);
+                this.total_user = res.data.result.total;
+                this.loading_user = false;
+            }.bind(this), function (error) {
+                console.log(error)
+            })
+        },
+        userFormClear: function () {
+            this.userForm.username = '';
+            this.userForm.realname = '';
+            this.userSearch('delete');
+        },
+        selectUser: function (val) {
+            var params = {
+                pkid: val.pkid,
+                organizationId: this.currentUuid,
+                alterId: this.shiroData.userid,
+                alterName: this.shiroData.realName
+            }
+            axios.post('/api/user/updateJbxxByVO', params).then(function (res) {
+                if (res.data.result > 0) {
+                    this.$message.success('添加用户' + val.username + '成功');
+                    this.userEditFlag = true;
+                    this.userSearch('page');
+                } else {
+                    this.$message.error('添加用户' + val.username + '失败');
+                    this.userSearch('page');
+                }
+            }.bind(this), function (error) {
+                console.log(error);
+            })
+        },
+        userFormRefesh: function (val) {
+            if(this.userEditFlag == true){
+                this.getUserlistByJgid(this.currentUuid);
+            }
+        },
+        //用户列表翻页事件
+        currentPageChange_user: function (val) {
+            if (this.currentPage_user != val) {
+                this.currentPage_user = val;
+                this.userSearch('page');
+            }
+        },
     }
 
 })
