@@ -312,6 +312,35 @@ var vm = new Vue({
                 this.addForm.preparentid = data.jgid.substr(0, 2);
             }
         },
+        remove(store, data) {
+            this.$confirm('确定删除此组织机构?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                var params = {
+                    uuid: data.uuid,
+                    deleteFlag: 'Y',
+                    xgrid: this.shiroData.userid,
+                    xgrmc: this.shiroData.realName
+                }
+                axios.post('/api/organization/doDeleteByVO', params).then(function (res) {
+                    if (res.data.result > 0) {
+                        this.$message.success('删除' + data.jgjc + '成功');
+                        this.getJgidData();
+                    } else {
+                        this.$message.success('删除' + data.jgjc + '失败');
+                    }
+                }.bind(this), function (error) {
+                    console.log(error)
+                })
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
         editDetail: function () {
             this.editFlag = false;
         },
@@ -335,23 +364,13 @@ var vm = new Vue({
             }
             axios.post('/api/organization/doUpdateByVO', params).then(function (res) {
                 if (res.data.result > 0) {
-                    this.$alert('修改成功', '提示', {
-                        type: 'success',
-                        confirmButtonText: '确定',
-                        callback: action => {
-                            this.editFlag = true;
-                            this.getJgxqById(params.uuid);
-                        }
-                    });
+                    this.$message.success('修改成功');
+                    this.editFlag = true;
+                    this.getJgxqById(params.uuid);
                 } else {
-                    this.$alert('修改失败', '提示', {
-                        type: 'error',
-                        confirmButtonText: '确定',
-                        callback: action => {
-                            this.editFlag = true;
-                            this.getJgxqById(params.uuid);
-                        }
-                    });
+                    this.$message.error('修改失败');
+                    this.editFlag = true;
+                    this.getJgxqById(params.uuid);
                 }
             }.bind(this), function (error) {
                 console.log(error);
@@ -504,7 +523,7 @@ var vm = new Vue({
             })
         },
         userFormRefesh: function (val) {
-            if(this.userEditFlag == true){
+            if (this.userEditFlag == true) {
                 this.getUserlistByJgid(this.currentUuid);
             }
         },
