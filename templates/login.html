@@ -190,13 +190,13 @@
             if(r!=null){
                 msg = unescape(r[2]);
                 if(msg.indexOf('UnknownAccountException') != -1){
-                    alert('账号不存在！');
+                    alert('账号不存在');
                 }else if(msg.indexOf('IncorrectCredentialsException') != -1){
-                    alert('密码不正确！');
+                    alert('密码不正确');
                 }else if(msg.indexOf('ExcessiveAttemptsException') != -1){
-                    alert('密码输入错误次数超过5次！');
+                    alert('密码输入错误次数超过5次');
                 }else if(msg.indexOf('kaptchaValidateFailed') != -1){
-                    alert('验证码错误！');
+                    alert('验证码错误');
                 }
             }
             */
@@ -232,11 +232,11 @@
                 this.validateCode = $('#validateCode').val();
                 this.loginType = $("#loginType").val();
                 if (this.username == null || this.username == '') {
-                    alert("用户名不能为空！")
+                    alert("用户名不能为空")
                 } else if (this.password == null || this.password == '') {
-                    alert("密码不能为空！")
+                    alert("密码不能为空")
                 } else if (this.validateCode == null || this.validateCode == '') {
-                    alert("验证码不能为空！")
+                    alert("验证码不能为空")
                 } else {
                     /** 采用Controller方式登陆  by li.xue 2018/12/5
                     var params = {
@@ -283,7 +283,7 @@
                 if (this.unscid == null || this.unscid == '') {
                     alert("统一社会信用代码不能为空!")
                 } else if(!reg.test(this.unscid)){
-                    alert("统一社会信用代码为18位字母或数字！")
+                    alert("统一社会信用代码为18位字母或数字")
                 }else {
                     /** 采用Controller方式登陆  by li.xue 2018/12/5
                     var params = {

@@ -142,7 +142,7 @@ var vue = new Vue({
             var _self = this;
             if (this.searchForm.begintime != "" && this.searchForm.endtime != "" && this.searchForm.begintime > this.searchForm.endtime) {
                 _self.$message({
-                    message: "时间选择错误！",
+                    message: "时间选择错误",
                     type: "error"
                 });
                 return;

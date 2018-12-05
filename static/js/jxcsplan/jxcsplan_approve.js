@@ -243,7 +243,7 @@ var vue = new Vue({
             }
             // if (this.tableData[this.data_index].shzt == '03') {
             //     this.$message({
-            //         message: "该记录已审核通过！",
+            //         message: "该记录已审核通过",
             //         type: "warning",
             //         showClose: true
             //     });
@@ -305,7 +305,7 @@ var vue = new Vue({
                         this.tableData[this.data_index].shztmc = res.data.result.shztmc;
                         this.tableData[this.data_index].shzt = res.data.result.shzt;
                         this.tableData[this.data_index].reserve1 = res.data.result.reserve1;
-                        this.$alert('审核成功！', '提示', {
+                        this.$alert('审核成功', '提示', {
                             type: 'success',
                             confirmButtonText: '确定'
                         });

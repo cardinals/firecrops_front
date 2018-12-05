@@ -177,14 +177,14 @@ new Vue({
         checkedBefore: function () {
             if (this.editForm.jzmc == null || this.editForm.jzmc == "") {
                 this.$message.warning({
-                    message: "请填写建筑名称！",
+                    message: "请填写建筑名称",
                     showClose: true
                 });
                 return false;
             }
             // else if (this.editForm.xfgx == []) {
             //     this.$message.warning({
-            //         message: "请选择消防管辖！",
+            //         message: "请选择消防管辖",
             //         showClose: true
             //     });
             //     return false;

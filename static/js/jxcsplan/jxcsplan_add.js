@@ -342,7 +342,7 @@ new Vue({
         addDomainJzxx: function(){
             if(this.addForm.jzfl == '1' && this.addForm.jzxxList.length >0){
                 this.$message.warning({
-                    message: "单体建筑只能添加一条单位建筑信息！",
+                    message: "单体建筑只能添加一条单位建筑信息",
                     showClose: true
                 });
             }else{
@@ -625,7 +625,7 @@ new Vue({
         checkedBefore: function () {
             if(this.addForm.jzfl == '1' && this.addForm.jzxxList.length >1){
                 this.$message.warning({
-                    message: "单体建筑只能添加一条单位建筑信息！请更改建筑类型或删除多余建筑信息！",
+                    message: "单体建筑只能添加一条单位建筑信息，请更改建筑类型或删除多余建筑信息",
                     showClose: true
                 });
                 return false;

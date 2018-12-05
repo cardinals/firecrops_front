@@ -2114,7 +2114,7 @@ Ext.define('FirePlanGisApp.view.viewport.map.MapHelper', {
         });
 
         if (gjts.length <= 0) {
-            Ext.toast('暂无关键图示信息！', '提示：', 'br');
+            Ext.toast('暂无关键图示信息', '提示：', 'br');
             return false;
         }
 

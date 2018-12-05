@@ -405,19 +405,19 @@ new Vue({
         validateSave: function () {
             if (this.editForm.symc == "" || this.editForm.symc == null) {
                 this.$message.warning({
-                    message: '请输入水源名称!',
+                    message: '请输入水源名称',
                     showClose: true
                 });
                 return false;
             } else if (this.editForm.sylx == "" || this.editForm.sylx == null) {
                 this.$message.warning({
-                    message: '请选择水源类型!',
+                    message: '请选择水源类型',
                     showClose: true
                 });
                 return false;
             } else if (this.editForm.gxdz.length == 0) {
                 this.$message.warning({
-                    message: '请选择管辖队站！',
+                    message: '请选择管辖队站',
                     showClose: true
                 });
                 return false;

@@ -149,16 +149,16 @@ var vue = new Vue({
             console.log(file);
         },
         handleExceed(files, fileList) {
-            this.$message.warning('限制选择 1 个图片！');
+            this.$message.warning('限制选择 1 个图片');
         },
         handleChange(file, fileList){
             if(fileList.length > 1){
                 fileList.splice(1,fileList.length-1);
-                this.$message.warning('限制选择 1 个图片！');
+                this.$message.warning('限制选择 1 个图片');
             }
             const isLt2M = file.size / 1024 / 1024 < 0.5;
             if (!isLt2M) {
-                this.$message.error('上传图片大小不能超过 500kb!');
+                this.$message.error('上传图片大小不能超过500KB');
                 fileList.splice(0,fileList.length);
             }
             return isLt2M;
