@@ -372,12 +372,10 @@ var vue = new Vue({
             this.$refs["addFormulaForm"].validate((valid) => {
                 if (valid) {
                     if (this.dialogTitle == "火场计算新增") {
-
-                        var _self = this;
                         axios.get('/dpapi/firecalculationlist/getNum/' + this.addFormulaForm.gsmc).then(function (res) {
 
                             if (res.data.result > 0) {
-                                _self.$message({
+                                this.$message({
                                     message: "公式名称已存在",
                                     showClose: true
                                 });
@@ -403,7 +401,7 @@ var vue = new Vue({
 
                                     if (res.data.msg == "计算公式中参数与参数信息中参数个数不符!请重新输入。") {
 
-                                        _self.$message({
+                                        this.$message({
                                             message: res.data.msg,
                                             showClose: true
                                         });
@@ -418,8 +416,8 @@ var vue = new Vue({
                                     console.log(error)
                                 })
 
-                                _self.total = _self.tableData.length;
-                                _self.loadingData();//重新加载数据
+                                this.total = this.tableData.length;
+                                this.loadingData();//重新加载数据
                             }
                         }.bind(this), function (error) {
                             console.log(error)
@@ -427,7 +425,6 @@ var vue = new Vue({
 
 
                     } else if (this.dialogTitle == "权限编辑") {
-
                         var params = {
                             uuid: this.addFormulaForm.uuid,
                             gsmc: this.addFormulaForm.gsmc,
@@ -443,7 +440,7 @@ var vue = new Vue({
 
                         axios.post('/dpapi/firecalculationlist/updateByVO', params).then(function (res) {
                             if (res.data.msg == "计算公式中参数与参数信息中参数个数不符!请重新输入。") {
-                                _self.$message({
+                                this.$message({
                                     message: res.data.msg,
                                     type: "error"
                                 });
@@ -457,8 +454,8 @@ var vue = new Vue({
                             console.log(error)
                         })
                         //存在疑问暂不影响系统功能
-                        _self.total = _self.tableData.length;
-                        _self.loadingData();//重新加载数据
+                        this.total = this.tableData.length;
+                        this.loadingData();//重新加载数据
 
                     }
 
