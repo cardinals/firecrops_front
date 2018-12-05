@@ -378,7 +378,7 @@ var vue = new Vue({
 
                             if (res.data.result > 0) {
                                 _self.$message({
-                                    message: "角色名已存在!",
+                                    message: "公式名称已存在",
                                     showClose: true
                                 });
                             } else {
