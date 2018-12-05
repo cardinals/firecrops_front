@@ -406,20 +406,7 @@ var vm = new Vue({
         },
         //组织机构新增form表单清空
         addFormClear: function () {
-            this.addForm.sjjgid = '';
-            this.addForm.preparentid = '';
-            this.addForm.jgid = '';
-            this.addForm.jgmc = '';
-            this.addForm.jgjc = '';
-            this.addForm.jgxzdm = [];
-            this.addForm.jgdz = '';
-            this.addForm.jgms = '';
-            this.addForm.xzqh = [];
-            this.addForm.czhm = '';
-            this.addForm.lxr = '';
-            this.addForm.lxdh = '';
-            this.addForm.xqmj = '';
-            this.addForm.xqfw = '';
+            this.$refs["addForm"].resetFields();
         },
         closeAddDialog: function () {
             this.addVisible = false;
