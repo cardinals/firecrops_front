@@ -174,7 +174,7 @@
 					</div>
 				</div>
 				<!--新建界面-->
-				<el-dialog title="组织机构新增" :visible.sync="addVisible" :close-on-click-modal="false">
+				<el-dialog title="组织机构新增" :visible.sync="addVisible" :close-on-click-modal="false" @close="addFormClear">
 					<el-form :model="addForm" label-width="85px" ref="addForm" :rules="addFormRules">
 						<el-row>
 							<el-col :span="11">

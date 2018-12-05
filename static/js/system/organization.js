@@ -242,40 +242,8 @@ var vm = new Vue({
         //当前页修改事件
         currentPageChange: function (val) {
             this.currentPage = val;
-            var _self = this;
-            _self.loadingData(); //重新加载数据
         },
-        //表格查询事件
-        searchClick: function () {
-            var _self = this;
-            if (this.searchForm.createTimeBegin != "" && this.searchForm.createTimeEnd != "" && this.searchForm.createTimeBegin > this.searchForm.createTimeEnd) {
-                _self.$message({
-                    message: "时间选择错误！",
-                    type: "error"
-                });
-                return;
-            }
-            // this.loading = true;//表格重新加载
-            var params = {
-                jgsearch: this.searchForm.jgsearch
-            }
-            axios.post('/api/organization/findByVO', params).then(function (res) {
-                this.tableData = res.data.result;
-                for (var i = 0; i < this.tableData.length; i++) {
-                    //预案类型转码
-                    for (var k = 0; k < this.yalxdmData.length; k++) {
-                        if (this.yalxdmData[k].codeValue == this.tableData[i].yalxdm) {
-                            this.tableData[i].yalxdm = this.yalxdmData[k].codeName;
-                        }
-                    }
 
-                }
-                _self.total = _self.tableData.length;
-                this.loading = false;
-            }.bind(this), function (error) {
-                console.log("failed")
-            })
-        },
         //左侧树显示的label
         renderContent(createElement, { node, data, store }) {
             // if (data.type == '1') {
@@ -302,7 +270,7 @@ var vm = new Vue({
             );
             // } 
         },
-        //新增
+        //新增组织机构节点
         append(store, data) {
             this.addVisible = true;
             this.addForm.sjjgid = data.uuid;
@@ -312,6 +280,7 @@ var vm = new Vue({
                 this.addForm.preparentid = data.jgid.substr(0, 2);
             }
         },
+        //移除组织机构节点
         remove(store, data) {
             this.$confirm('确定删除此组织机构?', '提示', {
                 confirmButtonText: '确定',
@@ -341,9 +310,11 @@ var vm = new Vue({
                 });
             });
         },
+        //点击详情编辑按钮
         editDetail: function () {
             this.editFlag = false;
         },
+        //保存详情
         saveDetail: function () {
             var params = {
                 uuid: this.detailData.uuid,
@@ -377,14 +348,12 @@ var vm = new Vue({
             })
             this.editFlag = true;
         },
+        //点击添加用户按钮
         addUsers: function () {
             this.userVisible = true;
             this.userSearch('init');
         },
-        closeAddDialog: function () {
-            this.addVisible = false;
-            this.addFormClear();
-        },
+        //组织机构节点新增保存
         addSubmit: function (formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -435,6 +404,7 @@ var vm = new Vue({
                 }
             });
         },
+        //组织机构新增form表单清空
         addFormClear: function () {
             this.addForm.sjjgid = '';
             this.addForm.preparentid = '';
@@ -451,6 +421,11 @@ var vm = new Vue({
             this.addForm.xqmj = '';
             this.addForm.xqfw = '';
         },
+        closeAddDialog: function () {
+            this.addVisible = false;
+            this.addFormClear();
+        },
+        //移除用户
         removeUser: function (val) {
             var params = {
                 pkid: val.pkid,
@@ -470,6 +445,7 @@ var vm = new Vue({
                 console.log(error);
             })
         },
+        //用户添加弹出页-列表查询
         userSearch: function (type) {
             //按钮事件的选择
             if (type == 'page') {
@@ -497,11 +473,13 @@ var vm = new Vue({
                 console.log(error)
             })
         },
+        //用户添加弹出页-查询条件清空
         userFormClear: function () {
             this.userForm.username = '';
             this.userForm.realname = '';
             this.userSearch('delete');
         },
+        //用户添加弹出页-点击添加用户
         selectUser: function (val) {
             var params = {
                 pkid: val.pkid,
@@ -522,6 +500,7 @@ var vm = new Vue({
                 console.log(error);
             })
         },
+        //
         userFormRefesh: function (val) {
             if (this.userEditFlag == true) {
                 this.getUserlistByJgid(this.currentUuid);
