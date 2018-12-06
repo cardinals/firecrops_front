@@ -57,3 +57,6 @@
 .jgidAdd .el-form-item__error {
     line-height: 0.9;
 }
+.frame_left_card .el-card__header,.frame_right_card .el-card__header {
+    padding: 10px 10px 8px 15px;
+}
