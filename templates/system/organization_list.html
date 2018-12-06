@@ -46,7 +46,7 @@
 								<div slot="header" class="clearfix">
 									<strong class="card_title_font">组织机构详情</strong>
 									<el-button v-if="editFlag==true" type="primary" icon="edit" size="small" class="r" @click="editDetail"> 编辑</el-button>
-									<el-button v-if="editFlag==false" type="success" icon="check" size="small" class="r" @click="saveDetail">保存</el-button>
+									<el-button v-if="editFlag==false" type="success" icon="check" size="small" class="r" @click="saveDetail('editForm')">保存</el-button>
 								</div>
 								<div>
 									<el-form :model="detailData" label-width="90px" :rules="editFormRules" ref="editForm">

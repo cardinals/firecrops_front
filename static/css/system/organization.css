@@ -54,3 +54,6 @@
 .jgidAdd .el-form-item__content{
     margin-left: 5px !important;
 }
+.jgidAdd .el-form-item__error {
+    line-height: 0.9;
+}

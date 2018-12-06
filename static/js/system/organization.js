@@ -173,6 +173,7 @@ var vm = new Vue({
         getJgxqById: function (jgid) {
             this.editFlag = true;
             this.userEditFlag = false;
+            this.$refs["editForm"].resetFields();
             axios.get('/api/organization/doFindById/' + jgid).then(function (res) {
                 this.detailData = res.data.result;
                 //机构性质格式化
@@ -315,38 +316,45 @@ var vm = new Vue({
             this.editFlag = false;
         },
         //保存详情
-        saveDetail: function () {
-            var params = {
-                uuid: this.detailData.uuid,
-                jgmc: this.detailData.jgmc,
-                jgjc: this.detailData.jgjc,
-                jgxzdm: this.detailData.jgxzdm[this.detailData.jgxzdm.length - 1],
-                jgid: this.detailData.preparentid + this.detailData.jgid,
-                jgdz: this.detailData.jgdz,
-                jgms: this.detailData.jgms,
-                xzqh: this.detailData.xzqh[this.detailData.xzqh.length - 1],
-                czhm: this.detailData.czhm,
-                lxr: this.detailData.lxr,
-                lxdh: this.detailData.lxdh,
-                xqmj: this.detailData.xqmj,
-                xqfw: this.detailData.xqfw,
-                xgrid: this.shiroData.userid,
-                xgrmc: this.shiroData.realName
-            }
-            axios.post('/api/organization/doUpdateByVO', params).then(function (res) {
-                if (res.data.result > 0) {
-                    this.$message.success('修改成功');
+        saveDetail: function (formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    var params = {
+                        uuid: this.detailData.uuid,
+                        jgmc: this.detailData.jgmc,
+                        jgjc: this.detailData.jgjc,
+                        jgxzdm: this.detailData.jgxzdm[this.detailData.jgxzdm.length - 1],
+                        jgid: this.detailData.preparentid + this.detailData.jgid,
+                        jgdz: this.detailData.jgdz,
+                        jgms: this.detailData.jgms,
+                        xzqh: this.detailData.xzqh[this.detailData.xzqh.length - 1],
+                        czhm: this.detailData.czhm,
+                        lxr: this.detailData.lxr,
+                        lxdh: this.detailData.lxdh,
+                        xqmj: this.detailData.xqmj,
+                        xqfw: this.detailData.xqfw,
+                        xgrid: this.shiroData.userid,
+                        xgrmc: this.shiroData.realName
+                    }
+                    axios.post('/api/organization/doUpdateByVO', params).then(function (res) {
+                        if (res.data.result > 0) {
+                            this.$message.success('修改成功');
+                            this.editFlag = true;
+                            this.getJgxqById(params.uuid);
+                        } else {
+                            this.$message.error('修改失败');
+                            this.editFlag = true;
+                            this.getJgxqById(params.uuid);
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
                     this.editFlag = true;
-                    this.getJgxqById(params.uuid);
                 } else {
-                    this.$message.error('修改失败');
-                    this.editFlag = true;
-                    this.getJgxqById(params.uuid);
+                    console.log('error save!!');
+                    return false;
                 }
-            }.bind(this), function (error) {
-                console.log(error);
-            })
-            this.editFlag = true;
+            });
         },
         //点击添加用户按钮
         addUsers: function () {
