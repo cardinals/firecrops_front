@@ -27,15 +27,15 @@
 				<div class="frame">
 					<div class="frame_left_card">
 						<el-card class="card_style">
-							<div slot="header" class="clearfix">
-								<div>
+							<div slot="header">
+								<el-row style="line-height:30px;">
 									<strong class="card_title_font">组织机构树</strong>
-									<el-input placeholder="查询" size="small" style="float:right; padding:3px 0; width:70%; margin-top:-8px;" v-model="filterText"></el-input>
-								</div>
+									<el-input placeholder="查询" size="small" class="r" style="width:70%;" v-model="filterText"></el-input>
+								</el-row>
 							</div>
 							<div scroll="no" class="src_slt">
-								<el-tree :data="tableData" :expand-on-click-node="false" :props="jgidprops" :filter-node-method="filterNode" :render-content="renderContent" node-key="uuid"
-								 ref="tree2" @node-click="currentNodeChange" style="font-weight:bold; width:100%; font-weight:100px; border:none;">
+								<el-tree :data="tableData" :expand-on-click-node="false" :props="jgidprops" :filter-node-method="filterNode" :render-content="renderContent"
+								 node-key="uuid" ref="tree2" @node-click="currentNodeChange" style="font-weight:bold; width:100%; font-weight:100px; border:none;">
 								</el-tree>
 							</div>
 						</el-card>
@@ -43,10 +43,12 @@
 					<div class="frame_right_card" scroll="no">
 						<div class="frame_right_top" scroll="no">
 							<el-card class="card_style m0">
-								<div slot="header" class="clearfix">
-									<strong class="card_title_font">组织机构详情</strong>
-									<el-button v-if="editFlag==true" type="primary" icon="edit" size="small" class="r" @click="editDetail"> 编辑</el-button>
-									<el-button v-if="editFlag==false" type="success" icon="check" size="small" class="r" @click="saveDetail('editForm')">保存</el-button>
+								<div slot="header">
+									<el-row style="line-height:30px;">
+										<strong class="card_title_font">组织机构详情</strong>
+										<el-button v-if="editFlag==true" type="primary" icon="edit" size="small" class="r" @click="editDetail"> 编辑</el-button>
+										<el-button v-if="editFlag==false" type="success" icon="check" size="small" class="r" @click="saveDetail('editForm')">保存</el-button>
+									</el-row>
 								</div>
 								<div>
 									<el-form :model="detailData" label-width="90px" :rules="editFormRules" ref="editForm">
@@ -142,9 +144,11 @@
 						</div>
 						<div class="frame_right_bottom" scroll="no">
 							<el-card class="card_style m0">
-								<div slot="header" class="clearfix">
-									<strong class="card_title_font">用户列表</strong>
-									<el-button type="primary" icon="plus" size="small" class="r" @click="addUsers"> 添加</el-button>
+								<div slot="header">
+									<el-row style="line-height:30px;">
+										<strong class="card_title_font">用户列表</strong>
+										<el-button type="primary" icon="plus" size="small" class="r" @click="addUsers"> 添加</el-button>
+									</el-row>
 								</div>
 								<div class="table_container">
 									<el-table border id="table" :data="userData.slice((currentPage-1)*pageSize,currentPage*pageSize)" class="detailTable" :height="tableheight">
@@ -163,8 +167,8 @@
 									<!--列表底部工具条和分页符-->
 									<el-row type="flex" justify="end">
 										<el-col :span="18">
-											<el-pagination @current-change="currentPageChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 50]"
-											 :page-size="pageSize" layout="total, prev, pager, next, jumper" :total=parseInt(total)>
+											<el-pagination @current-change="currentPageChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 50]" :page-size="pageSize"
+											 layout="total, prev, pager, next, jumper" :total=parseInt(total)>
 											</el-pagination>
 										</el-col>
 									</el-row>
