@@ -41,7 +41,7 @@ var vue = new Vue({
             editFormRules: {
                 rolename: [
                     { required: true, message: "请输入角色名称", trigger: "blur" },
-                    { pattern: /^[a-zA-Z0-9]{2,16}$/, message: '长度为2-16个字母或数字',trigger: 'blur'},
+                    { pattern: /^[0-9A-Za-z-_]{2,16}$/, message: '角色名应为2-16位字母、数字、字符-_', trigger: 'blur' },
                 ],
                 roleinfo: [
                     { required: true, message: "请输入角色描述", trigger: "blur" },
