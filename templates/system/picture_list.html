@@ -21,9 +21,9 @@
 								<el-col :xs="1" :sm="1" :md="1" :lg="1" :xl="1">&nbsp;</el-col>
 								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
 									<label class="el-form-item__label searchLabel">图片类型</label>
-                                    <el-select size="small" v-model="searchForm.pic_type" placeholder="全部" class="searchSelect" clearable>
-                                        <el-option v-for="type in allSavedTypes" :label="type.picTypename" :value="type.picType" :key="type.picType"></el-option>
-                                    </el-select>
+									<el-select size="small" v-model="searchForm.pic_type" placeholder="全部" class="searchSelect" clearable>
+										<el-option v-for="type in allSavedTypes" :label="type.picTypename" :value="type.picType" :key="type.picType"></el-option>
+									</el-select>
 								</el-col>
 								<el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">&nbsp;</el-col>
 								<el-col :xs="9" :sm="9" :md="9" :lg="9" :xl="9" class="searchInline">
@@ -34,237 +34,136 @@
 							</el-row>
 							<div>
 								<el-form>
-                                    <el-col :span="12" class="btnEditDelete">
-                                        <el-form-item align="left">
-                                            <el-button v-if="hasPermission('system/picture:add')" type="success" icon="plus" size="small" @click="addClick">新增</el-button>
-                                            <el-button v-if="hasPermission('system/picture:delete')" type="danger" icon="delete2" size="small" @click="removeSelection">删除</el-button>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12"></el-col>
-                                    <el-col :span="12" class="btnSearchPlus">
-                                        <el-form-item>
-                                            <el-button type="primary" icon="search" size="small" @click="searchClick">查询</el-button>
-                                            <el-button type="clear" icon="delete" size="small" @click="clearClick">重置</el-button>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-form>
+									<el-col :span="12" class="btnEditDelete">
+										<el-form-item align="left">
+											<el-button v-if="hasPermission('system/picture:add')" type="success" icon="plus" size="small" @click="addClick">新增</el-button>
+											<el-button v-if="hasPermission('system/picture:delete')" type="danger" icon="delete2" size="small" @click="removeSelection">删除</el-button>
+										</el-form-item>
+									</el-col>
+									<el-col :span="12"></el-col>
+									<el-col :span="12" class="btnSearchPlus">
+										<el-form-item>
+											<el-button type="primary" icon="search" size="small" @click="searchClick">查询</el-button>
+											<el-button type="clear" icon="delete" size="small" @click="clearClick">重置</el-button>
+										</el-form-item>
+									</el-col>
+								</el-form>
 							</div>
 						</el-form>
 					</el-row>
 					<div class="table_container">
-						<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-						 @selection-change="selectionChange" class="tableStyle" :height="tableheight">
+						<el-table border id="table" :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" @selection-change="selectionChange"
+						 class="tableStyle" :height="tableheight">
 							<el-table-column type="selection" min-width="5%"></el-table-column>
-							<el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>	
-							<el-table-column prop="picName" show-overflow-tooltip label="图片名称" min-width="35%" align="center"></el-table-column>
+							<el-table-column type="index" show-overflow-tooltip label="序号" width="65" align="center"></el-table-column>
+							<el-table-column prop="picName" show-overflow-tooltip label="图片名称" min-width="30%" align="center"></el-table-column>
 							<el-table-column prop="picValue" show-overflow-tooltip label="图片代码" min-width="15%" align="center"></el-table-column>
 							<el-table-column prop="picTypename" show-overflow-tooltip label="图片类型" min-width="15%" align="center"></el-table-column>
 							<el-table-column prop="picType" show-overflow-tooltip label="类型代码" min-width="15%" align="center"></el-table-column>
-							<el-table-column prop="imgStr" show-overflow-tooltip label="图片预览" min-width="10%" align="center" >
-                                <template slot-scope="scope">
-                                    <img :src="scope.row.imgStr" :alt="scope.row.imgStr" @click="imgPreview(scope.row.imgStr)" style="max-height: 35px;max-width: 130px" >  
+							<el-table-column prop="imgStr" show-overflow-tooltip label="图片预览" min-width="15%" align="center">
+								<template slot-scope="scope">
+									<img v-if="scope.row.picBlob!=null" :src="scope.row.imgStr" :alt="scope.row.imgStr" @click="imgPreview(scope.row.imgStr)"
+									 style="max-height: 35px;max-width: 130px">
+									<v-text v-else>暂无</v-text>
 								</template>
 							</el-table-column>
 							<el-table-column show-overflow-tooltip label="操作" width="65" align="center" v-if="hasPermission('system/picture:edit')">
-                                <template slot-scope="scope">
-                                    <el-button type="text" @click="editClick(scope.row)">编辑</el-button>
-                                </template>
-                            </el-table-column>
+								<template slot-scope="scope">
+									<el-button type="text" @click="editClick(scope.row)">编辑</el-button>
+								</template>
+							</el-table-column>
 						</el-table>
 
 						<!--列表底部工具条和分页符-->
 						<el-row type="flex" justify="end">
 							<el-col :span="18">
-								<el-pagination 
-									@size-change="pageSizeChange" 
-									@current-change="currentPageChange" 
-									:current-page="currentPage"
-									 :page-sizes="[10, 20, 30, 50]" 
-									 :page-size="pageSize" 
-									 layout="total, prev, pager, next, jumper" 
-									 :total=parseInt(total)>
+								<el-pagination @current-change="currentPageChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 50]" :page-size="pageSize"
+								 layout="total, prev, pager, next, jumper" :total=parseInt(total)>
 								</el-pagination>
 							</el-col>
 						</el-row>
 					</div>
 					<!--图片预览-->
-					<el-dialog :visible.sync="imgViewVisible" class="picDialog" :close-on-click-modal="false"  size="tiny">
-						<img :src="previewImg" width="100%"  class="mt15"></img>
-						<!-- <div id="flagImage" style="margin-top: 3%">
-								<img id="flag" style="height:100px;width: 100px;">
-							</div> -->
+					<el-dialog :visible.sync="imgViewVisible" class="picDialog" :close-on-click-modal="false" size="tiny">
+						<img :src="previewImg" width="100%" class="mt15"></img>
 					</el-dialog>
 
-					<!--新建界面-->
-					<el-dialog title="图片新增" :visible.sync="addFormVisible" @close="closeDialog(addForm)" :close-on-click-modal="false">
-						<el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
+					<!--新建编辑界面-->
+					<el-dialog :title="addDialogTitle" :visible.sync="addDialogVisible" @close="closeAddDialog" :close-on-click-modal="false">
+						<el-form :model="addForm" label-width="85px" :rules="addFormRules" ref="addForm">
 							<el-row>
-								<el-col :span="10">
-									<el-form-item class="dialog-form" label="图片类型" prop="picType">
-                                        <el-select size="small" v-model="addForm.picType" :disabled="selectDisabled" placeholder="请选择图片类型" @change="getAddTypeNames()" @clear='clearAddTypeNames()' clearable>
-                                            <el-option v-for="type in allTypes" :label="type.codetypeName" :value="type.codetype" :key="type.codetype"></el-option>
-                                        </el-select>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="10">
-									<el-form-item class="dialog-form" label="图片名称" prop="picName">
-                                        <el-select size="small" v-model="addForm.picName" :disabled="selectDisabled" placeholder="请选择图片名称" clearable>
-                                            <el-option v-for="typeName in allAddTypeNames" :label="typeName.codeName" :value="typeName.codeName" :key="typeName.codeValue"></el-option>
-                                        </el-select>
-									</el-form-item>
-								</el-col>
-								<el-col :span="2"><el-button type="success" size="small" style="margin-top: 4px;margin-left: 13px;" @click="inputClick()" :disabled="btnAddDisabled">手动输入</el-button></el-col>
-								<el-col :span="1">&nbsp;</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="10">
-									<el-form-item class="dialog-form" label="图片类型" id="inputPicTypeName" style="display: none;" prop="inputPicTypeName">
-										<el-input size="small" v-model="addForm.inputPicTypeName" placeholder="图片类型"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="10">
-									<el-form-item class="dialog-form" label="类型代码" id="inputPicType" style="display: none;" prop="inputPicType">
-										<el-input size="small" v-model="addForm.inputPicType" placeholder="类型代码"></el-input>
+								<el-col :span="11">
+									<el-form-item label="录入类型" prop="inputType">
+										<el-select size="small" v-model="addForm.inputType" placeholder="录入类型" clearable>
+											<el-option v-for="type in inputTypes" :label="type.codeName" :value="type.codeValue"></el-option>
+										</el-select>
 									</el-form-item>
 								</el-col>
 							</el-row>
-							<el-row>
-								<el-col :span="10">
-									<el-form-item class="dialog-form" label="图片名称" id="inputPicName" style="display: none;" prop="inputPicName">
-										<el-input size="small" v-model="addForm.inputPicName" placeholder="图片名称"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="10">
-									<el-form-item class="dialog-form" label="图片代码" id="inputPicValue" style="display: none;" prop="inputPicValue">
-										<el-input size="small" v-model="addForm.inputPicValue" placeholder="图片代码"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="2"><el-button type="danger" size="small"  id="closeBtn"  style="margin-top: 4px;margin-left: 13px;display: none;" @click="closeClick()">选择输入</el-button></el-col>
-								<el-col :span="1">&nbsp;</el-col>
-							</el-row>
-                            <el-row>
-                                <el-form-item label="图片上传">
-									<el-upload
-									ref="upload"
-									action="/api/picture/insertImage"
-									:data="upLoadData"
-									:on-preview="handlePreview"
-									:on-remove="handleRemove"
-									:on-exceed="handleExceed"
-									:on-change = "handleChange"
-									:on-success = "handleSuccess"
-									:auto-upload="false"
-									:before-upload="beforeImgUpload"
-									multiple
-									:limit="1"
-									:file-list="fileList">
-									<el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-									<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-									</el-upload>
-                                </el-form-item>
-							</el-row>
-							<el-row class="mt35 mb20">
+							<div v-if="addForm.inputType=='0'">
 								<el-row>
-									<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
-										<el-button type="clear" icon="close" size="small" class="btn_submit" @click="closeDialog(addForm)"> 取消</el-button>
-										<el-button type="success" icon="check" size="small" class="btn_save" @click="addSubmit(addForm)">保存</el-button>
+									<el-col :span="11">
+										<el-form-item label="图片类型" prop="picType">
+											<el-select size="small" v-model="addForm.picType" placeholder="图片类型" @change="getAddTypeNames" clearable>
+												<el-option v-for="type in allTypes" :label="type.codetypeName" :value="type.codetype"></el-option>
+											</el-select>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="图片名称" prop="picValue">
+											<el-select size="small" v-model="addForm.picValue" @change="ifPicNameValueExsit" placeholder="图片名称" clearable>
+												<el-option v-for="type in allAddTypeNames" :label="type.codeName" :value="type.codeValue"></el-option>
+											</el-select>
+										</el-form-item>
 									</el-col>
 								</el-row>
-							</el-row>
-						</el-form>
-						<!-- <div slot="footer" class="dialog-footer">
-							<el-button size="small" @click.native="closeDialog(addForm)">取消</el-button>
-							<el-button size="small" type="primary" @click.native="addSubmit(addForm)">提交</el-button>
-						</div> -->
-					</el-dialog>
-
-					<!--修改界面-->
-					<el-dialog title="图片编辑" :visible.sync="editFormVisible"  @close="closeEditDialog(editForm)" :close-on-click-modal="false">
-						<el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-							<el-row>
-								<el-col :span="10">
-									<el-form-item class="dialog-form" label="图片类型" prop="picType">
-                                        <el-select size="small" v-model="editForm.picType" :disabled="selectEditDisabled" placeholder="请选择图片类型" @change="getEditTypeNames()" @clear='clearEditTypeNames()' clearable>
-                                            <el-option v-for="type in allTypes" :label="type.codetypeName" :value="type.codetype" :key="type.codetype"></el-option>
-                                        </el-select>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="10">
-									<el-form-item class="dialog-form" label="图片名称" prop="picName">
-                                        <el-select size="small" v-model="editForm.picName" :disabled="selectEditDisabled" placeholder="请选择图片名称" clearable>
-                                            <el-option v-for="typeName in allEditTypeNames" :label="typeName.codeName" :value="typeName.codeName" :key="typeName.codeValue"></el-option>
-                                        </el-select>
-									</el-form-item>
-								</el-col>
-								<el-col :span="2"><el-button type="success" size="small" style="margin-top: 4px;margin-left: 13px;" @click="inputEditClick()" :disabled="btnEditDisabled">手动输入</el-button></el-col>
-								<el-col :span="1">&nbsp;</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="10">
-									<el-form-item class="dialog-form" label="图片类型" id="inputEditPicTypeName" style="display: none;" prop="inputPicTypeName">
-										<el-input size="small" v-model="editForm.inputPicTypeName" placeholder="图片类型"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="10">
-									<el-form-item class="dialog-form" label="类型代码" id="inputEditPicType" style="display: none;" prop="inputPicType">
-										<el-input size="small" v-model="editForm.inputPicType" placeholder="类型代码"></el-input>
-									</el-form-item>
-								</el-col>
-							</el-row>
-							<el-row>
-								<el-col :span="10">
-									<el-form-item class="dialog-form" label="图片名称" id="inputEditPicName" style="display: none;" prop="inputPicName">
-										<el-input size="small" v-model="editForm.inputPicName" placeholder="图片名称"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="1">&nbsp;</el-col>
-								<el-col :span="10">
-									<el-form-item class="dialog-form" label="图片代码" id="inputEditPicValue" style="display: none;" prop="inputPicValue">
-										<el-input size="small" v-model="editForm.inputPicValue" placeholder="图片代码"></el-input>
-									</el-form-item>
-								</el-col>
-								<el-col :span="2"><el-button type="danger" size="small"  id="closeEditBtn"  style="margin-top: 4px;margin-left: 13px;display: none;" @click="closeEditClick()">选择输入</el-button></el-col>
-								<el-col :span="1">&nbsp;</el-col>
-							</el-row>
-                            <el-row>
-                                <el-form-item label="图片上传">
-									<el-upload
-									ref="upload"
-									action="/api/picture/insertImage"
-									:data="upLoadData"
-									:on-preview="handlePreview"
-									:on-remove="handleRemove"
-									:on-exceed="handleExceed"
-									:on-change = "handleChange"
-									:on-success = "handleSuccess"
-									:auto-upload="false"
-									:before-upload="beforeImgUpload"
-									multiple
-									:limit="1"
-									:file-list="fileList">
-									<el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-									<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-									</el-upload>
-                                </el-form-item>
-							</el-row>
-							<el-row class="mt35 mb20">
+							</div>
+							<div v-else-if="addForm.inputType=='1'">
 								<el-row>
-									<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="text-align: center">
-										<el-button type="clear" icon="close" size="small" class="btn_submit" @click="closeEditDialog(editForm)"> 取消</el-button>
-										<el-button type="success" icon="check" size="small" class="btn_save" @click="editSubmit(editForm)">保存</el-button>
+									<el-col :span="11">
+										<el-form-item label="图片类型" prop="picTypename">
+											<el-input size="small" v-model="addForm.picTypename" placeholder="图片类型"></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="类型代码" prop="picType">
+											<el-input size="small" v-model="addForm.picType" placeholder="类型代码"></el-input>
+										</el-form-item>
 									</el-col>
 								</el-row>
+								<el-row>
+									<el-col :span="11">
+										<el-form-item label="图片名称" prop="picName">
+											<el-input size="small" v-model="addForm.picName" placeholder="图片名称"></el-input>
+										</el-form-item>
+									</el-col>
+									<el-col :span="1">&nbsp;</el-col>
+									<el-col :span="11">
+										<el-form-item label="图片代码" prop="picValue">
+											<el-input size="small" v-model="addForm.picValue" placeholder="图片代码"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
+							</div>
+							<el-row>
+								<el-form-item label="图片上传" class="is-required">
+									<el-upload ref="upload" action="/api/picture/insertImage" :data="upLoadData" :on-remove="handleRemove" :on-exceed="handleExceed"
+									 :on-change="handleChange" :on-success="handleSuccess" :auto-upload="false" :before-upload="beforeImgUpload" multiple
+									 :limit="1" :file-list="fileList">
+										<el-button slot="trigger" size="small" type="primary" icon="search">选取文件</el-button>
+										<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+									</el-upload>
+								</el-form-item>
 							</el-row>
 						</el-form>
-						<!-- <div slot="footer" class="dialog-footer">
-							<el-button size="small" @click.native="closeEditDialog(editForm)">取消</el-button>
-							<el-button size="small" type="primary" @click.native="editSubmit(editForm)">提交</el-button>
-						</div> -->
+						<el-row class="mt35 mb20">
+							<el-row class="tc">
+								<el-button type="clear" icon="close" size="small" class="btn_submit" @click="closeAddDialog"> 取消</el-button>
+								<el-button type="success" icon="check" size="small" class="btn_save" @click="addSubmit('addForm')">保存</el-button>
+							</el-row>
+						</el-row>
 					</el-dialog>
 				</div>
 			</div>
@@ -274,4 +173,5 @@
 	<!-- /main-box -->
 </body>
 <script src="../../static/js/system/picture.js"></script>
+
 </html>
