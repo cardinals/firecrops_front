@@ -94,7 +94,7 @@
 							<el-row>
 								<el-col :span="11">
 									<el-form-item label="录入类型" prop="inputType">
-										<el-select size="small" v-model="addForm.inputType" placeholder="录入类型" clearable>
+										<el-select size="small" v-model="addForm.inputType" @change="inputTypeChange" placeholder="录入类型" clearable>
 											<el-option v-for="type in inputTypes" :label="type.codeName" :value="type.codeValue"></el-option>
 										</el-select>
 									</el-form-item>
@@ -123,35 +123,34 @@
 								<el-row>
 									<el-col :span="11">
 										<el-form-item label="图片类型" prop="picTypename">
-											<el-input size="small" v-model="addForm.picTypename" placeholder="图片类型"></el-input>
+											<el-input v-model="addForm.picTypename" :disabled="picTypeValueExsit" placeholder="图片类型" size="small"></el-input>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
 									<el-col :span="11">
 										<el-form-item label="类型代码" prop="picType">
-											<el-input size="small" v-model="addForm.picType" placeholder="类型代码"></el-input>
+											<el-input v-model="addForm.picType" @change="ifPicTypeValueExsit" placeholder="类型代码" size="small"></el-input>
 										</el-form-item>
 									</el-col>
 								</el-row>
 								<el-row>
 									<el-col :span="11">
 										<el-form-item label="图片名称" prop="picName">
-											<el-input size="small" v-model="addForm.picName" placeholder="图片名称"></el-input>
+											<el-input v-model="addForm.picName" placeholder="图片名称" size="small"></el-input>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
 									<el-col :span="11">
 										<el-form-item label="图片代码" prop="picValue">
-											<el-input size="small" v-model="addForm.picValue" placeholder="图片代码"></el-input>
+											<el-input v-model="addForm.picValue" @change="ifPicNameValueExsit" placeholder="图片代码" size="small"></el-input>
 										</el-form-item>
 									</el-col>
 								</el-row>
 							</div>
 							<el-row>
-								<el-form-item label="图片上传" class="is-required">
-									<el-upload ref="upload" action="/api/picture/insertImage" :data="upLoadData" :on-remove="handleRemove" :on-exceed="handleExceed"
-									 :on-change="handleChange" :on-success="handleSuccess" :auto-upload="false" :before-upload="beforeImgUpload" :limit="1"
-									 :file-list="fileList">
+								<el-form-item label="图片上传">
+									<el-upload ref="upload" action="/api/picture/insertImage" :data="upLoadData" :on-remove="handleRemove" :on-change="handleChange"
+									 :on-success="handleSuccess" :auto-upload="false" :before-upload="beforeImgUpload" :limit="1" :file-list="fileList">
 										<el-button slot="trigger" size="small" type="primary" icon="search">选取文件</el-button>
 										<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
 									</el-upload>
