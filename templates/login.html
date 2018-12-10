@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>数字化预案管理平台</title>
+    <title>江苏总队数字化预案管理平台</title>
     <meta charset="UTF-8">
     <meta http-equiv="x-dns-prefetch-control" content="on" />
     <meta name="renderer" content="webkit" />
@@ -24,8 +24,8 @@
     <meta name="baidu_union_verify" content="b88dd3920f970845bad8ad9f90d687f7" />
     <meta name="domain_verify" content="pmrgi33nmfuw4ir2ej2g65lunfqw6ltdn5wselbcm52wszbchirdqyztge3tenrsgq3dknjume2tayrvmqytemlfmiydimddgu4gcnzcfqrhi2lnmvjwc5tfei5dcnbwhazdcobuhe2dqobrpu"
     />
-    <meta name="keywords" content="数字化预案管理平台" />
-    <meta name="description" content="数字化预案管理平台" />
+    <meta name="keywords" content="江苏总队数字化预案管理平台" />
+    <meta name="description" content="江苏总队数字化预案管理平台" />
     <link href="../static/css/login.css" id="css" rel="stylesheet" type="text/css" />
     <meta http-equiv="Cache-Control" content="no-transform" /> 
     <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -35,22 +35,22 @@
     </style>
     <style>
     .logina{
-        font-size:18px;
+        font-size:14px;
         cursor: pointer;
-        color:#ff8c00;
+        color:#fff;
     }
     .logina:hover{
-        color:#ff8c00;
+        color:#fff;
     }
     .loginb{
-        font-size:18px;
+        font-size:14px;
         cursor: pointer
     }
     .loginb:hover{
-        color:#ff8c00;
+        color:#fff;
     }
     .current{
-        color: #ff8c00;
+        color: #fff;
     }
     .currentb{
         color: #333333;
@@ -77,14 +77,14 @@
                                 <ul id="froma" style="display:block;">
                                     <li class="I1">
                                         <i id="icon-user"></i>
-                                        <input type="text" class="inputstyle" v-model="username" name="username" id="username" placeholder="用户名">
+                                        <input type="text" class="inputI1" v-model="username" name="username" id="username" placeholder="用户名">
                                     </li>
                                     <li class="I2">
                                         <i id="icon-password"></i>
-                                        <input type="password" class="inputstyle" v-model="password" name="password" id="password" placeholder="密码">
+                                        <input type="password" class="inputI2" v-model="password" name="password" id="password" placeholder="密码">
                                     </li>
                                     <li class="I3">
-                                        <input type="text" class="inputstyle" v-model="validateCode" name="validateCode" id="validateCode" placeholder="验证码" @keyup.enter="login()">
+                                        <input type="text" class="inputI3" v-model="validateCode" name="validateCode" id="validateCode" placeholder="验证码" @keyup.enter="login()">
                                         <a href="javascript:;" @click="reloadCode()">
                                             <img v-bind:src="src" id="checkCode" class="verficode" onerror="javascript:this.src='../static/images/img-error.png';" style="vertical-align: bottom"
                                                 width="50" height="20">
@@ -97,14 +97,14 @@
                                 <ul id="fromb" style="display:none;">
                                     <li class="I1" >
                                         <i class="icon-jxcs"></i>
-                                        <input type="text" class="inputstyle" v-model="unscid" name="unscid" id="unscid" placeholder="统一社会信用代码">
+                                        <input type="text" class="inputI1" v-model="unscid" name="unscid" id="unscid" placeholder="统一社会信用代码">
                                     </li>
                                     <li class="I2" style="visibility: hidden;">
                                         <i id="icon-password"></i>
-                                        <input type="password" class="inputstyle" >
+                                        <input type="password" class="inputI2" >
                                     </li>
                                     <li class="I3" style="visibility: hidden;">
-                                        <input type="text" class="inputstyle"  >
+                                        <input type="text" class="inputI3"  >
                                         <a href="javascript:;" >
                                             <img v-bind:src="src" id="checkCode" class="verficode" onerror="javascript:this.src='../static/images/img-error.png';" style="vertical-align: bottom"
                                                 width="50" height="20">
@@ -112,13 +112,7 @@
                                     </li>
                                     <li style="height: 20px;"></li>
                                 </ul>
-                                
-                                <!--
-                                <p>
-                                    <input type="checkbox" name="rememberMe" id="rememberMe" />&nbsp;&nbsp;
-                                    <a>记住我</a>
-                                </p>
-                                -->
+                            
                                 <div class="LoginBtn">
                                     <a @click="login()" id="lg" style="display:block;">登录</a>
                                     <a @click="nlogin()" id="nlg" style="display:none;">登录</a>

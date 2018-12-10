@@ -8,9 +8,16 @@ body,html{ width:100%; height:100%;}
 
 /* top */
 /* body{ background:#2546a5 url(../images/login-bg.jpg) no-repeat center center;} */
-.login_top{border:1px solid #fff;position:fixed;top: 0;
-    left: 0;width:100%;height:5em;overflow:hidden;background:#ffffff}
-.login_top_logo{width:585px;height:50px;background: url(../images/LOGO4.png)no-repeat center center; background-size: 350px 50px; position: absolute; top: 5px; left:17px; z-index:1;}
+.login_top{border:1px solid #471d14;position:fixed;top: 0;
+    left: 0;width:100%;height:5em;overflow:hidden;background:#471d14}
+.login_top_logo{
+    width:390px;
+    height:40px;
+    background: url(../images/logo/pic_title.png)no-repeat;
+    background-size: 390px 40px; 
+    position: absolute; 
+    top: 8px; 
+    left:10px;}
 .logo{ float:left;}
 .logo img{ width:80%;}
 
@@ -19,10 +26,13 @@ body,html{ width:100%; height:100%;}
     top:5em;
     position:absolute;
     z-index:10;
-    bottom:2.5em;
+    bottom:0em;
     _height:100%;
     width:100%;  overflow:hidden;
-    background:url(../images/loginCenterzz.png) no-repeat 0 0; background-size: 100% auto;}
+    background:url(../images/logo/bg_02.png) no-repeat 0 0; 
+    background-size:cover;
+    
+}
 .Login_img{ 
     position:absolute;
     top: 1.5em;
@@ -33,66 +43,92 @@ body,html{ width:100%; height:100%;}
     _height:100%; 
     margin:0 auto;
     overflow:hidden; 
-    background: url(../images/loginCenter-img.png) no-repeat left center;
+    /* background: url(../images/loginCenter-img.png) no-repeat left center; */
     background-size: auto 100%;}
     .Login{
          position: absolute;
-         top: 3%;
-         left: 62%;
-         width:420px; 
-         height:450px; 
+         top: 22%;
+         left: 65%;
+         width:260px; 
+         height:300px; 
          float:left; 
-         background:url(../images/loginBox-bg.png) no-repeat 0 0; 
-         overflow:hidden;}
-    .Login_n{ width:360px; height:390px; margin:29px 0 0 32px;}
-    .Login_nTop{height:64px; line-height:72px; font-size:20px; border-bottom: 1px solid #d6d6d6; padding-left:30px;color:#c0c0c0}
-    .Login_n ul{width:298px; margin:30px auto 0;}
-    .Login_n ul li input{ width:250px; height:39px; line-height:39px; font-size:14px; padding-left:46px; border-radius:4px; margin-bottom:15px; border:1px solid #d6d6d6;}
+         background: rgba(255, 255, 255, 0.2);
+         /* background:url(../images/loginBox-bg.png) no-repeat 0 0;  */
+         overflow:hidden;
+         border-radius: 2px;
+        }
+    .Login_n{ 
+         width:260px;
+         height:290px;
+         margin:0px 0 10 0px;
+        }
+    .Login_nTop{
+        height:54px; 
+        line-height:72px; 
+        font-size:14px;  
+        padding-left:20px;
+        color:#fff;
+    }
+    .Login_n ul{width:198px; margin:20px 17px 20px 17px;}
+    /* .Login_n ul li input{background:#FFF;width:200px; height:30px; line-height:30px; font-size:14px; padding-left:46px; border-radius:3px; margin-bottom:15px; border:1px solid #d6d6d6;} */
+    .inputI1{
+        outline:none; background:#FFF;width:180px; height:30px; line-height:30px; font-size:14px; padding-left:46px; border-radius:3px; margin-bottom:15px; border:1px solid #d6d6d6;
+    }
+    .inputI2{
+        outline:none; background:#FFF;width:180px; height:30px; line-height:30px; font-size:14px; padding-left:46px; border-radius:3px; margin-bottom:15px; border:1px solid #d6d6d6;
+    }
+  
     /*.Login_n ul .I1 input{ background:url(../images/icon-user.png) no-repeat 12px center;} */
     /*icon设置为单独图标，解决chrome浏览器自动填充密码时覆盖background样式问题*/
     .Login_n ul .I1 #icon-user{
         width: 30px;
         height: 30px;
-        background: url(../images/icon-user.png) no-repeat;      
+        background: url(../images/logo/icon_user.png) no-repeat;      
         display: inline-block;
         position: absolute;
         margin-left: 12px;
-        margin-top: 10px;
+        margin-top: 5px;
+        
+    }
+    .inputI3{
+        outline:none; background:#FFF;width:100px; height:30px; line-height:30px; font-size:14px; padding-left:46px; border-radius:3px; margin-bottom:15px; border:1px solid #d6d6d6;
     }
     
 /*.Login_n ul .I2 input{ background:url(../images/icon-password.png) no-repeat 12px center;}*/
 .Login_n ul .I2 #icon-password{
     width: 30px;
     height: 30px;
-    background: url(../images/icon-password.png) no-repeat;      
+    background: url(../images/logo/icon_password01.png) no-repeat;      
     display: inline-block;
     position: absolute;
     margin-left: 12px;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 .icon-jxcs{
     width: 30px;
     height: 30px;
-    background: url(../images/icon-password.png) no-repeat;      
+    background: url(../images/logo/icon_password01.png) no-repeat;      
     display: inline-block;
     position: absolute;
     margin-left: 12px;
-    margin-top: 10px;
+    margin-top: 5px;
 }
-.Login_n ul .I3 input{ background:url(../images/icon-verficode.png) no-repeat 12px center;}
+.Login_n ul .I3 input{ background:url(../images/logo/icon_code.png) no-repeat 12px center;}
 .I3  { position:relative;}
-.verficode{ display:block; width:74px; height:25px; position:absolute; top:8px; right:10px;}
-.Login_n ul input:focus{box-shadow:0px 0px 8px #06F; border: 1px solid #06F;}
-.Login_n  p{width:298px; margin:0 auto;}
-.LoginBtn{ margin-top:30px;} 
-.LoginBtn a{ display:block; width:296px; height:39px; line-height:39px; margin:0 auto; background:url(../images/loginButton.jpg) repeat-x;border-radius:4px; color:#FFF; font-size:16px; font-family:"微软雅黑"; text-align:center; border:1px solid #265f94;}
-.LoginBtn a:hover{ display:block; width:296px; height:39px; line-height:39px; margin:0 auto; background:url(../images/loginButton-hover.jpg) repeat-x;border-radius:4px; color:#FFF; font-size:16px; font-family:"微软雅黑"; text-align:center; border:1px solid #ab7a3b;}
+.verficode{ display:block; width:70px; height:30px; position:absolute; top:1px; right:-30px;}
+/* input边框样式 */
+.Login_n ul input:focus{box-shadow:0px 0px 8px #ffba00; border: 1px solid #ffba00;}
+.Login_n  p{width:198px; margin:0 auto;}
+.LoginBtn{ margin-top:-30px;} 
+.LoginBtn a{ display:block; width:225px; height:30px; line-height:30px; margin:0 auto;margin-left: 18px; background:#ffba00;border-radius:2px; color:#FFF; font-size:16px; font-family:"微软雅黑"; text-align:center; border:1px solid #ffba00;}
+.LoginBtn a:hover{ display:block; width:225px; height:30px; line-height:30px; margin:0 auto;margin-left: 18px; background:#ff8411;border-radius:2px; color:#FFF; font-size:16px; font-family:"微软雅黑"; text-align:center; border:1px solid #ff8411;}
  
 /* footer */
-.login_footer{border:1px solid #fff; z-index: 999;position:fixed;bottom: 0;
-    left: 0; height:4em; width:100%; text-align:center; font-size:1em; background:#ffffff; padding: 0 auto;}
+.login_footer{ z-index: 999;position:fixed;bottom: 0;
+    left: 0; height:4em; width:100%; text-align:center; font-size:1em;  padding: 0 auto;color: #f3f2f0;}
 .login_footer_text{ 
     position: relative;line-height:4em;text-align: center;z-index: 999;
+    color: #f3f2f0;
  }
 
 /* 输入框 */
@@ -120,3 +156,4 @@ input:-webkit-autofill {
         background-color: transparent
     }
 }
+
