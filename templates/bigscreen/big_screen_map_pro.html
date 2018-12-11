@@ -44,11 +44,14 @@
                     <el-form ref="form" :model="form" label-width="80px">
                         <!-- lxy start -->
                         <div class="h65">
-                            <div class="search_top h25" style="margin-top:20px;">
-                                <el-select style="border: 2px solid #647AAE;border-radius:5px;" placeholder="请输入地址" v-model="searchForm.xzqhmc" class="input-with-select map_slt l b_r" >
-                                    <el-option v-for="data in selqhmc" :key="data.xzqh" :label="data.xzqhmc" :value="data"></el-option>
-                                </el-select>
-                                <el-button class="l ml5" style="background:#1E2B3F;border: 2px solid #647AAE;border-radius:5px;margin-left: 1px;height: 29px;" type="primary" @click="searchClick">搜索</el-button>
+                            
+                            <div class="search_top h25 searchbk">
+                                
+                                    <el-select placeholder="请输入地址" v-model="searchForm.xzqhmc" class="input-with-select map_slt l b_r sltbk" >
+                                        <el-option v-for="data in selqhmc" :key="data.xzqh" :label="data.xzqhmc" :value="data"></el-option>
+                                    </el-select>
+                                    <el-button class="l ml5 btnbk" type="primary" @click="searchClick">搜索</el-button>
+                               
                             </div>
                             <div class="h515"  style="margin-top: 10px; overflow-y:auto !important;height:515px;">
                                 <div id="shengshizs">

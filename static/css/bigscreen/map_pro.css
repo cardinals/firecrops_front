@@ -144,3 +144,25 @@
     display: inline-block;
     border: 0px;
 }
+
+.searchbk{
+  margin-top:20px;margin-left: 12px;
+  /* background: #aaa; */
+
+}
+
+.btnbk{
+  border:0px;background:#F9C520;border-radius:0px 0px 0px 0px;margin-left: -1px;height: 25px;
+}
+
+.sltbk{
+  border:0px;border-radius:0px;outline: none;
+}
+
+.el-select{
+  border-radius: 0px;
+}
+
+.el-option{
+  border-radius: 0px;
+}
