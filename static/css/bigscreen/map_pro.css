@@ -10,17 +10,18 @@
     position:relative; z-index:66;
   }
   .pagenum{
-    position:fixed;bottom:10px;margin-left:22px;color:black;
-    border:2px solid #3CBFA5;
+    position:fixed;bottom:10px;margin-left:22px;
+    color:#333;
+    /* border:2px solid #3CBFA5;
     background: #3A254F;
-    border-radius: 5px;
+    border-radius: 5px; */
   }
   .pagenum_btn{
     font-weight:bold;text-decoration: none;color:black;
   
   }
   .el-pagination__total{
-    color:#fff;
+    color:#333;
   } 
   .el-pagination__jump{
     color:#fff;
@@ -127,3 +128,19 @@
   .map-menu-left div::-webkit-scrollbar {
     display:none;
   }
+
+  .dzbk{
+    color:blueviolet;font-size:14px
+  }
+
+  .zddwbk{
+    color:#333;font-size:12px
+  }
+
+ #icon-password{
+    width: 24px;
+    height: 24px;
+    background: url(/static/images/logo/icon_code.png) no-repeat;      
+    display: inline-block;
+    border: 0px;
+}

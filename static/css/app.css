@@ -97,7 +97,7 @@ font-family:"微软雅黑";
   -ms-transition-duration: 0.3s;
 }
 /* 左侧滚动 */
-#menu-box{overflow:auto;overflow-x:hidden;height:100%;background:#493b35;}
+#menu-box{overflow:auto;overflow-x:hidden;height:100%;background:#fff;}
 
 .logo {
   background: url('../images/LOGO.png') no-repeat;
@@ -128,10 +128,13 @@ font-family:"微软雅黑";
 }
 
 .map-bglf {
-  background: url('../images/dock-bg.png');
+  /* background: url('../images/dock-bg.png'); */
+  background: #fff;
   height:100%;
   width:100%;
   background-size:cover; 
+  background: #EBEDEF;
+	box-shadow: 0px 0px 10px 5px #aaa;
 }
 
 .map-bg2 {
