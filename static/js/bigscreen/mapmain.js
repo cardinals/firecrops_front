@@ -171,6 +171,7 @@ var vm = new Vue({
         this.getCity();
         document.title = this.city + '预案情况';
         this.getShengZddwDate();//省
+        
     },
     methods:
     //获取重点单位信息
@@ -303,15 +304,40 @@ var vm = new Vue({
         },
         //获取省范围的方法
         getBoundary: function (map) {
+
             var bdary = new BMap.Boundary();
             bdary.get(this.city, function (rs) { //获取行政区域
                 var count = rs.boundaries.length; //行政区域的点有多少个
+                
                 for (var i = 0; i < count; i++) {
-                    var ply = new BMap.Polygon(rs.boundaries[i], { strokeWeight: 3, strokeColor: "#ff0000" }); //建立多边形覆盖物
+                   
+                    var ply = new BMap.Polygon(rs.boundaries[i], { strokeWeight: 3, strokeColor: "#ff0000",fillColor: "" }); //建立多边形覆盖物
                     ply.setFillColor("none");
-                    map.addOverlay(ply); //添加覆盖物 map.setViewport(ply.getPath());调整视野 
+                    //添加覆盖物，调整视野
+                    // map.setViewport(ply.getPath());
+                    map.addOverlay(ply); 
                 }
             });
+            //
+            // var bdary = new BMap.Boundary();
+            // bdary.get(this.city, function (rs) {       //获取行政区域       
+            //     //for循环都删除掉了
+            //     //东西经南北纬的范围
+            //     debugger;
+            //     map.clearOverlays(); 
+            //     var EN_JW = "180, 90;";         //东北角
+            //     var NW_JW = "-180,  90;";       //西北角
+            //     var WS_JW = "-180, -90;";       //西南角
+            //     var SE_JW = "180, -90;";        //东南角
+            //     //添加环形遮罩层
+            //     var ply1 = new BMap.Polygon(rs.boundaries[0] + SE_JW + SE_JW + WS_JW + NW_JW + EN_JW + SE_JW, { strokeColor: "none", fillColor: "rgb(246,246,246)", fillOpacity:1, strokeOpacity: 0.5 }); //建立多边形覆盖物
+            //     map.addOverlay(ply1);  
+            //     //给目标行政区划添加边框，其实就是给目标行政区划添加一个没有填充物的遮罩层
+            //     var ply = new BMap.Polygon(rs.boundaries[0], { strokeWeight: 2, strokeColor: "#00f",fillColor: "" });
+            //     map.addOverlay(ply); 
+            //  });
+            //将省份的视野进行调整
+            map.centerAndZoom(this.city, 8);
         },
         //获取省份
         getShengZddwDate: function () {
@@ -535,6 +561,7 @@ var vm = new Vue({
                 enableGeolocation: true
             });
             map.addControl(navigationControl);
+            this.getBoundary(map);//划分行政区域
             // 添加定位控件
             var geolocationControl = new BMap.GeolocationControl();
             geolocationControl.addEventListener("locationSuccess", function (e) {
@@ -553,6 +580,14 @@ var vm = new Vue({
             });
             map.addControl(geolocationControl);
             map.centerAndZoom(new BMap.Point(107.164226, 31.859637), 5);
+            //防止地图离开规定视野只是显示在当前的省份
+            // var b = new BMap.Bounds(new BMap.Point(116.027143, 39.772348),new BMap.Point(116.832025, 40.126349));
+            // try {	
+            //     BMapLib.AreaRestriction.setBounds(map, b);
+            // } catch (e) {
+            //     alert(e);
+            // }
+            // 控件
             var top_left_control = new BMap.ScaleControl({
                 anchor: BMAP_ANCHOR_TOP_LEFT
             });
@@ -560,6 +595,8 @@ var vm = new Vue({
             map.enableScrollWheelZoom(true);//开启鼠标滚轮缩放
             vm.createCluster();
             vm.drawMap();
+            //启用移动的动画效果
+            // map.enableAnimation(true);
             //经纬度的获取
             map.addEventListener("click", function (e) {
                 document.getElementById('lat').value = e.point.lat;
