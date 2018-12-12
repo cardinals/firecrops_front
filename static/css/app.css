@@ -97,7 +97,7 @@ font-family:"微软雅黑";
   -ms-transition-duration: 0.3s;
 }
 /* 左侧滚动 */
-#menu-box{overflow:auto;overflow-x:hidden;height:100%;background:#fff;}
+#menu-box{overflow:auto;overflow-x:hidden;height:100%;background:#493b35;}
 
 .logo {
   background: url('../images/LOGO.png') no-repeat;
