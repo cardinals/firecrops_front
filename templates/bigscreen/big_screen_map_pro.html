@@ -23,7 +23,7 @@
     <script src="../../static/js/common/config.js"></script>
     <style>
        .jwcolor{ color:#fff;background: #3A254F;padding: 5px;border: 2px solid #F9C520;border-radius:25px;}
-       .h25{height: 25px;} .h515{height: 515px;}
+       .h25{height: 25px;} .h515{height: 620px;}
        .h65{height: 65%;} .wh240{width: 240;}
        .icont:hover{background: rgba(0,0,0,0.3);}
     </style>
@@ -40,11 +40,11 @@
         <div class="application-boxs tc abs" style="top:0px;">
             <!-- 左侧 -->
             <div class="map-menu-left map-bglf" >
-                <a id="menu-toggle-btn" class="abs db el-icon-arrow-left menu-toggle-btn f12 tc" href="javascript:;"></a>
+                <a id="menu-toggle-btn" class="abs db el-icon-arrow-left menu-toggle-btn f12 tc" href="javascript:;" ></a>
                 <div id="menu-box" class="f12">
                     <el-form ref="form" :model="form" label-width="80px">
                         <!-- lxy start -->
-                        <div class="h65">
+                        <div class="h65" >
                             
                             <div class="search_top h25 searchbk">
                                 
@@ -57,23 +57,23 @@
                             <div class="h515"  style="margin-top: 10px; overflow-y:auto !important;height:515px;">
                                 <div id="shengshizs">
                                     <el-card v-for="data in shengshizs.slice((currentPage-1)*pageSize,currentPage*pageSize) " :body-style="{ padding: '0px' }"
-                                        style="color:#333;border-radius: 0px;">
+                                        class="cardbk">
                                         <div @click="shengshiClick(data)">
-                                            <!-- 队站名称： -->
-                                            <div class="l cell_bk dzbk"><img id="icon-password"/>{{data.xzqhmc }}</div>
+                                            <!-- 队站名称： <img id="icon-password"/>-->
+                                            <div class="l cell_bk dzbk">{{data.xzqhmc }}</div>
                                             <div class="l cell_bk zddwbk">重点单位数量：{{data.zddwsl }}</div>
                                         </div>
                                     </el-card>
                                 </div>
                                 <div id="zddwxx">
-                                    <el-card v-for="data in zddwxx.slice((currentPage-1)*pageSize,currentPage*pageSize)" :body-style="{ padding: '0px' }" style="color:#333;border-radius: 0px;">
+                                    <el-card class="cardbk" v-for="data in zddwxx.slice((currentPage-1)*pageSize,currentPage*pageSize)" :body-style="{ padding: '0px' }" style="color:#333;border-radius: 0px;">
                                         <div @click="zddwxxClick(data)">
-                                            <div slot="header">
-                                                <strong>{{data.dwmc }}</strong>&nbsp&nbsp
+                                            <div class="dzbk" slot="header">
+                                                {{data.dwmc }}&nbsp&nbsp
                                                 <!-- <el-tag color="" size="medium">{{data.dwxzmc}}</el-tag> -->
                                             </div>
-                                            <div class="l cell_bk dzbk">地址：{{data.dwdz }}</div>
-                                            <div class="l cell_bk dzbk">电话：{{data.zbdh }}</div>
+                                            <div class="l cell_bk zddwbk">地址：{{data.dwdz }}</div>
+                                            <div class="l cell_bk zddwbk">电话：{{data.zbdh }}</div>
                                         </div>
                                     </el-card>
                                 </div>

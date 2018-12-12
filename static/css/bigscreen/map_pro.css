@@ -11,17 +11,18 @@
   }
   .pagenum{
     position:fixed;bottom:10px;margin-left:22px;
-    color:#333;
+    color:#fff;
+    font-family: "微软雅黑";
     /* border:2px solid #3CBFA5;
     background: #3A254F;
     border-radius: 5px; */
   }
   .pagenum_btn{
-    font-weight:bold;text-decoration: none;color:black;
+    font-weight:bold;text-decoration: none;color:#fff;
   
   }
   .el-pagination__total{
-    color:#333;
+    color:#fff;
   } 
   .el-pagination__jump{
     color:#fff;
@@ -130,11 +131,11 @@
   }
 
   .dzbk{
-    color:blueviolet;font-size:14px
+    color:#fff;font-size:14px
   }
 
   .zddwbk{
-    color:#333;font-size:12px
+    color:#aaa;font-size:12px
   }
 
  #icon-password{
@@ -156,8 +157,11 @@
 }
 
 .sltbk{
-  border:0px;border-radius:0px;outline: none;
-  border-radius:0px;background:#fff;border:0px;border:none;outline:medium;
+  border:0px !important;
+  outline: none;
+  border-radius:0px;
+  background:#fff;
+  border:none !important;
 }
 
 .el-select{
@@ -168,3 +172,72 @@
   border-radius: 0px;
 }
 
+/* .el-select:focus-within {
+  border: none;
+  outline: none;
+} */
+
+.el-select{
+  border:0px !important;
+  outline: none;
+  border-radius:0px;
+  background:#fff;
+  border:none !important;
+}
+
+.el-option{
+  border:0px !important;
+  outline: none;
+  border-radius:0px;
+  background:#fff;
+  border:none !important;
+}
+
+.cardbk{
+  margin: 0px;
+  color:#333;
+  border-radius: 0px;
+  border: 0px;
+  background: #493b35;
+}
+
+.cardbk:hover{
+  margin: 0px;
+  color:#333;
+  border-radius: 0px;
+  border: 0px;
+  background: #705f58;
+}
+
+.el-pagination .btn-next, .el-pagination .btn-prev {
+  background:#493b35;
+  background-size: 16px;
+  border: 0px;
+  cursor: pointer;
+  margin: 0;
+  color: #fff;
+}
+
+.el-pagination__editor {
+  border: 0px;
+  border-radius: 0px;
+  line-height: 18px;
+  padding: 4px 2px;
+  width: 30px;
+  text-align: center;
+  margin: 0 2px;
+  box-sizing: border-box;
+  transition: border .3s;
+  color: #fff;
+  background:#493b35;
+}
+
+.el-pagination button.disabled {
+  color: #e4e4e4;
+  background-color: #493b35;
+  cursor: not-allowed;
+}
+/* 收缩按钮位置 */
+.menu-toggle-btn {
+  bottom: 14px;
+}
