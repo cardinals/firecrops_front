@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="../../static/css/app.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/bigscreen/map_pro.css">
     <link rel="stylesheet" type="text/css" href="../../static/css/bigscreen/bigmap.css">
+    <link rel="icon" href="/static/images/logo/logo.png">
     <link href="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.css" rel="stylesheet" type="text/css"
     />
     <!-- 底部控件 -->
@@ -47,8 +48,8 @@
                             
                             <div class="search_top h25 searchbk">
                                 
-                                    <el-select placeholder="请输入地址" v-model="searchForm.xzqhmc" class="input-with-select map_slt l b_r sltbk" >
-                                        <el-option v-for="data in selqhmc" :key="data.xzqh" :label="data.xzqhmc" :value="data"></el-option>
+                                    <el-select  placeholder="请输入地址" v-model="searchForm.xzqhmc" class="input-with-select map_slt l b_r sltbk search_border" >
+                                        <el-option  v-for="data in selqhmc" :key="data.xzqh" :label="data.xzqhmc" :value="data"></el-option>
                                     </el-select>
                                     <el-button class="l ml5 btnbk" type="primary" @click="searchClick">搜索</el-button>
                                

@@ -157,6 +157,7 @@
 
 .sltbk{
   border:0px;border-radius:0px;outline: none;
+  border-radius:0px;background:#fff;border:0px;border:none;outline:medium;
 }
 
 .el-select{
@@ -166,3 +167,4 @@
 .el-option{
   border-radius: 0px;
 }
+
