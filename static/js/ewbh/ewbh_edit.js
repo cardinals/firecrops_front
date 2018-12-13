@@ -140,7 +140,7 @@ var vue = new Vue({
                 this.type = 'BJ';
             }
             window.setTimeout(function () {
-                document.getElementById('ewbhmain').contentWindow.postMessage(params, "http://localhost:8082");
+                document.getElementById('ewbhmain').contentWindow.postMessage(params, ewbhUrl);
             }, 2000);
         },
         //根据重点单位id获取消防队伍信息
