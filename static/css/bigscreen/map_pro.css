@@ -243,36 +243,40 @@
 }
 /* 经纬度显示框样式 */
 .inputbk {
-  border:0px;margin-left:-5px;padding:5px;width:91px;border-radius:0px 2px 2px 0px;height: 28.5px !important;background: rgba(0,0,0,0.5);color: #fff;
+ border:0px;margin-left:-4px;padding:5px;width:91px;border-radius:2px 2px 2px 2px;height: 27px !important;background: rgba(0,0,0,0.5);color: #fff;
 }
-.jwcolor{ color:#fff;background: #493b35;
+.jwcolor{ color:#493b35;background: rgba(0,0,0,0);
   padding: 5px;border-radius:2px 0px 0px 2px;
+  font-weight: 600; 
   }
   .h25{height: 25px;} .h515{height: 620px;}
   .h65{height: 65%;} .wh240{width: 240;}
   .icont:hover{background: rgba(0,0,0,0.3);}
 
 .searchmenu{
-  color:#fff;
-  background:#493b35;
+  color:#493b35;
+  background:rgba(0,0,0,0);
   height: 29px !important;
   top:5px;
   border:0px;
   border-radius:2px 0px 0px 2px;
+  font-weight: 600;
 }
 .searchmenu:hover{
-  color:#fff;
-  background:#493b35;
+  color:#493b35;
+  background:rgba(0,0,0,0);
   height: 29px !important;
   top:5px;
   border:0px;
   border-radius:2px 0px 0px 2px;
+  font-weight: 600;
 }
 
 .menubk{
   margin-top:16px;
-  background:rgba(89,99,160,0.7);
+  background:rgba(89,99,160,0) !important;
   color: #fff;
   border:0px;
+  
 }
   
