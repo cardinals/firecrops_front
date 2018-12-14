@@ -128,6 +128,7 @@ var vm = new Vue({
         ],
         //分页功能
         shengshizs: [],
+        jiangshudata:[],
         selqhmc: [],
         searchForm: {
             xzqh: '',
@@ -311,7 +312,7 @@ var vm = new Vue({
                 
                 for (var i = 0; i < count; i++) {
                    
-                    var ply = new BMap.Polygon(rs.boundaries[i], { strokeWeight: 3, strokeColor: "#ff0000",fillColor: "" }); //建立多边形覆盖物
+                    var ply = new BMap.Polygon(rs.boundaries[i], { strokeWeight: 3, strokeColor: "rgba(0,0,0,0)",fillColor: "" }); //建立多边形覆盖物
                     ply.setFillColor("none");
                     //添加覆盖物，调整视野
                     // map.setViewport(ply.getPath());
@@ -345,12 +346,24 @@ var vm = new Vue({
             axios.post('/dpapi/map/getMapByVO', params).then(function (res) {
                 this.ShengZddwDate = res.data.result;
                 this.total = res.data.result.length;
+                //仅显示江苏总队
+                this.jiangshudata = res.data.result;
+              
                 //获取左侧省市的卡片数据
-                this.shengshizs = res.data.result;
+                for(o=0;o<this.jiangshudata.length;o++){
+                    if(this.jiangshudata[o].xzqhmc=="江苏总队"){
+                        this.shengshizs[0] = this.jiangshudata[o];
+                         //省市与重点单位详细切换
+                        $("#shengshizs").show();
+                        $("#zddwxx").hide();
+                        this.initMap();
+                    }
+                }
+
                 //省市与重点单位详细切换
-                $("#shengshizs").show();
-                $("#zddwxx").hide();
-                this.initMap();
+                // $("#shengshizs").show();
+                // $("#zddwxx").hide();
+                // this.initMap();
             }.bind(this), function (error) {
                 console.log(error);
             })
@@ -734,31 +747,32 @@ var vm = new Vue({
             this.province = province;
             var provinces = this.ShengZddwDate;
             //数据库表
-            for (var i = 0; i < provinces.length; i++) {
-                var pt = new BMap.Point(provinces[i].gisX, provinces[i].gisY);
+            // for (var i = 0; i < provinces.length; i++) {
+                var pt = new BMap.Point(provinces[9].gisX, provinces[9].gisY);
+            
                 var marker = new BMap.Marker(pt, { icon: myIcon1 });
                 //判断字段长度改变样式
                 var labelstr = "";
-                var mclen = provinces[i].xzqhmc.length;
-                var sllen = provinces[i].zddwsl.length;
+                var mclen = provinces[9].xzqhmc.length;
+                var sllen = provinces[9].zddwsl.length;
 
                 if (mclen == 4) {
-                    labelstr = '&nbsp<span style="color:#fff;">' + provinces[i].xzqhmc + '</span>';
+                    labelstr = '&nbsp<span style="color:#fff;">' + provinces[9].xzqhmc + '</span>';
                 } else {
-                    labelstr = '<span style="color:#fff;">' + provinces[i].xzqhmc + '</span>';
+                    labelstr = '<span style="color:#fff;">' + provinces[9].xzqhmc + '</span>';
                 }
 
                 if (sllen == 4) {
-                    labelstr += '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span style="font-size:1.3em;color:red;">' + provinces[i].zddwsl + '</span>';
+                    labelstr += '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span style="font-size:1.3em;color:red;">' + provinces[9].zddwsl + '</span>';
                 } else {
-                    labelstr += '&nbsp&nbsp&nbsp&nbsp&nbsp<span style="font-size:1.3em;color:red;">' + provinces[i].zddwsl + '</span>';
+                    labelstr += '&nbsp&nbsp&nbsp&nbsp&nbsp<span style="font-size:1.3em;color:red;">' + provinces[9].zddwsl + '</span>';
                 }
                 if (mclen == 5 && sllen == 5) {
-                    labelstr = '<span style="color:#fff;">' + provinces[i].xzqhmc + '</span>';
-                    labelstr += '&nbsp&nbsp<span style="font-size:1.3em;color:red;">' + provinces[i].zddwsl + '</span>';
+                    labelstr = '<span style="color:#fff;">' + provinces[9].xzqhmc + '</span>';
+                    labelstr += '&nbsp&nbsp<span style="font-size:1.3em;color:red;">' + provinces[9].zddwsl + '</span>';
                 }
                 var label = new BMap.Label(labelstr);
-                marker.province = provinces[i];
+                marker.province = provinces[9];
                 label.setStyle({
                     fontSize: '0.6em',
                     fontWeight: 'bold',
@@ -800,14 +814,15 @@ var vm = new Vue({
                     vm.hideMarker(vm.province);
                     map.centerAndZoom(pt, 8);
                 });
-                marker.entity = provinces[i];
+                marker.entity = provinces[9];
                 province.push(marker);
                 map.addOverlay(marker);
                 marker.setLabel(label);
-            }
+            // }
         },
         //图层二
         drawMapa: function (result) {
+            
             var myIcon1 = new BMap.Icon("../../static/images/new/w1_pct.png", new BMap.Size(110, 70));
             var cityp = [];
             var citys;
@@ -899,6 +914,7 @@ var vm = new Vue({
                 });
                 //
                 marker.addEventListener("click", function (e) {
+                    alert("即将加载大量数据，请等待几秒。");
                     //loading加载开始
                     vm.loading = true;
                     vm.selqhmc = vm.shengshizs;
@@ -944,6 +960,7 @@ var vm = new Vue({
                 var marker = new BMap.Marker(point, { icon: myIcon1 });
                 marker.uuid = zddws[i].uuid;
                 marker.addEventListener("click", function (e) {
+                    debugger;
                     //显示底部按钮
                     vm.ShowBtn();
                     vm.getZddwxx('', e.target.uuid);
@@ -1044,6 +1061,7 @@ var vm = new Vue({
             vm.loading = false;
         },
         //点击重点单位事件
+        //zjctest
         drawMapc: function (zddw) {
             vm.ShowBtn();
             //隐藏旧圆
@@ -1055,6 +1073,7 @@ var vm = new Vue({
             var middle = this.wgs84_bd09(gispt);
             var pt = new BMap.Point(middle.lng, middle.lat);
             //end
+            
             var map = vm.map;
             map.centerAndZoom(pt, 18);//防止跳回聚合
             this.infoData = (zddw.dwmc != null ? zddw.dwmc : '无');
@@ -1102,6 +1121,7 @@ var vm = new Vue({
             //设置新图标
             var myIcon2 = new BMap.Icon("../../static/images/new/w1_05.png", new BMap.Size(26, 26)); //点击后的新图标
             var marker = new BMap.Marker(pt, { icon: myIcon2 });
+            
             var circle = new BMap.Circle(pt, 240, { strokeColor: "blue", fillColor: "lightblue", strokeWeight: 1, fillOpacity: 0.3, strokeOpacity: 0.3 });
             var radius = 240;
             var r = 6371004;
@@ -1128,6 +1148,7 @@ var vm = new Vue({
             vm.chAllMarkers(vm.zdd);
             vm.zdd = marker;
             vm.circle = circle;
+            
         },
         //显示按钮方法
         ShowBtn: function () {
