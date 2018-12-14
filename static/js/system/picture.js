@@ -42,16 +42,18 @@ var vue = new Vue({
             //图片预览
             previewImg: '',
             //新建页面是否显示
+            status: '',
             addDialogVisible: false,
             addDialogTitle: '',
             addFormChangeFlag: false,
             fileChangeFlag: false,
+            editInitFlag: false,
             inputTypes: [
                 { codeName: '选择录入', codeValue: '0' },
                 { codeName: '手动录入', codeValue: '1' }
             ],
             addFormRules: {
-                inputType: [
+                reserve1: [
                     { required: true, message: '必选项', trigger: 'change' }
                 ],
                 picType: [
@@ -71,7 +73,7 @@ var vue = new Vue({
             },
             //新建数据
             addForm: {
-                inputType: '',
+                reserve1: '',
                 pkid: '',
                 picType: '',
                 picTypename: '',
@@ -253,6 +255,7 @@ var vue = new Vue({
 
         //新建事件
         addClick: function () {
+            this.status = 'XZ';
             this.addDialogVisible = true;
         },
         //新建提交点击事件
@@ -260,7 +263,7 @@ var vue = new Vue({
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     if (this.addForm.pkid == '' || this.addForm.pkid == null) {//新增
-                        if (this.addForm.inputType == '0') {//选择录入
+                        if (this.addForm.reserve1 == '0') {//选择录入
                             for (var k = 0; k < this.allAddTypeNames.length; k++) {
                                 if (this.allAddTypeNames[k].codeValue == this.addForm.picValue) {
                                     this.addForm.picName = this.allAddTypeNames[k].codeName;
@@ -298,36 +301,47 @@ var vue = new Vue({
                                     console.log(error)
                                 })
                             }
-                        } else if (this.addForm.inputType == '1') {//手动录入
-                            if (this.picNameValueExsit) {
-                                this.$message.error("图片代码 " + this.addForm.picValue + " 已存在!");
-                            } else {
-                                var params = {
-                                    reserve1: '1',
-                                    picType: this.addForm.picType,
-                                    picTypename: this.addForm.picTypename,
-                                    picValue: this.addForm.picValue,
-                                    picName: this.addForm.picName,
-                                    createId: this.shiroData.userid,
-                                    createName: this.shiroData.realName
-                                }
-                                axios.post('/api/picture/insertByVO', params).then(function (res) {
-                                    if (res.data.result > 0) {
-                                        if (this.fileChangeFlag) {
-                                            this.submitUpload();
-                                        } else {
-                                            this.$message.success("手动录入成功");
-                                            this.searchClick('insert');
-                                            this.closeAddDialog();
-                                        }
-                                    }
-                                }.bind(this), function (error) {
-                                    console.log(error)
-                                })
+                        } else if (this.addForm.reserve1 == '1') {//手动录入
+                            var params = {
+                                picType: this.addForm.picType
                             }
+                            axios.post('/api/picture/findByVO', params).then(function (res) {
+                                if (res.data.result.total > 0 && res.data.result.list[0].picTypename != this.addForm.picTypename) {
+                                    this.$message.warning("图片类型代码已存在,与图片类型名称不一致!");
+                                } else {
+                                    if (this.picNameValueExsit) {
+                                        this.$message.error("图片代码 " + this.addForm.picValue + " 已存在!");
+                                    } else {
+                                        var params = {
+                                            reserve1: '1',
+                                            picType: this.addForm.picType,
+                                            picTypename: this.addForm.picTypename,
+                                            picValue: this.addForm.picValue,
+                                            picName: this.addForm.picName,
+                                            createId: this.shiroData.userid,
+                                            createName: this.shiroData.realName
+                                        }
+                                        axios.post('/api/picture/insertByVO', params).then(function (res) {
+                                            if (res.data.result > 0) {
+                                                if (this.fileChangeFlag) {
+                                                    this.submitUpload();
+                                                } else {
+                                                    this.$message.success("手动录入成功");
+                                                    this.searchClick('insert');
+                                                    this.closeAddDialog();
+                                                }
+                                            }
+                                        }.bind(this), function (error) {
+                                            console.log(error)
+                                        })
+                                    }
+                                }
+                            }.bind(this), function (error) {
+                                console.log(error)
+                            })
                         }
                     } else {//修改
-                        if (this.addForm.inputType == '0') {//选择录入
+                        if (this.addForm.reserve1 == '0') {//选择录入
                             for (var k = 0; k < this.allAddTypeNames.length; k++) {
                                 if (this.allAddTypeNames[k].codeValue == this.addForm.picValue) {
                                     this.addForm.picName = this.allAddTypeNames[k].codeName;
@@ -366,7 +380,7 @@ var vue = new Vue({
                                     console.log(error)
                                 })
                             }
-                        } else if (this.addForm.inputType == '1') {//手动录入
+                        } else if (this.addForm.reserve1 == '1') {//手动录入
                             if (this.picNameValueExsit) {
                                 this.$message.error("图片代码 " + this.addForm.picValue + " 已存在!");
                             } else {
@@ -405,28 +419,34 @@ var vue = new Vue({
         },
         //表格修改事件
         editClick: function (val) {
+            this.status = 'BJ';
             axios.get('/api/picture/doFindById/' + val.pkid).then(function (res) {
                 this.addForm.pkid = res.data.result.pkid;
-                if (res.data.result.reserve1 == '1') {
-                    this.addForm.inputType = '1';
-                } else {
-                    this.addForm.inputType = '0';
-                }
+                this.addForm.reserve1 = res.data.result.reserve1;
                 this.addForm.picType = res.data.result.picType;
-                this.addForm.picTypename = res.data.result.picTypename;
                 this.addForm.picValue = res.data.result.picValue;
+                this.addForm.picTypename = res.data.result.picTypename;
                 this.addForm.picName = res.data.result.picName;
-
-                var params = {
-                    picType: this.addForm.picType
+                if (this.addForm.reserve1 == '1') {
+                    var params = {
+                        picType: this.addForm.picType
+                    }
+                    axios.post('/api/picture/findByVO', params).then(function (res1) {
+                        if (res1.data.result.total > 1) {
+                            this.picTypeValueExsit = true;
+                        }
+                    }.bind(this), function (error) {
+                        console.log(error)
+                    })
+                } else {
+                    this.addForm.reserve1 = '0';
+                    axios.get('/api/codelist/getCodetype/' + res.data.result.picType).then(function (res2) {
+                        this.allAddTypeNames = res2.data.result;
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
                 }
-                axios.post('/api/picture/findByVO', params).then(function (res1) {
-                    if (res1.data.result.total > 1) {
-                        this.picTypeValueExsit = true;
-                    } 
-                }.bind(this), function (error) {
-                    console.log(error)
-                })
+
                 this.addDialogVisible = true;
             }.bind(this), function (error) {
                 console.log(error)
@@ -435,22 +455,49 @@ var vue = new Vue({
 
         //新增页-关闭
         closeAddDialog: function () {
-            this.addDialogVisible = false;
+            this.addForm = {
+                reserve1: '',
+                pkid: '',
+                picType: '',
+                picTypename: '',
+                picValue: '',
+                picName: ''
+            };
             this.$refs["addForm"].resetFields();
             this.$refs.upload.clearFiles();
             this.fileChangeFlag = false;
             this.picTypeValueExsit = false;
             this.picNameValueExsit = false;
+            this.status = '';
+            this.addDialogVisible = false;
         },
         inputTypeChange: function (val) {
-            this.addForm.picType = '';
-            this.addForm.picTypename = '';
-            this.addForm.picValue = '';
-            this.addForm.picName = '';
+            if (val == '') {
+                this.editInitFlag = true;
+            } else {
+                if (this.status == 'XZ') {
+                    this.addForm.picType = '';
+                    this.addForm.picTypename = '';
+                    this.addForm.picValue = '';
+                    this.addForm.picName = '';
+                } else if (this.status == 'BJ') {
+                    if (this.editInitFlag) {
+                        this.editInitFlag = false;
+                    } else {
+                        this.addForm.picType = '';
+                        this.addForm.picTypename = '';
+                        this.addForm.picValue = '';
+                        this.addForm.picName = '';
+                    }
+                }
+            }
+
         },
         //判断图片类型value是否已存在
         ifPicTypeValueExsit: function (val) {
-            if (val != '') {
+            if (val == '') {
+                this.picTypeValueExsit = false;
+            } else {
                 var params = {
                     picType: this.addForm.picType
                 }
@@ -458,11 +505,11 @@ var vue = new Vue({
                     if (res.data.result.total > 0) {
                         // this.$message.warning("图片类型代码已存在!");
                         this.picTypeValueExsit = true;
-                        this.addForm.picTypename = res.data.result.list[0].picTypename;
+                        // this.addForm.picTypename = res.data.result.list[0].picTypename;
                         return true;
                     } else {
                         this.picTypeValueExsit = false;
-                        this.addForm.picTypename = '';
+                        // this.addForm.picTypename = '';
                         return false;
                     }
                 }.bind(this), function (error) {
@@ -472,41 +519,41 @@ var vue = new Vue({
         },
         //判断某一图片类型下的图片名称value是否已存在
         ifPicNameValueExsit: function (val) {
-            if (this.addForm.picType == '') {
-                if (this.addForm.inputType == '0') {//选择录入
-                    this.$message.error("请先选择图片类型!");
-                } else if (this.addForm.inputType == '1') {//手动录入
-                    this.$message.error("请先录入图片类型代码!");
+            // if (this.addForm.picType == '') {
+            //     if (this.addForm.reserve1 == '0') {//选择录入
+            //         this.$message.error("请先选择图片类型!");
+            //     } else if (this.addForm.reserve1 == '1') {//手动录入
+            //         this.$message.error("请先录入图片类型代码!");
+            //     }
+            // } else {
+            if (val != '') {
+                var params = {
+                    picType: this.addForm.picType,
+                    picValue: val
                 }
-            } else {
-                if (val != '') {
-                    var params = {
-                        picType: this.addForm.picType,
-                        picValue: val
-                    }
-                    axios.post('/api/picture/findByVO', params).then(function (res) {
-                        if (res.data.result.total > 0) {
-                            if (this.addForm.inputType == 0) {//选择录入
-                                for (var k = 0; k < this.allAddTypeNames.length; k++) {
-                                    if (this.allAddTypeNames[k].codeValue == val) {
-                                        this.addForm.picName = this.allAddTypeNames[k].codeName;
-                                    }
+                axios.post('/api/picture/findByVO', params).then(function (res) {
+                    if (res.data.result.total > 0) {
+                        if (this.addForm.reserve1 == 0) {//选择录入
+                            for (var k = 0; k < this.allAddTypeNames.length; k++) {
+                                if (this.allAddTypeNames[k].codeValue == val) {
+                                    this.addForm.picName = this.allAddTypeNames[k].codeName;
                                 }
-                                this.$message.error("图片名称" + this.addForm.picName + "已存在!");
-                            } else if (this.addForm.inputType == 1) {//手动录入
-                                this.$message.error("图片代码" + val + "已存在!");
                             }
-                            this.picNameValueExsit = true;
-                            return true;
-                        } else {
-                            this.picNameValueExsit = false;
-                            return false;
+                            this.$message.error("图片名称" + this.addForm.picName + "已存在!");
+                        } else if (this.addForm.reserve1 == 1) {//手动录入
+                            this.$message.error("图片代码" + val + "已存在!");
                         }
-                    }.bind(this), function (error) {
-                        console.log(error)
-                    })
-                }
+                        this.picNameValueExsit = true;
+                        return true;
+                    } else {
+                        this.picNameValueExsit = false;
+                        return false;
+                    }
+                }.bind(this), function (error) {
+                    console.log(error)
+                })
             }
+            // }
 
         },
     },
