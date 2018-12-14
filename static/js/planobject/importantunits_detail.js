@@ -13,7 +13,7 @@ new Vue({
             jzl_zdbwData: [],//建筑类重点部位数据
             zzl_zdbwData: [],//装置类重点部位数据
             cgl_zdbwData: [],//储罐类重点部位数据
-            jzfqData:[],//建筑分区原始数据
+            jzfqData: [],//建筑分区原始数据
             jzl_jzfqData: [],//建筑群-建筑类数据
             zzl_jzfqData: [],//建筑群-装置类数据
             cgl_jzfqData: [],//建筑类建筑分区数据
@@ -215,15 +215,15 @@ new Vue({
          */
         /**面包屑 by li.xue 20180628*/
         var type = getQueryString("type");
-        if(type == "GJSS"){
+        if (type == "GJSS") {
             loadBreadcrumb("高级搜索", "重点单位详情");
-        }else if(type == "DT"){
+        } else if (type == "DT") {
             loadBreadcrumb("地图", "重点单位详情");
-        }else if(type == "XZ"){
+        } else if (type == "XZ") {
             loadBreadcrumb("重点单位", "重点单位新增");
-        }else if(type == "BJ"){
+        } else if (type == "BJ") {
             loadBreadcrumb("重点单位", "重点单位编辑");
-        }else{
+        } else {
             loadBreadcrumb("重点单位", "重点单位详情");
         }
 
@@ -334,7 +334,7 @@ new Vue({
                         };
                     }
                 }
-                
+
                 // if (this.tableData.jzfl == 10 || this.tableData.jzfl == 20) {
                 //     this.jzl_jzfqData = res.data.result;
                 // } else if (this.tableData.jzfl == 30) {
@@ -531,8 +531,8 @@ new Vue({
             }
             axios.post('/dpapi/digitalplanlist/list', params).then(function (res) {
                 var tempData = res.data.result;
-                for(var i=0;i<tempData.length;i++){
-                    tempData[i].zzsj = tempData[i].zzsj.substring(0,10);
+                for (var i = 0; i < tempData.length; i++) {
+                    tempData[i].zzsj = tempData[i].zzsj.substring(0, 10);
                 }
                 this.yaData = tempData;
                 if (this.yaData.length !== 0) {
@@ -546,11 +546,16 @@ new Vue({
         //预案预览
         openPlan: function (val) {
             if (val.yajb == '03') {
-                window.open(baseUrl+"/planShare/page/" + val.uuid + "/" + 'detail' + "/web");
+                window.open(baseUrl + "/planShare/page/" + val.uuid + "/" + 'detail' + "/web");
             } else if (val.yajb == '01' || val.yajb == '02') {
                 var fjDate = [];
                 var fjCount = 0;
-                axios.get('/dpapi/yafjxz/doFindByPlanId/' + val.uuid).then(function (res) {
+                var params = {
+                    yaid: val.uuid,
+                    kzm: 'zip'
+                }
+                axios.post('/dpapi/yafjxz/doFindByPlanId', params).then(function (res) {
+                    // axios.get('/dpapi/yafjxz/doFindByPlanId/' + val.uuid).then(function (res) {
                     fjDate = res.data.result;
                     fjCount = fjDate.length;
                     if (fjCount > 0) {
@@ -561,7 +566,7 @@ new Vue({
                                 showClose: true
                             });
                         } else {
-                            window.open(baseUrl+"/upload/" + yllj);
+                            window.open(baseUrl + "/upload/" + yllj);
                         }
                     } else {
                         this.$message({
@@ -578,21 +583,26 @@ new Vue({
         downloadPlan: function (val) {
             if (val.yajb == '03') {
                 if (val.dxid == 'dlwd') {
-                    window.open(baseUrl+"/dpapi/yafjxz/downTempYa?yawjmc=大连万达_简版.docx");
+                    window.open(baseUrl + "/dpapi/yafjxz/downTempYa?yawjmc=大连万达_简版.docx");
                 }
             } else if (val.yajb == '01' || val.yajb == '02') {
                 var fjDate = [];
                 var fjCount = 0;
-                axios.get('/dpapi/yafjxz/doFindByPlanId/' + val.uuid).then(function (res) {
+                var params = {
+                    yaid: val.uuid,
+                    kzm: 'zip'
+                }
+                axios.post('/dpapi/yafjxz/doFindByPlanId', params).then(function (res) {
+                    // axios.get('/dpapi/yafjxz/doFindByPlanId/' + val.uuid).then(function (res) {
                     fjDate = res.data.result;
                     fjCount = fjDate.length;
                     if (fjCount > 0) {
-                        axios.get('/dpapi/yafjxz/doFindByPlanId/' + val.uuid).then(function (res) {
-                            var xzlj = res.data.result[0].xzlj;
-                            window.open(baseUrl+"/upload/" + xzlj);
-                        }.bind(this), function (error) {
-                            console.log(error)
-                        })
+                        // axios.get('/dpapi/yafjxz/doFindByPlanId/' + val.uuid).then(function (res) {
+                        var xzlj = res.data.result[0].xzlj;
+                        window.open(baseUrl + "/upload/" + xzlj);
+                        // }.bind(this), function (error) {
+                        //     console.log(error)
+                        // })
                     }
                 }.bind(this), function (error) {
                     console.log(error)
@@ -619,7 +629,7 @@ new Vue({
         //信息分享
         openShare: function () {
             var ID = getQueryString("ID");
-            window.open(baseUrl+"/planShare/pageZddw/" + ID +  "/web");
+            window.open(baseUrl + "/planShare/pageZddw/" + ID + "/web");
         },
         closeShareDialog: function () {
             this.shareDialogVisible = false;
@@ -645,12 +655,12 @@ new Vue({
             }, 300);
         },
         //跳转到地图页面并带上UUID和点击参数
-        tz:function(){
+        tz: function () {
             // console.log(this.tableData);
             var uuid = this.tableData.uuid;
             var cityCode = this.tableData.xzqh;
             //行政区划代码，跳转后需要截取前四位补0后查一下市的名称
-            window.location.href = "bigscreen/big_screen_map_pro.html?cityCode="+cityCode+"&uuid="+uuid+"&sydj=1";
+            window.location.href = "bigscreen/big_screen_map_pro.html?cityCode=" + cityCode + "&uuid=" + uuid + "&sydj=1";
         }
     }
 
