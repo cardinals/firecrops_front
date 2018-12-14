@@ -59,8 +59,8 @@ new Vue({
         this.planDetails(this.pkid);
         this.disasterSet(this.pkid);
         this.fjDetail();
-        this.picDetail();  
-        
+        this.picDetail();
+
     },
 
     methods: {
@@ -225,7 +225,7 @@ new Vue({
 
         //模板压缩包导出
         downloadModule: function () {
-            location.href=baseUrl +"/planShare/exportData/"+this.pkid;
+            location.href = baseUrl + "/planShare/exportData/" + this.pkid;
         },
         //根据重点单位id获取建筑分区信息
         getJzfqDetailByVo: function () {
@@ -323,7 +323,11 @@ new Vue({
         //预案预览
         openPlan: function () {
             if (this.fjDetailData > 0) {
-                axios.get('/dpapi/yafjxz/doFindByPlanId/' + this.pkid).then(function (res) {
+                var params = {
+                    yaid: this.pkid,
+                    kzm: 'zip'
+                }
+                axios.post('/dpapi/yafjxz/doFindByPlanId', params).then(function (res) {
                     var yllj = res.data.result[0].yllj;
                     if (yllj == null || yllj == '') {
                         this.$message({
@@ -346,7 +350,11 @@ new Vue({
         //预案下载
         downloadPlan: function () {
             if (this.fjDetailData > 0) {
-                axios.get('/dpapi/yafjxz/doFindByPlanId/' + this.pkid).then(function (res) {
+                var params = {
+                    yaid: this.pkid,
+                    kzm: 'zip'
+                }
+                axios.post('/dpapi/yafjxz/doFindByPlanId', params).then(function (res) {
                     var xzlj = res.data.result[0].xzlj;
                     window.open(baseUrl + "/upload/" + xzlj);
                 }.bind(this), function (error) {
@@ -374,7 +382,7 @@ new Vue({
                 this.hisDetailData = res.data.result;
                 if (this.basicDetailData.jdh.substr(0, 2) == '21') {
                     var head = 'http://10.119.119.232:11010';
-                //江苏
+                    //江苏
                 } else if (this.basicDetailData.jdh.substr(0, 2) == '32') {
                     var head = 'http://10.119.119.205:11010';
                 }
@@ -386,9 +394,9 @@ new Vue({
                                 uuid: this.hisDetailData[i].id,
                                 name: this.hisDetailData[i].zlmc,
                                 url: head + body + this.hisDetailData[i].xgxx,
-                                type:'history'
+                                type: 'history'
                             });
-                        }else if (this.hisDetailData[i].fjlxdm == '01') {
+                        } else if (this.hisDetailData[i].fjlxdm == '01') {
                             this.hisPlanData.push(this.hisDetailData[i]);
                         }
                     }
@@ -404,7 +412,7 @@ new Vue({
                     //辽宁
                     if (this.basicDetailData.jdh.substr(0, 2) == '21') {
                         var head = 'http://10.119.119.232:11010';
-                    //江苏
+                        //江苏
                     } else if (this.basicDetailData.jdh.substr(0, 2) == '32') {
                         var head = 'http://10.119.119.205:11010';
                     }
