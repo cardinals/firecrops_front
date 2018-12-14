@@ -29,9 +29,10 @@ var vue = new Vue({
     created: function () {
         var iframe = document.getElementById("ewbhmain");
         iframe.src = ewbhUrl;
-        this.shiroData = shiroGlobal;
+        // this.shiroData = shiroGlobal;
+        this.getShiro();
         this.type = getQueryString("type");
-        this.init();
+        // this.init();
     },
     methods: {
         init: function () {
@@ -51,6 +52,21 @@ var vue = new Vue({
                     this.getZddwList();
                 }
             }
+        },
+        getShiro:function(){
+            axios.get('/api/shiro').then(function (res) {
+                if(res.data.organizationVO == null || res.data.organizationVO == ""){
+                    res.data.organizationVO = {
+                        uuid: "",
+                        jgjc: "",
+                        jgid: ""
+                    }
+                }
+                this.shiroData = res.data;
+                this.init();
+            }.bind(this), function (error) {
+                console.log(error)
+            });
         },
         //返回重点单位列表
         returnZddw: function () {
