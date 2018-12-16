@@ -960,7 +960,7 @@ var vm = new Vue({
                 var marker = new BMap.Marker(point, { icon: myIcon1 });
                 marker.uuid = zddws[i].uuid;
                 marker.addEventListener("click", function (e) {
-                    debugger;
+                    
                     //显示底部按钮
                     vm.ShowBtn();
                     vm.getZddwxx('', e.target.uuid);
@@ -1063,6 +1063,7 @@ var vm = new Vue({
         //点击重点单位事件
         //zjctest
         drawMapc: function (zddw) {
+            
             vm.ShowBtn();
             //隐藏旧圆
             var oc = vm.circle;

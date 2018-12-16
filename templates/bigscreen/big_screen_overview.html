@@ -36,143 +36,242 @@
 	}
 	.selected {
         color: white;
-    }
+	}
+	.h68{
+		margin-top: 4px;
+		height:66.5%;
+	}
+	.h69{
+		margin-top: 9px;
+		height:45.5%;
+	}
+#tabAutoa{ width:100%; height:100%; overflow:hidden;color:#1661d6;margin-top: 5px;}	
+#tabAuto{ width:100%; height:100%; overflow:hidden;color:#1661d6;margin-top: 5px;}
+.tabAuto{ width:100%; overflow:hidden; margin:0; padding:0;}
+.tabAuto li{ width:33%; height:100%; float:left; border-bottom:none;list-style:none; text-align:center; border-bottom:none; cursor:pointer;}
+.tabAuto li.current{ border-bottom:2px solid #1661d6; color: #fff;font-size: 15px;}
+.tgh-box{ width:100%; height:100%; overflow:hidden;cursor:pointer;}
+.tgh-box div{ width:100%; height:100%;}
+</style>
+
 </style>
 
 <body  id='allbody' style="visibility:hidden;" onload="init()"   class="fw bg_tm">
 	<div id="app">
 		<div class="application-box tc abs">
 			<!-- 头部分 -->
-			<div class="application-div h20">
-				<div class="h100 w25 l p5">
-					<div class="application-text map-bg2">
-						<div class="application-imge2" style="background-image: url(../../static/images/icon_unit.png);"></div>
-						<div class="application-name2">重点单位总数（个)</div>
-						<div class="application-num2" v-text=totalDate.zddw></div>
-					</div>
-				</div>
-				<div class="h100 w25 l p5">
-					<div class="application-text map-bg2">
-						<div class="application-imge2" style="background-image: url(../../static/images/icon_building.png);"></div>
-						<div class="application-name2">建筑信息总数（个）</div>
-						<div class="application-num2" v-text=totalDate.jzxx></div>
-					</div>
-				</div>
-				<div class="h100 w25 l p5">
-					<div class="application-text map-bg2">
-						<div class="application-imge2" style="background-image: url(../../static/images/icon_emergency.png);"></div>
-						<div class="application-name2">数字化预案总数（个）</div>
-						<div class="application-num2" v-text=totalDate.szhya></div>
-					</div>
-				</div>
-				<div class="h100 w25 l p5">
-					<div class="application-text map-bg2">
-						<div class="application-imge2" style="background-image: url(../../static/images/icon_ranks.png);"></div>
-						<div class="application-name2">消防队站总数（个）</div>
-						<div class="application-num2" v-text=totalDate.xfdz></div>
-					</div>
-				</div>
-			</div>
 			<!-- 左侧部分 -->
-			<div class="l h80 w25">
-				<div class="application-div h60 p5">
-					<div class="application-text map-bg2">
-						<div class="application-subtitle l">总队预案数量排行(Top10)</div>
-						<div class="application-subtitle" style="position: absolute;text-align:right;"><a href="#" @click="top10jump()">更多</a></div>
-						<div id="top10Bar" class="application-boxs"></div>
+			<div class="l h80 w25" >
+				
+				<div class="application-div h85 p5">
+					<div class="application-text map-bg2" style="background:url('/static/images/new/bg_01.png') no-repeat;background-size:100% 100%">
+						
+						<div  style="height:9%;width:100%;float: left;">
+							</div>
+							<div  style="height:10%;width:100%;float: left;">
+									<div id="tabAutoa">
+											<ul class="tabAuto">
+											<li>消防水源</li>
+											<li>重点单位</li>
+											<li>消防队站</li>
+											</ul>
+									</div>
+							</div>
+							<div  style="height:5%;width:100%;float: left;">
+									
+							</div>
+							<!-- <div class="tgh-box">  -->
+								<div id="top10Barz" style="margin-left:-17px;height:76%;width:100%;float: left;color:#fff;">
+
+								</div>
+								<!-- <div id="top10Barz" style="margin-left:-17px;height:76%;width:100%;float: left;color:#fff;">
+
+								</div>
+								<div id="top10Barz" style="margin-left:-17px;height:76%;width:100%;float: left;color:#fff;">
+
+								</div>
+							</div>  -->
 					</div>
 				</div>
-				<!-- <div class="application-div h30 p5">
-					<div class="application-text map-bg2">
-						
-					</div>
-				</div> -->
 				<div class="application-div h40 p5">
-					<!--
-						<div class="application-text map-bg2">
-						<div class="application-subtitle l">预案提醒</div>
-						<div class="application-subtitle" style="position: absolute;text-align:right;"><a href="#" @click="jump()">更多</a></div>
-						<div class="application-boxs flex pl10 pr10 pb10">
-							<div id="scroll" class="application-text">
-								<ul>
-									<li v-for="data in scrollData">
-										<!-- <a href="../digitalplan/digitalplan_approve.html" v-text="data.zddwmc"></a> -->
-						<!--				<a href="#" @click="jump()" style="color:#29bb9d;" v-text="data.zddwmc"></a>
-										<div style="color:#ff6364;" v-if="data.type == '1'" v-text="'待审核'"></div>
-										<div style="color:#fdc107;" v-if="data.type == '2'" v-text="'待更新'+ data.count"></div>
-									</li>
-								</ul>
-							</div>
-							<!-- <div id="tagscloud" class="application-boxs">
-											<a class="tagc1" v-text="'辽宁省人民法院'"></a>
-											<a class="tagc2" v-text="'辽宁省政府'"></a>
-											<a class="tagc3" v-text="'辽宁省就业局'"></a>
-											<a class="tagc4" v-text="'沈阳市城市规划管理局'"></a>
-											<a class="tagc2" v-text="'沈阳市公安局'"></a>
-											<a class="tagc3" v-text="'沈阳市地铁二号线'"></a>
-											<a class="tagc3" v-text="'青岛市塑性加工园'"></a>
-											<a class="tagc4" v-text="'泰安市城建局'"></a>
-											<a class="tagc2" v-text="'河北省国土资源厅'"></a>
-											<a class="tagc1" v-text="'秦皇岛市林业局'"></a>
-										</div> -->
-				<!--		</div>
-					</div>
-					-->
-					<div class="application-text map-bg2">
-						<div class="application-subtitle l" id="tab-head">
-							<h5 id="tab1" @click="changeTab(0)" class="selected">待审核</h2>
-							<h5 id="tab2" @click="changeTab(1)">待更新</h2>
-						</div>
-							
-						<div class="application-boxs flex pl10 pr10 pb10" v-if="isDSH">
-							<div id="scroll" class="application-text">
-								<ul>
-									<li v-for="data in scrollData_DSH">
-										<a href="#" @click="jump()" style="color:#29bb9d;" v-text="data.name"></a>
-										<div style="color:#ff6364;" v-text="'待审核'"></div>
-									</li>
-								</ul>
-							</div>
-						</div>
+					
+					<div class="application-text map-bg2" style="background:url('/static/images/new/bg_06.png') no-repeat;background-size:100% 100%">
+						
+						<!-- 左侧 -->
+						<div  style="height:12%;width:100%;float: left;">
 
-						<div class="application-boxs flex pl10 pr10 pb10" v-if="isDGX">
-								<div id="scroll" class="application-text">
-									<ul>
-										<li v-for="data in scrollData_DGX">
-											<a style="color:#29bb9d;text-decoration:none; " v-text="data.name"></a>
-											<div style="color:#fdc107;" v-text="'待更新'+ data.value"></div>
-										</li>
-									</ul>
-								</div>
+
+						</div>
+						<div  style="height:88%;width:100%;float: left;color:#fff;">
+
+										<div style="margin-left:10px;" class="application-boxs flex pl10 pr10 pb10" v-if="isDSH">
+											<div id="scroll" >
+												<ul>
+													<li v-for="data in scrollData_DSH">
+														<a href="#" @click="jump()" style="color:#fff;" v-text="data.name"></a>
+														<div style="color:#fff;" v-text="'待审核'"></div>
+													</li>
+												</ul>
+											</div>
+										</div>
+				
+										<div class="application-boxs flex pl10 pr10 pb10" v-if="isDGX">
+												<div id="scroll" class="application-text">
+													<ul>
+														<li v-for="data in scrollData_DGX">
+															<a style="color:#fff;text-decoration:none; " v-text="data.name"></a>
+															<div style="color:#fff;" v-text="'待更新'+ data.value"></div>
+														</li>
+													</ul>
+												</div>
+										</div>
+								
 						</div>
 					</div>
 				</div>
 			</div>
 			<!-- 中央部分 -->
-			<div class="l h80 w50">
-				<div class="application-div h100">
-					<div id="map" class="application-text"></div>
+			<div class="l h68 w50" >
+				<div class="application-div h100" style="background-size:100% 100%">
+					<!-- <div id="map" class="application-text"></div> -->
+
+					<div  style="height:100%;width:80%;float: left;">
+						<div  style="height:15%;width:100%;float: left;">
+							<div style="height:100%;width:10%;float: left;">
+								
+							</div>
+							<div style="font-size:16px;color:#fff;height:100%;width:40%;float: left;padding-top: 10px;padding-left: 20px;">
+								九小场所采集数据
+							</div>
+							<div style="height:100%;width:40%;float: left;">
+								<div style="height:90%;width:100%;float: left;background:url('/static/images/new/bg_02.png') no-repeat;background-size:100% 100%">
+									<div style="font-size:36px;color:#19deef;width: 90%;float: left;margin-top: -2px;" >11345</div><div style="width: 10%;float: left;font-size:16px;color:#19deef;margin-top: 18px;margin-left: -16px;"> 台</div>
+								</div>
+
+								<div style="height:20%;width:100%;float: left;color:#fff;font-size:2px;">
+									 
+								
+										<p class="date" style="font-size:2px;color: #1661d6;">
+												<span style="font-size:2px !important;color: #1661d6;">截止：</span>
+												<span id="Y"></span>
+												<strong>-</strong>
+												<span id="MH"></span>
+												<strong>-</strong>
+												<span id="td_keleyi_com"></span>
+												<!--<strong id="D"></strong>-->
+												<span id="H"></span>
+												<span id="M"></span>
+												<!-- <strong id="S"></strong> -->
+										</p>
+								
+
+								</div>
+
+							</div>
+							
+
+						</div>
+						<div  style="height:85%;width:100%;float: left;">
+								<div  style="height:100%;width:15%;float: left;">
+									</div>
+									<!-- 地图 -->
+									<div @click="loadChart()" style="cursor: pointer;height:100%;width:65%;float: left;background:url('/static/images/new/pic_map.png') no-repeat;background-size:100% 100%">
+			
+									</div>
+									<div  style="height:100%;width:20%;float: left;">
+									
+									</div>
+						
+						</div>
+
+					</div>
+					<!-- 中央部分右侧数据 -->
+					<div  style="height:100%;width:20%;float: left;background:url('/static/images/new/bg_03.png') no-repeat;background-size:100% 100%">
+						<div  style="height:8%;width:100%;float: left;">
+								
+						</div>
+						<div  style="height:24%;width:100%;float: left;">
+								<div style="font-size:26px;color:#19deef;width: 90%;float: left;margin-top: 8px;" v-text=tatalDate0.jzxx></div><div style="width: 10%;float: left;font-size:16px;color:#19deef;margin-top: 18px;margin-left: -8px;"> 条</div>
+								<div style="width: 100%;color:#fff;font-size:16px;">建筑信息</div>
+						</div>
+						<div  style="height:23%;width:100%;float: left;">
+							<div style="font-size:26px;color:#19deef;width: 90%;float: left;margin-top: 8px;" v-text=tatalDate0.zddw></div><div style="width: 10%;float: left;font-size:16px;color:#19deef;margin-top: 18px;margin-left: -8px;"> 条</div>
+							<div style="width: 100%;color:#fff;font-size:16px;">重点单位</div>
+						</div>
+						<div  style="height:23%;width:100%;float: left;">
+								<div style="font-size:26px;color:#19deef;width: 90%;float: left;margin-top: 8px;" v-text=tatalDate0.szhya></div><div style="width: 10%;float: left;font-size:16px;color:#19deef;margin-top: 18px;margin-left: -8px;"> 条</div>
+								<div style="width: 100%;color:#fff;font-size:16px;">消防水源信息</div>
+						</div>
+						<div  style="height:23%;width:100%;float: left;">
+								<div style="font-size:26px;color:#19deef;width: 90%;float: left;margin-top: 8px;" v-text=tatalDate0.xfdz></div><div style="width: 10%;float: left;font-size:16px;color:#19deef;margin-top: 18px;margin-left: -8px;"> 条</div>
+								<div style="width: 100%;color:#fff;font-size:16px;">消防力量信息</div>
+						</div>
+					</div>
+
 				</div>
-				<!-- <div class="application-div h25">
-					<div id="barmax" class="application-text"></div>
-				</div> -->
+				<div class="application-div h69" style="background:url('/static/images/new/bg_05.png') no-repeat;background-size:100% 100%">
+					<!-- <div id="barmax" class="application-text"></div> -->
+					
+					<div  style="height:12%;width:100%;float: left;">
+						</div>
+						<div  style="height:88%;width:100%;float: left;">
+							<div id="barmax" style="height:100%;width:100%;"></div>
+						</div>
+						
+				</div>
 			</div>
+			
 			<!-- 右侧部分 -->
-			<div class="l h80 w25">
-				<div class="application-div h50 p5">
-					<div class="application-text map-bg2">
-						<div class="application-subtitle l">各级重点单位占比</div>
-						<div id="pie" class="application-boxs"></div>
+			<div class="l h80 w25" >
+				<!-- 预案数量排行 -->
+				<div class="application-div h85 p5" >
+					<div class="application-text map-bg2" style="background:url('/static/images/new/bg_07.png') no-repeat;background-size:100% 100%">
+						
+						<div  style="height:9%;width:100%;float: left;">
+						</div>
+						<div  style="height:10%;width:100%;float: left;">
+								<div id="tabAuto">
+										<ul class="tabAuto">
+										<li>二级预案</li>
+										<li>三级预案</li>
+										<li>大中队级预案</li>
+										</ul>
+								</div>	
+								
+								
+						</div>
+						<div  style="height:5%;width:100%;float: left;">
+						</div>
+						<!-- <div class="tgh-box"> -->
+							<div id="top10Bar"  style="height:76%;width:100%;float: left;margin-left: -5px;">
+							
+							</div>
+							<!-- <div id="top10Bara"  style="height:76%;width:100%;float: left;margin-left: -5px;">
+							
+							</div>
+							<div id="top10Barb"  style="height:76%;width:100%;float: left;margin-left: -5px;">
+							
+							</div>
+						</div> -->
+						
 					</div>
 				</div>
-				<div class="application-div h50 p5">
-					<div class="application-text map-bg2">
-						<div class="application-subtitle l">各类数字化预案数量</div>
-						<div class="application-subtitle" style="position: absolute;text-align:right;"><a href="#" @click="barjump()">更多</a></div>
-						<div id="bar" class="application-boxs"></div>
+				<!-- 右侧 -->
+				
+				<div class="application-div h40 p5">
+					<div class="application-text map-bg2" style="background:url('/static/images/new/bg_04.png') no-repeat;background-size:100% 100%">
+				
+						<div style="height:12%;width:100%;float: left;">
+						</div>
+						<div style="height:88%;width:100%;float: left;">
+							<div id="bar"style="height: 100%;width:100%;">
+
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
+			
 		</div>
 		<!-- /application-box -->
 	</div>
@@ -185,6 +284,8 @@
 <!-- <script type="text/javascript" src="../../static/js/bigscreen/tagscloud.js"></script> -->
 <script type="text/javascript" src="../../static/js/bigscreen/scroll.js"></script>
 <script type="text/javascript" src="../../static/js/bigscreen/big_screen_overview.js"></script>
+
+
 	<script>
 		$(function () {
 				
@@ -203,5 +304,106 @@
 				document.getElementById("allbody").style.visibility = 'visible';
 			}
 	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+		
+		setInterval(showTime, 1000); 
+		function timer(obj,txt){
+		obj.text(txt);
+		} 
+		function showTime(){ 
+		var today = new Date();
+		var weekday=new Array(7)
+		weekday[0]="星期日"
+		weekday[1]="星期一"
+		weekday[2]="星期二"
+		weekday[3]="星期三"
+		weekday[4]="星期四"
+		weekday[5]="星期五"
+		weekday[6]="星期六" 
+		var y=today.getFullYear()+"";
+		var month=today.getMonth()+1;
+		var td_keleyi_com=today.getDate()+"";
+		var d=weekday[today.getDay()];
+		var h=today.getHours()+":";
+		var m=today.getMinutes()+"";
+		var s=today.getSeconds(); 
+		timer($("#Y"),y);
+		timer($("#MH"),month); 
+		timer($("#td_kel"+"eyi_com"),td_keleyi_com); 
+		timer($("#D"),d);
+		timer($("#H"),h);
+		timer($("#M"),m);
+		timer($("#S"),s);
+		} 
+		})
+		</script>
+	
+	<script type="text/javascript">
+		// JavaScript Document
+		$(function(){
+		$(".tabAuto li:first").addClass("current");
+		$(".tgh-box div").not(":first").hide(); 
+		$(".tabAuto li").click(function(){
+		$(this).addClass("current").siblings().removeClass("current"); 
+		var index = $(".tabAuto li").index(this);
+		$(".tgh-box div").eq(index).show().siblings().hide();
+		})
+		})
+		
+		//自动轮换代码
+		$(function(){
+		$(".tabAuto li:first").addClass("current");
+		$(".tgh-box div:first").css('display','block');
+		autoScroll();
+		contentHover();
+		currentHover(); 
+		
+		});
+		var i=-1; //第i+1个tab开始;
+		var offset = 2000; //轮换时间
+		var timer = null;
+		function autoScroll(){
+		var n = $(".tabAuto li").length - 1;
+		i++;
+		if(i > n)
+		i=0;
+		slide(i);
+		timer = window.setTimeout(autoScroll,offset);
+		}
+		function slide(i){
+		$(".tabAuto li").eq(i).addClass("current").siblings().removeClass("current");
+		$(".tgh-box div").eq(i).show().siblings().hide(); 
+		}
+		function currentHover(){
+		$(".tabAuto li").hover(function(){
+		if(timer){ 
+		clearTimeout(timer);
+		i = $(this).prevAll().length;
+		slide(i);
+		}
+		},function(){
+		timer = window.setTimeout(autoScroll,offset);
+		this.blur(); 
+		return false; 
+		}) 
+		}
+		function contentHover(){
+		$(".tgh-box div").hover(function(){
+		if(timer){
+		clearTimeout(timer);
+		i = $(this).prevAll().length;
+		slide(i); 
+		} 
+		},function(){
+		timer = window.setTimeout(autoScroll,offset);
+		this.blur();
+		return false;
+		}) 
+		}
+		</script>	
+		
+		
 </html>
 

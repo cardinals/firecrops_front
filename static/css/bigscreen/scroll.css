@@ -10,7 +10,8 @@
     width: 100%;
     height: 40px;
     line-height: 20px;
-    vertical-align:bottom; zoom:1; border-bottom:#B7B7B7 dashed 1px;
+    vertical-align:bottom; zoom:1; 
+    /* border-bottom:#B7B7B7 dashed 1px; */
 }
 
 #scroll li a {
