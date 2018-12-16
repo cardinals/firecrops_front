@@ -93,14 +93,14 @@
 						<el-form :model="addForm" label-width="85px" :rules="addFormRules" ref="addForm">
 							<el-row>
 								<el-col :span="11">
-									<el-form-item label="录入类型" prop="inputType">
-										<el-select size="small" v-model="addForm.inputType" @change="inputTypeChange" placeholder="录入类型" clearable>
+									<el-form-item label="录入类型" prop="reserve1">
+										<el-select size="small" v-model="addForm.reserve1" @change="inputTypeChange" placeholder="录入类型" clearable>
 											<el-option v-for="type in inputTypes" :label="type.codeName" :value="type.codeValue"></el-option>
 										</el-select>
 									</el-form-item>
 								</el-col>
 							</el-row>
-							<div v-if="addForm.inputType=='0'">
+							<div v-if="addForm.reserve1==='0'">
 								<el-row>
 									<el-col :span="11">
 										<el-form-item label="图片类型" prop="picType">
@@ -119,17 +119,17 @@
 									</el-col>
 								</el-row>
 							</div>
-							<div v-else-if="addForm.inputType=='1'">
+							<div v-else-if="addForm.reserve1==='1'">
 								<el-row>
 									<el-col :span="11">
 										<el-form-item label="图片类型" prop="picTypename">
-											<el-input v-model="addForm.picTypename" :disabled="picTypeValueExsit" placeholder="图片类型" size="small"></el-input>
+											<el-input v-model="addForm.picTypename" placeholder="图片类型" size="small"></el-input>
 										</el-form-item>
 									</el-col>
 									<el-col :span="1">&nbsp;</el-col>
 									<el-col :span="11">
 										<el-form-item label="类型代码" prop="picType">
-											<el-input v-model="addForm.picType" @change="ifPicTypeValueExsit" placeholder="类型代码" size="small"></el-input>
+											<el-input v-model="addForm.picType" placeholder="类型代码" size="small"></el-input>
 										</el-form-item>
 									</el-col>
 								</el-row>
