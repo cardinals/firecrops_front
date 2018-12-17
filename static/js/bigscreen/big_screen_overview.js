@@ -178,10 +178,10 @@ var vm = new Vue({
         this.echarts52();
         this.echarts5();
 
-        this.echarts111();
-        this.echarts112();
-
         this.echarts11();
+        this.echarts111();
+         this.echarts112();
+
         this.echarts1();
         this.barChart();
 
