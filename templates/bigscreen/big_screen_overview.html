@@ -52,9 +52,31 @@
 .tabAuto li.current{ border-bottom:2px solid #1661d6; color: #fff;font-size: 15px;}
 .tgh-box{ width:100%; height:100%; overflow:hidden;cursor:pointer;}
 .tgh-box div{ width:100%; height:100%;}
-</style>
+
+dl {
+	width:100%; height:100%; overflow:hidden;color:#1661d6;margin-top: 8px;
+}
+dt.active {
+	border-bottom:2px solid #1661d6; color: #fff;font-size: 15px;
+}
+dt {
+ float:left;
+ border-left:0;
+ cursor:pointer;
+ margin-bottom:-1px;
+ width:33%;
+}
+dd {
+ clear:both;
+ /* width:100%;
+ border-left:0;
+ border-left:0;
+ display:none; */
+}
+
 
 </style>
+
 
 <body  id='allbody' style="visibility:hidden;" onload="init()"   class="fw bg_tm">
 	<div id="app">
@@ -66,31 +88,25 @@
 				<div class="application-div h85 p5">
 					<div class="application-text map-bg2" style="background:url('/static/images/new/bg_01.png') no-repeat;background-size:100% 100%">
 						
-						<div  style="height:9%;width:100%;float: left;">
+							<div  style="height:9%;width:100%;float: left;">
 							</div>
-							<div  style="height:10%;width:100%;float: left;">
-									<div id="tabAutoa">
-											<ul class="tabAuto">
-											<li>消防水源</li>
-											<li>重点单位</li>
-											<li>消防队站</li>
-											</ul>
+							<div  style="height:95%;width:100%;float: left;color: #fff;">
+								<dl>
+									<dt>消防水源</dt>
+									<dt>重点单位</dt>
+									<dt>消防队站</dt>
+									<div  style="height:7%;width:100%;float: left;">
 									</div>
+									<dd  id="top10Barz" style="height:75%;width:100%;margin-left: -15px">
+										
+									</dd>
+									<dd   id="top10Barza" style="height:75%;width:100%;margin-left: -15px">
+									</dd>
+									<dd   id="top10Barzb" style="height:75%;width:100%;margin-left: -15px" >
+									</dd>
+								</dl>
 							</div>
-							<div  style="height:5%;width:100%;float: left;">
-									
-							</div>
-							<!-- <div class="tgh-box">  -->
-								<div id="top10Barz" style="margin-left:-17px;height:76%;width:100%;float: left;color:#fff;">
-
-								</div>
-								<!-- <div id="top10Barz" style="margin-left:-17px;height:76%;width:100%;float: left;color:#fff;">
-
-								</div>
-								<div id="top10Barz" style="margin-left:-17px;height:76%;width:100%;float: left;color:#fff;">
-
-								</div>
-							</div>  -->
+		
 					</div>
 				</div>
 				<div class="application-div h40 p5">
@@ -100,9 +116,8 @@
 						<!-- 左侧 -->
 						<div  style="height:12%;width:100%;float: left;">
 
-
 						</div>
-						<div  style="height:88%;width:100%;float: left;color:#fff;">
+						<div style="height:88%;width:100%;float: left;color:#fff;">
 
 										<div style="margin-left:10px;" class="application-boxs flex pl10 pr10 pb10" v-if="isDSH">
 											<div id="scroll" >
@@ -229,30 +244,22 @@
 						
 						<div  style="height:9%;width:100%;float: left;">
 						</div>
-						<div  style="height:10%;width:100%;float: left;">
-								<div id="tabAuto">
-										<ul class="tabAuto">
-										<li>二级预案</li>
-										<li>三级预案</li>
-										<li>大中队级预案</li>
-										</ul>
-								</div>	
-								
-								
+						<div  style="height:95%;width:100%;float: left;color: #fff;">
+							<dl>
+								<dt>二级预案</dt>
+								<dt>三级预案</dt>
+								<dt>大中队级预案</dt>
+								<div  style="height:6%;width:100%;float: left;">
+								</div>
+								<dd  id="top10Bara" style="height:84%;width:100%;margin-left: -5px;">
+									
+								</dd>
+								<dd id="top10Bar"  style="height:84%;width:100%;margin-left: -5px;">
+								</dd>
+								<dd id="top10Barb" style="height:84%;width:100%;margin-left: -5px;" >
+								</dd>
+							</dl>
 						</div>
-						<div  style="height:5%;width:100%;float: left;">
-						</div>
-						<!-- <div class="tgh-box"> -->
-							<div id="top10Bar"  style="height:76%;width:100%;float: left;margin-left: -5px;">
-							
-							</div>
-							<!-- <div id="top10Bara"  style="height:76%;width:100%;float: left;margin-left: -5px;">
-							
-							</div>
-							<div id="top10Barb"  style="height:76%;width:100%;float: left;margin-left: -5px;">
-							
-							</div>
-						</div> -->
 						
 					</div>
 				</div>
@@ -340,7 +347,7 @@
 		})
 		</script>
 	
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		// JavaScript Document
 		$(function(){
 		$(".tabAuto li:first").addClass("current");
@@ -402,8 +409,51 @@
 		return false;
 		}) 
 		}
-		</script>	
-		
+	</script>	 -->
+<!--右侧tab自动切换-->
+<script type="text/javascript">
+	$(document).ready(function(){
+ $('dt:first').addClass('active');
+ $('dd:first').css('display','block');
+ autoroll();
+ hookThumb();
+});
+var i=-1; //第i+1个tab开始
+var offset = 2500; //轮换时间
+var timer = null;
+function autoroll(){
+ n = $('dt').length-1;
+ i++;
+ if(i > n){
+ i = 0;
+ }
+ slide(i);
+    timer = window.setTimeout(autoroll, offset);
+ }
+function slide(i){
+ $('dt').eq(i).addClass('active').siblings().removeClass('active');
+ $('dd').eq(i).css('display','block').siblings('dd').css('display','none');
+ 
+ }
+function hookThumb(){    
+ $('dt').hover(
+  function () {
+    if (timer) {
+                clearTimeout(timer);
+    i = $(this).prevAll().length;
+             slide(i); 
+            }
+  },
+  function () {
+      
+            timer = window.setTimeout(autoroll, offset);  
+            this.blur();            
+            return false;
+  }
+); 
+}
+</script>
+
 		
 </html>
 

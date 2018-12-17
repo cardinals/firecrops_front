@@ -70,6 +70,8 @@ var vm = new Vue({
         ],
         top10: [],
         top11: [],
+        top101: [],
+        top102: [],
         //测试数据
         scrollData_DSH0: [
             { value: '1', name: '辽宁省人民法院' },
@@ -168,21 +170,23 @@ var vm = new Vue({
     mounted: function () {
         this.total();
       
+        
         this.scrollDsh();
         this.scrollDgx();
         
-        // this.echarts51();
-        // this.echarts52();
+        this.echarts51();
+        this.echarts52();
         this.echarts5();
-        // this.echarts51();
-        // this.echarts52();
+
+        this.echarts111();
+        this.echarts112();
+
         this.echarts11();
         this.echarts1();
         this.barChart();
-        this.echarts2();
-        this.echarts3();
-        // this.echarts4();
-        // this.echarts5();
+
+        // this.echarts2();
+        // this.echarts3();
         
         /**yushch
         setInterval(
@@ -683,6 +687,288 @@ var vm = new Vue({
             window.parent.frames.location.href = "../../templates/all.html?url=/report/report3&type=DPYL";
             //window.parent.frames.location.href="../../templates/report/report3.html?type=DPYL"+"&index=82";
         },
+                 // top102排名柱状图
+                 echarts112: function () {
+                    var myBarChart = echarts.init(document.getElementById('top10Barzb'));
+                    var categoryzb = [];
+                    var data = [];
+                    TopOption = {
+                        // title: {
+                        //     text: '预案总数排行(top10)',
+                        //     left: 'center',
+                        //     top: 2,
+                        //     textStyle: {
+                        //         color: '#ccc'
+                        //     }
+                        // },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'shadow'
+                            }
+                        },
+                        grid: {
+                            left: '20px',
+                            right: '60px',
+                            top: '5px',
+                            bottom: '-10px',
+                            containLabel: true
+                        },
+                        xAxis: {
+                            show: false,
+                            type: 'value',
+                            axisLine: {
+                                show: false,
+                                lineStyle: {
+                                    color: 'white'
+                                }
+                            },
+                            splitLine: {
+                                show: false
+                            },
+                            axisTick: {
+                                show: false
+                            }
+                        },
+                        yAxis: {
+                            type: 'category',
+                            // data: category,
+                            data:  ['13       徐州', '12       南通', '11       泰州', ' 10    连云港','9       常州', '8       淮安', '7       无锡', '6       盐城', '5       宿迁', '4       扬州', '3       苏州', '2       镇江','1       南京'],
+                            splitLine: {
+                                show: false
+                            },
+                            axisLine: {
+                                show: false,
+                                lineStyle: {
+                                    color: '#e6e6e6'
+                                }
+                            },
+                            axisLabel: {
+                                inside: false
+                            },
+                            axisTick: {
+                                show: false
+                            },
+                            z: 10,
+                            nameTextStyle: {
+                                fontSize: 15
+                            }
+                        },
+                        series: [
+                            {
+                                name: '预案数量',
+                                type: 'bar',
+                                // data: data,
+                                data: [ 262, 325, 512, 610, 632, 656, 715, 723, 792, 800, 813, 920,1149],
+                                barWidth: 6,
+                                barGap: 10,
+                                smooth: true,
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        position: 'right',
+                                        offset: [5, 0],
+                                        textStyle: {
+                                            color: function (params) {
+                                                var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
+                                                return colorList[params.dataIndex];
+                                            },
+                                            fontSize: 13
+                                        }
+                                    }
+                                },
+                                itemStyle: {
+                                    emphasis: {
+                                        barBorderRadius: 7
+                                    },
+                                    normal: {
+                                        barBorderRadius: 7,
+                                        // 蓝色渐变
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 1, 0,
+                                            [
+                                                { offset: 0, color: '#3977E6' },
+                                                { offset: 1, color: '#37BBF8' }
+                                            ]
+                                        ),
+                                        // 彩虹颜色
+                                        // color: function (params) {
+                                        //     var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
+                                        //     return colorList[params.dataIndex];
+                                        // }
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                    var params = {
+                        btype: 'top10'
+                    }
+                    axios.post('/dpapi/dp/getListByType', params).then(function (res) {
+                        for (let i = 0; i < res.data.result.length; i++) {
+                            const element = res.data.result[i];
+                            const item = {
+                                name: element.bname,
+                                value: element.bvalue,
+                            }
+                            this.top102.push(item);
+                        }
+                        this.top102.sort(this.up);
+                        for (var i = 0; i < this.top102.length; i++) {
+                            categoryzb.push( i+1+"     "+this.top10[i].name);    //挨个取出类别并填入类别数组
+                            data.push(this.top102[i].value);
+                        }
+                        myBarChart.setOption(TopOption);
+                        myBarChart.on('click', function (params) {
+                            //跳出父框架（iframe）
+                            window.parent.frames.location.href = "../../templates/all.html?url=/report/report1&type=DPYL";
+                            //window.parent.frames.location.href="../../templates/report/report1.html?type=DPYL"+"&index=81";
+                        });
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
+                },
+                 // top101排名柱状图
+                 echarts111: function () {
+                    var myBarChart = echarts.init(document.getElementById('top10Barza'));
+                    var categoryza = [];
+                    var data = [];
+                    TopOption = {
+                        // title: {
+                        //     text: '预案总数排行(top10)',
+                        //     left: 'center',
+                        //     top: 2,
+                        //     textStyle: {
+                        //         color: '#ccc'
+                        //     }
+                        // },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'shadow'
+                            }
+                        },
+                        grid: {
+                            left: '20px',
+                            right: '60px',
+                            top: '5px',
+                            bottom: '-10px',
+                            containLabel: true
+                        },
+                        xAxis: {
+                            show: false,
+                            type: 'value',
+                            axisLine: {
+                                show: false,
+                                lineStyle: {
+                                    color: 'white'
+                                }
+                            },
+                            splitLine: {
+                                show: false
+                            },
+                            axisTick: {
+                                show: false
+                            }
+                        },
+                        yAxis: {
+                            type: 'category',
+                            // data: category,
+                            data:  ['13       徐州', '12       南通', '11       泰州', ' 10    连云港','9       常州', '8       淮安', '7       无锡', '6       盐城', '5       宿迁', '4       扬州', '3       苏州', '2       镇江','1       南京'],
+                            splitLine: {
+                                show: false
+                            },
+                            axisLine: {
+                                show: false,
+                                lineStyle: {
+                                    color: '#e6e6e6'
+                                }
+                            },
+                            axisLabel: {
+                                inside: false
+                            },
+                            axisTick: {
+                                show: false
+                            },
+                            z: 10,
+                            nameTextStyle: {
+                                fontSize: 15
+                            }
+                        },
+                        series: [
+                            {
+                                name: '预案数量',
+                                type: 'bar',
+                                // data: data,
+                                data: [ 212, 325, 512, 530, 612, 650, 705, 733, 792, 800, 813, 920,949],
+                                barWidth: 6,
+                                barGap: 10,
+                                smooth: true,
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        position: 'right',
+                                        offset: [5, 0],
+                                        textStyle: {
+                                            color: function (params) {
+                                                var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
+                                                return colorList[params.dataIndex];
+                                            },
+                                            fontSize: 13
+                                        }
+                                    }
+                                },
+                                itemStyle: {
+                                    emphasis: {
+                                        barBorderRadius: 7
+                                    },
+                                    normal: {
+                                        barBorderRadius: 7,
+                                        // 蓝色渐变
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 1, 0,
+                                            [
+                                                { offset: 0, color: '#3977E6' },
+                                                { offset: 1, color: '#37BBF8' }
+                                            ]
+                                        ),
+                                        // 彩虹颜色
+                                        // color: function (params) {
+                                        //     var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
+                                        //     return colorList[params.dataIndex];
+                                        // }
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                    var params = {
+                        btype: 'top10'
+                    }
+                    axios.post('/dpapi/dp/getListByType', params).then(function (res) {
+                        for (let i = 0; i < res.data.result.length; i++) {
+                            const element = res.data.result[i];
+                            const item = {
+                                name: element.bname,
+                                value: element.bvalue,
+                            }
+                            this.top101.push(item);
+                        }
+                        this.top101.sort(this.up);
+                        for (var i = 0; i < this.top101.length; i++) {
+                            categoryza.push( i+1+"     "+this.top101[i].name);    //挨个取出类别并填入类别数组
+                            data.push(this.top101[i].value);
+                        }
+                        myBarChart.setOption(TopOption);
+                        myBarChart.on('click', function (params) {
+                            //跳出父框架（iframe）
+                            window.parent.frames.location.href = "../../templates/all.html?url=/report/report1&type=DPYL";
+                            //window.parent.frames.location.href="../../templates/report/report1.html?type=DPYL"+"&index=81";
+                        });
+                    }.bind(this), function (error) {
+                        console.log(error);
+                    })
+                },
          // top10排名柱状图
          echarts11: function () {
             var myBarChart = echarts.init(document.getElementById('top10Barz'));
@@ -1014,10 +1300,6 @@ var vm = new Vue({
                                         position: 'right',
                                         offset: [5, 0],
                                         textStyle: {
-                                            // color: function (params) {
-                                            //     var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
-                                            //     return colorList[params.dataIndex];
-                                            // },
                                             fontSize: 13
                                         }
                                     }
@@ -1028,10 +1310,6 @@ var vm = new Vue({
                                     },
                                     normal: {
                                         barBorderRadius: 7,
-                                        // color: function (params) {
-                                        //     var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
-                                        //     return colorList[params.dataIndex];
-                                        // }
                                     }
                                 }
                             }
