@@ -150,8 +150,11 @@
 							<el-row>
 								<el-form-item label="图片上传">
 									<el-upload ref="upload" action="/api/picture/insertImage" :data="upLoadData" :on-remove="handleRemove" :on-change="handleChange"
-									 :on-success="handleSuccess" :auto-upload="false" :before-upload="beforeImgUpload" :limit="1" :file-list="fileList">
-										<el-button slot="trigger" size="small" type="primary" icon="search">选取文件</el-button>
+									 :on-success="handleSuccess" :auto-upload="false" :before-upload="beforeImgUpload" :show-file-list="false" :file-list="fileList">
+										<!-- <el-button slot="trigger" size="small" type="primary" icon="search">选取文件</el-button> -->
+										<img v-if="imageUrl" :src="imageUrl" class="avatar">
+										<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+
 										<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
 									</el-upload>
 								</el-form-item>

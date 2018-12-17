@@ -86,6 +86,7 @@ var vue = new Vue({
             //图片预览可否显示
             imgViewVisible: false,
             //图片列表
+            imageUrl: '',
             fileList: [],
             //上传附加参数
             upLoadData: {
@@ -202,6 +203,9 @@ var vue = new Vue({
                 console.log(error);
             })
         },
+        handleAvatarSuccess(res, file) {
+            this.imageUrl = URL.createObjectURL(file.raw);
+        },
 
         //文件上传前
         beforeImgUpload(file) {
@@ -228,16 +232,13 @@ var vue = new Vue({
         },
         handleChange(file, fileList) {
             this.fileChangeFlag = true;
-            if (fileList.length > 1) {
-                fileList.splice(1, fileList.length - 1);
-                this.$message.warning('限制选择 1 个图片！');
-                return false;
-            }
             const isLt2M = file.size / 1024 / 1024 < 0.5;
             if (!isLt2M) {
                 this.$message.error('上传图片大小不能超过500KB！');
                 fileList.splice(0, fileList.length);
                 this.fileChangeFlag = false;
+            }else{
+                this.imageUrl = URL.createObjectURL(file.raw);
             }
             return isLt2M;
         },
@@ -446,7 +447,7 @@ var vue = new Vue({
                         console.log(error);
                     })
                 }
-
+                this.imageUrl = res.data.result.photo64;
                 this.addDialogVisible = true;
             }.bind(this), function (error) {
                 console.log(error)
@@ -464,6 +465,7 @@ var vue = new Vue({
                 picName: ''
             };
             this.$refs["addForm"].resetFields();
+            this.imageUrl = "";
             this.$refs.upload.clearFiles();
             this.fileChangeFlag = false;
             this.picTypeValueExsit = false;
