@@ -169,7 +169,7 @@ var vm = new Vue({
     },
     mounted: function () {
         this.total();
-      
+        
         
         this.scrollDsh();
         this.scrollDgx();
@@ -177,15 +177,16 @@ var vm = new Vue({
         this.echarts51();
         this.echarts52();
         this.echarts5();
-
         this.echarts11();
         this.echarts111();
          this.echarts112();
 
         this.echarts1();
+        
         this.barChart();
-
-        // this.echarts2();
+        // this.mapecharts();
+       
+        this.echarts2();
         // this.echarts3();
         
         /**yushch
@@ -405,100 +406,210 @@ var vm = new Vue({
             };
             myBarChart.setOption(BarmaxOption);
         },
-        // 中央中部地图
+        
         echarts2: function () {
             var myMapChart = echarts2.init(document.getElementById('map'));
-            // var maxLine = 50000;
-            var maxLine;
-            var params = {
-                btype: 'map'
-            }
-            axios.post('/dpapi/dp/getListByType', params).then(function (res) {
-                
-                for (let i = 0; i < res.data.result.length; i++) {
-                    const element = res.data.result[i];
-                    const item = {
-                        name: element.bname,
-                        value: parseFloat(element.bvalue),
-                    }
-                    this.mapData.push(item);
-                }
-                var maxValue = Math.max.apply(Math, res.data.result.map(function (o) { return o.bvalue }));
-                maxLine = (parseInt(maxValue.toString().substr(0, 1)) + 1) * Math.pow(10, maxValue.toString().length - 1);
-                MapOption = {
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: '{b}<br/>重点单位数量:{c}'
-                    },
-                    // backgroundColor: 'rgba(255, 255, 255, 0.1)', //rgba设置透明度0.1
-                    dataRange: {
-                        orient: 'vertical',
-                        x: '20px',
-                        y: 'bottom',
-                        min: 0,
-                        max: maxLine,
-                        text: [maxLine, '0'],           // 文本，默认为数值文本
-                        textStyle: {
-                            color: '#FFFFFF',
-                            fontSize: 12
+            myMapChart.setOption({
+                // dataRange: {
+                //     min : 0,
+                //     max : 1000,
+                //     calculable : true,
+                //     //整体颜色的修改
+                //     color: ['#ff3333', 'orange', 'yellow','lime','aqua'],
+                //     textStyle:{
+                //         color:'#fff'
+                //     }
+                // },
+                series : [
+                    {
+                        name: '江苏',
+                        type: 'map',
+                        label: {
+                            normal: {
+                            show: true
+                            },
+                            emphasis: {
+                            show: true
+                            }
                         },
-                        splitNumber: 0,
-                        // inRange: {
-                        color: ['#ff6364', 'rgba(255, 255, 255, 0.2)']
-                        // }
-                    },
-                    series: [
-                        {
-                            name: '预案数量',
-                            type: 'map',
-                            mapType: 'china',
-                            hoverable: true,
-                            roam: false,
-                            //图形样式
-                            itemStyle: {
-                                //默认样式
-                                normal: {
-                                    areaStyle: {
-                                        color: 'rgba(255, 255, 255, 0.2)'
-                                    },
-                                    borderColor: '#89B1D4',
-                                    label: {
-                                        show: true,
-                                        textStyle: {
-                                            color: '#FFFFFF',
-                                            fontSize: 12
-                                        }
-                                    }
+                        roam: true,
+                        //开启各城市背景
+                        hoverable: false,
+                        
+                        mapType: '江苏',
+                        itemStyle:{
+                            normal:{
+                                borderColor:'rgba(100,149,237,1)',
+                                borderWidth:0.5,
+                                areaStyle:{
+                                    color: 'rgba(0,0,0,0)'
                                 },
-                                //强调样式（悬浮时样式）
+                                label: {
+                                show: true,
+                                fontSize:10,
+                                textStyle:{
+                                    color:'#fff',
+                                    fontSize:10
+                                }
+                                },
+                                
+                            },
+                            
+                        },
+                        data:[
+                        
+                        ],
+                        
+                        markLine : {
+                            smooth:true,
+                            symbol: ['none', 'circle'],  
+                            symbolSize : 1,
+                            itemStyle : {
+                                normal: {
+                                    color:'#fff',
+                                    borderWidth:1,
+                                    borderColor:'rgba(30,144,255,0.5)'
+                                }
+                            },
+                            data : [
+                                
+                            ],
+                        },
+                        geoCoord: {
+                            '南京': [118.8062,31.9208],
+                            '南通': [121.1023,32.1625],
+                            '常州': [119.4543,31.5582],
+                            '徐州': [117.5208,34.3268],
+                            '泰州': [120.0586,32.5525],
+                            '盐城': [120.2234,33.5577],
+                            '苏州': [120.6519,31.3989],
+                            '连云港': [119.1248,34.552],
+                            '镇江': [119.4763,31.9702],
+                            '扬州': [119.4000,32.4000],
+                            '无锡': [120.2900,31.5900],
+                            '宿迁': [118.3000,33.9600],
+                            '淮安': [119.1500,33.5000]
+                        },
+                        markPoint : {
+                            symbol:'emptyCircle',
+                            symbolSize : function (v){
+                                return 10 + v/10
+                            },
+                            effect : {
+                                show: true,
+                                shadowBlur : 0
+                            },
+                            itemStyle:{
+                                normal:{
+                                    label:{show:false}
+                                },
                                 emphasis: {
-                                    areaStyle: {
-                                        color: 'rgba(255, 255, 255, 0.4)'
-                                    },
-                                    borderColor: '#89B1D4',
-                                    borderWidth: '2',
-                                    label: {
-                                        show: true,
-                                        textStyle: {
-                                            color: '#FFFFFF',
-                                            fontSize: 12
-                                        }
+                                    label:{position:'top'}
+                                }
+                            },
+                            data : [
+                                {name:'南京',value:10},
+                                {name:'南通',value:10},
+                                {name:'常州',value:10},
+                                {name:'徐州',value:10},
+                                {name:'泰州',value:10},
+                                {name:'盐城',value:10},
+                                {name:'苏州',value:10},
+                                {name:'连云港',value:10},
+                                {name:'镇江',value:10},
+                                {name:'扬州',value:10},
+                                {name:'无锡',value:10},
+                                {name:'宿迁',value:10},
+                                {name:'淮安',value:15}							]
+                        }
+                    },
+                    {
+                        name: '北京 Top101',
+                        type: 'map',
+                        mapType: '江苏',
+                        data:[],
+                        markLine : {
+                            smooth:true,
+                            effect : {
+                                show: true,
+                                scaleSize: 1,
+                                period: 30,
+                                color: '#fff',
+                                shadowBlur: 10
+                            },
+                            itemStyle : {
+                                normal: {
+                                    label:{show:false},
+                                    borderWidth:1,
+                                    lineStyle: {
+                                        type: 'solid',
+                                        shadowBlur: 10
                                     }
                                 }
                             },
-                            data: this.mapData
+                            data : [
+//								[{name:'南京'}, {name:'南京',value:95}],
+//								[{name:'南通'}, {name:'南京',value:90}],
+//								[{name:'常州'}, {name:'南京',value:80}],
+//								[{name:'盐城'}, {name:'南京',value:50}],
+//								[{name:'扬州'}, {name:'南京',value:20}],
+//								[{name:'连云港'}, {name:'南京',value:50}],
+//								[{name:'镇江'}, {name:'南京',value:40}],
+//								[{name:'苏州'}, {name:'南京',value:40}],
+//								[{name:'无锡'}, {name:'南京',value:65}],
+//								[{name:'宿迁'}, {name:'南京',value:55}],
+//								[{name:'淮安'}, {name:'南京',value:45}],
+//								[{name:'徐州'}, {name:'南京',value:70}]
+                            ]
+                        },
+                        markPoint : {
+                            symbol:'emptyCircle',
+                            symbolSize : function (v){
+                                return 0.1
+                            },
+                            effect : {
+                                show: false,
+                                shadowBlur : 0
+                            },
+                            
+                            itemStyle:{
+                                
+                                normal:{
+                                    label:{show:true,
+                                          position:'top',
+                                          textStyle: {
+                                                    fontSize: 14,
+                                                    
+                                                }
+                                          }
+                                },
+                                emphasis: {
+                                    label:{show:true}
+                                }
+                            },
+                            data : [
+                                {name:'南京',value:949},
+                                {name:'南通',value:900},
+                                {name:'常州',value:800},
+                                {name:'徐州',value:700},
+                                {name:'泰州',value:600},
+                                {name:'盐城',value:500},
+                                {name:'苏州',value:400},
+                                {name:'连云港',value:300},
+                                {name:'镇江',value:200},
+                                {name:'扬州',value:200},
+                                {name:'无锡',value:605},
+                                {name:'宿迁',value:505},
+                                {name:'淮安',value:450}
+                            ]
                         }
-                    ]
-                };
-                myMapChart.setOption(MapOption);
-                myMapChart.on('click', function (params) {
-                    vm.$options.data.city = params.name;
-                    vm.$options.methods.loadChart();
+                    }
+                ]
+        });
+                // myMapChart.setOption(MapOption);
+                myMapChart.on('click', function () {
+                    vm.loadChart();
                 });
-
-            }.bind(this), function (error) {
-                console.log(error);
-            })
 
         },
         // 重点单位类型环形图
@@ -815,7 +926,7 @@ var vm = new Vue({
                         }
                         this.top102.sort(this.up);
                         for (var i = 0; i < this.top102.length; i++) {
-                            categoryzb.push( i+1+"     "+this.top10[i].name);    //挨个取出类别并填入类别数组
+                            categoryzb.push( i+1+"     "+this.top102[i].name);    //挨个取出类别并填入类别数组
                             data.push(this.top102[i].value);
                         }
                         myBarChart.setOption(TopOption);
