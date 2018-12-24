@@ -169,26 +169,19 @@ var vm = new Vue({
     },
     mounted: function () {
         this.total();
-        
-        
         this.scrollDsh();
         this.scrollDgx();
-        
         this.echarts51();
         this.echarts52();
         this.echarts5();
         this.echarts11();
         this.echarts111();
-         this.echarts112();
-
+        this.echarts112()
         this.echarts1();
-        
         this.barChart();
         // this.mapecharts();
-       
         this.echarts2();
         // this.echarts3();
-        
         /**yushch
         setInterval(
             this.autoAdd
@@ -326,7 +319,7 @@ var vm = new Vue({
                 },
                 // color: ['#0f82ee'],
                 grid: {
-                    top: '10',
+                    top: '40',
                     bottom: '10',
                     left: '2%',
                     right: '3%',
@@ -338,11 +331,15 @@ var vm = new Vue({
                         data: ['南京', '镇江', '苏州', '扬州', '宿迁', '盐城', '无锡', '淮安','常州', '连云港', '泰州', '南通', '徐州'],
                         axisLine: {
                             lineStyle: {
-                                color: 'white'
+                                color: '#42c9f6',
                             }
                         },
+                       
                         axisLabel: {
                             interval: 0,
+                            textStyle: {
+                                color: '#fff',//坐标值得具体的颜色
+                            },
                             /*
                             formatter:function(value)  
                             {  
@@ -358,23 +355,39 @@ var vm = new Vue({
                         type: 'value',
                         axisLine: {
                             lineStyle: {
-                                color: 'white'
+                           
+                                color: '#42c9f6'
                             }
                         },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#fff',//坐标值得具体的颜色
+                            },
+                            
+                        },
                         splitLine: {
-                            show: false
+                            show: true,
+                            lineStyle:{
+                                color: ['#364a6a'],
+                                width: 1,
+                                type: 'dashed'
+                            }
                         }
                     }
                 ],
                 series: [
                     {
-                        name: '数字化预案',
+                        name: '单位',
                         type: 'bar',
                         barWidth: '100%',
                         stack: '预案',
                         barWidth: '10',
+                        
                         itemStyle: {
+                            barBorderRadius: 20,
                             normal: {
+
+                                barBorderRadius:[2, 2, 0, 0],
                                 color: new echarts.graphic.LinearGradient(
                                     0, 0, 0, 1,
                                     [
@@ -388,7 +401,7 @@ var vm = new Vue({
                             },
                             emphasis: {
                                
-                                barBorderRadius: 15,
+                                barBorderRadius: 30,
                                 
                                 color: new echarts.graphic.LinearGradient(
                                     0, 0, 0, 1,
@@ -414,7 +427,7 @@ var vm = new Vue({
                 //     min : 0,
                 //     max : 1000,
                 //     calculable : true,
-                //     //整体颜色的修改
+                //     // 整体颜色的修改
                 //     color: ['#ff3333', 'orange', 'yellow','lime','aqua'],
                 //     textStyle:{
                 //         color:'#fff'
@@ -439,8 +452,10 @@ var vm = new Vue({
                         mapType: '江苏',
                         itemStyle:{
                             normal:{
-                                borderColor:'rgba(100,149,237,1)',
-                                borderWidth:0.5,
+                                borderColor:'#19dbec',
+                                borderWidth:1,
+                                shadowColor: 'rgba(0,54,255, 1)',
+                                shadowBlur: 10,
                                 areaStyle:{
                                     color: 'rgba(0,0,0,0)'
                                 },
@@ -449,7 +464,7 @@ var vm = new Vue({
                                 fontSize:10,
                                 textStyle:{
                                     color:'#fff',
-                                    fontSize:10
+                                    fontSize:9
                                 }
                                 },
                                 
@@ -493,7 +508,8 @@ var vm = new Vue({
                         markPoint : {
                             symbol:'emptyCircle',
                             symbolSize : function (v){
-                                return 10 + v/10
+                                // 设置圆圈的半径大小
+                                return 10 + v/150
                             },
                             effect : {
                                 show: true,
@@ -508,19 +524,19 @@ var vm = new Vue({
                                 }
                             },
                             data : [
-                                {name:'南京',value:10},
-                                {name:'南通',value:10},
-                                {name:'常州',value:10},
-                                {name:'徐州',value:10},
-                                {name:'泰州',value:10},
-                                {name:'盐城',value:10},
-                                {name:'苏州',value:10},
-                                {name:'连云港',value:10},
-                                {name:'镇江',value:10},
-                                {name:'扬州',value:10},
-                                {name:'无锡',value:10},
-                                {name:'宿迁',value:10},
-                                {name:'淮安',value:15}							]
+                                {name:'南京',value:949},
+                                {name:'南通',value:900},
+                                {name:'常州',value:800},
+                                {name:'徐州',value:700},
+                                {name:'泰州',value:600},
+                                {name:'盐城',value:500},
+                                {name:'苏州',value:400},
+                                {name:'连云港',value:300},
+                                {name:'镇江',value:200},
+                                {name:'扬州',value:200},
+                                {name:'无锡',value:605},
+                                {name:'宿迁',value:505},
+                                {name:'淮安',value:450}						]
                         }
                     },
                     {
@@ -548,6 +564,7 @@ var vm = new Vue({
                                 }
                             },
                             data : [
+                                //显示地图上的数据走向
 //								[{name:'南京'}, {name:'南京',value:95}],
 //								[{name:'南通'}, {name:'南京',value:90}],
 //								[{name:'常州'}, {name:'南京',value:80}],
@@ -588,19 +605,20 @@ var vm = new Vue({
                                 }
                             },
                             data : [
-                                {name:'南京',value:949},
-                                {name:'南通',value:900},
-                                {name:'常州',value:800},
-                                {name:'徐州',value:700},
-                                {name:'泰州',value:600},
-                                {name:'盐城',value:500},
-                                {name:'苏州',value:400},
-                                {name:'连云港',value:300},
-                                {name:'镇江',value:200},
-                                {name:'扬州',value:200},
-                                {name:'无锡',value:605},
-                                {name:'宿迁',value:505},
-                                {name:'淮安',value:450}
+                                // 显示地图上的数字
+                                // {name:'南京',value:949},
+                                // {name:'南通',value:900},
+                                // {name:'常州',value:800},
+                                // {name:'徐州',value:700},
+                                // {name:'泰州',value:600},
+                                // {name:'盐城',value:500},
+                                // {name:'苏州',value:400},
+                                // {name:'连云港',value:300},
+                                // {name:'镇江',value:200},
+                                // {name:'扬州',value:200},
+                                // {name:'无锡',value:605},
+                                // {name:'宿迁',value:505},
+                                // {name:'淮安',value:450}
                             ]
                         }
                     }
