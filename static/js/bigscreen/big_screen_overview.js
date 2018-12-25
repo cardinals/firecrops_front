@@ -227,7 +227,7 @@ var vm = new Vue({
 					}
 				},
 				grid: {
-					top: '10',
+					top: '20',
 					bottom: '5',
 					left: '15',
 					right: '40',
@@ -235,10 +235,11 @@ var vm = new Vue({
 				},
 				xAxis: [
 					{
-						type: 'category',
+                        type: 'category',
+                        
                         data: this.barData.name,
-                        fontSize:"1px",
 						axisLabel: {
+                            fontSize:9,
 							interval: 0,
 							/*
 							formatter:function(value)  
@@ -247,19 +248,22 @@ var vm = new Vue({
 							},
 							*/
                             rotate: "-40",
-                            color:"#fff",
-                            textStyle:{
-                                fontSize:"1px",
-                            }
-                            
-						},
+                            color:"#fff"
+                
+                        },
+                       
 					}
 				],
 				yAxis: [
 					{
 						type: 'value',
 						splitLine: {
-							show: false
+                            show: true,
+                            lineStyle:{
+                                color: ['#42c9f6'],
+                                width: 1,
+                                type: 'solid'
+                            }
                         },
                         axisLabel: {
                             color:"#fff",
@@ -272,15 +276,19 @@ var vm = new Vue({
 						type: 'bar',
 						barWidth: '100%',
 						stack: '预案',
-						barWidth: '10',
+						barWidth: '5',
 						data: this.barData.value,
 						smooth: true,
 						itemStyle: {
 							normal: {
+                                barBorderRadius:[3, 3, 0, 0],
 								color: function (params) {
 									var colorList = ['#42c9f6','#eca426','#42c9f6','#eca426','#42c9f6','#eca426','#42c9f6','#eca426','#42c9f6','#eca426'];
 									return colorList[params.dataIndex];
-								}
+                                },
+                                textStyle:{
+                                    fontSize:"1px",
+                                }
 							}
 						}
 					}
@@ -387,7 +395,7 @@ var vm = new Vue({
                             barBorderRadius: 20,
                             normal: {
 
-                                barBorderRadius:[2, 2, 0, 0],
+                                barBorderRadius:[3, 3, 0, 0],
                                 color: new echarts.graphic.LinearGradient(
                                     0, 0, 0, 1,
                                     [
