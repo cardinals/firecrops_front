@@ -233,13 +233,13 @@ var vue = new Vue({
 			};
 			myChart.on('click', function (param) {
 				var index = param.dataIndex + 1;
-				vm.pieData = eval("vm.pieData" + index);
-				vm.pieTitle = eval("vm.pieTitle" + index);
+				vue.pieData = eval("vue.pieData" + index);
+				vue.pieTitle = eval("vue.pieTitle" + index);
 				var pieChart = echarts.getInstanceByDom(document.getElementById("pie"));
 				if (pieChart != null && pieChart != "" && pieChart != undefined) {
 					pieChart.dispose();
 				}
-				vm.pieChart();
+				vue.pieChart();
 			});
 			// 此外param参数包含的内容有：
 			// param.seriesIndex：系列序号（series中当前图形是第几个图形第几个，从0开始计数）
