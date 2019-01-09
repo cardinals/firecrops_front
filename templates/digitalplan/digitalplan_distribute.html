@@ -18,16 +18,16 @@
                     <el-row>
                         <el-form label-width="75px" :inline="true" class="el-form demo-form-inline">
                             <el-row>
-                                <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+                                <el-col :span="8" class="searchInline">
                                     <label class="el-form-item__label searchLabel">预案名称</label>
                                     <el-input size="small" v-model="searchForm.YAMC" placeholder="预案名称"></el-input>
                                 </el-col>
-                                <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+                                <el-col :span="8" class="searchInline">
                                     <label class="el-form-item__label searchLabel">预案类型</label>
                                     <el-cascader :options="YALX_dataTree" :props="defaultProps" size="small" v-model="searchForm.YALX" placeholder="全部" class="searchSelect"
                                         clearable change-on-select :show-all-levels="false"></el-cascader>
                                 </el-col>
-                                <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+                                <el-col :span="8" class="searchInline">
                                     <label class="el-form-item__label searchLabel">预案级别</label>
                                     <el-select size="small" v-model="searchForm.YAJB" placeholder="全部" class="searchSelect" clearable>
                                         <el-option v-for="item in YAJB_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
@@ -35,16 +35,16 @@
                                 </el-col>
                             </el-row>
                             <el-row>
-                                <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+                                <el-col :span="8" class="searchInline">
                                     <label class="el-form-item__label searchLabel">对象名称</label>
                                     <el-input size="small" v-model="searchForm.DXMC" placeholder="对象名称"></el-input>
                                 </el-col>
-                                <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+                                <el-col :span="8" class="searchInline">
                                     <label class="el-form-item__label searchLabel">制作机构</label>
                                     <el-cascader :options="ZZJG_dataTree" :props="jgidprops" size="small" v-model="searchForm.ZZJG" placeholder="全部" class="searchSelect"
                                         clearable change-on-select :show-all-levels="false"></el-cascader>
                                 </el-col>
-                                <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="searchInline">
+                                <el-col :span="8" class="searchInline">
                                     <label class="el-form-item__label searchLabel">预案状态</label>
                                     <el-select size="small" v-model="searchForm.YAZT" disabled placeholder="全部" class="searchSelect" clearable>
                                         <el-option v-for="item in YAZT_data" :key="item.codeValue" :label="item.codeName" :value="item.codeValue"></el-option>
@@ -122,15 +122,10 @@
                                     </el-form-item>
                                 </el-col>
                             </el-row>
-                            <el-row class="mt10 mb20">
-                                <el-form :inline="true" class="el-form demo-form-inline">
-                                    <el-row>
-                                        <el-col :xs="23" :sm="23" :md="23" :lg="23" :xl="23" class="editform-button">
+                            <el-row class="mt20 mb10 tc">
+                                
                                             <el-button type="clear" icon="close" size="small" class="btn_submit" @click.native="closeDialog(ffdz)"> 取消</el-button>
                                             <el-button type="success" icon="check" size="small" class="btn_submit" @click.native="distributeSubmit(ffdz)">分发</el-button>
-                                        </el-col>
-                                    </el-row>
-                                </el-form>
                             </el-row>
                         </el-form>
 					</el-dialog>
