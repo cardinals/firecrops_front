@@ -1,9 +1,3 @@
-//异步加载详情页
-$(function () {
-    //动态加载main
-    var paramUrl = getQueryString("url");
-    loadDiv(urlRewrite(paramUrl));
-});
 /**header-box by li.xue 20180628 */
 var shiroGlobal = "";
 var realname = "";
@@ -18,6 +12,9 @@ axios.get('/api/shiro').then(function (res) {
     }
     shiroGlobal = res.data;
     localStorage.setItem("user", shiroGlobal);
+    //动态加载main
+    var paramUrl = getQueryString("url");
+    loadDiv(urlRewrite(paramUrl));
     //用户权限
     for(var i in res.data.permissions){
         permissions.push(res.data.permissions[i]);
