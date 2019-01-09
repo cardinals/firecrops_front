@@ -43,7 +43,7 @@
 	}
 	.h69{
 		margin-top: 9px;
-		height:45.5%;
+		height:45.3%;
 	}
 #tabAutoa{ width:100%; height:100%; overflow:hidden;color:#1661d6;margin-top: 5px;}	
 #tabAuto{ width:100%; height:100%; overflow:hidden;color:#1661d6;margin-top: 5px;}
@@ -163,22 +163,18 @@ dd {
 								</div>
 
 								<div style="height:20%;width:100%;float: left;color:#fff;font-size:2px;">
-									 
-								
-										<p class="date" style="font-size:2px;color: #1661d6;">
-												<span style="font-size:2px !important;color: #1661d6;">截止：</span>
-												<span id="Y"></span>
-												<strong>-</strong>
-												<span id="MH"></span>
-												<strong>-</strong>
-												<span id="td_keleyi_com"></span>
-												<!--<strong id="D"></strong>-->
-												<span id="H"></span>
-												<span id="M"></span>
-												<!-- <strong id="S"></strong> -->
-										</p>
-								
-
+									<p class="date" style="font-size:2px;color: #1661d6;">
+										<span style="font-size:2px !important;color: #1661d6;">截止：</span>
+										<span id="Y"></span>
+										<strong>-</strong>
+										<span id="MH"></span>
+										<strong>-</strong>
+										<span id="td_keleyi_com"></span>
+										<!--<strong id="D"></strong>-->
+										<span id="H"></span>
+										<span id="M"></span>
+										<!-- <strong id="S"></strong> -->
+									</p>
 								</div>
 
 							</div>
@@ -189,10 +185,10 @@ dd {
 								<div  style="height:100%;width:15%;float: left;">
 									</div>
 									<!-- 地图 -->
-									<div @click="loadChart()" style="cursor: pointer;height:100%;width:65%;float: left;background:url('/static/images/new/pic_map.png') no-repeat;background-size:100% 100%">
+									<div  id="map" style="cursor: pointer;height:100%;width:65%;float: left;">
 			
 									</div>
-									<div  style="height:100%;width:20%;float: left;">
+									<div style="height:100%;width:20%;float: left;">
 									
 									</div>
 						
@@ -200,7 +196,7 @@ dd {
 
 					</div>
 					<!-- 中央部分右侧数据 -->
-					<div  style="height:100%;width:20%;float: left;background:url('/static/images/new/bg_03.png') no-repeat;background-size:100% 100%">
+					<div class="map-bg2" style="height:100%;width:20%;float: left;background:url('/static/images/new/bg_03.png') no-repeat;background-size:100% 100%">
 						<div  style="height:8%;width:100%;float: left;">
 								
 						</div>
@@ -223,7 +219,7 @@ dd {
 					</div>
 
 				</div>
-				<div class="application-div h69" style="background:url('/static/images/new/bg_05.png') no-repeat;background-size:100% 100%">
+				<div class="application-div h69  map-bg2" style="background:url('/static/images/new/bg_05.png') no-repeat;background-size:100% 100%">
 					<!-- <div id="barmax" class="application-text"></div> -->
 					
 					<div  style="height:12%;width:100%;float: left;">
