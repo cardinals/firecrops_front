@@ -51,6 +51,80 @@
                     <div class="inform-content">
                         <template>
                             <el-tabs v-model="activeName" type="border-card">
+                                <el-tab-pane label="预案信息" name="fifth">
+                                    <div v-if="this.YA === false">
+                                        无预案数据
+                                    </div>
+                                    <div v-if="this.YA">
+                                        <el-card v-for="data in yaData" class="card_style">
+                                            <el-row class="inform-margin-card">
+                                                <el-col :span="24">
+                                                    <div >
+                                                        <strong class="dtdlStyle">预案名称：</strong>
+                                                        <a href="#" @click="planDetails(data)"><v-text v-text="data.yamc||'无'"></v-text></a>
+                                                        <span class="companyStatus dib" title="预案级别" v-text="data.yajbmc||'无'"></span>
+                                                    </div>
+                                                </el-col>
+                                            </el-row>
+                                            <el-row class="inform-margin-card">
+                                                <el-col :span="12">
+                                                    <div>
+                                                        <strong class="dtdlStyle">预案编号：</strong>
+                                                        <v-text v-text="data.yabm||'无'"></v-text>
+                                                    </div>
+                                                </el-col>
+                                                <el-col :span="12">
+                                                    <div>
+                                                        <strong class="dtdlStyle">预案类型：</strong>
+                                                        <v-text v-text="data.yalxmc||'无'"></v-text>
+                                                    </div>
+                                                </el-col>
+                                            </el-row>
+                                            <el-row class="inform-margin-card">
+                                                <el-col :span="12">
+                                                    <div>
+                                                        <strong class="dtdlStyle">制作人名称：</strong>
+                                                        <v-text v-text="data.zzrmc||'无'"></v-text>
+                                                    </div>
+                                                </el-col>
+                                                <el-col :span="12">
+                                                    <div>
+                                                        <strong class="dtdlStyle">制作日期：</strong>
+                                                        <v-text v-text="data.zzsj||'无'"></v-text>
+                                                    </div>
+                                                </el-col>
+                                            </el-row>
+                                            <el-button type="primary" icon="message" style="margin-top:20px;width:120px" @click="openPlan(data)">在线预览</el-button>
+                                            <el-button type="primary" icon="share" style="margin-top:20px;width:120px" @click="downloadPlan(data)">预案下载</el-button>
+                                        </el-card>
+                                    </div>
+                                    <!-- <div class="inform-margin">
+                                        <a id="ew" href="" class="inform-download-display" download="">
+                                            <span id="we"></span>
+                                        </a>
+                                        <a id="sw" href="" class="inform-download-display" download="">
+                                            <span id="ws"></span>
+                                        </a>
+                                        <a id="pf" href="" class="inform-download-display" download="">
+                                            <span id="fp"></span>
+                                        </a>
+                                        <dl>
+                                            <dt class="dtdlStyle">附件下载:</dt>
+                                            <dd class="dtdlStyle">
+                                                <img class="inform-download-cursor" src="../images/icon-download/erwei.png" @click="DownLoadTwoFile()">
+                                            </dd>
+                                            <dt class="dtdlStyle inform-download-cursor" @click="DownLoadTwoFile()">二维预案</dt>
+                                            <dd class="dtdlStyle">
+                                                <img class="inform-download-cursor" src="../images/icon-download/sanwei.png" @click="DownLoadThreeFile()">
+                                            </dd>
+                                            <dt class="dtdlStyle inform-download-cursor" @click="DownLoadThreeFile()">三维预案</dt>
+                                            <dd class="dtdlStyle">
+                                                <img class="inform-download-cursor" src="../images/icon-download/wendang.png" @click="DownLoadFile()">
+                                            </dd>
+                                            <dt class="dtdlStyle inform-download-cursor" @click="DownLoadFile()">文档预案</dt>
+                                        </dl>
+                                    </div> -->
+                                </el-tab-pane>
                                 <el-tab-pane label="单位信息" name="first">
                                     <el-card class="card_style">
                                         <div slot="header" class="clearfix">
@@ -1262,80 +1336,6 @@
                                             </el-row>
                                         </el-card>
                                     </div>
-                                </el-tab-pane>
-                                <el-tab-pane label="预案信息" name="fifth">
-                                    <div v-if="this.YA === false">
-                                        无预案数据
-                                    </div>
-                                    <div v-if="this.YA">
-                                        <el-card v-for="data in yaData" class="card_style">
-                                            <el-row class="inform-margin-card">
-                                                <el-col :span="24">
-                                                    <div >
-                                                        <strong class="dtdlStyle">预案名称：</strong>
-                                                        <a href="#" @click="planDetails(data)"><v-text v-text="data.yamc||'无'"></v-text></a>
-                                                        <span class="companyStatus dib" title="预案级别" v-text="data.yajbmc||'无'"></span>
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row class="inform-margin-card">
-                                                <el-col :span="12">
-                                                    <div>
-                                                        <strong class="dtdlStyle">预案编号：</strong>
-                                                        <v-text v-text="data.yabm||'无'"></v-text>
-                                                    </div>
-                                                </el-col>
-                                                <el-col :span="12">
-                                                    <div>
-                                                        <strong class="dtdlStyle">预案类型：</strong>
-                                                        <v-text v-text="data.yalxmc||'无'"></v-text>
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row class="inform-margin-card">
-                                                <el-col :span="12">
-                                                    <div>
-                                                        <strong class="dtdlStyle">制作人名称：</strong>
-                                                        <v-text v-text="data.zzrmc||'无'"></v-text>
-                                                    </div>
-                                                </el-col>
-                                                <el-col :span="12">
-                                                    <div>
-                                                        <strong class="dtdlStyle">制作日期：</strong>
-                                                        <v-text v-text="data.zzsj||'无'"></v-text>
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                            <el-button type="primary" icon="message" style="margin-top:20px;width:120px" @click="openPlan(data)">在线预览</el-button>
-                                            <el-button type="primary" icon="share" style="margin-top:20px;width:120px" @click="downloadPlan(data)">预案下载</el-button>
-                                        </el-card>
-                                    </div>
-                                    <!-- <div class="inform-margin">
-                                        <a id="ew" href="" class="inform-download-display" download="">
-                                            <span id="we"></span>
-                                        </a>
-                                        <a id="sw" href="" class="inform-download-display" download="">
-                                            <span id="ws"></span>
-                                        </a>
-                                        <a id="pf" href="" class="inform-download-display" download="">
-                                            <span id="fp"></span>
-                                        </a>
-                                        <dl>
-                                            <dt class="dtdlStyle">附件下载:</dt>
-                                            <dd class="dtdlStyle">
-                                                <img class="inform-download-cursor" src="../images/icon-download/erwei.png" @click="DownLoadTwoFile()">
-                                            </dd>
-                                            <dt class="dtdlStyle inform-download-cursor" @click="DownLoadTwoFile()">二维预案</dt>
-                                            <dd class="dtdlStyle">
-                                                <img class="inform-download-cursor" src="../images/icon-download/sanwei.png" @click="DownLoadThreeFile()">
-                                            </dd>
-                                            <dt class="dtdlStyle inform-download-cursor" @click="DownLoadThreeFile()">三维预案</dt>
-                                            <dd class="dtdlStyle">
-                                                <img class="inform-download-cursor" src="../images/icon-download/wendang.png" @click="DownLoadFile()">
-                                            </dd>
-                                            <dt class="dtdlStyle inform-download-cursor" @click="DownLoadFile()">文档预案</dt>
-                                        </dl>
-                                    </div> -->
                                 </el-tab-pane>
                             </el-tabs>
                         </template>

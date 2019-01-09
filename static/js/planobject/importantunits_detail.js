@@ -4,7 +4,7 @@ new Vue({
     el: '#app',
     data: function () {
         return {
-            activeName: "first",//tab页缺省标签
+            activeName: "fifth",//tab页缺省标签
             uuid: "",
             //表数据
             tableData: [],//基本数据
