@@ -170,9 +170,17 @@ var vue = new Vue({
                     jgid = this.shiroData.organizationVO.uuid;
                 }
             }
+            //预案类型
+            var yalx = "";
+            var tempYalx = this.searchForm.YALX[this.searchForm.YALX.length-1];
+            if(tempYalx != null && tempYalx.substr(1,4) == '0000'){
+                yalx = tempYalx.substr(0,1);
+            }else{
+                yalx = tempYalx;
+            }
             var params = {
                 yamc: this.searchForm.YAMC.replace(/%/g, "\\%"),
-                yalx: this.searchForm.YALX[this.searchForm.YALX.length - 1],
+                yalx: yalx,
                 yajb: this.searchForm.YAJB,
                 jgid: jgid,
                 shzt: shztbm,
