@@ -417,8 +417,10 @@ new Vue({
                         var head = 'http://10.119.119.205:11010';
                     }
                     var body = '/attachment/filemanage/configFile!showFile.action';
-                    var url = head + body + this.hisPlanData[0].xgxx;
-                    window.open(url);
+                    for(var i in this.hisPlanData){
+                        var url = head + body + this.hisPlanData[i].xgxx;
+                        window.open(url);
+                    }
                 } else {
                     this.$message({
                         message: "该预案无历史附件",
@@ -431,6 +433,7 @@ new Vue({
                     showClose: true
                 });
             }
+            this.hisPlanData = []
         }
         //add end 
     }
