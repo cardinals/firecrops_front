@@ -13,6 +13,9 @@
 	<script type="text/javascript" src="../../static/js/zzzlib/jquery-3.2.1.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css">
 
+	<link rel="stylesheet" type="text/css" href="../../static/css/bigscreen/main.css">
+	<script type="text/javascript" src="../../static/js/bigscreen/main.js"></script>
+
 </head>
 
 <style>
@@ -38,12 +41,12 @@
         color: white;
 	}
 	.h68{
-		margin-top: 4px;
-		height:66.5%;
+		margin-top: 5px;
+		height:62.3%;
 	}
 	.h69{
-		margin-top: 9px;
-		height:45.3%;
+		margin-top: 10px;
+		height:59.5%;
 	}
 #tabAutoa{ width:100%; height:100%; overflow:hidden;color:#1661d6;margin-top: 5px;}	
 #tabAuto{ width:100%; height:100%; overflow:hidden;color:#1661d6;margin-top: 5px;}
@@ -75,6 +78,15 @@ dd {
 }
 
 
+#scroll li {
+    width: 100%;
+    /* height: 40px; */
+    line-height: 20px;
+    vertical-align: bottom;
+    zoom: 1;
+    /* border-bottom: #B7B7B7 dashed 1px; */
+}
+
 </style>
 
 
@@ -85,12 +97,12 @@ dd {
 			<!-- 左侧部分 -->
 			<div class="l h80 w25" >
 				
-				<div class="application-div h85 p5">
-					<div class="application-text map-bg2" style="background:url('/static/images/new/bg_01.png') no-repeat;background-size:100% 100%">
+				<div class="application-div h80 p5">
+					<div class="application-text" style="background:url('/static/images/new/bg_01.png') no-repeat;background-size:100% 100%">
 						
-							<div  style="height:9%;width:100%;float: left;">
+							<div  style="height:7%;width:100%;float: left;">
 							</div>
-							<div  style="height:95%;width:100%;float: left;color: #fff;">
+							<div  style="height:98%;width:100%;float: left;color: #fff;">
 								<dl>
 									<dt>消防水源</dt>
 									<dt>重点单位</dt>
@@ -108,9 +120,9 @@ dd {
 		
 					</div>
 				</div>
-				<div class="application-div h40 p5">
+				<div class="application-div h45 p5" style="margin-top:1px;">
 					
-					<div class="application-text map-bg2" style="background:url('/static/images/new/bg_06.png') no-repeat;background-size:100% 100%">
+					<div class="application-text " style="background:url('/static/images/new/bg_06.png') no-repeat;background-size:100% 100%">
 						
 						<!-- 左侧 -->
 						<div  style="height:12%;width:100%;float: left;">
@@ -118,34 +130,34 @@ dd {
 						</div>
 						<div style="height:88%;width:100%;float: left;color:#fff;">
 
-										<div style="margin-left:10px;" class="application-boxs flex pl10 pr10 pb10" v-if="isDSH">
-											<div id="scroll" >
-												<ul>
-													<li v-for="data in scrollData_DSH">
-														<a href="#" @click="jump()" style="color:#fff;" v-text="data.name"></a>
-														<div style="color:#fff;" v-text="'待审核'"></div>
-													</li>
-												</ul>
-											</div>
-										</div>
-				
-										<div class="application-boxs flex pl10 pr10 pb10" v-if="isDGX">
-												<div id="scroll" class="application-text">
-													<ul>
-														<li v-for="data in scrollData_DGX">
-															<a style="color:#fff;text-decoration:none; " v-text="data.name"></a>
-															<div style="color:#fff;" v-text="'待更新'+ data.value"></div>
-														</li>
-													</ul>
-												</div>
-										</div>
+							<div style="margin-left:15px;" class="application-boxs" v-if="isDSH">
+								<div id="scroll" >
+									<ul>
+										<li v-for="data in scrollData_DSH">
+											<a href="#" @click="jump()" style="color:#fff;font-size: 2px;height: 20px;" v-text="data.name"></a>
+											<div style="color:#fff;font-size: 2px;margin-left:20px;height: 20px;" v-text="'待审核'"></div>
+										</li>
+									</ul>
+								</div>
+							</div>
+	
+							<div class="application-boxs flex pl10 pr10 pb10" v-if="isDGX">
+									<div id="scroll" class="application-text">
+										<ul>
+											<li v-for="data in scrollData_DGX">
+												<a style="color:#fff;text-decoration:none; " v-text="data.name"></a>
+												<div style="color:#fff;" v-text="'待更新'+ data.value"></div>
+											</li>
+										</ul>
+									</div>
+							</div>
 								
 						</div>
 					</div>
 				</div>
 			</div>
 			<!-- 中央部分 -->
-			<div class="l h68 w50" >
+			<div class="l h68 w50" style="margin-left:5px;">
 				<div class="application-div h100" style="background-size:100% 100%">
 					<!-- <div id="map" class="application-text"></div> -->
 
@@ -159,7 +171,74 @@ dd {
 							</div>
 							<div style="height:100%;width:40%;float: left;">
 								<div style="height:90%;width:100%;float: left;background:url('/static/images/new/bg_02.png') no-repeat;background-size:100% 100%">
-									<div style="font-size:36px;color:#19deef;width: 90%;float: left;margin-top: -2px;" >11345</div><div style="width: 10%;float: left;font-size:16px;color:#19deef;margin-top: 18px;margin-left: -16px;">条</div>
+									<div style="font-size:36px;color:#19deef;width: 90%;float: left;margin-top: -2px;" >
+										<!-- 数字格式 -->
+										11345
+										<!-- <div class="wrap">
+											<div class="clock">
+												<ul>
+													<li>
+														<ul id="time1">
+															<li><img src="/static/images/numberstyle/back.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+														</ul>
+													</li>
+																<li>
+														<ul id="time1">
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+														</ul>
+													</li>
+													<li>
+														<ul id="time1">
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+														</ul>
+													</li>
+													<li>
+														<ul id="time1">
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+														</ul>
+													 </li>
+													<li>
+														<ul id="time1">
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+															<li><img src="/static/images/numberstyle/front.png" width="100%" height="100%"></li>
+														</ul>
+													</li>
+															
+												</ul>
+											</div>
+											
+										</div> -->
+									
+									</div><div style="width: 10%;float: left;font-size:16px;color:#19deef;margin-top: 18px;margin-left: -16px;">条</div>
 								</div>
 
 								<div style="height:20%;width:100%;float: left;color:#fff;font-size:2px;">
@@ -183,71 +262,69 @@ dd {
 						</div>
 						<div  style="height:85%;width:100%;float: left;">
 								<div  style="height:100%;width:15%;float: left;">
-									</div>
-									<!-- 地图 -->
-									<div  id="map" style="cursor: pointer;height:100%;width:65%;float: left;">
-			
-									</div>
-									<div style="height:100%;width:20%;float: left;">
-									
-									</div>
-						
+								</div>
+								<!-- 地图 -->
+								<div  id="map" style="cursor: pointer;height:100%;width:65%;float: left;">
+		
+								</div>
+								<div style="height:100%;width:20%;float: left;">
+								
+								</div>
 						</div>
 
 					</div>
 					<!-- 中央部分右侧数据 -->
-					<div class="map-bg2" style="height:100%;width:20%;float: left;background:url('/static/images/new/bg_03.png') no-repeat;background-size:100% 100%">
+					<div  style="height:100%;width:20%;float: left;background:url('/static/images/new/bg_03.png') no-repeat;background-size:100% 100%">
 						<div  style="height:8%;width:100%;float: left;">
 								
 						</div>
 						<div  style="height:24%;width:100%;float: left;">
-								<div style="font-size:26px;color:#19deef;width: 90%;float: left;margin-top: 8px;" v-text=tatalDate0.jzxx></div><div style="width: 10%;float: left;font-size:16px;color:#19deef;margin-top: 18px;margin-left: -8px;"> 条</div>
-								<div style="width: 100%;color:#fff;font-size:16px;">建筑信息</div>
+								<div style="font-size:20px;color:#19deef;width: 90%;float: left;margin-top: 13px;" v-text=tatalDate0.jzxx></div><div style="width: 10%;float: left;font-size:10px;color:#19deef;margin-top: 20px;margin-left: -26px;"> 条</div>
+								<div style="width: 100%;color:#fff;font-size:10px;margin-top: -15px;">建筑信息</div>
 						</div>
 						<div  style="height:23%;width:100%;float: left;">
-							<div style="font-size:26px;color:#19deef;width: 90%;float: left;margin-top: 8px;" v-text=tatalDate0.zddw></div><div style="width: 10%;float: left;font-size:16px;color:#19deef;margin-top: 18px;margin-left: -8px;"> 条</div>
-							<div style="width: 100%;color:#fff;font-size:16px;">重点单位</div>
+							<div style="font-size:20px;color:#19deef;width: 90%;float: left;margin-top: 13px;" v-text=tatalDate0.zddw></div><div style="width: 10%;float: left;font-size:10px;color:#19deef;margin-top: 20px;margin-left: -26px;"> 条</div>
+							<div style="width: 100%;color:#fff;font-size:10px;margin-top: -15px;">重点单位</div>
 						</div>
 						<div  style="height:23%;width:100%;float: left;">
-								<div style="font-size:26px;color:#19deef;width: 90%;float: left;margin-top: 8px;" v-text=tatalDate0.szhya></div><div style="width: 10%;float: left;font-size:16px;color:#19deef;margin-top: 18px;margin-left: -8px;"> 条</div>
-								<div style="width: 100%;color:#fff;font-size:16px;">消防水源信息</div>
+								<div style="font-size:20px;color:#19deef;width: 90%;float: left;margin-top: 13px;" v-text=tatalDate0.szhya></div><div style="width: 10%;float: left;font-size:10px;color:#19deef;margin-top: 20px;margin-left: -26px;"> 条</div>
+								<div style="width: 100%;color:#fff;font-size:10px;margin-top: -15px;">消防水源信息</div>
 						</div>
 						<div  style="height:23%;width:100%;float: left;">
-								<div style="font-size:26px;color:#19deef;width: 90%;float: left;margin-top: 8px;" v-text=tatalDate0.xfdz></div><div style="width: 10%;float: left;font-size:16px;color:#19deef;margin-top: 18px;margin-left: -8px;"> 条</div>
-								<div style="width: 100%;color:#fff;font-size:16px;">消防力量信息</div>
+								<div style="font-size:20px;color:#19deef;width: 90%;float: left;margin-top: 13px;" v-text=tatalDate0.xfdz></div><div style="width: 10%;float: left;font-size:10px;color:#19deef;margin-top: 20px;margin-left: -26px;"> 条</div>
+								<div style="width: 100%;color:#fff;font-size:10px;margin-top: -15px;">消防力量信息</div>
 						</div>
 					</div>
 
 				</div>
-				<div class="application-div h69  map-bg2" style="background:url('/static/images/new/bg_05.png') no-repeat;background-size:100% 100%">
+				<div class="application-div h69 " style=" background:url('/static/images/new/bg_05.png') no-repeat;background-size:100% 100%">
 					<!-- <div id="barmax" class="application-text"></div> -->
 					
 					<div  style="height:12%;width:100%;float: left;">
-						</div>
-						<div  style="height:88%;width:100%;float: left;">
-							<div id="barmax" style="height:100%;width:100%;"></div>
-						</div>
+					</div>
+					<div  style="height:88%;width:100%;float: left;">
+						<div id="barmax" style="height:100%;width:100%;"></div>
+					</div>
 						
 				</div>
+
 			</div>
 			
 			<!-- 右侧部分 -->
-			<div class="l h80 w25" >
+			<div class="l h80 w25" style="margin-left:5px;">
 				<!-- 预案数量排行 -->
 				<div class="application-div h85 p5" >
-					<div class="application-text map-bg2" style="background:url('/static/images/new/bg_07.png') no-repeat;background-size:100% 100%">
+					<div class="application-text " style="background:url('/static/images/new/bg_07.png') no-repeat;background-size:100% 100%">
 						
-						<div  style="height:9%;width:100%;float: left;">
+						<div  style="height:9.5%;width:100%;float: left;">
 						</div>
-						<div  style="height:95%;width:100%;float: left;color: #fff;">
+						<div  style="height:87%;width:100%;float: left;color: #fff;">
 							<dl>
 								<dt>二级预案</dt>
 								<dt>三级预案</dt>
 								<dt>大中队级预案</dt>
-								<div  style="height:6%;width:100%;float: left;">
-								</div>
+								
 								<dd  id="top10Bara" style="height:84%;width:100%;margin-left: -5px;">
-									
 								</dd>
 								<dd id="top10Bar"  style="height:84%;width:100%;margin-left: -5px;">
 								</dd>
@@ -260,13 +337,13 @@ dd {
 				</div>
 				<!-- 右侧 -->
 				
-				<div class="application-div h40 p5">
-					<div class="application-text map-bg2" style="background:url('/static/images/new/bg_04.png') no-repeat;background-size:100% 100%">
+				<div class="application-div h45 p5">
+					<div class="application-text" style="background:url('/static/images/new/bg_04.png') no-repeat;background-size:100% 100%">
 				
 						<div style="height:12%;width:100%;float: left;">
 						</div>
 						<div style="height:88%;width:100%;float: left;">
-							<div id="bar"style="height: 100%;width:100%;">
+							<div id="bar" style="height: 100%;width:100%;">
 
 							</div>
 						</div>

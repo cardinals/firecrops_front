@@ -217,8 +217,13 @@ var vm = new Vue({
 			var myChart = echarts.init(document.getElementById('bar'));
 			option = {
 				title: {
-					text: '',
-					x: 'center'
+					text: '单位：个',
+                    x: 'right',
+                    right:'2%',
+                    textStyle:{
+                        color:'#fff',
+                        fontSize:'10'
+                    }
 				},
 				tooltip: {
 					trigger: 'axis',
@@ -227,7 +232,7 @@ var vm = new Vue({
 					}
 				},
 				grid: {
-					top: '20',
+					top: '25',
 					bottom: '5',
 					left: '15',
 					right: '40',
@@ -251,11 +256,18 @@ var vm = new Vue({
                             color:"#fff"
                 
                         },
+                        axisLine:{
+                            show: false,
+                            lineStyle: {
+                                color: '#e6e6e6'
+                            }
+                        }
                        
 					}
 				],
 				yAxis: [
 					{
+                        name:'单位：个',
 						type: 'value',
 						splitLine: {
                             show: true,
@@ -325,7 +337,18 @@ var vm = new Vue({
                         type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                     }
                 },
-                // color: ['#0f82ee'],
+                title : {
+                    text: '单位：条',
+                    top:'5%',
+                    left: '1%',
+                    textStyle: {
+                        color: '#fff',//坐标值得具体的颜色
+                        fontSize:'10',
+                       
+                    },
+
+                },
+                color: ['#0f82ee'],
                 grid: {
                     top: '40',
                     bottom: '10',
@@ -336,14 +359,12 @@ var vm = new Vue({
                 xAxis: [
                     {
                         type: 'category',
-                        data: ['南京', '镇江', '苏州', '扬州', '宿迁', '盐城', '无锡', '淮安','常州', '连云港', '泰州', '南通', '徐州'],
-                        axisLine: {
-                            lineStyle: {
-                                color: '#42c9f6',
-                            }
+                        textStyle: {
+                            color: '#fff',//坐标值得具体的颜色
                         },
-                       
+                        data: ['南京', '镇江', '苏州', '扬州', '宿迁', '盐城', '无锡', '淮安','常州', '连云港', '泰州', '南通', '徐州'],
                         axisLabel: {
+                            show: true,
                             interval: 0,
                             textStyle: {
                                 color: '#fff',//坐标值得具体的颜色
@@ -356,15 +377,24 @@ var vm = new Vue({
                             */
                             // rotate: "45"
                         },
+                        axisLine: {
+                           
+                            lineStyle: {
+                                color: '#fff',
+                            }
+                        },
+                       
                     }
                 ],
                 yAxis: [
                     {
+                        // name : '单位：条',
+                        show: true,
                         type: 'value',
                         axisLine: {
                             lineStyle: {
-                           
-                                color: '#42c9f6'
+                                // color: '#42c9f6'
+                                color: '#fff',
                             }
                         },
                         axisLabel: {
@@ -389,7 +419,7 @@ var vm = new Vue({
                         type: 'bar',
                         barWidth: '100%',
                         stack: '预案',
-                        barWidth: '10',
+                        barWidth: '12',
                         
                         itemStyle: {
                             barBorderRadius: 20,
@@ -845,8 +875,8 @@ var vm = new Vue({
                             }
                         },
                         grid: {
-                            left: '20px',
-                            right: '60px',
+                            left: '40px',
+                            right: '5px',
                             top: '5px',
                             bottom: '-10px',
                             containLabel: true
@@ -870,10 +900,11 @@ var vm = new Vue({
                         yAxis: {
                             type: 'category',
                             // data: category,
-                            data:  ['13       徐州', '12       南通', '11       泰州', ' 10    连云港','9       常州', '8       淮安', '7       无锡', '6       盐城', '5       宿迁', '4       扬州', '3       苏州', '2       镇江','1       南京'],
+                            data:  ['          徐州', '          南通', '          泰州', '        连云港','          常州', '          淮安', '          无锡', '          盐城', '          宿迁', '          扬州', '          苏州', '          镇江','          南京'],
                             splitLine: {
                                 show: false
                             },
+                            offset: '25',
                             axisLine: {
                                 show: false,
                                 lineStyle: {
@@ -888,7 +919,7 @@ var vm = new Vue({
                             },
                             z: 10,
                             nameTextStyle: {
-                                fontSize: 15
+                                fontSize: 10
                             }
                         },
                         series: [
@@ -896,21 +927,24 @@ var vm = new Vue({
                                 name: '预案数量',
                                 type: 'bar',
                                 // data: data,
-                                data: [ 262, 325, 512, 610, 632, 656, 715, 723, 792, 800, 813, 920,1149],
+                                data: [ 262, 325, 12, 60, 632, 656, 15, 723, 792, 800, 813, 920,1149],
                                 barWidth: 6,
-                                barGap: 10,
+                                barGap: 20,
+                                barCategoryGap:'50%',
+                                
                                 smooth: true,
                                 label: {
                                     normal: {
                                         show: true,
-                                        position: 'right',
-                                        offset: [5, 0],
+                                        position: 'left',
+                                        offset: [0,0],
                                         textStyle: {
-                                            color: function (params) {
-                                                var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
-                                                return colorList[params.dataIndex];
-                                            },
-                                            fontSize: 13
+                                            color: '#fff',
+                                            // function (params) {
+                                            //     var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
+                                            //     return colorList[params.dataIndex];
+                                            // },
+                                            fontSize: 10
                                         }
                                     }
                                 },
@@ -986,8 +1020,8 @@ var vm = new Vue({
                             }
                         },
                         grid: {
-                            left: '20px',
-                            right: '60px',
+                            left: '40px',
+                            right: '5px',
                             top: '5px',
                             bottom: '-10px',
                             containLabel: true
@@ -1011,10 +1045,11 @@ var vm = new Vue({
                         yAxis: {
                             type: 'category',
                             // data: category,
-                            data:  ['13       徐州', '12       南通', '11       泰州', ' 10    连云港','9       常州', '8       淮安', '7       无锡', '6       盐城', '5       宿迁', '4       扬州', '3       苏州', '2       镇江','1       南京'],
+                            data:  ['          徐州', '          南通', '          泰州', '        连云港','          常州', '          淮安', '          无锡', '          盐城', '          宿迁', '          扬州', '          苏州', '          镇江','          南京'],
                             splitLine: {
                                 show: false
                             },
+                            offset: '25',
                             axisLine: {
                                 show: false,
                                 lineStyle: {
@@ -1029,7 +1064,7 @@ var vm = new Vue({
                             },
                             z: 10,
                             nameTextStyle: {
-                                fontSize: 15
+                                fontSize: 10
                             }
                         },
                         series: [
@@ -1037,21 +1072,23 @@ var vm = new Vue({
                                 name: '预案数量',
                                 type: 'bar',
                                 // data: data,
-                                data: [ 212, 325, 512, 530, 612, 650, 705, 733, 792, 800, 813, 920,949],
+                                data: [ 212, 325, 512, 530, 612, 650, 705, 733, 792, 80, 813, 20,949],
                                 barWidth: 6,
-                                barGap: 10,
+                                barGap: 20,
+                                barCategoryGap:'50%',
                                 smooth: true,
                                 label: {
                                     normal: {
                                         show: true,
-                                        position: 'right',
-                                        offset: [5, 0],
+                                        position: 'left',
+                                        offset: [0, 0],
                                         textStyle: {
-                                            color: function (params) {
-                                                var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
-                                                return colorList[params.dataIndex];
-                                            },
-                                            fontSize: 13
+                                            color:'#fff', 
+                                            // function (params) {
+                                            //     var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
+                                            //     return colorList[params.dataIndex];
+                                            // },
+                                            fontSize: 10
                                         }
                                     }
                                 },
@@ -1127,8 +1164,8 @@ var vm = new Vue({
                     }
                 },
                 grid: {
-                    left: '20px',
-                    right: '60px',
+                    left: '40px',
+                    right: '5px',
                     top: '5px',
                     bottom: '-10px',
                     containLabel: true
@@ -1152,10 +1189,11 @@ var vm = new Vue({
                 yAxis: {
                     type: 'category',
                     // data: category,
-                    data:  ['13       徐州', '12       南通', '11       泰州', ' 10    连云港','9       常州', '8       淮安', '7       无锡', '6       盐城', '5       宿迁', '4       扬州', '3       苏州', '2       镇江','1       南京'],
+                    data:  ['          徐州', '          南通', '          泰州', '        连云港','          常州', '          淮安', '          无锡', '          盐城', '          宿迁', '          扬州', '          苏州', '          镇江','          南京'],
                     splitLine: {
                         show: false
                     },
+                    offset: '25',
                     axisLine: {
                         show: false,
                         lineStyle: {
@@ -1170,7 +1208,7 @@ var vm = new Vue({
                     },
                     z: 10,
                     nameTextStyle: {
-                        fontSize: 15
+                        fontSize: 10
                     }
                 },
                 series: [
@@ -1180,20 +1218,23 @@ var vm = new Vue({
                         // data: data,
                         data: [ 212, 325, 512, 590, 612, 650, 705, 723, 792, 800, 813, 920,949],
                         barWidth: 6,
-                        barGap: 10,
+                        barGap: 20,
+                        barCategoryGap:'50%',
                         smooth: true,
                         label: {
                             normal: {
                                 show: true,
-                                position: 'right',
-                                offset: [5, 0],
+                                position: 'left',
+                                offset: [0, 0],
                                 textStyle: {
-                                    color: function (params) {
-                                        var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
-                                        return colorList[params.dataIndex];
-                                    },
-                                    fontSize: 13
+                                    color:'#fff',
+                                    //  function (params) {
+                                    //     var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
+                                    //     return colorList[params.dataIndex];
+                                    // },
+                                    fontSize: 10
                                 }
+                               
                             }
                         },
                         itemStyle: {
@@ -1250,347 +1291,448 @@ var vm = new Vue({
         // top10排名柱状图
         echarts52: function () {
             var myBarChartbbb = echarts.init(document.getElementById('top10Barb'));
-            var categoryzb = [];
-            var data = [];
-            TopOption = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                },
-                grid: {
-                    left: '20px',
-                    right: '60px',
-                    top: '5px',
-                    bottom: '-10px',
-                    containLabel: true
-                },
-                xAxis: {
-                    show: false,
-                    type: 'value',
-                    axisLine: {
-                        show: false,
-                        lineStyle: {
-                            color: 'white'
-                        }
-                    },
-                    splitLine: {
-                        show: false
-                    },
-                    axisTick: {
-                        show: false
-                    }
-                },
-                yAxis: {
-                    type: 'category',
-                    data:  ['13       徐州             212                   56%', '12       南通             325                   57%', '11       泰州             512                   72%', ' 10    连云港             590                   69%','9       常州             612                   39%', '8       淮安             650                   72%', '7       无锡             705                   79%', '6       盐城             723                   36%', '5       宿迁             792                   56%', '4       扬州             800                   35%', '3       苏州             813                   21%', '2       镇江             920                   39%','1       南京             942                   49%'],
-                    splitLine: {
-                        show: false
-                    },
-                    axisLine: {
-                        show: false,
-                        lineStyle: {
-                            color: '#e6e6e6'
-                        }
-                    },
-                    axisLabel: {
-                        inside: false
-                    },
-                    axisTick: {
-                        show: false
-                    },
-                    z: 10,
-                    nameTextStyle: {
-                        fontSize: 15
-                    }
-                },
-                series: [
-                    {
-                        name: '预案数量',
-                        type: 'bar',
-                        data: [ ],
-                        barWidth: 1,
-                        barGap: 10,
-                        smooth: true,
-                        label: {
-                            normal: {
-                                show: true,
-                                position: 'right',
-                                offset: [5, 0],
-                                textStyle: {
-                                    // color: function (params) {
-                                    //     var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
-                                    //     return colorList[params.dataIndex];
-                                    // },
-                                    fontSize: 13
-                                }
+            var category = ['          徐州', '          南通', '          泰州', '        连云港','          常州', '          淮安', '          无锡', '          盐城', '          宿迁', '          扬州', '          苏州', '          镇江','          南京'];
+                    // var barData = [0, ~~(Math.random() * 100), ~~(Math.random() * 100), ~~(Math.random() * 100), ~~(Math.random() * 100)];
+                    var barData = [212, 325, 512, 590, 612, 650, 705, 723, 792, 800, 813, 920,949];
+                    var lineData = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,]
+                    
+                    // console.log(barData)
+                    var TopOption = {
+                       
+                        grid: [{//图形的位置
+                            left: '0',
+                            bottom: '0',
+                            top: 0,
+                            right: '90'
+                        }],
+                        xAxis: {
+                            show: false//是否展示X轴
+                        },
+                        yAxis: {
+                            data: category,
+                            show: true,
+                            nameTextStyle: {
+                                fontSize: 10
+                            },
+                            axisLabel: {
+                                inside: true,
+                                verticalAlign: 'middle',
+                                lineHeight: 150,
+                                color: '#fff',
+                                // fontSize: 10
+                            },
+                            axisLine: {
+                                show: false//不展示刻度
                             }
                         },
-                        itemStyle: {
-                            emphasis: {
-                                barBorderRadius: 7
+                        series: [// { // 外边框
+                            //     name: '',
+                            //     type: 'pictorialBar',//echarts图的类型
+                            //     symbol: 'reat',//内部类型（方块，圆，svg，base64图片）
+                            //     barWidth: '10',
+                            //     barMaxWidth: '10%',
+                            //     symbolOffset: [70, 0],//柱子的位置
+                            //     symbolSize: [130, 20],//size,单个symbol的大小
+                            //     itemStyle: {
+                            //         normal: {
+                            //             color: '#3f559c'
+                            //         }
+                            //     },
+                            //     z: -180,//图层值
+                            //     symbolRepeat: null,//是否重复symbol
+                            //     data: [1, 1, 1, 1],
+                            //     barGap: 50,//柱子的“粗细”
+                            //     barCategoryGap: 0,
+                            //     animationEasing: 'elasticOut',
+                    
+                            // },
+                            // { // 内边框
+                            //     name: '',
+                            //     type: 'pictorialBar',
+                            //     symbol: 'reat',
+                            //     barWidth: '3%',
+                            //     barMaxWidth: '20%',
+                            //     symbolOffset: [72, 0],
+                            //     symbolSize: [125, 18],
+                            //     itemStyle: {
+                            //         normal: {
+                    
+                            //             color: '#0d073d'
+                            //         }
+                            //     },
+                            //     z: -20,
+                            //     symbolRepeat: null,
+                            //     data: [1, 1, 1, 1],
+                            //     barGap: 45,
+                            //     barCategoryGap: 0,
+                            //     animationEasing: 'elasticOut',
+                    
+                            // },
+                    
+                            { // 下层块
+                                name: '',
+                                type: 'pictorialBar',
+                                symbol: 'rectangle',
+                                barWidth: '3%',
+                                barMaxWidth: '20%',
+                                symbolOffset: [75, 8],
+                                itemStyle: {
+                                    normal: {
+                    
+                                        color: '#1F4683',
+                                        
+                                    }
+                                },
+                                z: -11,
+                                symbolRepeat: true,
+                                symbolSize: [15, 1],
+                                data: lineData,
+                                barGap: 50,
+                                barCategoryGap: 0,
+                                animationEasing: 'elasticOut',
+                                label : {
+                                    show: true,
+                                    position: 'insideRight',
+                                    
+                                    color:'#fff',
+                                    fontSize:'10',
+                                    
+                                   },
+                    
                             },
-                            normal: {
-                                barBorderRadius: 7,
-                                // color: function (params) {
-                                //     var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
-                                //     return colorList[params.dataIndex];
-                                // }
-                            }
-                        }
+                    
+                            { // 上层块
+                                name: '', // blue bar
+                                type: 'pictorialBar',
+                                symbol: 'rectangle',
+                                barWidth: '3%',
+                                barMaxWidth: 100,
+                                symbolOffset: [75, 8],
+                                itemStyle: {
+                                    normal: {
+                                        barMaxWidth: '20%',
+                                        // barBorderRadius: 100,
+                                        color: '#7a9eff',
+                                        label : {
+                                             show: true,
+                                             position: 'insideLeft',
+                                             left:'-100',
+                                             color:'#fff',
+                                             fontSize:'10'
+                                            },
+                                        
+                                    }
+                                },
+                                symbolRepeat: true,
+                                symbolSize: [15, 1],
+                                // symbolClip: true,
+                                data: barData,
+                            },
+                            /* 
+                             */
+                    
+                        ],
+                    
                     }
-                ]
-            };
-            // var params = {
-            //     btype: 'top10'
-            // }
-            // axios.post('/dpapi/dp/getListByType', params).then(function (res) {
-            //     for (let i = 0; i < res.data.result.length; i++) {
-            //         const elementz = res.data.result[i];
-            //         const item = {
-            //             name: elementz.bname,
-            //             value: elementz.bvalue,
-            //         }
-            //         this.top11.push(item);
-            //     }
-            //     this.top11.sort(this.up);
-            //     for (var i = 0; i < this.top11.length; i++) {
-            //         categoryz.push(this.top11[i].name);    //挨个取出类别并填入类别数组
-            //         data.push(this.top11[i].value);
-            //     }
-            //     myBarChart.setOption(TopOption);
-            // }.bind(this), function (error) {
-            //     console.log(error);
-            // })
             myBarChartbbb.setOption(TopOption);
         },
                 // top10排名柱状图
                 echarts51: function () {
                     var myBarChartaaa = echarts.init(document.getElementById('top10Bara'));
-                    var categoryza = [];
-                    var data = [];
-                    TopOption = {
-                        tooltip: {
-                            trigger: 'axis',
-                            axisPointer: {
-                                type: 'shadow'
-                            }
-                        },
-                        grid: {
-                            left: '20px',
-                            right: '60px',
-                            top: '5px',
-                            bottom: '-10px',
-                            containLabel: true
-                        },
+                    var category = ['          徐州', '          南通', '          泰州', '        连云港','          常州', '          淮安', '          无锡', '          盐城', '          宿迁', '          扬州', '          苏州', '          镇江','          南京'];
+                    // var barData = [0, ~~(Math.random() * 100), ~~(Math.random() * 100), ~~(Math.random() * 100), ~~(Math.random() * 100)];
+                    var barData = [212, 325, 512, 590, 612, 650, 705, 723, 792, 800, 813, 920,949];
+                    var lineData = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,]
+                    
+                    // console.log(barData)
+                    var TopOption = {
+                       
+                        grid: [{//图形的位置
+                            left: '0',
+                            bottom: '0',
+                            top: 0,
+                            right: '90'
+                        }],
                         xAxis: {
-                            show: false,
-                            type: 'value',
-                            axisLine: {
-                                show: false,
-                                lineStyle: {
-                                    color: 'white'
-                                }
-                            },
-                            splitLine: {
-                                show: false
-                            },
-                            axisTick: {
-                                show: false
-                            }
+                            show: false//是否展示X轴
                         },
                         yAxis: {
-                            type: 'category',
-                            data:  ['13       徐州             212                   56%', '12       南通             325                   57%', '11       泰州             512                   72%', ' 10    连云港             590                   69%','9       常州             612                   39%', '8       淮安             650                   72%', '7       无锡             705                   79%', '6       盐城             723                   36%', '5       宿迁             792                   56%', '4       扬州             800                   35%', '3       苏州             813                   21%', '2       镇江             920                   39%','1       南京             942                   49%'],
-                            splitLine: {
-                                show: false
-                            },
-                            axisLine: {
-                                show: false,
-                                lineStyle: {
-                                    color: '#e6e6e6'
-                                }
+                            data: category,
+                            show: true,
+                            nameTextStyle: {
+                                fontSize: 10
                             },
                             axisLabel: {
-                                inside: false
+                                inside: true,
+                                verticalAlign: 'middle',
+                                lineHeight: 150,
+                                color: '#fff',
+                                // fontSize: 10
                             },
-                            axisTick: {
-                                show: false
-                            },
-                            z: 10,
-                            nameTextStyle: {
-                                fontSize: 15
+                            axisLine: {
+                                show: false//不展示刻度
                             }
                         },
                         series: [
-                            {
-                                name: '预案数量',
-                                type: 'bar',
-                                data: [ ],
-                                barWidth: 1,
-                                barGap: 10,
-                                smooth: true,
-                                label: {
+                            // { // 外边框
+                            //     name: '',
+                            //     type: 'pictorialBar',//echarts图的类型
+                            //     symbol: 'reat',//内部类型（方块，圆，svg，base64图片）
+                            //     barWidth: '10',
+                            //     barMaxWidth: '10%',
+                            //     symbolOffset: [70, 0],//柱子的位置
+                            //     symbolSize: [130, 20],//size,单个symbol的大小
+                            //     itemStyle: {
+                            //         normal: {
+                            //             color: '#3f559c'
+                            //         }
+                            //     },
+                            //     z: -180,//图层值
+                            //     symbolRepeat: null,//是否重复symbol
+                            //     data: [1, 1, 1, 1],
+                            //     barGap: 50,//柱子的“粗细”
+                            //     barCategoryGap: 0,
+                            //     animationEasing: 'elasticOut',
+                    
+                            // },
+                            // { // 内边框
+                            //     name: '',
+                            //     type: 'pictorialBar',
+                            //     symbol: 'reat',
+                            //     barWidth: '3%',
+                            //     barMaxWidth: '20%',
+                            //     symbolOffset: [72, 0],
+                            //     symbolSize: [125, 18],
+                            //     itemStyle: {
+                            //         normal: {
+                    
+                            //             color: '#0d073d'
+                            //         }
+                            //     },
+                            //     z: -20,
+                            //     symbolRepeat: null,
+                            //     data: [1, 1, 1, 1],
+                            //     barGap: 45,
+                            //     barCategoryGap: 0,
+                            //     animationEasing: 'elasticOut',
+                    
+                            // },
+                    
+                            { // 下层块
+                                name: '',
+                                type: 'pictorialBar',
+                                symbol: 'rectangle',
+                                barWidth: '3%',
+                                barMaxWidth: '20%',
+                                symbolOffset: [75, 8],
+                                itemStyle: {
                                     normal: {
-                                        show: true,
-                                        position: 'right',
-                                        offset: [5, 0],
-                                        textStyle: {
-                                            fontSize: 13
-                                        }
+                    
+                                        color: '#1F4683',
+                                        
                                     }
                                 },
+                                z: -11,
+                                symbolRepeat: true,
+                                symbolSize: [15, 1],
+                                data: lineData,
+                                barGap: 50,
+                                barCategoryGap: 0,
+                                animationEasing: 'elasticOut',
+                                label : {
+                                    show: true,
+                                    position: 'insideRight',
+                                    
+                                    color:'#fff',
+                                    fontSize:'10',
+                                    
+                                   },
+                    
+                            },
+                    
+                            { // 上层块
+                                name: '', // blue bar
+                                type: 'pictorialBar',
+                                symbol: 'rectangle',
+                                barWidth: '3%',
+                                barMaxWidth: 100,
+                                symbolOffset: [75, 8],
                                 itemStyle: {
-                                    emphasis: {
-                                        barBorderRadius: 7
-                                    },
                                     normal: {
-                                        barBorderRadius: 7,
+                                        barMaxWidth: '20%',
+                                        // barBorderRadius: 100,
+                                        color: '#7a9eff',
+                                        label : {
+                                             show: true,
+                                             position: 'insideLeft',
+                                             left:'-100',
+                                             color:'#fff',
+                                             fontSize:'10'
+                                            },
+                                        
                                     }
-                                }
-                            }
-                        ]
-                    };
-                    // var params = {
-                    //     btype: 'top10'
-                    // }
-                    // axios.post('/dpapi/dp/getListByType', params).then(function (res) {
-                    //     for (let i = 0; i < res.data.result.length; i++) {
-                    //         const elementz = res.data.result[i];
-                    //         const item = {
-                    //             name: elementz.bname,
-                    //             value: elementz.bvalue,
-                    //         }
-                    //         this.top11.push(item);
-                    //     }
-                    //     this.top11.sort(this.up);
-                    //     for (var i = 0; i < this.top11.length; i++) {
-                    //         categoryz.push(this.top11[i].name);    //挨个取出类别并填入类别数组
-                    //         data.push(this.top11[i].value);
-                    //     }
-                    //     myBarChart.setOption(TopOption);
-                    // }.bind(this), function (error) {
-                    //     console.log(error);
-                    // })
+                                },
+                                symbolRepeat: true,
+                                symbolSize: [15, 1],
+                                // symbolClip: true,
+                                data: barData,
+                            },
+                            /* 
+                             */
+                           
+                        ],
+                    
+                    }
+                    
                     myBarChartaaa.setOption(TopOption);
                 },
         // top10排名柱状图
         echarts5: function () {
             var myBarChart = echarts.init(document.getElementById('top10Bar'));
-            var categoryz = [];
-            var data = [];
-            TopOption = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                },
-                grid: {
-                    left: '20px',
-                    right: '60px',
-                    top: '5px',
-                    bottom: '-10px',
-                    containLabel: true
-                },
-                xAxis: {
-                    show: false,
-                    type: 'value',
-                    axisLine: {
-                        show: false,
-                        lineStyle: {
-                            color: 'white'
-                        }
-                    },
-                    splitLine: {
-                        show: false
-                    },
-                    axisTick: {
-                        show: false
-                    }
-                },
-                yAxis: {
-                    type: 'category',
-                    data:  ['13       徐州             212                   56%', '12       南通             325                   57%', '11       泰州             512                   72%', ' 10    连云港             590                   69%','9       常州             612                   39%', '8       淮安             650                   72%', '7       无锡             705                   79%', '6       盐城             723                   36%', '5       宿迁             792                   56%', '4       扬州             800                   35%', '3       苏州             813                   21%', '2       镇江             920                   39%','1       南京             942                   49%'],
-                    splitLine: {
-                        show: false
-                    },
-                    axisLine: {
-                        show: false,
-                        lineStyle: {
-                            color: '#e6e6e6'
-                        }
-                    },
-                    axisLabel: {
-                        inside: false
-                    },
-                    axisTick: {
-                        show: false
-                    },
-                    z: 10,
-                    nameTextStyle: {
-                        fontSize: 15
-                    }
-                },
-                series: [
-                    {
-                        name: '预案数量',
-                        type: 'bar',
-                        data: [ ],
-                        barWidth: 1,
-                        barGap: 10,
-                        smooth: true,
-                        label: {
-                            normal: {
-                                show: true,
-                                position: 'right',
-                                offset: [5, 0],
-                                textStyle: {
-                                    // color: function (params) {
-                                    //     var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
-                                    //     return colorList[params.dataIndex];
-                                    // },
-                                    fontSize: 13
-                                }
+            var category = ['          徐州', '          南通', '          泰州', '        连云港','          常州', '          淮安', '          无锡', '          盐城', '          宿迁', '          扬州', '          苏州', '          镇江','          南京'];
+                    // var barData = [0, ~~(Math.random() * 100), ~~(Math.random() * 100), ~~(Math.random() * 100), ~~(Math.random() * 100)];
+                    var barData = [212, 325, 512, 590, 612, 650, 705, 723, 792, 800, 813, 920,949];
+                    var lineData = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,]
+                    
+                    // console.log(barData)
+                    var TopOption = {
+                       
+                        grid: [{//图形的位置
+                            left: '0',
+                            bottom: '0',
+                            top: 0,
+                            right: '90'
+                        }],
+                        xAxis: {
+                            show: false//是否展示X轴
+                        },
+                        yAxis: {
+                            data: category,
+                            show: true,
+                            nameTextStyle: {
+                                fontSize: 10
+                            },
+                            axisLabel: {
+                                inside: true,
+                                verticalAlign: 'middle',
+                                lineHeight: 150,
+                                color: '#fff',
+                                // fontSize: 10
+                            },
+                            axisLine: {
+                                show: false//不展示刻度
                             }
                         },
-                        itemStyle: {
-                            emphasis: {
-                                barBorderRadius: 7
+                        series: [
+                            // { // 外边框
+                            //     name: '',
+                            //     type: 'pictorialBar',//echarts图的类型
+                            //     symbol: 'reat',//内部类型（方块，圆，svg，base64图片）
+                            //     barWidth: '10',
+                            //     barMaxWidth: '10%',
+                            //     symbolOffset: [70, 0],//柱子的位置
+                            //     symbolSize: [130, 20],//size,单个symbol的大小
+                            //     itemStyle: {
+                            //         normal: {
+                            //             color: '#3f559c'
+                            //         }
+                            //     },
+                            //     z: -180,//图层值
+                            //     symbolRepeat: null,//是否重复symbol
+                            //     data: [1, 1, 1, 1],
+                            //     barGap: 50,//柱子的“粗细”
+                            //     barCategoryGap: 0,
+                            //     animationEasing: 'elasticOut',
+                    
+                            // },
+                            // { // 内边框
+                            //     name: '',
+                            //     type: 'pictorialBar',
+                            //     symbol: 'reat',
+                            //     barWidth: '3%',
+                            //     barMaxWidth: '20%',
+                            //     symbolOffset: [72, 0],
+                            //     symbolSize: [125, 18],
+                            //     itemStyle: {
+                            //         normal: {
+                    
+                            //             color: '#0d073d'
+                            //         }
+                            //     },
+                            //     z: -20,
+                            //     symbolRepeat: null,
+                            //     data: [1, 1, 1, 1],
+                            //     barGap: 45,
+                            //     barCategoryGap: 0,
+                            //     animationEasing: 'elasticOut',
+                    
+                            // },
+                    
+                            { // 下层块
+                                name: '',
+                                type: 'pictorialBar',
+                                symbol: 'rectangle',
+                                barWidth: '3%',
+                                barMaxWidth: '20%',
+                                symbolOffset: [75, 8],
+                                itemStyle: {
+                                    normal: {
+                    
+                                        color: '#1F4683',
+                                        
+                                    }
+                                },
+                                z: -11,
+                                symbolRepeat: true,
+                                symbolSize: [15, 1],
+                                data: lineData,
+                                barGap: 50,
+                                barCategoryGap: 0,
+                                animationEasing: 'elasticOut',
+                                label : {
+                                    show: true,
+                                    position: 'insideRight',
+                                    
+                                    color:'#fff',
+                                    fontSize:'10',
+                                    
+                                   },
+                    
                             },
-                            normal: {
-                                barBorderRadius: 7,
-                                // color: function (params) {
-                                //     var colorList = ['#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#e6e6e6', '#29bb9d', '#fdc107', '#ff6364'];
-                                //     return colorList[params.dataIndex];
-                                // }
-                            }
-                        }
+                    
+                            { // 上层块
+                                name: '', // blue bar
+                                type: 'pictorialBar',
+                                symbol: 'rectangle',
+                                barWidth: '3%',
+                                barMaxWidth: 100,
+                                symbolOffset: [75, 8],
+                                itemStyle: {
+                                    normal: {
+                                        barMaxWidth: '20%',
+                                        // barBorderRadius: 100,
+                                        color: '#7a9eff',
+                                        label : {
+                                             show: true,
+                                             position: 'insideLeft',
+                                             left:'-100',
+                                             color:'#fff',
+                                             fontSize:'10'
+                                            },
+                                        
+                                    }
+                                },
+                                symbolRepeat: true,
+                                symbolSize: [15, 1],
+                                // symbolClip: true,
+                                data: barData,
+                            },
+                            /* 
+                             */
+                    
+                        ],
+                    
                     }
-                ]
-            };
-            // var params = {
-            //     btype: 'top10'
-            // }
-            // axios.post('/dpapi/dp/getListByType', params).then(function (res) {
-            //     for (let i = 0; i < res.data.result.length; i++) {
-            //         const elementz = res.data.result[i];
-            //         const item = {
-            //             name: elementz.bname,
-            //             value: elementz.bvalue,
-            //         }
-            //         this.top11.push(item);
-            //     }
-            //     this.top11.sort(this.up);
-            //     for (var i = 0; i < this.top11.length; i++) {
-            //         categoryz.push(this.top11[i].name);    //挨个取出类别并填入类别数组
-            //         data.push(this.top11[i].value);
-            //     }
-            //     myBarChart.setOption(TopOption);
-            // }.bind(this), function (error) {
-            //     console.log(error);
-            // })
             myBarChart.setOption(TopOption);
         },
 
