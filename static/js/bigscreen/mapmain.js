@@ -153,8 +153,11 @@ var vm = new Vue({
         //检索来源
         searchSource: '搜索百度库',
         //当前城市
-        myCity: ''
+        myCity: '',
         // db end
+
+        //详情页显示flag
+        detailVisible: false,
     },
     mounted: function() {
         // var gis_X = this.GetQueryString("gis_X");
@@ -1218,7 +1221,7 @@ var vm = new Vue({
                 '</tr>' +
                 '</table>' +
                 '<div class="bbar" style="text-align: center; position: absolute; bottom: 0;width: 100%;height: 32px;text-align: right;">' +
-                '<b class="btn" onclick="vm.syxq(\'' + uuid + '\')" style="border-radius:2px;padding:0 7px;background:#5963A0;font-size:12px;color: #fff;display: inline-block;margin: 0 2px;height: 24px;line-height: 24px;border-radius: 2px;cursor: pointer;text-align: center;text-decoration: none;" ><img style="margin-right:5px;margin-bottom:1px;width: 12px;height: 12px;vertical-align: sub;" src="../../static/images/btn/icon_details.png">详细信息</b>' +
+                '<b class="btn" onclick="vm.syxq(\'' + uuid + '\',\'' + d + '\')" style="border-radius:2px;padding:0 7px;background:#5963A0;font-size:12px;color: #fff;display: inline-block;margin: 0 2px;height: 24px;line-height: 24px;border-radius: 2px;cursor: pointer;text-align: center;text-decoration: none;" ><img style="margin-right:5px;margin-bottom:1px;width: 12px;height: 12px;vertical-align: sub;" src="../../static/images/btn/icon_details.png">详细信息</b>' +
                 '</div>' +
                 '<div class="x-clear"></div>' +
                 '</div>'
@@ -1648,7 +1651,7 @@ var vm = new Vue({
                         '</tr>' +
                         '</table>' +
                         '<div class="bbar" style="text-align: center; position: absolute; bottom: 0;width: 100%;height: 32px;text-align: right;">' +
-                        '<b class="btn" onclick="vm.syxq(\'' + uuid + '\')" style="border-radius:2px;padding:0 7px;background:#5963A0;font-size:12px;color: #fff;display: inline-block;margin: 0 2px;height: 24px;line-height: 24px;cursor: pointer;text-align: center;text-decoration: none;" ><img style="margin-right:5px;margin-bottom:1px;width: 12px;height: 12px;vertical-align: sub;" src="../../static/images/btn/icon_details.png">详细信息</b>' +
+                        '<b class="btn" onclick="vm.syxq(\'' + uuid + '\',\'' + d + '\')" style="border-radius:2px;padding:0 7px;background:#5963A0;font-size:12px;color: #fff;display: inline-block;margin: 0 2px;height: 24px;line-height: 24px;cursor: pointer;text-align: center;text-decoration: none;" ><img style="margin-right:5px;margin-bottom:1px;width: 12px;height: 12px;vertical-align: sub;" src="../../static/images/btn/icon_details.png">详细信息</b>' +
                         '</div>' +
                         '<div class="x-clear"></div>' +
                         '</div>'
@@ -2050,9 +2053,10 @@ var vm = new Vue({
             window.open(baseUrl+"/planShare/pageZddw/" + val + "/web");
         },
         //水源详情跳转
-        syxq: function (params) {
+        syxq: function (params,lx) {
             //window.location.href = "../basicinfo/firewater_list.html?uuid=" + params + "&sydj=1" + "&index=71" + "&type=DT";
-            window.location.href = "../all.html?url=/basicinfo/firewater&uuid=" + params + "&sydj=1" + "&index=71" + "&type=DT";
+            // window.location.href = "../all.html?url=/basicinfo/firewater&uuid=" + params + "&sydj=1" + "&index=71" + "&type=DT";
+            this.syxqbtn(params,lx)
         },
         //队站详情跳转
         dzxq: function (dzparams) {
@@ -2060,11 +2064,54 @@ var vm = new Vue({
             window.location.href = "../all.html?url=/basicinfo/firestation&dzid=" + dzparams + "&dzdj=1" + "&index=75" + "&type=DT";
         },
         //重点单位详情跳转
+
         zddwxq: function (zddwparams) {
             //window.location.href = "../planobject/importantunits_detail.html?ID=" + zddwparams + "&index=41" + "&type=DT";
             // window.location.href = "../planobject/importantunits_detail.html?uuid=" + zddwparams;
-            window.location.href = "../all.html?url=/planobject/importantunits_detail&ID=" + zddwparams + "&index=41" + "&type=DT";
+            this.zddwxqbtn(zddwparams)
+            // window.location.href = "../all.html?url=/planobject/importantunits_detail&ID=" + zddwparams + "&index=41" + "&type=DT";
         },
+        //重点单位详细信息页
+        zddwxqbtn:function(zddwparams){
+            //点击进入详情页
+                this.detailVisible = true;
+                var shortURL = top.location.href.substr(0, top.location.href.indexOf("?")) + "?id=" + zddwparams + "&sylx=" ;
+                history.pushState(null, null, shortURL)
+                //异步加载详情页
+                $(function () {
+                    $.ajax({
+                        url: '../../../templates/basicinfo/import.html',
+                        cache: true,
+                        async: true,
+                        success: function (html) {
+                            $("#detailDialog").html(html);
+                        }
+                    });
+                })
+
+          
+
+        },
+        //水源详情信息页
+        syxqbtn:function(params,lx){
+        
+            //点击进入详情页
+                this.detailVisible = true;
+                var shortURL = top.location.href.substr(0, top.location.href.indexOf("?")) + "?id=" + params + "&sylx=" + lx;
+                history.pushState(null, null, shortURL)
+                //异步加载详情页
+                $(function () {
+                    $.ajax({
+                        url: '../../../templates/basicinfo/water.html',
+                        cache: true,
+                        async: true,
+                        success: function (html) {
+                            $("#detailDialog").html(html);
+                        }
+                    });
+                })
+        },
+
         //车辆单位详情跳转
         clxq: function (clparams) {
             //window.location.href = "../basicinfo/fireengine_list.html?uuid=" + clparams + "&cldj=1" + "&index=63" + "&type=DT";

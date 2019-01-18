@@ -1,0 +1,359 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/lib.css">
+    <title>消防水源信息</title>
+</head>
+<body class="fw f14 main-index-body">
+    <!--水源详情页-->
+    <div id="detailDisplay"  element-loading-text="加载中">
+        <div>
+            <el-row style="margin-bottom:10px;">
+                <el-col :span="24">
+                    <div>
+                        <el-button type="primary" size="mini" @click="this.tz">进入系统查看详情信息</el-button>
+                    </div>
+                </el-col>
+            </el-row>
+            
+            <el-row>
+                <el-col :span="24">
+                    <div>
+                        <strong class="dtdlStyle">水源名称：</strong>
+                        <v-text v-text="detailData.symc||'无'"></v-text>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row class="inform-margin" >
+                <el-col :span="24">
+                    <div>
+                        <strong class="dtdlStyle">水源类型：</strong>
+                        <v-text v-text="detailData.sylxmc||'无'"></v-text>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row class="inform-margin">
+                <el-col :span="24">
+                    <div>
+                        <strong class="dtdlStyle">水源地址：</strong>
+                        <v-text v-text="detailData.sydz||'无'"></v-text>
+                      
+                    </div>
+                </el-col>
+            </el-row>
+            <!-- <img @click="this.tz" src="../../static/images/mapbtnmin.png" style="cursor:pointer;float:right;margin-top: -100px;"> -->
+            <div class="mt10">
+                <el-tabs v-model="activeName" style="min-height: 185px">
+                    <el-tab-pane name="first" label="基本信息">
+                        <el-row class="mb10">
+                            <el-col :span="12">
+                                <div>
+                                    <strong class="dtdlStyle">可用状态：</strong>
+                                    <v-text v-text="detailData.kyztmc||'无'"></v-text>
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div>
+                                    <strong class="dtdlStyle">水源归属：</strong>
+                                    <v-text v-text="detailData.sygsmc||'无'"></v-text>
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <el-row class="mb10">
+                            <el-col :span="24">
+                                <div>
+                                    <strong class="dtdlStyle">所属单位（小区）：</strong>
+                                    <v-text v-text="detailData.ssdw||'无'"></v-text>
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <el-row class="mb10">
+                            <el-col :span="12">
+                                <div>
+                                    <strong class="dtdlStyle">经度：</strong>
+                                    <v-text v-text="detailData.gisX||'无'"></v-text>
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div>
+                                    <strong class="dtdlStyle">纬度：</strong>
+                                    <v-text v-text="detailData.gisY||'无'"></v-text>
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <el-row class="mb10">
+                            <el-col :span="24">
+                                <div>
+                                    <strong class="dtdlStyle">备注：</strong>
+                                    <v-text v-text="detailData.bz||'无'"></v-text>
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <!-- <HR align=center width=600 color=#987cb9SIZE=1 style="margin-bottom: 10px"></HR>
+                        <el-row>
+                            <strong style="font-size: 16px">责任归属</strong>
+                        </el-row> -->
+                        <el-row style="border-bottom: 1px solid #d1dbe5;line-height: 29px;" class="mt5 mb10">
+                            <el-col :span="24">
+                                <strong>责任归属</strong>
+                            </el-col>
+                        </el-row>
+                        <el-row class="mb10">
+                            <el-col :span="12">
+                                <div>
+                                    <strong class="dtdlStyle">行政区划：</strong>
+                                    <v-text v-text="detailData.xzqhmc||'无'"></v-text>
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div>
+                                    <strong class="dtdlStyle">管辖队站：</strong>
+                                    <v-text v-text="detailData.dzjc||'无'"></v-text>
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <el-row class="mb10">
+                            <el-col :span="12">
+                                <div>
+                                    <strong class="dtdlStyle">供水单位：</strong>
+                                    <v-text v-text="detailData.gsdw||'无'"></v-text>
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div>
+                                    <strong class="dtdlStyle">供水单位联系方式：</strong>
+                                    <v-text v-text="detailData.gsdwlxfs||'无'"></v-text>
+                                </div>
+                            </el-col>
+                        </el-row>
+                    </el-tab-pane>
+                    <el-tab-pane name="second" label="属性信息">
+                        <div v-show="isXHS">
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">设置形式：</strong>
+                                        <v-text v-text="detailData.xhs_szxsmc||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">最大流量：</strong>
+                                        <v-text v-text="detailData.xhs_zdll||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">管网形式：</strong>
+                                        <v-text v-text="detailData.xhs_gwxsmc||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">管网直径（mm）：</strong>
+                                        <v-text v-text="detailData.xhs_gwzj||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">管网压力类型：</strong>
+                                        <v-text v-text="detailData.xhs_gwyllxmc||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">管网压力范围（MPa）：</strong>
+                                        <v-text v-text="detailData.xhs_gwylfw||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">接口形式：</strong>
+                                        <v-text v-text="detailData.xhs_jkxsmc||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">接口口径（mm）：</strong>
+                                        <v-text v-text="detailData.xhs_jkkj||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                        </div>
+                        <div v-show="isXFSH">
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">管网直径（mm）：</strong>
+                                        <v-text v-text="detailData.xfsh_gwzj||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">管网压力（MPa）：</strong>
+                                        <v-text v-text="detailData.xfsh_gwyl||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">出水口高度（m）：</strong>
+                                        <v-text v-text="detailData.xfsh_cskgd||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">最大流量（L/s）：</strong>
+                                        <v-text v-text="detailData.xfsh_zdll||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                        </div>
+                        <div v-show="isXFSC">
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">水源标高差（m）：</strong>
+                                        <v-text v-text="detailData.xfsc_sybgc||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">储水量（L）：</strong>
+                                        <v-text v-text="detailData.xfsc_csl||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">进水流量（L/s）：</strong>
+                                        <v-text v-text="detailData.xfsc_jsll||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">取水最大流量（L/s）：</strong>
+                                        <v-text v-text="detailData.xfsc_qszdll||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">管网形式：</strong>
+                                        <v-text v-text="detailData.xfsc_gwxsmc||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">补水时间（h）：</strong>
+                                        <v-text v-text="detailData.xfsc_bssj||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">停车位置：</strong>
+                                        <v-text v-text="detailData.xfsc_tcwz||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">同时取水车辆数（辆）：</strong>
+                                        <v-text v-text="detailData.xfsc_tsqscls||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                        </div>
+                        <div v-show="isTRSYQSD">
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">天然水源类型：</strong>
+                                        <v-text v-text="detailData.trsy_trsylxmc||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">水质：</strong>
+                                        <v-text v-text="detailData.trsy_szmc||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">水质描述：</strong>
+                                        <v-text v-text="detailData.trsy_szms||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">有无枯水期：</strong>
+                                        <v-text v-text="detailData.trsy_ywksqmc||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">枯水期时间：</strong>
+                                        <v-text v-text="detailData.trsy_ksqsj||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">有无取水点：</strong>
+                                        <v-text v-text="detailData.trsy_ywqsd||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">水源标高差（m）：</strong>
+                                        <v-text v-text="detailData.trsyqsd_sybgc||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">取水形式：</strong>
+                                        <v-text v-text="detailData.trsyqsd_qsxsmc||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                            <el-row class="mb10">
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">停车位置：</strong>
+                                        <v-text v-text="detailData.trsyqsd_tcwz||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12">
+                                    <div>
+                                        <strong class="dtdlStyle">同时取水车辆数（辆）：</strong>
+                                        <v-text v-text="detailData.trsyqsd_tsqscls||'无'"></v-text>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                        </div>
+                    </el-tab-pane>
+                </el-tabs>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../static/js/zzzlib/vue.js"></script>
+<script src="../../static/js/zzzlib/vue.min.js"></script>
+<script src="../../static/js/zzzlib/elementUI.js"></script>
+<script src="../../static/js/basicinfo/water.js"></script>
+</html>

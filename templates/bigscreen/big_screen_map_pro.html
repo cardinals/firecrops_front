@@ -244,6 +244,14 @@
                 </div>
             </div>
         </div>
+
+        <!--重点单位、水源的详情界面的跳转-->
+		<el-dialog title="基本信息详情页"  :visible.sync="detailVisible"  @close="closeDialog()" :close-on-click-modal="false">
+            
+            <div id="detailDialog"></div>
+       
+        </el-dialog>
+
     </div>
 </body>
 <!-- 引入js -->

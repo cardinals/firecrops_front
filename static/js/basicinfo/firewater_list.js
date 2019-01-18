@@ -64,7 +64,6 @@ var vue = new Vue({
             //删除的弹出框
             deleteVisible: false,
 
-
             //选中的值显示
             sels: [],
             //选中的序号
