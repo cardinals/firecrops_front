@@ -1390,14 +1390,14 @@ var vm = new Vue({
                                 barGap: 50,
                                 barCategoryGap: 0,
                                 animationEasing: 'elasticOut',
-                                label : {
-                                    show: true,
-                                    position: 'insideRight',
+                                // label : {
+                                //     show: true,
+                                //     position: 'insideRight',
                                     
-                                    color:'#fff',
-                                    fontSize:'10',
+                                //     color:'#fff',
+                                //     fontSize:'10',
                                     
-                                   },
+                                //    },
                     
                             },
                     
@@ -1415,7 +1415,7 @@ var vm = new Vue({
                                         color: '#7a9eff',
                                         label : {
                                              show: true,
-                                             position: 'insideLeft',
+                                             position: 'insideRight',
                                              left:'-100',
                                              color:'#fff',
                                              fontSize:'10'
@@ -1539,14 +1539,14 @@ var vm = new Vue({
                                 barGap: 50,
                                 barCategoryGap: 0,
                                 animationEasing: 'elasticOut',
-                                label : {
-                                    show: true,
-                                    position: 'insideRight',
+                                // label : {
+                                //     show: true,
+                                //     position: 'insideRight',
                                     
-                                    color:'#fff',
-                                    fontSize:'10',
+                                //     color:'#fff',
+                                //     fontSize:'10',
                                     
-                                   },
+                                //    },
                     
                             },
                     
@@ -1564,7 +1564,7 @@ var vm = new Vue({
                                         color: '#7a9eff',
                                         label : {
                                              show: true,
-                                             position: 'insideLeft',
+                                             position: 'insideRight',
                                              left:'-100',
                                              color:'#fff',
                                              fontSize:'10'
@@ -1689,14 +1689,14 @@ var vm = new Vue({
                                 barGap: 50,
                                 barCategoryGap: 0,
                                 animationEasing: 'elasticOut',
-                                label : {
-                                    show: true,
-                                    position: 'insideRight',
+                                // label : {
+                                //     show: true,
+                                //     position: 'insideRight',
                                     
-                                    color:'#fff',
-                                    fontSize:'10',
+                                //     color:'#fff',
+                                //     fontSize:'10',
                                     
-                                   },
+                                //    },
                     
                             },
                     
@@ -1714,7 +1714,7 @@ var vm = new Vue({
                                         color: '#7a9eff',
                                         label : {
                                              show: true,
-                                             position: 'insideLeft',
+                                             position: 'insideRight',
                                              left:'-100',
                                              color:'#fff',
                                              fontSize:'10'
