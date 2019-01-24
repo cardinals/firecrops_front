@@ -109,11 +109,11 @@ dd {
 									<dt>消防队站</dt>
 									<div  style="height:7%;width:100%;float: left;">
 									</div>
-									<dd  id="top10Barz" style="height:75%;width:100%;margin-left: -15px">	
+									<dd  id="top10Barz" style="height:75%;width:100%;margin-left: -15px;">	
 									</dd>
-									<dd   id="top10Barza" style="height:75%;width:100%;margin-left: -15px">
+									<dd   id="top10Barza" style="height:75%;width:100%;margin-left: -15px;">
 									</dd>
-									<dd   id="top10Barzb" style="height:75%;width:100%;margin-left: -15px" >
+									<dd   id="top10Barzb" style="height:75%;width:100%;margin-left: -15px;" >
 									</dd>
 								</dl>
 							</div>
@@ -319,7 +319,19 @@ dd {
 						<div  style="height:9.5%;width:100%;float: left;">
 						</div>
 						<div  style="height:87%;width:100%;float: left;color: #fff;">
-							<dl>
+							
+							<ul class="tabAuto">
+								<li>二级预案</li>
+								<li>三级预案</li>
+								<li>大中队级预案</li>
+							</ul>
+							<div style="height:2%;"></div>
+							<div class="tgh-box">
+								<div id="top10Bara" style="height:84%;width:100%;margin-left: -5px;"></div>
+								<div id="top10Bar"  style="height:84%;width:100%;margin-left: -5px;"></div>
+								<div id="top10Barb" style="height:84%;width:100%;margin-left: -5px;"></div>
+							</div>
+							<!-- <ul>
 								<dt>二级预案</dt>
 								<dt>三级预案</dt>
 								<dt>大中队级预案</dt>
@@ -330,7 +342,7 @@ dd {
 								</dd>
 								<dd id="top10Barb" style="height:84%;width:100%;margin-left: -5px;" >
 								</dd>
-							</dl>
+							</ul> -->
 						</div>
 						
 					</div>
@@ -482,49 +494,7 @@ dd {
 		}) 
 		}
 	</script>	 -->
-<!--右侧tab自动切换-->
-<script type="text/javascript">
-	$(document).ready(function(){
- $('dt:first').addClass('active');
- $('dd:first').css('display','block');
- autoroll();
- hookThumb();
-});
-var i=-1; //第i+1个tab开始
-var offset = 2500; //轮换时间
-var timer = null;
-function autoroll(){
- n = $('dt').length-1;
- i++;
- if(i > n){
- i = 0;
- }
- slide(i);
-    timer = window.setTimeout(autoroll, offset);
- }
-function slide(i){
- $('dt').eq(i).addClass('active').siblings().removeClass('active');
- $('dd').eq(i).css('display','block').siblings('dd').css('display','none');
- 
- }
-function hookThumb(){    
- $('dt').hover(
-  function () {
-    if (timer) {
-                clearTimeout(timer);
-    i = $(this).prevAll().length;
-             slide(i); 
-            }
-  },
-  function () {
-      
-            timer = window.setTimeout(autoroll, offset);  
-            this.blur();            
-            return false;
-  }
-); 
-}
-</script>
+
 
 		
 </html>

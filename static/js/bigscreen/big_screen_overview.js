@@ -168,19 +168,23 @@ var vm = new Vue({
         isDGX: false
     },
     mounted: function () {
+        
         this.total();
         this.scrollDsh();
         this.scrollDgx();
-        this.echarts51();
-        this.echarts52();
-        this.echarts5();
+        // this.echarts51();
+        // this.echarts52();
+        // this.echarts5();
         this.echarts11();
-        this.echarts111();
-        this.echarts112()
+        
+        // this.echarts111();
+        // this.echarts112();
         this.echarts1();
         this.barChart();
         // this.mapecharts();
         this.echarts2();
+        this.tabMove();
+        this.tabMoveR();
         // this.echarts3();
         /**yushch
         setInterval(
@@ -189,6 +193,170 @@ var vm = new Vue({
          */
     },
     methods: {
+        //右侧tab自动切换
+        tabMove: function () {
+            $(document).ready(function () {
+                $('dt:first').addClass('active');
+                $('dd:first').css('display', 'block');
+                autoroll();
+                hookThumb();
+            });
+            var i = -1; //第i+1个tab开始
+            var offset = 2500; //轮换时间
+            var timer = null;
+            function autoroll() {
+                n = $('dt').length - 1;
+                i++;
+                if (i > n) {
+                    i = 0;
+                }
+                slide(i);
+                timer = window.setTimeout(autoroll, offset);
+            }
+             function slide(i) {
+               
+                switch(i)
+                    {
+                    case 0:
+                    $('dt').eq(i).addClass('active').siblings().removeClass('active');
+                    $('dd').eq(i).css('display', 'block').siblings('dd').css('display', 'none');
+                    document.getElementById("top10Barzb").style.display="none";
+                    document.getElementById("top10Barz").style.display="block";
+                    
+                    break;
+                    ;
+                    case 1:
+                    
+                    $('dt').eq(i).addClass('active').siblings().removeClass('active');
+                    $('dd').eq(i).css('display', 'block').siblings('dd').css('display', 'none');
+                    document.getElementById("top10Barz").style.display="none";
+                    document.getElementById("top10Barza").style.display="block";
+                    vm.echarts111();
+                    break;
+                    case 2:
+                    // debugger
+                    $('dt').eq(i).addClass('active').siblings().removeClass('active');
+                    $('dd').eq(i).css('display', 'block').siblings('dd').css('display', 'none');
+                    document.getElementById("top10Barza").style.display="none";
+                    document.getElementById("top10Barzb").style.display="block";
+                    vm.echarts112();
+                    break;
+                  
+                    }
+
+            }
+            function hookThumb() {
+                $('dt').hover(
+                    function () {
+                        if (timer) {
+                            clearTimeout(timer);
+                            i = $(this).prevAll().length;
+                            slide(i);
+                        }
+                    },
+                    function () {
+
+                        timer = window.setTimeout(autoroll, offset);
+                        this.blur();
+                        return false;
+                    }
+                );
+            }
+        },
+        //右侧tab导航
+        tabMoveR: function () {
+           // JavaScript Document
+		$(function(){
+            $(".tabAuto li:first").addClass("current");
+            $(".tgh-box div").not(":first").hide(); 
+            $(".tabAuto li").click(function(){
+            $(this).addClass("current").siblings().removeClass("current"); 
+            var index = $(".tabAuto li").index(this);
+            $(".tgh-box div").eq(index).show().siblings().hide();
+            })
+            })
+            
+            //自动轮换代码
+            $(function(){
+            $(".tabAuto li:first").addClass("current");
+            $(".tgh-box div:first").css('display','block');
+            autoScroll();
+            contentHover();
+            currentHover(); 
+            
+            });
+            var i=-1; //第i+1个tab开始;
+            var offset = 2000; //轮换时间
+            var timer = null;
+            function autoScroll(){
+            var n = $(".tabAuto li").length - 1;
+            i++;
+            if(i > n)
+            i=0;
+            slide(i);
+            timer = window.setTimeout(autoScroll,offset);
+            }
+            function slide(i){
+
+                switch (i) {
+                    case 0:
+                    
+                        // $(".tabAuto li").eq(i).addClass("current").siblings().removeClass("current");
+                        // $(".tgh-box div").eq(i).show().siblings().hide();
+                        $('.tabAuto li').eq(i).addClass('current').siblings().removeClass('current');
+                        $('.tgh-box div').eq(i).css('display', 'block').siblings('.tgh-box div').css('display', 'none');
+                        // document.getElementById("top10Barb").style.display = "none";
+                        // document.getElementById("top10Bara").style.display = "block";
+                        vm.echarts51();
+                        break;
+                        ;
+                    case 1:
+
+                        $('.tabAuto li').eq(i).addClass('current').siblings().removeClass('current');
+                        $('.tgh-box div').eq(i).css('display', 'block').siblings('.tgh-box div').css('display', 'none');
+                        // document.getElementById("top10Bara").style.display = "none";
+                        // document.getElementById("top10Bar").style.display = "block";
+                        vm.echarts52();
+                        break;
+                    case 2:
+                        
+                        $('.tabAuto li').eq(i).addClass('current').siblings().removeClass('current');
+                        $('.tgh-box div').eq(i).css('display', 'block').siblings('.tgh-box div').css('display', 'none');
+                        // document.getElementById("top10Bar").style.display = "none";
+                        // document.getElementById("top10Barb").style.display = "block";
+                        vm.echarts5();
+                        break;
+
+                }
+
+            }
+            function currentHover(){
+            $(".tabAuto li").hover(function(){
+            if(timer){ 
+            clearTimeout(timer);
+            i = $(this).prevAll().length;
+            slide(i);
+            }
+            },function(){
+            timer = window.setTimeout(autoScroll,offset);
+            this.blur(); 
+            return false; 
+            }) 
+            }
+            function contentHover(){
+            $(".tgh-box div").hover(function(){
+            if(timer){
+            clearTimeout(timer);
+            i = $(this).prevAll().length;
+            slide(i); 
+            } 
+            },function(){
+            timer = window.setTimeout(autoScroll,offset);
+            this.blur();
+            return false;
+            }) 
+            }
+        },
         // 标题数字
         total: function () {
             var params = {
@@ -1293,7 +1461,7 @@ var vm = new Vue({
             var myBarChartbbb = echarts.init(document.getElementById('top10Barb'));
             var category = ['          徐州', '          南通', '          泰州', '        连云港','          常州', '          淮安', '          无锡', '          盐城', '          宿迁', '          扬州', '          苏州', '          镇江','          南京'];
                     // var barData = [0, ~~(Math.random() * 100), ~~(Math.random() * 100), ~~(Math.random() * 100), ~~(Math.random() * 100)];
-                    var barData = [212, 325, 512, 590, 612, 650, 705, 723, 792, 800, 813, 920,949];
+                    var barData = [412, 225, 512, 490, 602, 650, 505, 623, 392, 800, 813, 720,849];
                     var lineData = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,]
                     
                     // console.log(barData)
@@ -1441,7 +1609,7 @@ var vm = new Vue({
                     var myBarChartaaa = echarts.init(document.getElementById('top10Bara'));
                     var category = ['          徐州', '          南通', '          泰州', '        连云港','          常州', '          淮安', '          无锡', '          盐城', '          宿迁', '          扬州', '          苏州', '          镇江','          南京'];
                     // var barData = [0, ~~(Math.random() * 100), ~~(Math.random() * 100), ~~(Math.random() * 100), ~~(Math.random() * 100)];
-                    var barData = [212, 325, 512, 590, 612, 650, 705, 723, 792, 800, 813, 920,949];
+                    var barData = [212, 425, 512, 590, 312, 650, 305, 723, 702, 600, 713, 920,949];
                     var lineData = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,]
                     
                     // console.log(barData)
