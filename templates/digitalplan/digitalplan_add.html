@@ -57,7 +57,7 @@
 							<el-col :span="7">
 								<el-form-item label="预案类型" prop="yalx" class="is-required">
 									<el-cascader :options="YALX_dataTree" :props="defaultProps" size="small" v-model="addForm.yalx" placeholder="请选择" class="searchSelect"
-										clearable change-on-select :show-all-levels="false"></el-cascader>
+									 clearable change-on-select :show-all-levels="false"></el-cascader>
 								</el-form-item>
 							</el-col>
 						</el-row>
@@ -96,7 +96,7 @@
 								<el-col :span="7">
 									<el-form-item label="燃烧物质">
 										<el-cascader :options="RSWZ_dataTree" :props="defaultProps" size="small" v-model="domain.rswz" placeholder="请选择" clearable
-											change-on-select :show-all-levels="false"></el-cascader>
+										 change-on-select :show-all-levels="false"></el-cascader>
 									</el-form-item>
 								</el-col>
 								<el-col :span="1">&nbsp;</el-col>
@@ -105,7 +105,7 @@
 								<el-col :span="7">
 									<el-form-item label="灾情等级">
 										<el-cascader :options="ZQDJ_dataTree" :props="defaultProps" size="small" v-model="domain.zqdj" placeholder="请选择" clearable
-											:show-all-levels="false"></el-cascader>
+										 :show-all-levels="false"></el-cascader>
 									</el-form-item>
 								</el-col>
 								<el-col :span="1">&nbsp;</el-col>
@@ -270,14 +270,10 @@
 						<el-col :span="1">&nbsp;</el-col>
 					</el-row>
 				</div>
-				<el-row class="mt35 mb20">
-					<el-row>
-						<el-col :span="24" class="editform-button">
-							<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel"> 取消</el-button>
-							<el-button type="primary" icon="document" size="small" class="btn_save" @click="save('addForm')"> 暂存</el-button>
-							<el-button type="success" icon="check" size="small" class="btn_submit" @click="submit('addForm')">提交</el-button>
-						</el-col>
-					</el-row>
+				<el-row class="mt35 mb20 tc">
+					<el-button type="clear" icon="close" size="small" class="btn_submit" @click="cancel" :loading="btnDisabled"> 取消</el-button>
+					<el-button type="primary" icon="document" size="small" class="btn_save" @click="save('addForm')" :loading="btnDisabled">暂存</el-button>
+					<el-button type="success" icon="check" size="small" class="btn_submit" @click="submit('addForm')" :loading="btnDisabled">提交</el-button>
 				</el-row>
 				<!--选择重点单位界面-->
 				<el-dialog title="选择重点单位" :visible.sync="unitsListVisible" :close-on-click-modal="false">

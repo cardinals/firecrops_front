@@ -34,7 +34,7 @@ new Vue({
                 bz: "",//备注
                 disasterList: []//灾情设定
             },
-
+            btnDisabled: false,
             //预案基本信息data
             YALX_dataTree: [],
             YAJB_data: [],
@@ -439,7 +439,7 @@ new Vue({
             this.unitsListVisible = true;
             this.loading_units = true;
             var params = {
-                dwmc: this.searchForm_units.dwmc.replace(/%/g,"\\%"),
+                dwmc: this.searchForm_units.dwmc.replace(/%/g, "\\%"),
                 mhdzid: this.shiroData.organizationVO.uuid,
                 jdh: this.shiroData.organizationVO.jgid.substr(0, 2) + '000000',
                 pageSize: this.pageSize_units,
@@ -563,7 +563,7 @@ new Vue({
                 this.loading_building = true;
                 var params = {
                     zddwid: this.addForm.dxid,
-                    jzmc: this.searchForm_building.jzmc.replace(/%/g,"\\%"),
+                    jzmc: this.searchForm_building.jzmc.replace(/%/g, "\\%"),
                     pageSize: this.pageSize_building,
                     pageNum: this.currentPage_building
                 };
@@ -633,7 +633,7 @@ new Vue({
                 var params = {
                     xzqh: xzqh,
                     dzid: dzid,
-                    dzmc: this.searchForm_fireSta.dzmc.replace(/%/g,"\\%"),
+                    dzmc: this.searchForm_fireSta.dzmc.replace(/%/g, "\\%"),
                     pageSize: this.pageSize_fireSta,
                     pageNum: this.currentPage_fireSta
                 };
@@ -677,6 +677,7 @@ new Vue({
         save: function (addForm) {
             this.$refs[addForm].validate((valid) => {
                 if (valid) {
+                    this.btnDisabled = true;
                     if (this.status == 0) {//新增
                         var params = {
                             dxid: this.addForm.dxid,
@@ -707,7 +708,7 @@ new Vue({
                                 //     showClose: true
                                 // });
                                 // loadDiv("digitalplan/digitalplan_list");
-
+                                this.btnDisabled = false;
                                 this.$alert('成功保存预案信息', '提示', {
                                     type: 'success',
                                     confirmButtonText: '确定',
@@ -753,6 +754,7 @@ new Vue({
                             } else if (this.isPic) {
                                 this.$refs.uploadPics.submit();
                             } else {
+                                this.btnDisabled = false;
                                 this.$alert('成功保存预案信息', '提示', {
                                     type: 'success',
                                     confirmButtonText: '确定',
@@ -775,6 +777,7 @@ new Vue({
         submit: function (addForm) {
             this.$refs[addForm].validate((valid) => {
                 if (valid) {
+                    this.btnDisabled = true;
                     if (this.status == 0) { //新增
                         var params = {
                             dxid: this.addForm.dxid,
@@ -801,6 +804,7 @@ new Vue({
                             } else if (this.isPic) {
                                 this.$refs.uploadPics.submit();
                             } else {
+                                this.btnDisabled = false;
                                 this.$alert('成功保存预案信息', '提示', {
                                     type: 'success',
                                     confirmButtonText: '确定',
@@ -847,6 +851,7 @@ new Vue({
                             } else if (this.isPic) {
                                 this.$refs.uploadPics.submit();
                             } else {
+                                this.btnDisabled = false;
                                 this.$alert('成功保存预案信息', '提示', {
                                     type: 'success',
                                     confirmButtonText: '确定',
@@ -871,6 +876,7 @@ new Vue({
                 if (this.isPic) {
                     this.$refs.uploadPics.submit();
                 } else {
+                    this.btnDisabled = false;
                     this.$alert('成功保存预案信息', '提示', {
                         type: 'success',
                         confirmButtonText: '确定',
@@ -880,11 +886,12 @@ new Vue({
                     });
                 }
             }
-            loadDiv("digitalplan/digitalplan_list");
+            // loadDiv("digitalplan/digitalplan_list");
         },
         //图片上传成功回调方法
         picSuccess: function (response, file, fileList) {
             if (response) {
+                this.btnDisabled = false;
                 this.$alert('成功保存预案信息', '提示', {
                     type: 'success',
                     confirmButtonText: '确定',
@@ -893,7 +900,7 @@ new Vue({
                     }
                 });
             }
-            loadDiv("digitalplan/digitalplan_list");
+            // loadDiv("digitalplan/digitalplan_list");
         },
         //附件移除
         fileRemove: function (file, fileList) {
