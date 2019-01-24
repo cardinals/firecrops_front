@@ -1,0 +1,45 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/lib.css">
+    <title>预案列表信息</title>
+</head>
+<body class="fw f14 main-index-body">
+    <!--水源详情页-->
+    <div id="detailDisplay"  element-loading-text="加载中">
+        <div>
+            <el-row style="margin-bottom:10px;">
+                <el-col :span="24">
+                    <div>
+                        <h4><strong>大中队级预案</strong></h4>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="24">
+                    <!-- <div>
+                        <strong class="dtdlStyle">预案名称：</strong>
+                        <v-text v-text="yamcData.yamc||'无'"></v-text>
+                    </div> -->
+                    <el-table border id="table" :data="detailData" 
+						 class="tableStyle" height="250" >
+							<el-table-column type="index" label="序号" show-overflow-tooltip width="70px" align="center"></el-table-column>
+							<el-table-column prop="yamc" label="预案名称" min-width="18%" show-overflow-tooltip align="center">
+								<template slot-scope="scope">
+									<a @click="informClick(scope.row)" type="text" v-text="scope.row.yamc"></a>
+								</template>
+							</el-table-column>
+							
+                    </el-table>
+                    
+                </el-col>
+            </el-row>
+            
+        </div>
+    </div>
+</body>
+<script src="../../static/js/zzzlib/vue.js"></script>
+<script src="../../static/js/zzzlib/vue.min.js"></script>
+<script src="../../static/js/zzzlib/elementUI.js"></script>
+<script src="../../static/js/basicinfo/yalist.js"></script>
+</html>
