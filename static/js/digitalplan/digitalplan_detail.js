@@ -3,9 +3,13 @@ new Vue({
     data: function () {
         return {
             activeName: "first",
-
             pkid: "",//页面获取的预案id
+            //选择分享模板界面
             shareVisible: false,
+            //选择导出word界面（详情、简版）
+            SelectExportVisible: false,
+            //选择导出word界面（详情-各字段项）
+            downVisible: false,
             showPicVisible: false,
             initialIndex: 0,
             picTitle: '',
@@ -21,19 +25,23 @@ new Vue({
             cgl_jzfqData: [],//建筑类建筑分区数据
             loading: false,
             picList: [],
-            fjDetailData: '',
-            hisDetailData: '',
+            //预案预览按钮是否可用：
+            FJYL: false,
+            //预案列表是否显示：
+            YAFJ: false,
+            yafjxzList: [],
+            hisDetailData: [],
             hisPlanData: [],
-            //word模板选择
-            downVisible: false,
+            //历史预案列表是否显示：
+            LSYAFJ: false,
+            //历史预案附件列表
+            hisPlanList: [],
             fmChecked: true,
             dwjbqkChecked: true,
             dwjzxxChecked: true,
             zdbwChecked: true,
             zqsdChecked: true,
             tpChecked: true
-
-            , SelectDownVisible: false
         }
     },
     created: function () {
@@ -60,7 +68,6 @@ new Vue({
         this.disasterSet(this.pkid);
         this.fjDetail();
         this.picDetail();
-
     },
 
     methods: {
@@ -81,8 +88,16 @@ new Vue({
                 } else {
                     this.basicDetailData.shsj = dateFormat(this.basicDetailData.shsj);
                 }
+                //大中队预案附件不可预览
+                if(this.basicDetailData.yajb == '03'){
+                    this.FJYL = true;
+                } else{
+                    this.FJYL = false;
+                }
                 doFindPhoto("YAJB", this.basicDetailData.yajb);
                 this.unitDetail(this.basicDetailData.dxid);
+                this.hisDetail(this.pkid);
+                this.getHisPlanListByYaId(this.pkid,this.basicDetailData.jdh);
                 this.loading = false;
             }.bind(this), function (error) {
                 console.log(error)
@@ -119,7 +134,13 @@ new Vue({
                 kzm: 'zip'
             }
             axios.post('/dpapi/yafjxz/doFindByPlanId', params).then(function (res) {
-                this.fjDetailData = res.data.result.length;
+                this.yafjxzList = res.data.result;
+                if (this.yafjxzList.length !== 0) {
+                    this.YAFJ = true;
+                } else{
+                    this.YAFJ = false;
+                }
+                // this.fjDetailData = res.data.result.length;
                 // if (res.data.result.length > 0) {
 
                 // this.fileList = [{
@@ -150,7 +171,7 @@ new Vue({
                         });
                     }
                 }
-                this.hisDetail(this.pkid);
+                // this.hisDetail(this.pkid);
             }.bind(this), function (error) {
                 console.log(error)
             })
@@ -225,7 +246,7 @@ new Vue({
 
         //模板压缩包导出
         downloadModule: function () {
-            location.href = baseUrl + "/planShare/exportData/" + this.pkid;
+            location.href = baseUrl + "/dpapi/planShare/exportData/" + this.pkid;
         },
         //根据重点单位id获取建筑分区信息
         getJzfqDetailByVo: function () {
@@ -259,14 +280,18 @@ new Vue({
         openDownVisible: function () {
             this.downVisible = true;
         },
-        openSelectDownVisible: function () {
-            this.SelectDownVisible = true;
+        //信息导出
+        openSelectExportVisible: function () {
+            this.SelectExportVisible = true;
         },
         closeShareDialog: function () {
             this.shareVisible = false;
         },
         closeDownDialog: function () {
             this.downVisible = false;
+        },
+        closeSelectExportDialog: function () {
+            this.SelectExportVisible = false;
         },
         //信息分享
         openDown: function (val) {
@@ -284,7 +309,7 @@ new Vue({
                 //     window.open(baseUrl + "/dpapi/yafjxz/downTempYa?yawjmc=大连锦源_简版.docx");
                 // }
                 var title = 'fm-dwjbqk-dwjzxx-zdbw';
-                window.open(baseUrl + "/planShare/downWord/" + this.pkid + "/" + title);
+                window.open(baseUrl + "/dpapi/planShare/downWord/" + this.pkid + "/" + title);
                 //edit end
 
             }
@@ -292,12 +317,9 @@ new Vue({
                 this.hisdownload();
             }
         },
-        closeSelectDownDialog: function () {
-            this.SelectDownVisible = false;
-        },
         //信息分享
         openShare: function (val) {
-            window.open(baseUrl + "/planShare/page/" + this.pkid + "/" + val + "/web");
+            window.open(baseUrl + "/dpapi/planShare/page/" + this.pkid + "/" + val + "/web");
         },
         downShare: function () {
 
@@ -318,124 +340,18 @@ new Vue({
             if (this.tpChecked) {
                 title += 'tp'
             }
-            window.open(baseUrl + "/planShare/downWord/" + this.pkid + "/" + title);
+            window.open(baseUrl + "/dpapi/planShare/downWord/" + this.pkid + "/" + title);
         },
         //预案预览
-        openPlan: function () {
-            if (this.fjDetailData > 0) {
-                var params = {
-                    yaid: this.pkid,
-                    kzm: 'zip'
-                }
-                axios.post('/dpapi/yafjxz/doFindByPlanId', params).then(function (res) {
-                    var yllj = res.data.result[0].yllj;
-                    if (yllj == null || yllj == '') {
-                        this.$message({
-                            message: "无可预览文件",
-                            showClose: true
-                        });
-                    } else {
-                        window.open(baseUrl + "/upload/" + yllj);
-                    }
-                }.bind(this), function (error) {
-                    console.log(error)
-                })
-            } else {
-                this.$message({
-                    message: "该预案无附件",
-                    showClose: true
-                });
-            }
+        openPlan: function (val) {
+            var yllj = val.yllj;
+            window.open(baseUrl + "/upload/" + yllj);
         },
         //预案下载
-        downloadPlan: function () {
-            if (this.fjDetailData > 0) {
-                var params = {
-                    yaid: this.pkid,
-                    kzm: 'zip'
-                }
-                axios.post('/dpapi/yafjxz/doFindByPlanId', params).then(function (res) {
-                    var xzlj = res.data.result[0].xzlj;
-                    window.open(baseUrl + "/upload/" + xzlj);
-                }.bind(this), function (error) {
-                    console.log(error)
-                })
-            } else {
-
-                //edit by huang-rui in 9.15
-                // if (this.pkid == 'dlwddzd' || this.pkid == 'dljy') {
-                //     this.openSelectDownVisible();
-                // } else {
-                //     this.openDownVisible();
-                // }
-                this.openSelectDownVisible();
-                //edit end
-            }
+        downloadPlan: function (val) {
+            var xzlj = val.xzlj;
+            window.open(baseUrl + "/upload/" + xzlj);
         },
-        // //add by huang-rui in 9.15
-        // //历史预案查询
-        // hisDetail: function (val) {
-        //     var params = {
-        //         yaid: val
-        //     };
-        //     axios.post('/dpapi/yaxxzl/list/', params).then(function (res) {
-        //         this.hisDetailData = res.data.result;
-        //         if (this.basicDetailData.jdh.substr(0, 2) == '21') {
-        //             var head = 'http://10.119.119.232:11010';
-        //             //江苏
-        //         } else if (this.basicDetailData.jdh.substr(0, 2) == '32') {
-        //             var head = 'http://10.119.119.205:11010';
-        //         }
-        //         var body = '/attachment/filemanage/configFile!showFile.action';
-        //         if (this.hisDetailData.length > 0) {
-        //             for (var i in this.hisDetailData) {
-        //                 if (this.hisDetailData[i].fjlxdm == '02') {
-        //                     this.picList.push({
-        //                         uuid: this.hisDetailData[i].id,
-        //                         name: this.hisDetailData[i].zlmc,
-        //                         url: head + body + this.hisDetailData[i].xgxx,
-        //                         type: 'history'
-        //                     });
-        //                 } else if (this.hisDetailData[i].fjlxdm == '01') {
-        //                     this.hisPlanData.push(this.hisDetailData[i]);
-        //                 }
-        //             }
-        //         }
-        //     }.bind(this), function (error) {
-        //         console.log(error)
-        //     })
-        // },
-        // //历史预案下载
-        // hisdownload: function () {
-        //     if (this.basicDetailData.jdh.substr(0, 2) == '21' || this.basicDetailData.jdh.substr(0, 2) == '32') {
-        //         if (this.hisPlanData.length > 0) {
-        //             //辽宁
-        //             if (this.basicDetailData.jdh.substr(0, 2) == '21') {
-        //                 var head = 'http://10.119.119.232:11010';
-        //                 //江苏
-        //             } else if (this.basicDetailData.jdh.substr(0, 2) == '32') {
-        //                 var head = 'http://10.119.119.205:11010';
-        //             }
-        //             var body = '/attachment/filemanage/configFile!showFile.action';
-        //             for(var i in this.hisPlanData){
-        //                 var url = head + body + this.hisPlanData[i].xgxx;
-        //                 window.open(url);
-        //             }
-        //         } else {
-        //             this.$message({
-        //                 message: "该预案无历史附件",
-        //                 showClose: true
-        //             });
-        //         }
-        //     } else {
-        //         this.$message({
-        //             message: "该总队历史预案未接入本平台",
-        //             showClose: true
-        //         });
-        //     }
-        //     this.hisPlanData = []
-        // }
-        // //add end 
         //add by huang-rui in 9.15
         //历史预案查询
         hisDetail: function (val) {
@@ -530,7 +446,41 @@ new Vue({
                 ID: this.basicDetailData.dxid
             }
             loadDivParam("planobject/importantunits_detail", params);
-        }
+        },
         //add end 
+        //根据预案id获取所有预案的历史预案附件列表
+        getHisPlanListByYaId: function (pkid,jdh) {
+            var params = {
+                uuid: pkid,
+                jdh: jdh
+            }
+            axios.post('/dpapi/digitalplanlist/doFindHisPlanListByVo', params).then(function (res) {
+                this.hisPlanList = res.data.result;
+                if (this.hisPlanList.length !== 0) {
+                    this.LSYAFJ = true;
+                }
+            }.bind(this), function (error) {
+                console.log(error)
+            })
+        },
+        //下载表格中所选的历史预案
+        downloadHisPlan: function (val){
+            var isAccess = false;
+            for(var i in ipList){
+                if (val.yajdh.substr(0, 2) == ipList[i].jdh) {
+                    var head = ipList[i].ip
+                    var body = '/attachment/filemanage/configFile!showFile.action';
+                    var url = head + body + val.xgxx;
+                    window.open(url);
+                }
+            }
+            if(isAccess == true && isHavePlan == false) {
+                this.$message({
+                    message: "该预案无历史附件",
+                    showClose: true
+                });
+            } 
+            isAccess = false;
+        }
     }
 })
