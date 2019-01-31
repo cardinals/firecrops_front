@@ -1068,7 +1068,7 @@ var vm = new Vue({
                         yAxis: {
                             type: 'category',
                             // data: category,
-                            data:  ['          徐州', '          南通', '          泰州', '        连云港','          常州', '          淮安', '          无锡', '          盐城', '          宿迁', '          扬州', '          苏州', '          镇江','          南京'],
+                            data:  ['          南通', '          徐州', '          淮安', '        连云港','          常州', '          泰州', '          无锡', '          盐城', '          宿迁', '          扬州', '          苏州', '          镇江','          南京'],
                             splitLine: {
                                 show: false
                             },
@@ -1095,7 +1095,7 @@ var vm = new Vue({
                                 name: '预案数量',
                                 type: 'bar',
                                 // data: data,
-                                data: [ 262, 325, 12, 60, 632, 656, 15, 723, 792, 800, 813, 920,1149],
+                                data: [ 262, 355, 412, 570, 612, 650, 705, 723, 762, 800, 813, 920,989],
                                 barWidth: 6,
                                 barGap: 20,
                                 barCategoryGap:'50%',
@@ -1213,7 +1213,7 @@ var vm = new Vue({
                         yAxis: {
                             type: 'category',
                             // data: category,
-                            data:  ['          徐州', '          南通', '          泰州', '        连云港','          常州', '          淮安', '          无锡', '          盐城', '          宿迁', '          扬州', '          苏州', '          镇江','          南京'],
+                            data:  ['          常州', '          南通', '          泰州', '        连云港','          徐州', '          无锡', '          淮安', '          盐城', '          宿迁', '          扬州', '          苏州', '          镇江','          南京'],
                             splitLine: {
                                 show: false
                             },
@@ -1240,7 +1240,7 @@ var vm = new Vue({
                                 name: '预案数量',
                                 type: 'bar',
                                 // data: data,
-                                data: [ 212, 325, 512, 530, 612, 650, 705, 733, 792, 80, 813, 20,949],
+                                data: [ 212, 325, 412, 590, 612, 610, 665, 763, 792, 800, 813, 920,939],
                                 barWidth: 6,
                                 barGap: 20,
                                 barCategoryGap:'50%',
@@ -1609,7 +1609,7 @@ var vm = new Vue({
                     var myBarChartaaa = echarts.init(document.getElementById('top10Bara'));
                     var category = ['          徐州', '          南通', '          泰州', '        连云港','          常州', '          淮安', '          无锡', '          盐城', '          宿迁', '          扬州', '          苏州', '          镇江','          南京'];
                     // var barData = [0, ~~(Math.random() * 100), ~~(Math.random() * 100), ~~(Math.random() * 100), ~~(Math.random() * 100)];
-                    var barData = [212, 425, 512, 590, 312, 650, 305, 723, 702, 600, 713, 920,949];
+                    var barData = [252, 285, 301, 311, 575, 580, 612, 637, 682, 700, 713, 920,949];
                     var lineData = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,]
                     
                     // console.log(barData)
