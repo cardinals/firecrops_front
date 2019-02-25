@@ -128,7 +128,7 @@ var vm = new Vue({
         ],
         //分页功能
         shengshizs: [],
-        jiangshudata:[],
+        jiangshudata: [],
         selqhmc: [],
         searchForm: {
             xzqh: '',
@@ -159,7 +159,7 @@ var vm = new Vue({
         //详情页显示flag
         detailVisible: false,
     },
-    mounted: function() {
+    mounted: function () {
         // var gis_X = this.GetQueryString("gis_X");
         // var gis_Y = this.GetQueryString("gis_Y");
         // var isSydj = this.GetQueryString("sydj");
@@ -175,13 +175,13 @@ var vm = new Vue({
         this.getCity();
         document.title = this.city + '预案情况';
         this.getShengZddwDate();//省
-        
+
     },
     methods:
     //获取重点单位信息
     {
         //当前页修改事件
-        handleCurrentChange: function(val) {
+        handleCurrentChange: function (val) {
             this.currentPage = val;
             var _self = this;
             // _self.loadingData(); //重新加载数据
@@ -312,14 +312,14 @@ var vm = new Vue({
             var bdary = new BMap.Boundary();
             bdary.get(this.city, function (rs) { //获取行政区域
                 var count = rs.boundaries.length; //行政区域的点有多少个
-                
+
                 for (var i = 0; i < count; i++) {
-                   
-                    var ply = new BMap.Polygon(rs.boundaries[i], { strokeWeight: 3, strokeColor: "rgba(0,0,0,0)",fillColor: "" }); //建立多边形覆盖物
+
+                    var ply = new BMap.Polygon(rs.boundaries[i], { strokeWeight: 3, strokeColor: "rgba(0,0,0,0)", fillColor: "" }); //建立多边形覆盖物
                     ply.setFillColor("none");
                     //添加覆盖物，调整视野
                     // map.setViewport(ply.getPath());
-                    map.addOverlay(ply); 
+                    map.addOverlay(ply);
                 }
             });
             //
@@ -351,12 +351,12 @@ var vm = new Vue({
                 this.total = res.data.result.length;
                 //仅显示江苏总队
                 this.jiangshudata = res.data.result;
-              
+
                 //获取左侧省市的卡片数据
-                for(o=0;o<this.jiangshudata.length;o++){
-                    if(this.jiangshudata[o].xzqhmc=="江苏总队"){
+                for (o = 0; o < this.jiangshudata.length; o++) {
+                    if (this.jiangshudata[o].xzqhmc == "江苏总队") {
                         this.shengshizs[0] = this.jiangshudata[o];
-                         //省市与重点单位详细切换
+                        //省市与重点单位详细切换
                         $("#shengshizs").show();
                         $("#zddwxx").hide();
                         this.initMap();
@@ -751,81 +751,81 @@ var vm = new Vue({
             var provinces = this.ShengZddwDate;
             //数据库表
             // for (var i = 0; i < provinces.length; i++) {
-                var pt = new BMap.Point(provinces[9].gisX, provinces[9].gisY);
-            
-                var marker = new BMap.Marker(pt, { icon: myIcon1 });
-                //判断字段长度改变样式
-                var labelstr = "";
-                var mclen = provinces[9].xzqhmc.length;
-                var sllen = provinces[9].zddwsl.length;
+            var pt = new BMap.Point(provinces[9].gisX, provinces[9].gisY);
 
-                if (mclen == 4) {
-                    labelstr = '&nbsp<span style="color:#fff;">' + provinces[9].xzqhmc + '</span>';
-                } else {
-                    labelstr = '<span style="color:#fff;">' + provinces[9].xzqhmc + '</span>';
-                }
+            var marker = new BMap.Marker(pt, { icon: myIcon1 });
+            //判断字段长度改变样式
+            var labelstr = "";
+            var mclen = provinces[9].xzqhmc.length;
+            var sllen = provinces[9].zddwsl.length;
 
-                if (sllen == 4) {
-                    labelstr += '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span style="font-size:1.3em;color:red;">' + provinces[9].zddwsl + '</span>';
-                } else {
-                    labelstr += '&nbsp&nbsp&nbsp&nbsp&nbsp<span style="font-size:1.3em;color:red;">' + provinces[9].zddwsl + '</span>';
-                }
-                if (mclen == 5 && sllen == 5) {
-                    labelstr = '<span style="color:#fff;">' + provinces[9].xzqhmc + '</span>';
-                    labelstr += '&nbsp&nbsp<span style="font-size:1.3em;color:red;">' + provinces[9].zddwsl + '</span>';
-                }
-                var label = new BMap.Label(labelstr);
-                marker.province = provinces[9];
-                label.setStyle({
-                    fontSize: '0.6em',
-                    fontWeight: 'bold',
-                    border: '0',
-                    padding: '14px 4px',
-                    textAlign: 'center',
-                    marginLeft: '1.5px',
-                    marginTop: '24px',
-                    color: '#ED0C0A',
-                    borderRadius: '2px',
-                    paddingRight: '58px',
-                    background: '',
-                });
-                //zjczzz
-                marker.addEventListener("onmouseover", function (e) {
-                    var myIcon3 = new BMap.Icon("../../static/images/new/w1_pp.png", new BMap.Size(100, 70)); //点击后的新图标
-                    var marker = e.currentTarget;
-                    marker.setIcon(myIcon3);
-                    marker.setTop(true, 27000000);
-                });
-                marker.addEventListener("onmouseout", function (e) {
-                    var myIcon1 = new BMap.Icon("../../static/images/new/w1_p.png", new BMap.Size(100, 70)); //点击后的新图标
-                    var marker = e.currentTarget;
-                    marker.setIcon(myIcon1);
-                    marker.setTop(false);
-                });
-                //
-                marker.addEventListener("click", function (e) {
-                    //获取行政区划
-                    var xzqh = e.target.province.xzqh;
-                    vm.selqhmc = vm.shengshizs;
-                    //获取省行政区划代码
-                    vm.getShiZddwDate(xzqh);
-                    var pmarker = e.target;
-                    var pt = pmarker.getPosition();
-                    vm.prvinceName = pmarker.entity[3];
-                    var citys = vm.cityp;
-                    var map = vm.map;
-                    vm.hideMarker(vm.province);
-                    map.centerAndZoom(pt, 8);
-                });
-                marker.entity = provinces[9];
-                province.push(marker);
-                map.addOverlay(marker);
-                marker.setLabel(label);
+            if (mclen == 4) {
+                labelstr = '&nbsp<span style="color:#fff;">' + provinces[9].xzqhmc + '</span>';
+            } else {
+                labelstr = '<span style="color:#fff;">' + provinces[9].xzqhmc + '</span>';
+            }
+
+            if (sllen == 4) {
+                labelstr += '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span style="font-size:1.3em;color:red;">' + provinces[9].zddwsl + '</span>';
+            } else {
+                labelstr += '&nbsp&nbsp&nbsp&nbsp&nbsp<span style="font-size:1.3em;color:red;">' + provinces[9].zddwsl + '</span>';
+            }
+            if (mclen == 5 && sllen == 5) {
+                labelstr = '<span style="color:#fff;">' + provinces[9].xzqhmc + '</span>';
+                labelstr += '&nbsp&nbsp<span style="font-size:1.3em;color:red;">' + provinces[9].zddwsl + '</span>';
+            }
+            var label = new BMap.Label(labelstr);
+            marker.province = provinces[9];
+            label.setStyle({
+                fontSize: '0.6em',
+                fontWeight: 'bold',
+                border: '0',
+                padding: '14px 4px',
+                textAlign: 'center',
+                marginLeft: '1.5px',
+                marginTop: '24px',
+                color: '#ED0C0A',
+                borderRadius: '2px',
+                paddingRight: '58px',
+                background: '',
+            });
+            //zjczzz
+            marker.addEventListener("onmouseover", function (e) {
+                var myIcon3 = new BMap.Icon("../../static/images/new/w1_pp.png", new BMap.Size(100, 70)); //点击后的新图标
+                var marker = e.currentTarget;
+                marker.setIcon(myIcon3);
+                marker.setTop(true, 27000000);
+            });
+            marker.addEventListener("onmouseout", function (e) {
+                var myIcon1 = new BMap.Icon("../../static/images/new/w1_p.png", new BMap.Size(100, 70)); //点击后的新图标
+                var marker = e.currentTarget;
+                marker.setIcon(myIcon1);
+                marker.setTop(false);
+            });
+            //
+            marker.addEventListener("click", function (e) {
+                //获取行政区划
+                var xzqh = e.target.province.xzqh;
+                vm.selqhmc = vm.shengshizs;
+                //获取省行政区划代码
+                vm.getShiZddwDate(xzqh);
+                var pmarker = e.target;
+                var pt = pmarker.getPosition();
+                vm.prvinceName = pmarker.entity[3];
+                var citys = vm.cityp;
+                var map = vm.map;
+                vm.hideMarker(vm.province);
+                map.centerAndZoom(pt, 8);
+            });
+            marker.entity = provinces[9];
+            province.push(marker);
+            map.addOverlay(marker);
+            marker.setLabel(label);
             // }
         },
         //图层二
         drawMapa: function (result) {
-            
+
             var myIcon1 = new BMap.Icon("../../static/images/new/w1_pct.png", new BMap.Size(110, 70));
             var cityp = [];
             var citys;
@@ -963,7 +963,7 @@ var vm = new Vue({
                 var marker = new BMap.Marker(point, { icon: myIcon1 });
                 marker.uuid = zddws[i].uuid;
                 marker.addEventListener("click", function (e) {
-                    
+
                     //显示底部按钮
                     vm.ShowBtn();
                     vm.getZddwxx('', e.target.uuid);
@@ -1066,7 +1066,7 @@ var vm = new Vue({
         //点击重点单位事件
         //zjctest
         drawMapc: function (zddw) {
-            
+
             vm.ShowBtn();
             //隐藏旧圆
             var oc = vm.circle;
@@ -1077,7 +1077,7 @@ var vm = new Vue({
             var middle = this.wgs84_bd09(gispt);
             var pt = new BMap.Point(middle.lng, middle.lat);
             //end
-            
+
             var map = vm.map;
             map.centerAndZoom(pt, 18);//防止跳回聚合
             this.infoData = (zddw.dwmc != null ? zddw.dwmc : '无');
@@ -1125,7 +1125,7 @@ var vm = new Vue({
             //设置新图标
             var myIcon2 = new BMap.Icon("../../static/images/new/w1_05.png", new BMap.Size(26, 26)); //点击后的新图标
             var marker = new BMap.Marker(pt, { icon: myIcon2 });
-            
+
             var circle = new BMap.Circle(pt, 240, { strokeColor: "blue", fillColor: "lightblue", strokeWeight: 1, fillOpacity: 0.3, strokeOpacity: 0.3 });
             var radius = 240;
             var r = 6371004;
@@ -1152,7 +1152,7 @@ var vm = new Vue({
             vm.chAllMarkers(vm.zdd);
             vm.zdd = marker;
             vm.circle = circle;
-            
+
         },
         //显示按钮方法
         ShowBtn: function () {
@@ -1975,7 +1975,7 @@ var vm = new Vue({
             var map = this.map;
             // var mapType = this.mapType;
             // if (mapType == 'satellite') {
-                map.setMapType(BMAP_NORMAL_MAP);
+            map.setMapType(BMAP_NORMAL_MAP);
             //     this.mapType = '2D';
             // }
         },
@@ -1983,9 +1983,9 @@ var vm = new Vue({
         openPlan_1: function (zddwid, yajb) {
             debugger
             axios.get('/dpapi/digitalplanlist/doFindListByZddwId/' + zddwid).then(function (res) {
-              
+
                 var plan = res.data.result;
-               
+
                 this.planData.yaid_1 = '';
                 this.planData.yaid_2 = '';
                 this.planData.yaid_3 = '';
@@ -2002,11 +2002,11 @@ var vm = new Vue({
                             // break;s
                         }
                     } else if (yajb == '03') {
-                        
+
                         if (plan[k].yajb == '03') {
-                            
+
                             this.planData.yaid_3 = plan[k].uuid;
-                            
+
                             // break;s
                         }
 
@@ -2049,13 +2049,13 @@ var vm = new Vue({
 
         },
         //预案信息列表
-        dzdjPlan: function (yaidd){
+        dzdjPlan: function (yaidd) {
             debugger
             //点击进入详情页
             this.detailVisible = true;
             var shortURL = top.location.href.substr(0, top.location.href.indexOf("?")) + "?id=" + yaidd;
             history.pushState(null, null, shortURL)
-            
+
             //异步加载详情页
             $(function () {
                 $.ajax({
@@ -2073,7 +2073,7 @@ var vm = new Vue({
             axios.get('/dpapi/yafjxz/doFindByPlanId/' + val).then(function (res) {
                 if (res.data.result) {
                     var yllj = res.data.result[0].yllj;
-                    window.open(baseUrl+"/upload/" + yllj);
+                    window.open(baseUrl + "/upload/" + yllj);
                 }
             }.bind(this), function (error) {
                 console.log(error)
@@ -2082,13 +2082,13 @@ var vm = new Vue({
 
         //分享
         openShare: function (val) {
-            window.open(baseUrl+"/planShare/pageZddw/" + val + "/web");
+            window.open(baseUrl + "/planShare/pageZddw/" + val + "/web");
         },
         //水源详情跳转
-        syxq: function (params,lx) {
+        syxq: function (params, lx) {
             //window.location.href = "../basicinfo/firewater_list.html?uuid=" + params + "&sydj=1" + "&index=71" + "&type=DT";
             // window.location.href = "../all.html?url=/basicinfo/firewater&uuid=" + params + "&sydj=1" + "&index=71" + "&type=DT";
-            this.syxqbtn(params,lx)
+            this.syxqbtn(params, lx)
         },
         //队站详情跳转
         dzxq: function (dzparams) {
@@ -2103,41 +2103,41 @@ var vm = new Vue({
             // window.location.href = "../all.html?url=/planobject/importantunits_detail&ID=" + zddwparams + "&index=41" + "&type=DT";
         },
         //重点单位详细信息页
-        zddwxqbtn:function(zddwparams){
+        zddwxqbtn: function (zddwparams) {
             //点击进入详情页
-                this.detailVisible = true;
-                var shortURL = top.location.href.substr(0, top.location.href.indexOf("?")) + "?id=" + zddwparams + "&sylx=" ;
-                history.pushState(null, null, shortURL)
-                //异步加载详情页
-                $(function () {
-                    $.ajax({
-                        url: '../../../templates/basicinfo/import.html',
-                        cache: true,
-                        async: true,
-                        success: function (html) {
-                            $("#detailDialog").html(html);
-                        }
-                    });
-                })
+            this.detailVisible = true;
+            var shortURL = top.location.href.substr(0, top.location.href.indexOf("?")) + "?id=" + zddwparams + "&sylx=";
+            history.pushState(null, null, shortURL)
+            //异步加载详情页
+            $(function () {
+                $.ajax({
+                    url: '../../../templates/basicinfo/import.html',
+                    cache: true,
+                    async: true,
+                    success: function (html) {
+                        $("#detailDialog").html(html);
+                    }
+                });
+            })
         },
         //水源详情信息页
-        syxqbtn:function(params,lx){
-        
+        syxqbtn: function (params, lx) {
+
             //点击进入详情页
-                this.detailVisible = true;
-                var shortURL = top.location.href.substr(0, top.location.href.indexOf("?")) + "?id=" + params + "&sylx=" + lx;
-                history.pushState(null, null, shortURL)
-                //异步加载详情页
-                $(function () {
-                    $.ajax({
-                        url: '../../../templates/basicinfo/water.html',
-                        cache: true,
-                        async: true,
-                        success: function (html) {
-                            $("#detailDialog").html(html);
-                        }
-                    });
-                })
+            this.detailVisible = true;
+            var shortURL = top.location.href.substr(0, top.location.href.indexOf("?")) + "?id=" + params + "&sylx=" + lx;
+            history.pushState(null, null, shortURL)
+            //异步加载详情页
+            $(function () {
+                $.ajax({
+                    url: '../../../templates/basicinfo/water.html',
+                    cache: true,
+                    async: true,
+                    success: function (html) {
+                        $("#detailDialog").html(html);
+                    }
+                });
+            })
         },
 
         //车辆单位详情跳转
@@ -2155,7 +2155,7 @@ var vm = new Vue({
             // }
         },
         //三维地图
-        SwOver:function (){
+        SwOver: function () {
             var map = this.map;
             map.setMapType(BMAP_PERSPECTIVE_MAP);
         },
@@ -2440,7 +2440,7 @@ var vm = new Vue({
         },
         // db end
         //根据参数部分和参数名来获取参数值 
-        GetQueryString: function(name) {
+        GetQueryString: function (name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
             if (r != null) return unescape(r[2]); return null;

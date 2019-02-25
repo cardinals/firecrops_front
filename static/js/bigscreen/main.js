@@ -50,3 +50,5 @@ function modiflyNum(id,value)
 		elm[parseInt(cc[i])].getElementsByTagName('img')[0].src="images/front.png";
 	}
 }
+
+
